@@ -46,16 +46,6 @@ a, a:active, a:link {
     height: 18px;
 }
 
-.btn {
-    text-decoration: none;
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-    text-align: center;
-    margin-right: 10px;
-    border-radius: 100%;
-}
-
 .status {
     text-align: center;
 }
@@ -95,37 +85,4 @@ a, a:active, a:link {
     box-shadow: none;
     height: 20px;
     width: 90%;
-}
-
-.btnclose {
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-    text-align: center;
-    margin-right: 10px;
-    border-radius: 100%;
-    background-color: #FC625C;
-    border: 1px solid #fb322a;
-}
-
-.btnhide {
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-    text-align: center;
-    margin-right: 10px;
-    border-radius: 100%;
-    background-color: #FDC141;
-    border: 1px solid #fdb928;
-}
-
-.btnfull {
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-    text-align: center;
-    margin-right: 10px;
-    border-radius: 100%;
-    background-color: #35CC4b;
-    border: 1px solid #2aa43b;
 }
