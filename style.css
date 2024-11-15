@@ -1,4 +1,4 @@
-/* General Reset for body and html */
+/* Reset body and html to fill full viewport */
 html, body {
   margin: 0;
   padding: 0;
@@ -22,10 +22,14 @@ body {
   -o-background-size: cover;
 }
 
-/* Link styling */
-a, a:active, a:link {
-  text-decoration: none;
-  color: #ffffff;
+/* Particles Background (Ensure particles stay behind content) */
+#particles-js {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Particles in the background */
 }
 
 /* Terminal container */
@@ -57,10 +61,11 @@ a, a:active, a:link {
   font-family: Monaco, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: white;
-  overflow-y: auto; /* Allows scrolling if needed */
+  overflow-y: auto; /* Allows scrolling when needed */
   min-height: 320px;
   border-radius: 0 0 5px 5px;
   white-space: pre-wrap; /* Allows text wrapping */
+  line-height: 1.6;
   max-height: 320px; /* Prevents overflow beyond the terminal window */
 }
 
@@ -90,11 +95,13 @@ a, a:active, a:link {
   color: white;
   font-family: inherit;
   outline: none;
-  overflow: hidden; /* Prevents scrolling */
   width: 90%;
   padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
+  white-space: nowrap; /* Prevents wrapping in input field */
+  word-wrap: normal; /* Keeps input in one line */
+  overflow: auto; /* Allows scrolling if content exceeds the input area */
 }
 
 /* Terminal window buttons */
