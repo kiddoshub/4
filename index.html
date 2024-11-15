@@ -30,66 +30,6 @@
             }
         });
     </script>
-
-    <style>
-        /* Basic reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Terminal window styling */
-        .terminal {
-            width: 50vw;
-            height: 50vh;
-            background-color: #333;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            border: 2px solid #00ff00;
-            position: relative;
-            overflow: hidden;
-            padding: 20px;
-        }
-
-        /* Terminal header bar */
-        .bar {
-            background-color: #222;
-            padding: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Button styles for close, hide, and fullscreen */
-        .btnclose, .btnhide, .btnfull {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #444;
-            cursor: pointer;
-        }
-
-        /* Button hover effects */
-        .btnclose:hover, .btnhide:hover, .btnfull:hover {
-            background-color: #ff6347;
-            transform: scale(1.1);
-        }
-
-        /* Typewriter text */
-        .logLine {
-            font-size: 1.5em;
-            color: #00ff00;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        /* Date and time display */
-        .dateTime {
-            font-size: 1.2em;
-            margin-top: 10px;
-            color: #ffffff; /* Color for the date and time */
-        }
-    </style>
 </head>
 <body oncontextmenu="return false;">
     <div class="terminal">
@@ -110,31 +50,31 @@
                 <span class="dir">~</span>
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
             </div>
-            <!-- Add the clock here -->
-            <p class="dateTime"></p> <!-- Date and time will appear here -->
+
+            <!-- Adding the clock here -->
+            <p id="clock" style="color: #fff;"></p> <!-- Clock will be displayed here -->
         </div>
     </div>
 
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
 
     <script>
-        // Function to display the current date and time
-        function updateDateTime() {
+        // Function to update the clock every second
+        function updateClock() {
             const now = new Date();
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
-            const date = now.toLocaleDateString();
 
-            // Format time as HH:MM:SS
+            // Format the time as HH:MM:SS
             const time = `${hours}:${minutes}:${seconds}`;
-            
-            // Set the date and time in the terminal window
-            document.querySelector('.dateTime').innerHTML = `${date} ${time}`;
+
+            // Display the clock in the element with id 'clock'
+            document.getElementById('clock').textContent = time;
         }
 
-        // Update the date and time every second
-        setInterval(updateDateTime, 1000); // Update every second
+        // Update the clock every second
+        setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
