@@ -82,7 +82,7 @@ html, body {
   background-color: #388E3C;
 }
 
-/* Window content area */
+/* Window content area (no scrollbar) */
 .window {
   padding: 10px 20px;
   color: #fff;
@@ -118,10 +118,18 @@ a:hover {
   color: #ffffff;
 }
 
-/* Input field for terminal commands */
+/* Input field for terminal commands (no scrollbar) */
 .userInput {
   width: calc(100% - 20px);
   padding: 10px;
   margin-top: 10px;
   background-color: transparent;
   border: 1px solid #2f2f2f;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  border-radius: 5px;
+  overflow: hidden; /* Prevents the input field from scrolling */
+  white-space: nowrap; /* Prevents text from wrapping */
+  word-wrap: normal; /* Keeps the input in one line */
+}
