@@ -29,8 +29,40 @@
             }
         });
     </script>
+
+    <!-- CSS for Hacker Text -->
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: black;
+            color: #00FF00; /* Green text */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hacker-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 20px;
+            line-height: 1.5;
+            opacity: 0.7;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 9999;
+        }
+
+        .terminal {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body oncontextmenu="return false;">
+
+    <!-- Hacker Text Overlay -->
+    <div id="hackerTextContainer" class="hacker-text"></div>
+
     <div class="terminal">
         <div class="bar">
             <div class="btnclose"></div>
@@ -53,5 +85,31 @@
     </div>
 
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
+
+    <script>
+        // JavaScript to generate random hacker text
+        const hackerTextContainer = document.getElementById('hackerTextContainer');
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?/|}{[]~';
+
+        function generateHackerText() {
+            let text = '';
+            for (let i = 0; i < 50; i++) { // Adjust the length of the string
+                text += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return text;
+        }
+
+        function updateHackerText() {
+            hackerTextContainer.innerHTML += generateHackerText() + '<br>';
+            // Keep scrolling the text down the page
+            if (hackerTextContainer.scrollHeight > window.innerHeight) {
+                hackerTextContainer.scrollTop = hackerTextContainer.scrollHeight;
+            }
+        }
+
+        // Update the text every 100ms for a continuous effect
+        setInterval(updateHackerText, 100);
+    </script>
+
 </body>
 </html>
