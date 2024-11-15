@@ -5,6 +5,8 @@ html, body {
   height: 100%;
   width: 100%;
   font-family: "Courier New", Courier, monospace;
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text color */
 }
 
 /* Particles Background */
@@ -30,6 +32,7 @@ html, body {
   border: 1px solid #2f2f2f; /* Slight border to make it look sharper */
 }
 
+/* Bar (top control buttons) */
 .bar {
   background-color: #2f2f2f;
   padding: 8px 10px;
@@ -85,9 +88,11 @@ html, body {
   color: #fff;
   font-size: 14px;
   min-height: 300px;
-  overflow-y: scroll;
+  overflow: hidden; /* Prevents scrolling */
   border-top: 1px solid #2f2f2f;
   border-radius: 0 0 10px 10px;
+  white-space: pre-wrap; /* Ensures multiple lines are wrapped properly */
+  line-height: 1.6;
 }
 
 .logLine {
@@ -120,16 +125,3 @@ a:hover {
   margin-top: 10px;
   background-color: transparent;
   border: 1px solid #2f2f2f;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-  border-radius: 5px;
-}
-
-.userInput::placeholder {
-  color: #757575;
-}
-
-.userInput:focus {
-  border-color: #81C784; /* Light green border when focused */
-}
