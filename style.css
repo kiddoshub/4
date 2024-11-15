@@ -1,4 +1,4 @@
-/* Reset body and html to fill full viewport */
+/* General Reset for body and html */
 html, body {
   margin: 0;
   padding: 0;
@@ -8,9 +8,21 @@ html, body {
   background-color: black;
   color: #ffffff;
   overflow: hidden; /* Prevents body scrollbar */
+  user-select: none;
+  cursor: default;
 }
 
-/* Particles Background (ensure full screen coverage and position behind content) */
+/* Set a background image for the body */
+body {
+  background: url('/web/20210206011739im_/http://caden.fun/fuct.gif') no-repeat center center fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+}
+
+/* Particles Background */
 #particles-js {
   position: absolute;
   top: 0;
@@ -25,7 +37,7 @@ html, body {
   position: relative;
   width: 600px;
   margin: 0 auto;
-  margin-top: 100px; /* Centering the terminal vertically */
+  margin-top: 100px; /* Center the terminal vertically */
   box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   overflow: hidden; /* Prevents scrolling outside the terminal window */
@@ -48,12 +60,13 @@ html, body {
   font-family: Monaco, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: white;
-  overflow-y: auto; /* Allows scrolling when needed */
-  min-height: 320px;
+  overflow: hidden; /* Prevent scrollbars */
+  height: 250px; /* Fixed height to avoid overflow */
+  max-height: 250px; /* Ensures the terminal doesn't expand beyond this height */
   border-radius: 0 0 5px 5px;
   white-space: pre-wrap; /* Allows text wrapping */
   line-height: 1.6;
-  max-height: 320px; /* Prevents overflow beyond the terminal window */
+  width: 100%; /* Ensures it fills the terminal container */
 }
 
 /* Log line styling */
@@ -88,7 +101,8 @@ html, body {
   margin-top: 10px;
   white-space: nowrap; /* Prevents wrapping in input field */
   word-wrap: normal; /* Keeps input in one line */
-  overflow: auto; /* Allows scrolling if content exceeds the input area */
+  overflow: hidden; /* Prevents the input field from scrolling */
+  margin-bottom: 10px; /* Adds some space below the input */
 }
 
 /* Terminal window buttons */
