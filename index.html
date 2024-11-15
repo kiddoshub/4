@@ -1,158 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Links Display</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* General Body Styling */
+body {
+    background-color: #000000;
+    color: #00FF00;
+    font-family: "Source Code Pro", "Courier New", Courier, monospace;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
 
-        /* Body Styling */
-        body {
-            background-color: #000;
-            color: #00ff00;
-            font-family: 'Source Code Pro', monospace;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            user-select: none;
-            position: relative;
-        }
+/* Matrix Falling Code Background */
+.matrix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
 
-        /* Matrix Falling Code Background */
-        .matrix {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%; /* Make the matrix cover the full height */
-            display: flex;
-            overflow: hidden;
-            z-index: -1; /* Ensures the matrix is in the background */
-        }
+.matrix div {
+    position: absolute;
+    top: -100%;
+    left: calc(100% / 10 * var(--i));
+    font-size: 12px;
+    color: #00FF00;
+    animation: matrix 4s linear infinite;
+    animation-delay: calc(-4s / 10 * var(--i));
+}
 
-        .matrix div {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            font-size: 20px;
-            white-space: nowrap;
-            animation: fall 5s linear infinite;
-            color: rgba(0, 255, 0, 0.7);
-            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
-        }
+@keyframes matrix {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+}
 
-        /* Positioning for the matrix divs to spread across the screen */
-        .matrix div:nth-child(odd) {
-            animation-duration: 7s;
-        }
+/* Terminal Window Styling */
+.terminal {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
 
-        .matrix div:nth-child(even) {
-            animation-duration: 4s;
-        }
+/* Terminal Bar */
+.bar {
+    display: flex;
+    align-items: center;
+    background-color: #111;
+    padding: 8px;
+    border-bottom: 1px solid #333;
+}
 
-        .matrix div:nth-child(1) {
-            left: 10%;
-        }
-        .matrix div:nth-child(2) {
-            left: 30%;
-        }
-        .matrix div:nth-child(3) {
-            left: 50%;
-        }
-        .matrix div:nth-child(4) {
-            left: 70%;
-        }
-        .matrix div:nth-child(5) {
-            left: 90%;
-        }
-        .matrix div:nth-child(6) {
-            left: 20%;
-        }
-        .matrix div:nth-child(7) {
-            left: 40%;
-        }
-        .matrix div:nth-child(8) {
-            left: 60%;
-        }
-        .matrix div:nth-child(9) {
-            left: 80%;
-        }
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    cursor: pointer;
+}
 
-        @keyframes fall {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(150vh); /* Allow the code to fall further down */
-            }
-        }
+.btnclose { background-color: #FC625C; }
+.btnhide { background-color: #FDC141; }
+.btnfull { background-color: #35CC4B; }
 
-        /* Terminal Window Styling */
-        .terminal {
-            position: relative;
-            width: 400px;
-            background: #111;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
-            z-index: 1; /* Ensures the terminal window is on top of the matrix */
-        }
+.title {
+    color: #00FF00;
+    font-size: 14px;
+    font-family: "Source Code Pro", monospace;
+}
 
-        .window {
-            color: #00ff00;
-            font-size: 16px;
-            line-height: 1.5;
-        }
+/* Terminal Content */
+.window {
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+    font-size: 14px;
+}
 
-        a {
-            color: #00ff00;
-            text-decoration: none;
-        }
+.logLine {
+    margin-bottom: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+}
 
-        a:hover {
-            text-shadow: 0 0 10px #00ff00;
-        }
-    </style>
-</head>
-<body oncontextmenu="return false;">
-    <!-- Matrix Falling Code Background -->
-    <div class="matrix">
-        <div style="--i:0;">101010</div>
-        <div style="--i:1;">110101</div>
-        <div style="--i:2;">010101</div>
-        <div style="--i:3;">001101</div>
-        <div style="--i:4;">111000</div>
-        <div style="--i:5;">0111</div> <!-- Added more 0111 lines -->
-        <div style="--i:6;">0111</div>
-        <div style="--i:7;">0111</div>
-        <div style="--i:8;">0111</div>
-    </div>
+.logLine .status {
+    color: #FFD700;
+    font-weight: bold;
+}
 
-    <!-- Links Display -->
-    <div class="terminal">
-        <div class="window">
-            <p class="logLine">
-                <span class="dir">~</span> 
-                <a href="https://www.instagram.com/cheapie" target="_blank">Instagram</a>
-            </p>
-            <p class="logLine">
-                <span class="dir">~</span>
-                <a href="https://www.snapchat.com/add/cheapie" target="_blank">Snapchat</a>
-            </p>
-            <p class="logLine">
-                <span class="dir">~</span>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Nudes</a>
-            </p>
-        </div>
-    </div>
-</body>
-</html>
+.dir {
+    color: #00FF00;
+    font-weight: bold;
+}
+
+.dir:before {
+    content: "➜ ";
+    color: #00FF00;
+}
+
+/* Links */
+a {
+    color: #00FF00;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+a:hover {
+    color: #FFD700;
+    border-bottom: 1px solid #FFD700;
+}
+
+/* Fade-in Animation for Text */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Scaling for iPhones */
+@media screen and (max-width: 768px) {
+    .terminal {
+        top: 2%;
+        left: 2%;
+        width: 96%;
+        height: 96%;
+    }
+
+    .window {
+        font-size: 12px;
+    }
+
+    .bar .title {
+        font-size: 12px;
+    }
+}
