@@ -1,143 +1,86 @@
-/* General Body Styling */
 body {
-    color: #000000;
-    background: url('fuct.gif') no-repeat center center fixed;
-    background-size: cover;
-    font-size: 14px;
-    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #00FF00;
+    font-family: "Courier New", Courier, monospace;
+    margin: 0;
+    height: 100vh;
     overflow: hidden;
-    user-select: none;
-    cursor: default;
 }
 
-/* Links Styling */
-a, a:active, a:link {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-a:hover {
-    color: #FFCC00; /* Slight hover effect */
-    text-decoration: underline;
-}
-
-/* Terminal Styling */
 .terminal {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
     border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.terminal-text {
+    font-size: 16px;
+    color: #00FF00;
+    font-family: "Courier New", Courier, monospace;
+    white-space: nowrap;
     overflow: hidden;
-    transition: transform 0.3s ease, opacity 0.3s ease; /* For animations */
+    border-right: 2px solid #00FF00;
+    width: 0;
+    animation: typing 3s steps(30, end), blink 0.75s step-end infinite;
 }
 
-/* Bar with Buttons */
-.bar {
-    display: flex;
-    align-items: center;
-    padding: 5px 8px;
-    background-color: #f6f6f6;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 1px solid #dddddd;
+.command-line {
+    font-size: 16px;
+    color: #00FF00;
+    font-family: "Courier New", Courier, monospace;
+    margin: 5px 0;
 }
 
-/* Buttons Styling */
-.btn {
-    width: 20px; /* Increased size */
-    height: 20px; /* Increased size */
-    border-radius: 50%;
-    margin-right: 8px;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.2s ease; /* For subtle click animation */
+.command-line:before {
+    content: "$ ";
+    color: #00FF00;
 }
 
-/* Button Colors */
-.btnclose {
-    background-color: #FC625C;
-    border: 1px solid #fb322a;
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
 }
 
-.btnhide {
-    background-color: #FDC141;
-    border: 1px solid #fdb928;
+@keyframes blink {
+    from { border-right-color: rgba(0, 255, 0, 0.75); }
+    to { border-right-color: transparent; }
 }
 
-.btnfull {
-    background-color: #35CC4b;
-    border: 1px solid #2aa43b;
+.matrix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
 }
 
-/* Button Hover Effects */
-.btn:hover {
-    filter: brightness(1.2); /* Slightly brighten the button on hover */
-    transform: scale(1.1); /* Enlarge slightly on hover */
+.matrix div {
+    position: absolute;
+    top: -100%;
+    left: calc(100% / 40 * var(--i));
+    font-size: 12px;
+    color: #00FF00;
+    animation: matrix 4s linear infinite;
+    animation-delay: calc(-4s / 40 * var(--i));
 }
 
-/* Window Content */
+@keyframes matrix {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+}
+
 .window {
-    padding: 10px;
-    font-family: Monaco, Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    color: white;
-    min-height: 320px;
-    overflow-y: auto; /* Show scrollbar only when needed */
-    overflow-x: hidden;
-    border-radius: 0 0 5px 5px;
+    animation: flicker 0.15s infinite;
 }
 
-/* Directory Prompt Styling */
-.dir {
-    color: #FF0000;
-    font-weight: bold;
-}
-
-.dir:before {
-    content: '➤'; /* Arrow symbol */
-    color: #FF0000;
-    margin-right: 10px;
-}
-
-/* Log Line for Consistency */
-.logLine {
-    height: 18px;
-}
-
-/* Responsive Design for Smaller Screens */
-@media (max-width: 768px) {
-    .terminal {
-        width: 90%;
-        padding: 10px;
-    }
-    .window {
-        font-size: 12px; /* Increase text size for readability */
-    }
-}
-.quantico-regular {
-  font-family: "Quantico", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.quantico-bold {
-  font-family: "Quantico", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.quantico-regular-italic {
-  font-family: "Quantico", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.quantico-bold-italic {
-  font-family: "Quantico", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
+@keyframes flicker {
+    0%, 19%, 
