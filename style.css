@@ -1,73 +1,9 @@
-body {
-    color: #000000;
-    background: url('fuct.gif') no-repeat center center fixed;
-    background-size: cover;
-    font-size: 14px;
-    font-family: Arial;
-    overflow: hidden;
-    user-select: none;
-    cursor: default;
-}
-
-a, a:active, a:link {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-a:hover {
-    color: #FFCC00;
-    text-decoration: underline;
-}
-
-a:focus {
-    outline: 2px solid #FFCC00;
-    outline-offset: 2px;
-}
-
-.terminal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-}
-
-.bar {
-    display: flex;
-    align-items: center;
-    border-radius: 5px 5px 0 0;
-    background-color: #f6f6f6;
-    padding: 5px 8px;
-    border: 1px solid #dddddd;
-}
-
-.logLine {
-    height: 18px;
-}
-
-.window {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    font-family: Monaco, Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    color: white;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-height: 320px;
-    border-radius: 0 0 5px 5px;
-}
-
-.dir {
-    color: #FF0000;
-    font-weight: bold;
-}
-
-.dir:before {
-    content: '➤';
-    color: #FF0000;
-    margin-right: 10px;
+.btn {
+    width: 20px; /* Increased size */
+    height: 20px; /* Increased size */
+    border-radius: 50%;
+    margin-right: 8px;
+    cursor: pointer; /* Indicate interactivity */
 }
 
 .btnclose {
@@ -85,12 +21,7 @@ a:focus {
     border: 1px solid #2aa43b;
 }
 
-@media (max-width: 768px) {
-    .terminal {
-        width: 90%;
-        padding: 10px;
-    }
-    .window {
-        font-size: 12px;
-    }
+/* Add hover effect */
+.btn:hover {
+    filter: brightness(1.2); /* Slightly brighten the button on hover */
 }
