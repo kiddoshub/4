@@ -3,19 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>c   a   d   e   n</title>
+    <title>Hacker Feed</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="boomer.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <script src="title.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body oncontextmenu="return false;">
     <!-- Matrix Falling Code Background -->
     <div class="matrix">
-        <!-- Generate multiple lines of falling code -->
         <div style="--i:0;">101010</div>
         <div style="--i:1;">110101</div>
         <div style="--i:2;">010101</div>
@@ -28,33 +23,24 @@
         <div style="--i:9;">011110</div>
     </div>
 
-    <!-- Terminal Window -->
-    <div class="terminal">
-        <div class="bar">
-            <div class="btnclose" title="Close"></div>
-            <div class="btnhide" title="Minimize"></div>
-            <div class="btnfull" title="Maximize"></div>
-        </div>
-        <div class="window">
-            <p class="logLine">08/04/04 4:44 am</p>
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank">instagram</a> -
-                <a href="https://www.snapchat.com/add/cheapie" target="_blank">snapchat</a>
-            </div>
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">nudes</a>
-            </div>
-        </div>
+    <!-- Dynamic Hacker Feed -->
+    <div class="feed">
+        <p class="logLine">Accessing secure server... <span class="status">OK</span></p>
+        <p class="logLine">Tracing IP address... <span class="status">192.168.0.1</span></p>
+        <p class="logLine">Decompiling binary... <span class="status">SUCCESS</span></p>
+        <p class="logLine">
+            <span class="dir">~</span> 
+            <a href="https://www.instagram.com/cheapie" target="_blank">instagram</a> - 
+            <a href="https://www.snapchat.com/add/cheapie" target="_blank">snapchat</a>
+        </p>
+        <p class="logLine">
+            <span class="dir">~</span>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">nudes</a>
+        </p>
+        <p class="logLine typing">Decrypting passcodes...</p>
     </div>
 
     <!-- Background Music -->
     <embed src="jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
-
-    <!-- Particle Effects -->
-    <div id="particles-js"></div>
-    <script src="particles.js" defer></script>
-    <script src="app.js" defer></script>
 </body>
 </html>
