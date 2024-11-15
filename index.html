@@ -52,26 +52,27 @@
             opacity: 0.5;
             pointer-events: none;
             white-space: nowrap;
-            z-index: -1; /* Ensure it's behind the terminal window */
+            z-index: -1; /* Behind the terminal */
             width: 100%;
             height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
         .terminal {
             position: relative;
-            z-index: 1; /* Keeps terminal window in front */
+            z-index: 1; /* Ensures the terminal is in front of hacker text */
             margin: 0 auto;
-            top: 100px; /* Adjust the position to fit in the screen */
+            top: 100px;
             width: 80%;
             max-width: 800px;
             background-color: rgba(0, 0, 0, 0.8);
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
             border-radius: 5px;
-            overflow: hidden; /* Prevents overflow from creating a new window */
+            overflow: hidden;
         }
 
-        /* Ensure terminal content is readable */
         .window {
             color: white;
         }
@@ -93,7 +94,6 @@
         .btnfull {
             background-color: #35CC4b;
         }
-
     </style>
 </head>
 <body oncontextmenu="return false;">
