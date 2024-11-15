@@ -2,18 +2,16 @@
 particlesJS('particles-js', {
   particles: {
     number: {
-      value: 80,  // Number of particles
+      value: 80,
       density: {
         enable: true,
-        value_area: 800  // Density of the particles
+        value_area: 800
       }
     },
-    color: { value: "#ffffff" },  // Particle color
-    shape: {
-      type: "circle",  // Shape of particles
-    },
+    color: { value: "#ffffff" },
+    shape: { type: "circle" },
     opacity: {
-      value: 0.5,  // Opacity of particles
+      value: 0.5,
       anim: {
         enable: true,
         speed: 1,
@@ -21,8 +19,8 @@ particlesJS('particles-js', {
       }
     },
     size: {
-      value: 3,  // Size of particles
-      random: true,  // Random size
+      value: 3,
+      random: true,
       anim: {
         enable: true,
         speed: 40,
@@ -31,11 +29,11 @@ particlesJS('particles-js', {
     },
     move: {
       enable: true,
-      speed: 6,  // Speed of particles
+      speed: 6,
       direction: "none",
       random: false,
       straight: false,
-      out_mode: "out",  // Particles will leave the screen
+      out_mode: "out",
       bounce: false
     }
   },
@@ -44,13 +42,13 @@ particlesJS('particles-js', {
     events: {
       onhover: {
         enable: true,
-        mode: "repulse"  // Repulse particles on hover
+        mode: "repulse"
       },
       onclick: {
         enable: true,
-        mode: "push"  // Push particles on click
+        mode: "push"
       }
     }
   },
-  retina_detect: true  // Ensure particles are displayed on retina displays
+  retina_detect: true
 });
