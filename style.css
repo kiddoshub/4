@@ -34,14 +34,15 @@ body {
     100% { transform: translateY(100vh); }
 }
 
-/* Hacker Feed Style */
+/* Stylish Hacker Feed */
 .feed {
     position: absolute;
-    top: 10%;
-    left: 5%;
+    top: 15%;
+    left: 10%;
     font-size: 16px;
-    width: 90%;
+    width: 80%;
     max-width: 800px;
+    z-index: 1;
 }
 
 .logLine {
@@ -49,11 +50,30 @@ body {
     font-size: 14px;
     color: #00FF00;
     font-family: "Quantico", "Courier New", Courier, monospace;
+    animation: fadeIn 1s ease-in-out;
 }
 
-.logLine .status {
+.status {
     color: #FFD700; /* Highlight statuses in gold */
     font-weight: bold;
+}
+
+.highlight {
+    color: #00FF00;
+    text-shadow: 0px 0px 8px rgba(0, 255, 0, 0.7);
+}
+
+/* Links Styling */
+a {
+    color: #00FF00;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.2s ease, color 0.2s ease;
+}
+
+a:hover {
+    color: #FFD700;
+    border-bottom: 1px solid #FFD700; /* Highlight on hover */
 }
 
 .dir {
@@ -66,34 +86,14 @@ body {
     color: #00FF00;
 }
 
-/* Typing Effect */
-.typing {
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid #00FF00;
-    width: 100%;
-    animation: typing 4s steps(30, end) infinite, blink 0.75s step-end infinite;
-}
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-@keyframes blink {
-    from { border-right-color: rgba(0, 255, 0, 0.75); }
-    to { border-right-color: transparent; }
-}
-
-/* Links Styling */
-a {
-    color: #00FF00;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-bottom 0.2s ease;
-}
-
-a:hover {
-    color: #FFD700;
-    border-bottom: 1px solid #FFD700; /* Highlight on hover */
+/* Fade-in Animation for Hacker Feed */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
