@@ -1,20 +1,21 @@
 body {
     color: #000000;
-    background: url('fuct.gif') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
-    background-color: black;
-    cursor: default;
-    overflow: hidden;
     font-size: 14px;
-    font-family: Arial, sans-serif;
+    font-family: Arial;
+    overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+}
+
+body {
+    background: url('fuct.gif') no-repeat center center fixed;
+    background-color: black;
+    cursor: default;
+    overflow: hidden;
 }
 
 a, a:active, a:link {
@@ -30,7 +31,6 @@ a, a:active, a:link {
     margin-top: 200px;
     box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    background-color: #000; /* Ensure visibility */
 }
 
 .bar {
@@ -38,12 +38,20 @@ a, a:active, a:link {
     background-color: #f6f6f6;
     padding: 5px 8px;
     border: 1px solid #dddddd;
-    display: flex;
-    justify-content: space-between;
 }
 
 .logLine {
     height: 18px;
+}
+
+.btn {
+    text-decoration: none;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    border-radius: 100%;
 }
 
 .status {
@@ -54,12 +62,12 @@ a, a:active, a:link {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 10px;
     font-family: Monaco, Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 10px;
     color: white;
-    overflow-y: auto;  /* Enable scrolling */
+    overflow-y: scroll;
     min-height: 320px;
     border-radius: 0 0 5px 5px;
-    max-height: 500px; /* Optional: limit the max height */
+    overflow: hidden;
 }
 
 .dir {
@@ -68,7 +76,7 @@ a, a:active, a:link {
 }
 
 .dir:before {
-    content: '➜'; /* Correct arrow symbol */
+    content: 'âžœ';
     color: #FF0000;
     margin-right: 10px;
 }
@@ -85,4 +93,40 @@ a, a:active, a:link {
     box-shadow: none;
     height: 20px;
     width: 90%;
+}
+
+.btnclose {
+    text-decoration: none;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    border-radius: 100%;
+    background-color: #FC625C;
+    border: 1px solid #fb322a;
+}
+
+.btnhide {
+    text-decoration: none;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    border-radius: 100%;
+    background-color: #FDC141;
+    border: 1px solid #fdb928;
+}
+
+.btnfull {
+    text-decoration: none;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+    border-radius: 100%;
+    background-color: #35CC4b;
+    border: 1px solid #2aa43b;
 }
