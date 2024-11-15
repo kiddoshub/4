@@ -1,12 +1,14 @@
+/* General Body Styling */
 body {
     background-color: #000000;
     color: #00FF00;
-    font-family: "Courier New", Courier, monospace;
+    font-family: "Quantico", "Courier New", Courier, monospace;
     margin: 0;
     height: 100vh;
     overflow: hidden;
 }
 
+/* Terminal Window Styling */
 .terminal {
     position: absolute;
     top: 50%;
@@ -20,39 +22,50 @@ body {
     border-radius: 5px;
 }
 
-.terminal-text {
+.bar {
+    display: flex;
+    align-items: center;
+    background-color: #333333;
+    padding: 5px;
+    border-radius: 5px 5px 0 0;
+}
+
+.btnclose {
+    width: 10px;
+    height: 10px;
+    background-color: #FC625C;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.btnhide {
+    width: 10px;
+    height: 10px;
+    background-color: #FDC141;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.btnfull {
+    width: 10px;
+    height: 10px;
+    background-color: #35CC4B;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.window {
     font-size: 16px;
     color: #00FF00;
-    font-family: "Courier New", Courier, monospace;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid #00FF00;
-    width: 0;
-    animation: typing 3s steps(30, end), blink 0.75s step-end infinite;
+    font-family: "Quantico", "Courier New", monospace;
 }
 
-.command-line {
-    font-size: 16px;
+.dir {
     color: #00FF00;
-    font-family: "Courier New", Courier, monospace;
-    margin: 5px 0;
+    font-weight: bold;
 }
 
-.command-line:before {
-    content: "$ ";
-    color: #00FF00;
-}
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-@keyframes blink {
-    from { border-right-color: rgba(0, 255, 0, 0.75); }
-    to { border-right-color: transparent; }
-}
-
+/* Falling Code Background */
 .matrix {
     position: absolute;
     top: 0;
@@ -66,21 +79,14 @@ body {
 .matrix div {
     position: absolute;
     top: -100%;
-    left: calc(100% / 40 * var(--i));
-    font-size: 12px;
+    left: calc(100% / 10 * var(--i));
+    font-size: 14px;
     color: #00FF00;
     animation: matrix 4s linear infinite;
-    animation-delay: calc(-4s / 40 * var(--i));
+    animation-delay: calc(-4s / 10 * var(--i));
 }
 
 @keyframes matrix {
     0% { transform: translateY(0); }
     100% { transform: translateY(100vh); }
 }
-
-.window {
-    animation: flicker 0.15s infinite;
-}
-
-@keyframes flicker {
-    0%, 19%, 
