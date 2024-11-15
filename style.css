@@ -8,64 +8,7 @@ body {
     overflow: hidden;
 }
 
-/* Terminal Window Styling */
-.terminal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 800px;
-    background: rgba(0, 0, 0, 0.85);
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    border-radius: 5px;
-}
-
-.bar {
-    display: flex;
-    align-items: center;
-    background-color: #333333;
-    padding: 5px;
-    border-radius: 5px 5px 0 0;
-}
-
-.btnclose {
-    width: 10px;
-    height: 10px;
-    background-color: #FC625C;
-    margin-right: 5px;
-    border-radius: 50%;
-}
-
-.btnhide {
-    width: 10px;
-    height: 10px;
-    background-color: #FDC141;
-    margin-right: 5px;
-    border-radius: 50%;
-}
-
-.btnfull {
-    width: 10px;
-    height: 10px;
-    background-color: #35CC4B;
-    margin-right: 5px;
-    border-radius: 50%;
-}
-
-.window {
-    font-size: 16px;
-    color: #00FF00;
-    font-family: "Quantico", "Courier New", monospace;
-}
-
-.dir {
-    color: #00FF00;
-    font-weight: bold;
-}
-
-/* Falling Code Background */
+/* Matrix Falling Code Background */
 .matrix {
     position: absolute;
     top: 0;
@@ -89,4 +32,68 @@ body {
 @keyframes matrix {
     0% { transform: translateY(0); }
     100% { transform: translateY(100vh); }
+}
+
+/* Hacker Feed Style */
+.feed {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    font-size: 16px;
+    width: 90%;
+    max-width: 800px;
+}
+
+.logLine {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #00FF00;
+    font-family: "Quantico", "Courier New", Courier, monospace;
+}
+
+.logLine .status {
+    color: #FFD700; /* Highlight statuses in gold */
+    font-weight: bold;
+}
+
+.dir {
+    color: #00FF00;
+    font-weight: bold;
+}
+
+.dir:before {
+    content: "➜ ";
+    color: #00FF00;
+}
+
+/* Typing Effect */
+.typing {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #00FF00;
+    width: 100%;
+    animation: typing 4s steps(30, end) infinite, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    from { border-right-color: rgba(0, 255, 0, 0.75); }
+    to { border-right-color: transparent; }
+}
+
+/* Links Styling */
+a {
+    color: #00FF00;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.2s ease;
+}
+
+a:hover {
+    color: #FFD700;
+    border-bottom: 1px solid #FFD700; /* Highlight on hover */
 }
