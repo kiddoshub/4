@@ -2,7 +2,7 @@
 body {
     background-color: #000000;
     color: #00FF00;
-    font-family: "Quantico", "Courier New", Courier, monospace;
+    font-family: "Source Code Pro", "Courier New", Courier, monospace;
     margin: 0;
     height: 100vh;
     overflow: hidden;
@@ -23,7 +23,7 @@ body {
     position: absolute;
     top: -100%;
     left: calc(100% / 10 * var(--i));
-    font-size: 14px;
+    font-size: 12px;
     color: #00FF00;
     animation: matrix 4s linear infinite;
     animation-delay: calc(-4s / 10 * var(--i));
@@ -34,46 +34,64 @@ body {
     100% { transform: translateY(100vh); }
 }
 
-/* Stylish Hacker Feed */
-.feed {
+/* Terminal Window Styling */
+.terminal {
     position: absolute;
-    top: 15%;
-    left: 10%;
-    font-size: 16px;
-    width: 80%;
-    max-width: 800px;
-    z-index: 1;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Terminal Bar */
+.bar {
+    display: flex;
+    align-items: center;
+    background-color: #111;
+    padding: 8px;
+    border-bottom: 1px solid #333;
+}
+
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.btnclose { background-color: #FC625C; }
+.btnhide { background-color: #FDC141; }
+.btnfull { background-color: #35CC4B; }
+
+.title {
+    color: #00FF00;
+    font-size: 14px;
+    font-family: "Source Code Pro", monospace;
+}
+
+/* Terminal Content */
+.window {
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+    font-size: 14px;
 }
 
 .logLine {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #00FF00;
-    font-family: "Quantico", "Courier New", Courier, monospace;
-    animation: fadeIn 1s ease-in-out;
+    margin-bottom: 5px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.status {
-    color: #FFD700; /* Highlight statuses in gold */
-    font-weight: bold;
-}
-
-.highlight {
-    color: #00FF00;
-    text-shadow: 0px 0px 8px rgba(0, 255, 0, 0.7);
-}
-
-/* Links Styling */
-a {
-    color: #00FF00;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-bottom 0.2s ease, color 0.2s ease;
-}
-
-a:hover {
+.logLine .status {
     color: #FFD700;
-    border-bottom: 1px solid #FFD700; /* Highlight on hover */
+    font-weight: bold;
 }
 
 .dir {
@@ -86,7 +104,20 @@ a:hover {
     color: #00FF00;
 }
 
-/* Fade-in Animation for Hacker Feed */
+/* Links */
+a {
+    color: #00FF00;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+a:hover {
+    color: #FFD700;
+    border-bottom: 1px solid #FFD700;
+}
+
+/* Fade-in Animation for Text */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -95,5 +126,23 @@ a:hover {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Responsive Scaling for iPhones */
+@media screen and (max-width: 768px) {
+    .terminal {
+        top: 2%;
+        left: 2%;
+        width: 96%;
+        height: 96%;
+    }
+
+    .window {
+        font-size: 12px;
+    }
+
+    .bar .title {
+        font-size: 12px;
     }
 }
