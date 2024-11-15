@@ -1,0 +1,283 @@
+body {
+  background-color: black;
+  text-align: left;
+  font-size: 19px;
+  font-family: 'Times New Roman', sans-serif;
+}
+
+body, a:hover {
+  cursor: url(https://web.archive.org/web/20210206011739im_/https://secondcityprints.mobi/lrassets/peo717.cur), progress !important;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+section a, header a {
+  border-bottom: 1px white solid;
+}
+
+a:hover {
+  border-color: transparent;
+}
+
+h1 {
+  margin: auto;
+  font-size: 3.5rem;
+  font-weight: 900;
+}
+
+hr {
+ margin: 20px auto; 
+}
+
+section {
+  margin: 50px auto;
+  display: block;
+}
+
+section.smaller {
+  margin: 10px auto;
+}
+
+section p {
+  font-weight: 800;
+  font-size: 2rem;
+}
+
+img {
+  max-width: 100%;
+}
+
+img.logo {
+  width: 300px;
+}
+
+img:hover {
+  opacity: 0.8;
+}
+
+body#static {
+  background: url('https://web.archive.org/web/20210206011739im_/https://s9.limitedrun.com/images/1335629/125t0zl.jpg.gif');
+  color: white;
+}
+
+body#peggy:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://web.archive.org/web/20210206011739im_/https://s9.limitedrun.com/images/1374517/perggy.jpg);
+  background-size: cover;
+  background-position: center;
+  z-index: -10;
+}
+
+body#tour:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://web.archive.org/web/20210206011739im_/https://s9.limitedrun.com/images/1374725/tour.jpg);
+  background-size: cover;
+  background-position: center;
+  z-index: -10;
+}
+
+body#videos:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://web.archive.org/web/20210206011739im_/https://s9.limitedrun.com/images/1374726/videos.jpg);
+  background-size: cover;
+  background-position: center;
+  z-index: -10;
+}
+
+body#albums:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://web.archive.org/web/20210206011739im_/https://s9.limitedrun.com/images/1374727/albums.jpg);
+  background-size: cover;
+  background-position: center;
+  z-index: -10;
+}
+
+body.img-bg:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header a {
+  margin: 10px 1vw;
+  padding: 1vw;
+  font-size: 1.5vw;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bold {
+  font-weight: 800;
+}
+
+.red-alert {
+  color: red;
+  font-size: 2rem;
+  border-bottom: 1px red solid;
+}
+
+.yellow {
+  color: #ffff66;
+  background-color: transparent !important;
+}
+
+a.yellow, .yellow a {
+  border-bottom: 1px #ffff66 solid;
+}
+
+.pink {
+  color: pink;
+  background-color: transparent !important;
+}
+
+a.pink, .pink a {
+  border-bottom: 1px pink solid;
+}
+
+.purple {
+  color: #ff0099;
+  background-color: transparent !important;
+}
+
+a.purple, .purple a {
+  border-bottom: 1px #ff0099 solid;
+}
+
+.italic { 
+  font-style: italic;
+}
+
+.socials a {
+  border-bottom: 0;
+}
+
+.btn {
+  background-color: #9955b8;
+}
+
+.copyright {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #FFCC66;
+}
+
+.container {
+  margin: 30px auto;
+  padding: 8px;
+  width: 100%;
+  max-width: 1220px;
+  text-align: center;
+}
+
+.soundcloud-container {
+  width: 100%;
+  max-width: 574px;
+  margin: auto;
+}
+
+.music-listing p {
+  font-size: 2rem;
+}
+
+.music-listing .description {
+  min-height: 16rem;
+}
+
+.videos p {
+  margin: auto;
+}
+
+.press a { 
+  color: #0000EE; 
+  border-bottom: 1px #0000EE solid;
+  font-weight: 900;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.press a:visited {
+  color: #551A8B;
+}
+
+.bit-widget-container {
+  margin-bottom: 3rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+}
+
+.row .col {
+  margin-bottom: 17px;
+}
+
+.row .col img{
+  max-height: 570px;
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1000px) {
+  header a {
+    font-size: 2.5vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  header a {
+    font-size: 3.5vw;
+  }
+  
+  .music-listing .description {
+    min-height: 0;
+  }
+}
+}
+/*
+     FILE ARCHIVED ON 01:17:39 Feb 06, 2021 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:42:44 Nov 15, 2024.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.624
+  exclusion.robots: 0.024
+  exclusion.robots.policy: 0.011
+  esindex: 0.012
+  cdx.remote: 30.832
+  LoadShardBlock: 264.66 (3)
+  PetaboxLoader3.datanode: 108.38 (4)
+  PetaboxLoader3.resolve: 303.14 (3)
+  load_resource: 201.373
+*/
