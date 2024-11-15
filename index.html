@@ -76,7 +76,7 @@
             const seconds = now.getSeconds().toString().padStart(2, '0');
 
             // Format the full date and time as: Weekday, Month Day, Year HH:MM:SS
-            const fullDate = ${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds};
+            const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
             
             // Display the clock in the element with id 'clock'
             document.getElementById('clock').textContent = fullDate;
