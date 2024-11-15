@@ -36,26 +36,63 @@
             font-family: 'Courier New', monospace;
             background-color: black;
             color: #00FF00; /* Green text */
+            margin: 0;
+            padding: 0;
             position: relative;
             overflow: hidden;
         }
 
+        /* Hacker text overlay, placed behind terminal */
         .hacker-text {
             position: absolute;
             top: 0;
             left: 0;
             font-size: 20px;
             line-height: 1.5;
-            opacity: 0.7;
+            opacity: 0.5;
             pointer-events: none;
             white-space: nowrap;
-            z-index: 9999;
+            z-index: -1; /* Ensure it's behind the terminal window */
+            width: 100%;
+            height: 100%;
         }
 
         .terminal {
             position: relative;
-            z-index: 1;
+            z-index: 1; /* Keeps terminal window in front */
+            margin: 0 auto;
+            top: 100px; /* Adjust the position to fit in the screen */
+            width: 80%;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            border-radius: 5px;
         }
+
+        /* Ensure terminal content is readable */
+        .window {
+            color: white;
+        }
+
+        .btnclose, .btnhide, .btnfull {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            margin-right: 10px;
+        }
+
+        .btnclose {
+            background-color: #FC625C;
+        }
+        .btnhide {
+            background-color: #FDC141;
+        }
+        .btnfull {
+            background-color: #35CC4b;
+        }
+
     </style>
 </head>
 <body oncontextmenu="return false;">
