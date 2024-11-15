@@ -1,4 +1,4 @@
-/* General Reset for body and html */
+/* Reset body and html to fill full viewport */
 html, body {
   margin: 0;
   padding: 0;
