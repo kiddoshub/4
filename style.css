@@ -14,7 +14,7 @@ html, body {
 
 /* Set a background image (unified one background style for body) */
 body {
-  background: url('/web/20210206011739im_/http://caden.fun/fuct.gif') no-repeat center center fixed;
+  background: url('fuct.gif') no-repeat center center fixed;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
