@@ -1,6 +1,6 @@
 body {
     color: #000000;
-    /** background: url(/web/20210206011739im_/http://caden.fun/moscow2.jpg) no-repeat center center fixed; **/
+    /** background: url('fuct.gif') no-repeat center center fixed; **/
 	-webkit-background-size: cover;
     -moz-background-size: cover;
     -ms-background-size: cover;
@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: url('/web/20210206011739im_/http://caden.fun/fuct.gif') no-repeat center center fixed;
+    background: url('fuct.gif') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
