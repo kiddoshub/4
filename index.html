@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,43 +16,121 @@
     <!-- JavaScript for title -->
     <script src="title.js" defer></script>
 
-    <!-- Prevent right-click and some key combinations -->
-    <script>
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        document.addEventListener('keydown', function(e) {
-            // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J
-            if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
-                (e.ctrlKey && e.keyCode === 85) || 
-                (e.keyCode === 123)) {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Terminal window styling */
+        .terminal {
+            width: 50vw;
+            height: 50vh;
+            background-color: #333;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            border: 2px solid #00ff00;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Terminal header bar */
+        .bar {
+            background-color: #222;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Button styles for close, hide, and fullscreen */
+        .btnclose, .btnhide, .btnfull {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #444;
+            cursor: pointer;
+        }
+
+        /* Button hover effects */
+        .btnclose:hover, .btnhide:hover, .btnfull:hover {
+            background-color: #ff6347;
+            transform: scale(1.1);
+        }
+
+        /* Typewriter text */
+        .logLine {
+            font-size: 1.5em;
+            color: #00ff00;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Date and time display */
+        .dateTime {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+    </style>
+
 </head>
-<body oncontextmenu="return false;">
+<body>
+
     <div class="terminal">
         <div class="bar">
             <div class="btnclose"></div>
             <div class="btnhide"></div>
             <div class="btnfull"></div>
-            <span style="text-align:center;"></span>
         </div>
         <div class="window">
-            <p class="logLine">❤ i love you ❤</p>
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">Instagram</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">Snapchat</a>
-            </div>
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
-            </div>
+            <p class="logLine"></p> <!-- Text will appear here -->
+            <p class="dateTime"></p> <!-- Date and time will appear here -->
         </div>
     </div>
 
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
+
+    <script>
+        // Typewriter effect for terminal text
+        document.addEventListener('DOMContentLoaded', function () {
+            const message = "❤ i love you ❤"; // The message to display
+            let index = 0;
+            const terminal = document.querySelector('.logLine'); // Target the terminal text element
+            const dateTimeElement = document.querySelector('.dateTime'); // Target the date/time element
+
+            // Function to display the current date and time
+            function updateDateTime() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                const date = now.toLocaleDateString();
+
+                // Format time as HH:MM:SS
+                const time = `${hours}:${minutes}:${seconds}`;
+                
+                // Set the date and time in the terminal window
+                dateTimeElement.innerHTML = `${date} ${time}`;
+            }
+
+            // Function for the typewriter effect
+            function typeWriter() {
+                if (index < message.length) {
+                    terminal.innerHTML += message.charAt(index); // Add one character at a time
+                    index++;
+                    setTimeout(typeWriter, 100); // Delay between each character
+                }
+            }
+
+            // Start the typewriter effect
+            typeWriter();
+
+            // Update the date and time every second
+            setInterval(updateDateTime, 1000); // Update every second
+        });
+    </script>
+
 </body>
 </html>
