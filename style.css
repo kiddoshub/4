@@ -1,22 +1,27 @@
 body {
     color: #000000;
     background: url('fuct.gif') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -ms-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
-    background-color: black;
     font-size: 14px;
-    font-family: Arial, sans-serif;
-    cursor: default;
+    font-family: Arial;
     overflow: hidden;
     user-select: none;
+    cursor: default;
 }
 
 a, a:active, a:link {
     text-decoration: none;
     color: #ffffff;
+}
+
+a:hover {
+    color: #FFCC00;
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 2px solid #FFCC00;
+    outline-offset: 2px;
 }
 
 .terminal {
@@ -32,22 +37,15 @@ a, a:active, a:link {
 .bar {
     display: flex;
     align-items: center;
+    border-radius: 5px 5px 0 0;
     background-color: #f6f6f6;
-    padding: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    padding: 5px 8px;
+    border: 1px solid #dddddd;
 }
 
-.btn {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 5px;
+.logLine {
+    height: 18px;
 }
-
-.btnclose { background-color: #FC625C; }
-.btnhide { background-color: #FDC141; }
-.btnfull { background-color: #35CC4b; }
 
 .window {
     background-color: rgba(0, 0, 0, 0.8);
@@ -55,10 +53,10 @@ a, a:active, a:link {
     font-family: Monaco, Helvetica, Arial, sans-serif;
     font-size: 10px;
     color: white;
-    min-height: 320px;
-    border-radius: 0 0 5px 5px;
     overflow-y: auto;
     overflow-x: hidden;
+    min-height: 320px;
+    border-radius: 0 0 5px 5px;
 }
 
 .dir {
@@ -67,7 +65,32 @@ a, a:active, a:link {
 }
 
 .dir:before {
-    content: '➜';
+    content: '➤';
     color: #FF0000;
     margin-right: 10px;
+}
+
+.btnclose {
+    background-color: #FC625C;
+    border: 1px solid #fb322a;
+}
+
+.btnhide {
+    background-color: #FDC141;
+    border: 1px solid #fdb928;
+}
+
+.btnfull {
+    background-color: #35CC4b;
+    border: 1px solid #2aa43b;
+}
+
+@media (max-width: 768px) {
+    .terminal {
+        width: 90%;
+        padding: 10px;
+    }
+    .window {
+        font-size: 12px;
+    }
 }
