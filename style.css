@@ -30,6 +30,9 @@ html, body {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Subtle shadow */
   z-index: 1; /* Make sure terminal is above particles */
   border: 1px solid #2f2f2f; /* Slight border to make it look sharper */
+  display: flex;
+  flex-direction: column;
+  height: 500px; /* Set a fixed height */
 }
 
 /* Bar (top control buttons) */
@@ -87,12 +90,13 @@ html, body {
   padding: 10px 20px;
   color: #fff;
   font-size: 14px;
-  min-height: 300px;
-  overflow: hidden; /* Prevents scrolling */
+  flex-grow: 1; /* Allow the window to expand and fill the available space */
+  overflow-y: auto; /* Allow scrolling when needed */
   border-top: 1px solid #2f2f2f;
   border-radius: 0 0 10px 10px;
   white-space: pre-wrap; /* Ensures multiple lines are wrapped properly */
   line-height: 1.6;
+  max-height: 100%; /* Ensures the window fits the space */
 }
 
 .logLine {
@@ -132,4 +136,5 @@ a:hover {
   overflow: hidden; /* Prevents the input field from scrolling */
   white-space: nowrap; /* Prevents text from wrapping */
   word-wrap: normal; /* Keeps the input in one line */
+  margin-bottom: 10px; /* Adds some space below the input */
 }
