@@ -1,140 +1,140 @@
-/* Reset body and html to fill full viewport */
+/* General Reset for body and html */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: "Courier New", Courier, monospace;
-  background-color: #121212; /* Dark background */
-  color: #e0e0e0; /* Light text color */
+  font-family: "Courier New", Monaco, monospace;
+  background-color: black;
+  color: #ffffff;
+  overflow: hidden; /* Prevents body scrollbar */
+  user-select: none;
+  cursor: default;
 }
 
-/* Particles Background */
-#particles-js {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Ensure particles stay behind the terminal window */
+/* Set a background image (unified one background style for body) */
+body {
+  background: url('/web/20210206011739im_/http://caden.fun/fuct.gif') no-repeat center center fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
 }
 
-/* Terminal Window Styles */
+/* Link styling */
+a, a:active, a:link {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+/* Terminal container */
 .terminal {
   position: relative;
-  width: 800px;
+  width: 600px;
   margin: 0 auto;
-  margin-top: 80px; /* Adjust the margin as needed */
-  background: rgba(0, 0, 0, 0.85); /* Darker background */
-  border-radius: 10px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Subtle shadow */
-  z-index: 1; /* Make sure terminal is above particles */
-  border: 1px solid #2f2f2f; /* Slight border to make it look sharper */
-  display: flex;
-  flex-direction: column;
-  height: 500px; /* Set a fixed height */
+  margin-top: 200px;
+  box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  overflow: hidden; /* Prevents scrolling outside the terminal window */
 }
 
-/* Bar (top control buttons) */
+/* Terminal control bar (buttons) */
 .bar {
-  background-color: #2f2f2f;
-  padding: 8px 10px;
   border-radius: 5px 5px 0 0;
+  background-color: #f6f6f6;
+  padding: 5px 8px;
+  border: 1px solid #dddddd;
   display: flex;
-  justify-content: flex-start; /* Align buttons to the left */
+  justify-content: flex-start;
   align-items: center;
 }
 
-.btnclose, .btnhide, .btnfull {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 8px; /* Space between the buttons */
-  border-radius: 50%; /* Circular buttons */
-  cursor: pointer;
-}
-
-/* Close button style */
-.btnclose {
-  background-color: #E57373;
-  border: 1px solid #E57373;
-}
-
-/* Hide button style */
-.btnhide {
-  background-color: #FFEB3B;
-  border: 1px solid #FFEB3B;
-}
-
-/* Fullscreen button style */
-.btnfull {
-  background-color: #81C784;
-  border: 1px solid #81C784;
-}
-
-/* Hover effects for buttons */
-.btnclose:hover {
-  background-color: #D32F2F;
-}
-
-.btnhide:hover {
-  background-color: #FBC02D;
-}
-
-.btnfull:hover {
-  background-color: #388E3C;
-}
-
-/* Window content area (no scrollbar) */
+/* Terminal window content area */
 .window {
-  padding: 10px 20px;
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+  padding: 10px;
+  font-family: Monaco, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  flex-grow: 1; /* Allow the window to expand and fill the available space */
-  overflow-y: auto; /* Allow scrolling when needed */
-  border-top: 1px solid #2f2f2f;
-  border-radius: 0 0 10px 10px;
-  white-space: pre-wrap; /* Ensures multiple lines are wrapped properly */
-  line-height: 1.6;
-  max-height: 100%; /* Ensures the window fits the space */
+  color: white;
+  overflow-y: auto; /* Allows scrolling if needed */
+  min-height: 320px;
+  border-radius: 0 0 5px 5px;
+  white-space: pre-wrap; /* Allows text wrapping */
+  max-height: 320px; /* Prevents overflow beyond the terminal window */
 }
 
+/* Log line styling */
 .logLine {
   height: 18px;
 }
 
+/* Directory symbol and styling */
 .dir {
-  color: #00BFAE;
+  color: #FF0000;
   font-weight: bold;
 }
 
 .dir:before {
-  content: '➜';
+  content: '➜'; /* Arrow symbol */
+  color: #FF0000;
   margin-right: 10px;
 }
 
-a, a:link, a:visited, a:active {
-  color: #00BFAE;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #ffffff;
-}
-
-/* Input field for terminal commands (no scrollbar) */
+/* Input field styles */
 .userInput {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  border: none;
   background-color: transparent;
-  border: 1px solid #2f2f2f;
-  color: #fff;
-  font-size: 14px;
+  color: white;
+  font-family: inherit;
   outline: none;
+  overflow: hidden; /* Prevents scrolling */
+  width: 90%;
+  padding: 10px;
   border-radius: 5px;
-  overflow: hidden; /* Prevents the input field from scrolling */
-  white-space: nowrap; /* Prevents text from wrapping */
-  word-wrap: normal; /* Keeps the input in one line */
-  margin-bottom: 10px; /* Adds some space below the input */
+  margin-top: 10px;
+}
+
+/* Terminal window buttons */
+.btn {
+  text-decoration: none;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  border-radius: 100%;
+}
+
+/* Close button */
+.btnclose {
+  background-color: #FC625C;
+  border: 1px solid #fb322a;
+}
+
+/* Minimize button */
+.btnhide {
+  background-color: #FDC141;
+  border: 1px solid #fdb928;
+}
+
+/* Fullscreen button */
+.btnfull {
+  background-color: #35CC4b;
+  border: 1px solid #2aa43b;
+}
+
+/* Hover effects for buttons */
+.btnclose:hover {
+  background-color: #f5a1a0;
+}
+
+.btnhide:hover {
+  background-color: #fddc61;
+}
+
+.btnfull:hover {
+  background-color: #66e05b;
 }
