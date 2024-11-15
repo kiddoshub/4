@@ -1,11 +1,63 @@
+/* General Body Styling */
+body {
+    color: #000000;
+    background: url('fuct.gif') no-repeat center center fixed;
+    background-size: cover;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    user-select: none;
+    cursor: default;
+}
+
+/* Links Styling */
+a, a:active, a:link {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+a:hover {
+    color: #FFCC00; /* Slight hover effect */
+    text-decoration: underline;
+}
+
+/* Terminal Styling */
+.terminal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* For animations */
+}
+
+/* Bar with Buttons */
+.bar {
+    display: flex;
+    align-items: center;
+    padding: 5px 8px;
+    background-color: #f6f6f6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #dddddd;
+}
+
+/* Buttons Styling */
 .btn {
     width: 20px; /* Increased size */
     height: 20px; /* Increased size */
     border-radius: 50%;
     margin-right: 8px;
-    cursor: pointer; /* Indicate interactivity */
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease; /* For subtle click animation */
 }
 
+/* Button Colors */
 .btnclose {
     background-color: #FC625C;
     border: 1px solid #fb322a;
@@ -21,7 +73,48 @@
     border: 1px solid #2aa43b;
 }
 
-/* Add hover effect */
+/* Button Hover Effects */
 .btn:hover {
     filter: brightness(1.2); /* Slightly brighten the button on hover */
+    transform: scale(1.1); /* Enlarge slightly on hover */
+}
+
+/* Window Content */
+.window {
+    padding: 10px;
+    font-family: Monaco, Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: white;
+    min-height: 320px;
+    overflow-y: auto; /* Show scrollbar only when needed */
+    overflow-x: hidden;
+    border-radius: 0 0 5px 5px;
+}
+
+/* Directory Prompt Styling */
+.dir {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+.dir:before {
+    content: '➤'; /* Arrow symbol */
+    color: #FF0000;
+    margin-right: 10px;
+}
+
+/* Log Line for Consistency */
+.logLine {
+    height: 18px;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .terminal {
+        width: 90%;
+        padding: 10px;
+    }
+    .window {
+        font-size: 12px; /* Increase text size for readability */
+    }
 }
