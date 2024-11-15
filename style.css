@@ -1,71 +1,164 @@
 body {
     color: #000000;
-    background: url('fuct.gif') no-repeat center center fixed;
+    /** background: url(fuct.gif) no-repeat center center fixed; **/
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    font-size: 14px;
-    font-family: Arial;
-    overflow: hidden;
+	font-size: 14px;
+	font-family: Arial;
+	overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
     user-select: none;
+}
+
+body {
+    background: url('fuct.gif') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: black;
     cursor: default;
+    overflow: hidden;
 }
 
 a, a:active, a:link {
-    text-decoration: none;
-    color: #ffffff;
+	text-decoration: none;
+	color: #ffffff;
 }
 
 .terminal {
-    position: relative;
-    width: 600px;
-    margin: 200px auto;
-    box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
+	position: relative;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 200px;
+	box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
 }
 
 .bar {
-    border-radius: 5px 5px 0 0;
-    background-color: #f6f6f6;
-    padding: 5px 8px;
-    border: 1px solid #dddddd;
+	border-radius: 5px 5px 0 0;
+	background-color: #f6f6f6;
+	padding: 5px 8px;
+	border: 1px solid #dddddd;
 }
 
 .logLine {
-    height: 18px;
+	height: 18px;
+}
+
+.btn {
+	text-decoration: none;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 100%;
+}
+
+.status {
+	text-align: center;
 }
 
 .window {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    font-family: Monaco, Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    color: white;
-    overflow-y: scroll;
-    min-height: 320px;
-    border-radius: 0 0 5px 5px;
+    background-color: red;
+	background-color: rgba(0, 0, 0, 0.8);
+	padding: 10px;
+	font-family: Monaco, Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	color: white;
+	overflow-y: scroll;
+	min-height: 320px;
+	border-radius: 0 0 5px 5px;
+	overflow: hidden;
 }
 
 .dir {
-    color: #FF0000;
-    font-weight: bold;
+	color: #FF0000;
+	font-weight: bold;
 }
 
 .dir:before {
-    content: '➤';
-    color: #FF0000;
-    margin-right: 10px;
+	content: '➜';
+	color: #FF0000;
+	margin-right: 10px;
+}
+
+.userInput {
+	position: relative;
+	display: inline-block;
+	border: none;
+	background-color: transparent;
+	color: white;
+	font-family: inherit;
+	outline: none;
+	overflow: auto;
+	box-shadow: none;
+	height: 20px;
+	width: 90%;
 }
 
 .btnclose {
-    background-color: #FC625C;
-    border: 1px solid #fb322a;
+	text-decoration: none;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 100%;
+	background-color: #FC625C;
+	border: 1px solid #fb322a;
 }
 
 .btnhide {
-    background-color: #FDC141;
-    border: 1px solid #fdb928;
+	text-decoration: none;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 100%;
+	background-color: #FDC141;
+	border: 1px solid #fdb928;
 }
 
+
 .btnfull {
-    background-color: #35CC4b;
-    border: 1px solid #2aa43b;
+	text-decoration: none;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 100%;
+	background-color: #35CC4b;
+	border: 1px solid #2aa43b;
 }
+
+/*
+     FILE ARCHIVED ON 01:17:39 Feb 06, 2021 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 16:09:15 Nov 15, 2024.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.7
+  exclusion.robots: 0.026
+  exclusion.robots.policy: 0.011
+  esindex: 0.015
+  cdx.remote: 6.833
+  LoadShardBlock: 183.586 (3)
+  PetaboxLoader3.datanode: 182.084 (4)
+  load_resource: 105.277
+  PetaboxLoader3.resolve: 64.369
+*/
