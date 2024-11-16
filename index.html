@@ -67,39 +67,92 @@
 
     <!-- JavaScript for Animated ASCII Art -->
     <script>
-        // Fetch the ASCII animation frames from the text file
-        fetch('snoopanim.txt')  // Adjust the path to where your snoopanim.txt is hosted
-            .then(response => response.text())
-            .then(data => {
-                // Clean the file content by removing Python code (or other non-ASCII content)
-                const cleanedData = data
-                    .split('\n')  // Split by lines
-                    .filter(line => {
-                        // Filter out lines containing Python code or unwanted content
-                        // For example, lines that start with 'import' or 'def' or empty lines
-                        return !line.trim().startsWith('import') && !line.trim().startsWith('def') && line.trim() !== '';
-                    })
-                    .join('\n');  // Join back into a clean string
+        // Embed the ASCII art frames directly into the JavaScript
+        const heartFrames = [
+            `⠀⠀⠀⠀⣀⣤
+⠀⠀⠀⠀⣿⠿⣶
+⠀⠀⠀⠀⣿⣿⣀
+⠀⠀⠀⣶⣶⣿⠿⠛⣶
+⠤⣀⠛⣿⣿⣿⣿⣿⣿⣭⣿⣤
+⠒⠀⠀⠀⠉⣿⣿⣿⣿⠀⠀⠉⣀
+⠀⠤⣤⣤⣀⣿⣿⣿⣿⣀⠀⠀⣿
+⠀⠀⠛⣿⣿⣿⣿⣿⣿⣿⣭⣶⠉
+⠀⠀⠀⠤⣿⣿⣿⣿⣿⣿⣿
+⠀⠀⠀⣭⣿⣿⣿⠀⣿⣿⣿
+⠀⠀⠀⣉⣿⣿⠿⠀⠿⣿⣿
+⠀⠀⠀⠀⣿⣿⠀⠀⠀⣿⣿⣤
+⠀⠀⠀⣀⣿⣿⠀⠀⠀⣿⣿⣿
+⠀⠀⠀⣿⣿⣿⠀⠀⠀⣿⣿⣿
+⠀⠀⠀⣿⣿⠛⠀⠀⠀⠉⣿⣿
+⠀⠀⠀⠉⣿⠀⠀⠀⠀⠀⠛⣿
+⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⣿⣿
+⠀⠀⠀⠀⣛⠀⠀⠀⠀⠀⠀⠛⠿⠿⠿
+⠀⠀⠀⠛⠛`,
+            `⠀⠀⠀⣀⣶⣀
+⠀⠀⠀⠒⣛⣭
+⠀⠀⠀⣀⠿⣿⣶
+⠀⣤⣿⠤⣭⣿⣿
+⣤⣿⣿⣿⠛⣿⣿⠀⣀
+⠀⣀⠤⣿⣿⣶⣤⣒⣛
+⠉⠀⣀⣿⣿⣿⣿⣭⠉
+⠀⠀⣭⣿⣿⠿⠿⣿
+⠀⣶⣿⣿⠛⠀⣿⣿
+⣤⣿⣿⠉⠤⣿⣿⠿
+⣿⣿⠛⠀⠿⣿⣿
+⣿⣿⣤⠀⣿⣿⠿
+⠀⣿⣿⣶⠀⣿⣿⣶
+⠀⠀⠛⣿⠀⠿⣿⣿
+⠀⠀⠀⣉⣿⠀⣿⣿
+⠀⠶⣶⠿⠛⠀⠉⣿
+⠀⠀⠀⠀⠀⠀⣀⣿
+⠀⠀⠀⠀⠀⣶⣿⠿`,
+            `⠀⠀⠀⠀⠀⠀⠀⠀⣤⣿⣿⠶⠀⠀⣀⣀
+⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣶⣿⣿⣿⣿⣿⣿
+⠀⠀⣀⣶⣤⣤⠿⠶⠿⠿⣿⣿⣿⣉⣿⣿
+⠿⣉⠀⠀⠀⠀⠀⠀⠀⠀⠛⣤⣿⣿⣿⣀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣿⣿⣿⣿⣶⣤
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣿⣿⣿⣿⠿⣛⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠛⣿⣿⣿⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⣿⣿⠿⠀⣿⣿⣿⠛
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠀⠀⣿⣿⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⠿⣿⠀⠀⣿⣶
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠛⠀⠀⣿⣿⣶
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣿⣿⠤
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⣿`,
+            `⠀⠀⣀
+⠀⠿⣿⣿⣀
+⠀⠉⣿⣿⣀
+⠀⠀⠛⣿⣭⣀⣀⣤
+⠀⠀⣿⣿⣿⣿⣿⠛⠿⣶⣀
+⠀⣿⣿⣿⣿⣿⣿⠀⠀⠀⣉⣶
+⠀⠀⠉⣿⣿⣿⣿⣀⠀⠀⣿⠉
+⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿
+⠀⣀⣿⣿⣿⣿⣿⣿⣿⣿⠿
+⠀⣿⣿⣿⠿⠉⣿⣿⣿⣿
+⠀⣿⣿⠿⠀⠀⣿⣿⣿⣿
+⣶⣿⣿⠀⠀⠀⠀⣿⣿⣿
+⠛⣿⣿⣀⠀⠀⠀⣿⣿⣿⣿⣶⣀
+⠀⣿⣿⠉⠀⠀⠀⠉⠉⠉⠛⠛⠿⣿⣶
+⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣿
+⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉
+⣀⣶⣿⠛`,
+        ];
 
-                // Now split the cleaned data into frames (assuming frames are separated by two newlines)
-                const heartFrames = cleanedData.split('\n\n');
+        // Function to update the ASCII heart animation
+        let frameIndex = 0;
+        function updateHeart() {
+            // Set the current frame's ASCII art
+            document.getElementById('heart-animation').textContent = heartFrames[frameIndex];
 
-                // Function to update the ASCII heart animation
-                let frameIndex = 0;
-                function updateHeart() {
-                    // Set the current frame's ASCII art
-                    document.getElementById('heart-animation').textContent = heartFrames[frameIndex];
+            // Update the frame index, looping back to the start
+            frameIndex = (frameIndex + 1) % heartFrames.length;
+        }
 
-                    // Update the frame index, looping back to the start
-                    frameIndex = (frameIndex + 1) % heartFrames.length;
-                }
-
-                // Update the heart every 200 milliseconds (adjust for speed)
-                setInterval(updateHeart, 200);
-            })
-            .catch(error => {
-                console.error('Error fetching the ASCII animation:', error);
-            });
+        // Update the heart every 200 milliseconds (adjust for speed)
+        setInterval(updateHeart, 200);
     </script>
 
     <!-- JavaScript for clock -->
