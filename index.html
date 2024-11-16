@@ -1,143 +1,250 @@
+                             ⠀⠀⠀
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal terminal with social links and audio">
-    <title>c   a   d   e   n</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal terminal with social links and audio">
+    <title>c   a   d   e   n</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
 
-    <!-- External CSS -->
-    <link href="style.css" rel="stylesheet" type="text/css">
-    <link href="boomer.css" media="screen" rel="stylesheet" type="text/css">
+    <!-- External CSS -->
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="boomer.css" media="screen" rel="stylesheet" type="text/css">
 
-    <!-- JavaScript for title -->
-    <script src="title.js" defer></script>
+    <!-- JavaScript for title -->
+    <script src="title.js" defer></script>
 
-    <!-- Prevent right-click and some key combinations -->
-    <script>
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
-                (e.ctrlKey && e.keyCode === 85) || 
-                (e.keyCode === 123)) {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <!-- Prevent right-click and some key combinations -->
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
+                (e.ctrlKey && e.keyCode === 85) || 
+                (e.keyCode === 123)) {
+                e.preventDefault();
+            }
+        });
 
+        // Array of ASCII cat versions
+        const catVersions = [
+           
+                              ████████                      
+                        ██████████████████                  
+                      ██████████████████████                
+                    ██████████████████████████              
+                  ████████████████        ████              
+                  ████████████████          ██              
+                ██████████████████                          
+                ██░░          ░░░░██                        
+              ██░░░░  ░░░░░░  ░░░░██                        
+              ██░░░░  ░░░░░░  ░░░░██                        
+            ██░░░░░░          ░░░░░░██                      
+            ████████████████████████████                    
+  ██████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒████████████████          
+  ██████████▒▒▒▒░░░░░░░░░░░░░░░░░░▒▒▒▒████████████          
+▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒          
+▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒          
+▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒          
+  ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒            
+  ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒            
+    ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒              
+      ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒                
+      ▒▒░░░░░░▒▒▒▒░░░░░░░░░░░░░░▒▒▒▒░░░░░░▒▒                
+      ▒▒░░░░▒▒  ▒▒▒▒░░░░░░░░░░▒▒  ▒▒▒▒░░░░▒▒                
+      ▒▒░░░░▒▒▒▒▒▒▒▒░░░░░░░░░░▒▒▒▒▒▒▒▒░░░░▒▒                
+        ▒▒░░░░▒▒▒▒░░░░░░░░░░░░░░▒▒▒▒░░░░▒▒                  
+        ▒▒░░░░░░░░░░    ▒▒    ░░░░░░░░░░▒▒                  
+          ▒▒░░░░░░░░          ░░░░░░░░▒▒                    
+            ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                      
+                ████████░░██████████████                    
+              ████████░░██░░██████████████                  
+              ██░░░░████░░████░░████████████      ▒▒▒▒▒▒    
+              ██░░░░░░██░░██░░░░░░██████████      ▒▒    ▒▒  
+              ██░░░░██░░░░░░██░░░░████████████      ░░    ▒▒
+              ██░░░░░░░░░░░░░░░░░░░░██████████      ▒▒    ▒▒
+              ██▒▒░░░░░░░░░░░░░░░░░░░░████████      ▒▒░░  ▒▒
+              ██▒▒░░░░░░░░░░░░░░░░░░░░░░██████    ▒▒░░░░░░▒▒
+            ████▒▒░░░░░░░░░░░░░░░░░░░░░░██████    ▒▒░░░░▒▒  
+            ████▒▒░░░░░░░░░░░░░░░░░░░░░░░░████  ▒▒░░░░░░▒▒  
+          ████████▒▒░░░░░░░░░░░░░░░░░░░░░░████▒▒░░░░░░▒▒    
+        ██████████▒▒░░░░░░░░░░░░░░░░░░░░░░████░░░░▒▒▒▒      
+    ██████████████▒▒░░░░▒▒░░░░░░░░░░░░░░░░████▒▒▒▒          
+████████████████████▒▒▒▒██▒▒▒▒▒▒▒▒▒▒▒▒██████                
+  ██████████▒▒▒▒░░░░░░░░░░░░░░░░░░▒▒▒▒████████████         
+            `,
+            `
+                                               
+                              _,._
+             __.'   _)
+            <_,)'.-"a\
+              /' (    \
+  _.-----..,-'   (`"--^
+ //              |
+(|   `;      ,   |
+  \   ;.----/  ,/
+   ) // /   | |\ \
+   \ \\`\   | |/ /
+    \ \\ \  | |\/
+     `" `"  `"`
+
+            `,
+            `
+              ▄▄                         
+                                                      (\
+                                          (`.`.
+                                           \:::\
+    _  _                                  _ `:::L
+   F|.':)                                (::--\:|
+  /:/::'                                (_:-.:::|
+ J:::'                                       |::|
+ |::F                                        |::F
+  L:\                                        F:J
+  |::`_                                   .-'::J
+   L:::)                                  `--|:J
+   |::L                                      F:|
+    L:|                                     J  |
+    |:J                          _          F  F
+    J::L       .-.-.            (:|  -     J: J
+     |::L      |/ /-.    |V     .\:\||     F:J
+      L:J    /||.' :'    |:L    `:`:\|    J: J
+      |::L   |.' .'      |:L      `.:|   .'.:/
+       L::\  \  J        |:)       |:|.-':::/
+        \  \  | |        |.|     _.J:/ `::.'
+         \  `.J `._      |:L   .'.' /_.--'
+          \ `- \:. `-._  |:J .::: .-'
+           `-.__`::_  ::.J:|::::-'`.
+                   .-._:'J `-:::   |
+                   |  \      ::: .'
+                   `._ o  .::::o'                          __.----.__     .-'-
+                      L:`.-"-.'(  .-:::-.__      ____.----'   ::  :  `-._/    <
+                       \` >  < ::::::::"""'""""""       `    `       :  \  (""`
+                        |( == |::::::'                                 :`.<
+                        J `--':::::::.                    : :           :::L
+                         |`-. :::::::::.                   :             : |
+                         J  |: :::::::::                  : :              |
+                          | |: :`::::::'   :                ` :            F
+                          | |: : : `""                                 '  J
+                          | |: :'           :                             F
+                          | |  _             .                   '   '   J
+                          J    ::            :                .          |
+                           \   ::`.          : _             .::         F
+                            L  :   `.  . ::  |:::.          .:' `        L
+                            \  : :.  \: :::  |::::.   .  . ::   :..      \
+                             `.: :::. `  ::: |:::::'_     :' ..-:::`.:    \
+                               L-:::::.`.' : |::' `::::..  .::' `:   `..   \
+                               J  ":|---\::::| "-.___:::::"'/    `.   .\:.  `.
+                                L  :|    L:: |                     `.  :\: ::J
+                                |  :|    |:: J                       \  :\  :|
+                                J  :|     \   L                       \   |  |
+                                 F  |     |  :|                        \  |: |
+                                 F  F     |  :|                         F J: |
+                                 F J      |  :|                         | |: |
+                                 L |       L :|                         | |: |
+                                 L |       J  |                         | |: |
+  CSR                             |:|      __L |----.___.----------------| || |-----
+                               __| F-----'  J |                         F |F:J
+           _   _________.-----'  | |         LJ                        J: |:  >  ..
+         _/ `-'                  | |         F \                       F: /:.':::::
+-.___.--'                        F |         F  )                 .::.':.'/:/  :::
+                                /  J        J .'           """:::::.:`-' '-' ..:::
+                               /_.'        /_/   :::::::....
+                              ...        .::::..
+                             :::::..
+
+            `,
+        ];
+
+        let currentCatIndex = 0;
+
+        function changeCatArt() {
+            const asciiArt = document.getElementById('ascii-art');
+            currentCatIndex = (currentCatIndex + 1) % catVersions.length;
+            asciiArt.textContent = catVersions[currentCatIndex];
+        }
+
+        function animateAsciiArt() {
+            const asciiArt = document.getElementById('ascii-art');
+            const characters = asciiArt.innerText.split('');
+            const now = Date.now();
+            let hue = 0;
+
+            asciiArt.innerHTML = characters
+                .map((char, index) => {
+                    if (char.trim() === '') return char;
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // Sinusoidal wave
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // Rainbow color
+                    hue = (hue + 1) % 360;
+                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
+                })
+                .join('');
+        }
+
+        setInterval(animateAsciiArt, 50); // Animate every 50ms
+    </script>
 </head>
 <body oncontextmenu="return false;">
-    <div class="terminal">
-        <div class="bar">
-            <div class="btnclose"></div>
-            <div class="btnhide"></div>
-            <div class="btnfull"></div>
-            <span style="text-align:center;"></span>
-        </div>
-        <div class="window">
-            <!-- Links -->
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">Instagram</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">Snapchat</a>
-            </div>
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
-            </div>
-
-            <!-- Animated ASCII Art -->
-            <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
-                              ████████                      
-                        ██████████████████                  
-                      ██████████████████████                
-                    ██████████████████████████              
-                  ████████████████        ████              
-                  ████████████████          ██              
-                ██████████████████                          
-                ██░░          ░░░░██                        
-              ██░░░░  ░░░░░░  ░░░░██                        
-              ██░░░░  ░░░░░░  ░░░░██                        
-            ██░░░░░░          ░░░░░░██                      
-            ████████████████████████████                    
-  ██████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒████████████████          
-  ██████████▒▒▒▒░░░░░░░░░░░░░░░░░░▒▒▒▒████████████          
-▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒          
-▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒          
-▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒          
-  ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒            
-  ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒            
-    ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒              
-      ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒                
-      ▒▒░░░░░░▒▒▒▒░░░░░░░░░░░░░░▒▒▒▒░░░░░░▒▒                
-      ▒▒░░░░▒▒  ▒▒▒▒░░░░░░░░░░▒▒  ▒▒▒▒░░░░▒▒                
-      ▒▒░░░░▒▒▒▒▒▒▒▒░░░░░░░░░░▒▒▒▒▒▒▒▒░░░░▒▒                
-        ▒▒░░░░▒▒▒▒░░░░░░░░░░░░░░▒▒▒▒░░░░▒▒                  
-        ▒▒░░░░░░░░░░    ▒▒    ░░░░░░░░░░▒▒                  
-          ▒▒░░░░░░░░          ░░░░░░░░▒▒                    
-            ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                      
-                ████████░░██████████████                    
-              ████████░░██░░██████████████                  
-              ██░░░░████░░████░░████████████      ▒▒▒▒▒▒    
-              ██░░░░░░██░░██░░░░░░██████████      ▒▒    ▒▒  
-              ██░░░░██░░░░░░██░░░░████████████      ░░    ▒▒
-              ██░░░░░░░░░░░░░░░░░░░░██████████      ▒▒    ▒▒
-              ██▒▒░░░░░░░░░░░░░░░░░░░░████████      ▒▒░░  ▒▒
-              ██▒▒░░░░░░░░░░░░░░░░░░░░░░██████    ▒▒░░░░░░▒▒
-            ████▒▒░░░░░░░░░░░░░░░░░░░░░░██████    ▒▒░░░░▒▒  
-            ████▒▒░░░░░░░░░░░░░░░░░░░░░░░░████  ▒▒░░░░░░▒▒  
-          ████████▒▒░░░░░░░░░░░░░░░░░░░░░░████▒▒░░░░░░▒▒    
-        ██████████▒▒░░░░░░░░░░░░░░░░░░░░░░████░░░░▒▒▒▒      
-    ██████████████▒▒░░░░▒▒░░░░░░░░░░░░░░░░████▒▒▒▒          
-████████████████████▒▒▒▒██▒▒▒▒▒▒▒▒▒▒▒▒██████                ⠀⠀⠀⠀      
-            </pre>
-
-            <!-- Displaying the clock -->
-            <p id="clock" style="color: red;"></p>
-        </div>
-    </div>
-
-    <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
-
-    <script>
-        // Function to update the clock every second with full date and time
-        function updateClock() {
-            const now = new Date();
-            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
-            const month = now.toLocaleString('en-us', { month: 'long' }); // January, etc.
-            const day = now.getDate();
-            const year = now.getFullYear();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
-            document.getElementById('clock').textContent = fullDate;
-        }
-        setInterval(updateClock, 1000); // Update clock every second
-
-        // Function to apply rainbow and wave effects to the ASCII art
-        function animateAsciiArt() {
-            const asciiArt = document.getElementById('ascii-art');
-            const characters = asciiArt.innerText.split('');
-            const now = Date.now();
-            let hue = 0;
-
-            asciiArt.innerHTML = characters
-                .map((char, index) => {
-                    if (char.trim() === '') return char; // Preserve spaces
-                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // Sinusoidal wave
-                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // Rainbow color
-                    hue = (hue + 1) % 360;
-                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
-                })
-                .join('');
-        }
-        setInterval(animateAsciiArt, 50); // Animate ASCII art every 50ms
-    </script>
+    <div class="terminal">
+        <div class="bar">
+            <div class="btnclose"></div>
+            <div class="btnhide"></div>
+            <div class="btnfull"></div>
+        </div>
+        <div class="window">
+            <!-- Add the clickable ASCII art -->
+            <pre id="ascii-art" onclick="changeCatArt()" style="white-space: pre; font-family: monospace; line-height: 1; cursor: pointer;">
+                                         
+                              ████████                      
+                        ██████████████████                  
+                      ██████████████████████                
+                    ██████████████████████████              
+                  ████████████████        ████              
+                  ████████████████          ██              
+                ██████████████████                          
+                ██░░          ░░░░██                        
+              ██░░░░  ░░░░░░  ░░░░██                        
+              ██░░░░  ░░░░░░  ░░░░██                        
+            ██░░░░░░          ░░░░░░██                      
+            ████████████████████████████                    
+  ██████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒████████████████          
+  ██████████▒▒▒▒░░░░░░░░░░░░░░░░░░▒▒▒▒████████████          
+▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒          
+▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒          
+▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒          
+  ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒            
+  ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒            
+    ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒              
+      ▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒                
+      ▒▒░░░░░░▒▒▒▒░░░░░░░░░░░░░░▒▒▒▒░░░░░░▒▒                
+      ▒▒░░░░▒▒  ▒▒▒▒░░░░░░░░░░▒▒  ▒▒▒▒░░░░▒▒                
+      ▒▒░░░░▒▒▒▒▒▒▒▒░░░░░░░░░░▒▒▒▒▒▒▒▒░░░░▒▒                
+        ▒▒░░░░▒▒▒▒░░░░░░░░░░░░░░▒▒▒▒░░░░▒▒                  
+        ▒▒░░░░░░░░░░    ▒▒    ░░░░░░░░░░▒▒                  
+          ▒▒░░░░░░░░          ░░░░░░░░▒▒                    
+            ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒                      
+                ████████░░██████████████                    
+              ████████░░██░░██████████████                  
+              ██░░░░████░░████░░████████████      ▒▒▒▒▒▒    
+              ██░░░░░░██░░██░░░░░░██████████      ▒▒    ▒▒  
+              ██░░░░██░░░░░░██░░░░████████████      ░░    ▒▒
+              ██░░░░░░░░░░░░░░░░░░░░██████████      ▒▒    ▒▒
+              ██▒▒░░░░░░░░░░░░░░░░░░░░████████      ▒▒░░  ▒▒
+              ██▒▒░░░░░░░░░░░░░░░░░░░░░░██████    ▒▒░░░░░░▒▒
+            ████▒▒░░░░░░░░░░░░░░░░░░░░░░██████    ▒▒░░░░▒▒  
+            ████▒▒░░░░░░░░░░░░░░░░░░░░░░░░████  ▒▒░░░░░░▒▒  
+          ████████▒▒░░░░░░░░░░░░░░░░░░░░░░████▒▒░░░░░░▒▒    
+        ██████████▒▒░░░░░░░░░░░░░░░░░░░░░░████░░░░▒▒▒▒      
+    ██████████████▒▒░░░░▒▒░░░░░░░░░░░░░░░░████▒▒▒▒          
+████████████████████▒▒▒▒██▒▒▒▒▒▒▒▒▒▒▒▒██████                
+  ██████████▒▒▒▒░░░░░░░░░░░░░░░░░░▒▒▒▒████████████                
+            </pre>
+        </div>
+    </div>
 </body>
 </html>
