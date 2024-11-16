@@ -71,8 +71,18 @@
         fetch('snoopanim.txt')  // Adjust the path to where your snoopanim.txt is hosted
             .then(response => response.text())
             .then(data => {
-                // Assuming each frame is separated by a newline or empty line
-                const heartFrames = data.split('\n\n');  // Adjust split logic based on your file's structure
+                // Clean the file content by removing Python code (or other non-ASCII content)
+                const cleanedData = data
+                    .split('\n')  // Split by lines
+                    .filter(line => {
+                        // Filter out lines containing Python code or unwanted content
+                        // For example, lines that start with 'import' or 'def' or empty lines
+                        return !line.trim().startsWith('import') && !line.trim().startsWith('def') && line.trim() !== '';
+                    })
+                    .join('\n');  // Join back into a clean string
+
+                // Now split the cleaned data into frames (assuming frames are separated by two newlines)
+                const heartFrames = cleanedData.split('\n\n');
 
                 // Function to update the ASCII heart animation
                 let frameIndex = 0;
