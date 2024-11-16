@@ -22,7 +22,6 @@
             e.preventDefault();
         });
         document.addEventListener('keydown', function(e) {
-            // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J
             if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
                 (e.ctrlKey && e.keyCode === 85) || 
                 (e.keyCode === 123)) {
@@ -41,7 +40,7 @@
             <span style="text-align:center;"></span>
         </div>
         <div class="window">
-            <!-- Removed the "i love you" message -->
+            <!-- Links -->
             <div class="rule">
                 <span class="dir">~</span>
                 <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">Instagram</a> - 
@@ -52,8 +51,8 @@
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
             </div>
 
-            <!-- Add the ASCII art -->
-            <pre style="white-space: pre; font-family: monospace; line-height: 1;">
+            <!-- Animated ASCII Art -->
+            <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
                               ████████                      
                         ██████████████████                  
                       ██████████████████████                
@@ -95,11 +94,11 @@
           ████████▒▒░░░░░░░░░░░░░░░░░░░░░░████▒▒░░░░░░▒▒    
         ██████████▒▒░░░░░░░░░░░░░░░░░░░░░░████░░░░▒▒▒▒      
     ██████████████▒▒░░░░▒▒░░░░░░░░░░░░░░░░████▒▒▒▒          
-████████████████████▒▒▒▒██▒▒▒▒▒▒▒▒▒▒▒▒██████                ⠀⠀⠀⠀
+████████████████████▒▒▒▒██▒▒▒▒▒▒▒▒▒▒▒▒██████                ⠀⠀⠀⠀      
             </pre>
 
-            <!-- Adding the full date and time here -->
-            <p id="clock" style="color: red;"></p> <!-- Clock will be displayed here in red -->
+            <!-- Displaying the clock -->
+            <p id="clock" style="color: red;"></p>
         </div>
     </div>
 
@@ -109,27 +108,36 @@
         // Function to update the clock every second with full date and time
         function updateClock() {
             const now = new Date();
-
-            // Get the full date (day, month, year)
-            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, Tuesday, etc.
-            const month = now.toLocaleString('en-us', { month: 'long' }); // January, February, etc.
+            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
+            const month = now.toLocaleString('en-us', { month: 'long' }); // January, etc.
             const day = now.getDate();
             const year = now.getFullYear();
-
-            // Get the time (hours, minutes, seconds)
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
-
-            // Format the full date and time as: Weekday, Month Day, Year HH:MM:SS
             const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
-            
-            // Display the clock in the element with id 'clock'
             document.getElementById('clock').textContent = fullDate;
         }
+        setInterval(updateClock, 1000); // Update clock every second
 
-        // Update the clock every second
-        setInterval(updateClock, 1000);
+        // Function to apply rainbow and wave effects to the ASCII art
+        function animateAsciiArt() {
+            const asciiArt = document.getElementById('ascii-art');
+            const characters = asciiArt.innerText.split('');
+            const now = Date.now();
+            let hue = 0;
+
+            asciiArt.innerHTML = characters
+                .map((char, index) => {
+                    if (char.trim() === '') return char; // Preserve spaces
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // Sinusoidal wave
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // Rainbow color
+                    hue = (hue + 1) % 360;
+                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
+                })
+                .join('');
+        }
+        setInterval(animateAsciiArt, 50); // Animate ASCII art every 50ms
     </script>
 </body>
 </html>
