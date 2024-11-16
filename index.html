@@ -67,39 +67,29 @@
 
     <!-- JavaScript for Animated ASCII Art -->
     <script>
-        // Define the frames of the ASCII animation (from snoopanim.txt)
-        const heartFrames = [
-            `
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠿⠿⠿⠿⢶⣶⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢹⠛⠉⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢸⠀⠤⡀⠠⢖⡚⢀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⡀⠉⠀⠀⠘⠿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⣠⣴⣿⣦⠀⠀⠀⠀⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⢰⣿⣿⣿⣿⣷⠄⠀⢀⣾⣿⢹⡿⣿⣿⣟⠻⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⢺⣿⣿⣿⣿⣿⠺⠿⠏⡻⣟⡞⢠⠉⣯⠡⢹⣼⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠘⣿⣿⣿⣿⡇⠀⠀⠀⠈⣀⡇⠸⣴⡞⢡⡿⢋⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢿⣿⣿⣿⠁⠀⠀⠀⢀⣿⣿⣶⣤⣁⣀⣠⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀
-⠀⠀⠀⠸⣿⣿⡏⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠛⢻⡆⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠉⠣⡀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠈⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            `,
-            // Other frames go here...
-        ];
+        // Fetch the ASCII animation frames from the text file
+        fetch('snoopanim.txt')  // Adjust the path to where your snoopanim.txt is hosted
+            .then(response => response.text())
+            .then(data => {
+                // Assuming each frame is separated by a newline or empty line
+                const heartFrames = data.split('\n\n');  // Adjust split logic based on your file's structure
 
-        // Function to update the ASCII heart animation
-        let frameIndex = 0;
-        function updateHeart() {
-            // Set the current frame's ASCII art
-            document.getElementById('heart-animation').textContent = heartFrames[frameIndex];
+                // Function to update the ASCII heart animation
+                let frameIndex = 0;
+                function updateHeart() {
+                    // Set the current frame's ASCII art
+                    document.getElementById('heart-animation').textContent = heartFrames[frameIndex];
 
-            // Update the frame index, looping back to the start
-            frameIndex = (frameIndex + 1) % heartFrames.length;
-        }
+                    // Update the frame index, looping back to the start
+                    frameIndex = (frameIndex + 1) % heartFrames.length;
+                }
 
-        // Update the heart every 200 milliseconds (adjust for speed)
-        setInterval(updateHeart, 200);
+                // Update the heart every 200 milliseconds (adjust for speed)
+                setInterval(updateHeart, 200);
+            })
+            .catch(error => {
+                console.error('Error fetching the ASCII animation:', error);
+            });
     </script>
 
     <!-- JavaScript for clock -->
