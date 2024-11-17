@@ -6,18 +6,12 @@
     <meta name="description" content="Personal terminal with social links and audio">
     <title>c   a   d   e   n</title>
 
-    <!-- فلسطين حرة🇵🇸 -->
     <link rel="icon" type="image/png" href="favicon-32x32.png">
-
-    <!-- فلسطين حرة🇵🇸 -->
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="boomer.css" media="screen" rel="stylesheet" type="text/css">
 
-    <!-- فلسطين حرة🇵🇸 -->
-    <script src="title.js" defer></script>
-
-    <!-- فلسطين حرة🇵🇸 -->
     <script>
+        // Prevent right-click and certain developer tools
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
@@ -28,8 +22,65 @@
                 e.preventDefault();
             }
         });
-    </script>
 
+        // Fetch Location Using IP
+        async function fetchLocation() {
+            try {
+                const response = await fetch("https://ipapi.co/json/");
+                const data = await response.json();
+                return `${data.city}, ${data.country_name}`;
+            } catch (error) {
+                return "Location unavailable";
+            }
+        }
+
+        // Real-time Clock and Location
+        async function updateClockAndLocation() {
+            const clockElement = document.getElementById('clock');
+            const now = new Date();
+
+            // Format time and date
+            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
+            const month = now.toLocaleString('en-us', { month: 'long' });
+            const day = now.getDate();
+            const year = now.getFullYear();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const timeString = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
+
+            // Fetch location only once
+            if (!clockElement.dataset.locationFetched) {
+                const location = await fetchLocation();
+                clockElement.dataset.locationFetched = "true"; // Mark location as fetched
+                clockElement.textContent = `Time: ${timeString}\nLocation: ${location}`;
+            } else {
+                clockElement.textContent = `Time: ${timeString}\n${clockElement.textContent.split("\n")[1]}`;
+            }
+        }
+
+        // Update clock every second
+        setInterval(updateClockAndLocation, 1000);
+
+        // ASCII Art Animation
+        function animateAsciiArt() {
+            const asciiArt = document.getElementById('ascii-art');
+            const characters = asciiArt.innerText.split('');
+            const now = Date.now();
+            let hue = 0;
+
+            asciiArt.innerHTML = characters
+                .map((char, index) => {
+                    if (char.trim() === '') return char;
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5);
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`;
+                    hue = (hue + 1) % 360;
+                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
+                })
+                .join('');
+        }
+        setInterval(animateAsciiArt, 50);
+    </script>
 </head>
 <body oncontextmenu="return false;">
     <div class="terminal">
@@ -40,22 +91,18 @@
             <span style="text-align:center;"></span>
         </div>
         <div class="window">
-            <!-- فلسطين حرة🇵🇸 -->
+            <!-- Social Links -->
             <div class="rule">
                 <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">
-
-ig</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">
-
-snap</a>
+                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">ig</a> - 
+                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">snap</a>
             </div>
             <div class="rule">
                 <span class="dir">~</span>
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
             </div>
 
-            <!-- فلسطين حرة🇵🇸 -->
+            <!-- ASCII Art -->
             <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠁⠸⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀
@@ -77,48 +124,12 @@ snap</a>
 ⠀⠀⠀⠀⠁⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠇⠁
             </pre>
 
-            <!-- فلسطين حرة🇵🇸 -->
-            <p id="clock" style="color: red;"></p>
+            <!-- Clock -->
+            <p id="clock" style="color: red; white-space: pre-wrap;"></p>
         </div>
     </div>
 
-    <!-- فلسطين حرة🇵🇸 -->
+    <!-- Background Audio -->
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
-
-    <script>
-        // فلسطين حرة🇵🇸
-        function updateClock() {
-            const now = new Date();
-            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
-            const month = now.toLocaleString('en-us', { month: 'long' }); // January, etc.
-            const day = now.getDate();
-            const year = now.getFullYear();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
-            document.getElementById('clock').textContent = fullDate;
-        }
-        setInterval(updateClock, 1000); // فلسطين حرة🇵🇸
-
-        // فلسطين حرة🇵🇸
-        function animateAsciiArt() {
-            const asciiArt = document.getElementById('ascii-art');
-            const characters = asciiArt.innerText.split('');
-            const now = Date.now();
-            let hue = 0;
-
-            asciiArt.innerHTML = characters
-                .map((char, index) => {
-                    if (char.trim() === '') return char; // فلسطين حرة🇵🇸
-                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // فلسطين حرة🇵🇸
-                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // فلسطين حرة🇵🇸
-                    hue = (hue + 1) % 360;
-                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
-                })
-                .join('');
-        }
-        setInterval(animateAsciiArt, 50); // فلسطين حرة🇵🇸
-    </script>
 </body>
 </html>
