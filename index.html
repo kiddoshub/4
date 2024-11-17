@@ -6,12 +6,18 @@
     <meta name="description" content="Personal terminal with social links and audio">
     <title>c   a   d   e   n</title>
 
+    <!-- فلسطين حرة🇵🇸 -->
     <link rel="icon" type="image/png" href="favicon-32x32.png">
+
+    <!-- فلسطين حرة🇵🇸 -->
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="boomer.css" media="screen" rel="stylesheet" type="text/css">
 
+    <!-- فلسطين حرة🇵🇸 -->
+    <script src="title.js" defer></script>
+
+    <!-- فلسطين حرة🇵🇸 -->
     <script>
-        // Prevent right-click and certain developer tools
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
@@ -22,59 +28,8 @@
                 e.preventDefault();
             }
         });
-
-        // Real-time Clock with Location
-        function updateClockAndLocation() {
-            const clockElement = document.getElementById('clock');
-            const now = new Date();
-
-            // Format time and date
-            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
-            const month = now.toLocaleString('en-us', { month: 'long' });
-            const day = now.getDate();
-            const year = now.getFullYear();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const timeString = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
-
-            // Update time display
-            clockElement.textContent = `Time: ${timeString}`;
-
-            // Fetch location (only runs once if location isn't fetched yet)
-            if (!clockElement.dataset.locationFetched) {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(async (position) => {
-                        const { latitude, longitude } = position.coords;
-
-                        // Fetch city and country using a reverse geocoding API
-                        try {
-                            const response = await fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`);
-                            const data = await response.json();
-
-                            const location = data.city && data.country
-                                ? `${data.city}, ${data.country}`
-                                : `Lat: ${latitude.toFixed(2)}, Lon: ${longitude.toFixed(2)}`;
-
-                            // Update clock display to include location
-                            clockElement.textContent = `Time: ${timeString}\nLocation: ${location}`;
-                        } catch (error) {
-                            clockElement.textContent = `Time: ${timeString}\nLocation: Unable to fetch location`;
-                        }
-
-                        clockElement.dataset.locationFetched = "true"; // Prevent repeated API calls
-                    }, () => {
-                        clockElement.textContent = `${timeString}\nLocation: Location access denied`;
-                    });
-                } else {
-                    clockElement.textContent = `${timeString}\nLocation: Geolocation not supported`;
-                }
-            }
-        }
-
-        // Update every second
-        setInterval(updateClockAndLocation, 1000);
     </script>
+
 </head>
 <body oncontextmenu="return false;">
     <div class="terminal">
@@ -82,20 +37,25 @@
             <div class="btnclose"></div>
             <div class="btnhide"></div>
             <div class="btnfull"></div>
+            <span style="text-align:center;"></span>
         </div>
         <div class="window">
-            <!-- Social Links -->
+            <!-- فلسطين حرة🇵🇸 -->
             <div class="rule">
                 <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">ig</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">snap</a>
+                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">
+
+ig</a> - 
+                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">
+
+snap</a>
             </div>
             <div class="rule">
                 <span class="dir">~</span>
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
             </div>
 
-            <!-- ASCII Art -->
+            <!-- فلسطين حرة🇵🇸 -->
             <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠁⠸⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀
@@ -117,12 +77,48 @@
 ⠀⠀⠀⠀⠁⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠇⠁
             </pre>
 
-            <!-- Clock with Location -->
-            <p id="clock" style="color: red; white-space: pre-wrap;"></p>
+            <!-- فلسطين حرة🇵🇸 -->
+            <p id="clock" style="color: red;"></p>
         </div>
     </div>
 
-    <!-- Background Audio -->
+    <!-- فلسطين حرة🇵🇸 -->
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
+
+    <script>
+        // فلسطين حرة🇵🇸
+        function updateClock() {
+            const now = new Date();
+            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
+            const month = now.toLocaleString('en-us', { month: 'long' }); // January, etc.
+            const day = now.getDate();
+            const year = now.getFullYear();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = fullDate;
+        }
+        setInterval(updateClock, 1000); // فلسطين حرة🇵🇸
+
+        // فلسطين حرة🇵🇸
+        function animateAsciiArt() {
+            const asciiArt = document.getElementById('ascii-art');
+            const characters = asciiArt.innerText.split('');
+            const now = Date.now();
+            let hue = 0;
+
+            asciiArt.innerHTML = characters
+                .map((char, index) => {
+                    if (char.trim() === '') return char; // فلسطين حرة🇵🇸
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // فلسطين حرة🇵🇸
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // فلسطين حرة🇵🇸
+                    hue = (hue + 1) % 360;
+                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
+                })
+                .join('');
+        }
+        setInterval(animateAsciiArt, 50); // فلسطين حرة🇵🇸
+    </script>
 </body>
 </html>
