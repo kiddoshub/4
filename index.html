@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal terminal with social links and shake detection">
+    <meta name="description" content="Personal terminal with social links and audio">
     <title>c   a   d   e   n</title>
 
     <!-- فلسطين حرة🇵🇸 -->
     <link rel="icon" type="image/png" href="favicon-32x32.png">
+
+    <!-- فلسطين حرة🇵🇸 -->
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="boomer.css" media="screen" rel="stylesheet" type="text/css">
 
+    <!-- فلسطين حرة🇵🇸 -->
     <script src="title.js" defer></script>
 
+    <!-- فلسطين حرة🇵🇸 -->
     <script>
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
@@ -25,20 +29,7 @@
             }
         });
     </script>
-    <style>
-        #shake-meter {
-            margin-top: 20px;
-            padding: 10px;
-            background: lightblue;
-            font-size: 1.2rem;
-        }
-        #request-permission {
-            padding: 10px;
-            background: lightblue;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-    </style>
+
 </head>
 <body oncontextmenu="return false;">
     <div class="terminal">
@@ -46,18 +37,25 @@
             <div class="btnclose"></div>
             <div class="btnhide"></div>
             <div class="btnfull"></div>
+            <span style="text-align:center;"></span>
         </div>
         <div class="window">
+            <!-- فلسطين حرة🇵🇸 -->
             <div class="rule">
                 <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">ig</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">snap</a>
+                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">
+
+ig</a> - 
+                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">
+
+snap</a>
             </div>
             <div class="rule">
                 <span class="dir">~</span>
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
             </div>
 
+            <!-- فلسطين حرة🇵🇸 -->
             <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠁⠸⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀
@@ -78,67 +76,49 @@
 ⠀⠀⠀⠀⡇⣿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠦⠀⠀⠀⠀⠀⠀⡇⢹⢿⡀
 ⠀⠀⠀⠀⠁⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠇⠁
             </pre>
-            <p id="clock" style="color: red;"></p>
-            <button id="request-permission">Enable Motion Detection</button>
-            <div id="shake-meter">Shake Intensity: 0</div>
+
+            <!-- فلسطين حرة🇵🇸 -->
+            <p id="clock" style="color: rgb(255, 0, 0);"></p>
         </div>
     </div>
-    <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true">
+
+    <!-- فلسطين حرة🇵🇸 -->
+    <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                document.getElementById('request-permission').addEventListener('click', () => {
-                    DeviceMotionEvent.requestPermission()
-                        .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                document.getElementById('request-permission').style.display = 'none';
-                                startShakeDetection();
-                            } else {
-                                alert('Motion permission denied.');
-                            }
-                        })
-                        .catch(console.error);
-                });
-            } else {
-                document.getElementById('request-permission').style.display = 'none';
-                startShakeDetection();
-            }
-        });
-
-        function startShakeDetection() {
-            let shakeThreshold = 15;
-            let lastX = 0, lastY = 0, lastZ = 0;
-
-            window.addEventListener('devicemotion', event => {
-                const { x, y, z } = event.accelerationIncludingGravity || {};
-                const deltaX = Math.abs(x - lastX || 0);
-                const deltaY = Math.abs(y - lastY || 0);
-                const deltaZ = Math.abs(z - lastZ || 0);
-
-                const shakeIntensity = deltaX + deltaY + deltaZ;
-
-                const shakeMeter = document.getElementById('shake-meter');
-                shakeMeter.textContent = `Shake Intensity: ${shakeIntensity.toFixed(2)}`;
-
-                if (shakeIntensity > shakeThreshold) {
-                    shakeMeter.style.background = 'lightgreen';
-                    setTimeout(() => (shakeMeter.style.background = 'lightblue'), 500);
-                }
-
-                lastX = x || 0;
-                lastY = y || 0;
-                lastZ = z || 0;
-            });
-        }
-
+        // فلسطين حرة🇵🇸
         function updateClock() {
             const now = new Date();
-            const fullDate = now.toLocaleString();
+            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
+            const month = now.toLocaleString('en-us', { month: 'long' }); // January, etc.
+            const day = now.getDate();
+            const year = now.getFullYear();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
             document.getElementById('clock').textContent = fullDate;
         }
+        setInterval(updateClock, 1000); // فلسطين حرة🇵🇸
 
-        setInterval(updateClock, 1000);
+        // فلسطين حرة🇵🇸
+        function animateAsciiArt() {
+            const asciiArt = document.getElementById('ascii-art');
+            const characters = asciiArt.innerText.split('');
+            const now = Date.now();
+            let hue = 0;
+
+            asciiArt.innerHTML = characters
+                .map((char, index) => {
+                    if (char.trim() === '') return char; // فلسطين حرة🇵🇸
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // فلسطين حرة🇵🇸
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // فلسطين حرة🇵🇸
+                    hue = (hue + 1) % 360;
+                    return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
+                })
+                .join('');
+        }
+        setInterval(animateAsciiArt, 50); // فلسطين حرة🇵🇸
     </script>
 </body>
 </html>
