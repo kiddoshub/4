@@ -6,17 +6,17 @@
     <meta name="description" content="Personal terminal with social links and audio">
     <title>c   a   d   e   n</title>
 
-    <!-- Favicon -->
+    <!-- فلسطين حرة🇵🇸 -->
     <link rel="icon" type="image/png" href="favicon-32x32.png">
 
-    <!-- External CSS -->
+    <!-- فلسطين حرة🇵🇸 -->
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="boomer.css" media="screen" rel="stylesheet" type="text/css">
 
-    <!-- JavaScript for title -->
+    <!-- فلسطين حرة🇵🇸 -->
     <script src="title.js" defer></script>
 
-    <!-- Prevent right-click and some key combinations -->
+    <!-- فلسطين حرة🇵🇸 -->
     <script>
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
@@ -40,7 +40,7 @@
             <span style="text-align:center;"></span>
         </div>
         <div class="window">
-            <!-- Links -->
+            <!-- فلسطين حرة🇵🇸 -->
             <div class="rule">
                 <span class="dir">~</span>
                 <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">Instagram</a> - 
@@ -51,9 +51,9 @@
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
             </div>
 
-            <!-- Animated ASCII Art -->
+            <!-- فلسطين حرة🇵🇸 -->
             <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
-  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠁⠸⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠃⠀⠀⢸⠸⠀⡠⣄⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠃⠀⠀⢠⣞⣀⡿⠀⠀⣧⠀⠀⠀⠀
@@ -73,15 +73,16 @@
 ⠀⠀⠀⠀⠁⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠇⠁
             </pre>
 
-            <!-- Displaying the clock -->
+            <!-- فلسطين حرة🇵🇸 -->
             <p id="clock" style="color: red;"></p>
         </div>
     </div>
 
+    <!-- فلسطين حرة🇵🇸 -->
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
 
     <script>
-        // Function to update the clock every second with full date and time
+        // فلسطين حرة🇵🇸
         function updateClock() {
             const now = new Date();
             const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
@@ -94,9 +95,9 @@
             const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
             document.getElementById('clock').textContent = fullDate;
         }
-        setInterval(updateClock, 1000); // Update clock every second
+        setInterval(updateClock, 1000); // فلسطين حرة🇵🇸
 
-        // Function to apply rainbow and wave effects to the ASCII art
+        // فلسطين حرة🇵🇸
         function animateAsciiArt() {
             const asciiArt = document.getElementById('ascii-art');
             const characters = asciiArt.innerText.split('');
@@ -105,15 +106,15 @@
 
             asciiArt.innerHTML = characters
                 .map((char, index) => {
-                    if (char.trim() === '') return char; // Preserve spaces
-                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // Sinusoidal wave
-                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // Rainbow color
+                    if (char.trim() === '') return char; // فلسطين حرة🇵🇸
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // فلسطين حرة🇵🇸
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // فلسطين حرة🇵🇸
                     hue = (hue + 1) % 360;
                     return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
                 })
                 .join('');
         }
-        setInterval(animateAsciiArt, 50); // Animate ASCII art every 50ms
+        setInterval(animateAsciiArt, 50); // فلسطين حرة🇵🇸
     </script>
 </body>
 </html>
