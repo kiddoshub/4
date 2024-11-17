@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal terminal with social links and audio">
+    <meta name="description" content="Hacker-style personal terminal with social links and audio">
     <title>c   a   d   e   n</title>
 
     <link rel="icon" type="image/png" href="favicon-32x32.png">
@@ -23,20 +23,35 @@
             }
         });
 
-        // Fetch Location Using IP
-        async function fetchLocation() {
+        // Fetch user info using IP-based API
+        async function fetchUserInfo() {
             try {
                 const response = await fetch("https://ipapi.co/json/");
                 const data = await response.json();
-                return `${data.city}, ${data.country_name}`;
+
+                return {
+                    ip: data.ip || "Unavailable",
+                    city: data.city || "Unknown City",
+                    region: data.region || "Unknown Region",
+                    country: data.country_name || "Unknown Country",
+                    timezone: data.timezone || "Unknown Timezone",
+                    isp: data.org || "Unknown ISP",
+                };
             } catch (error) {
-                return "Location unavailable";
+                return {
+                    ip: "Unavailable",
+                    city: "Unknown City",
+                    region: "Unknown Region",
+                    country: "Unknown Country",
+                    timezone: "Unknown Timezone",
+                    isp: "Unknown ISP",
+                };
             }
         }
 
-        // Real-time Clock and Location
-        async function updateClockAndLocation() {
-            const clockElement = document.getElementById('clock');
+        // Real-time Clock and User Info
+        async function updateHackerDisplay() {
+            const displayElement = document.getElementById('display');
             const now = new Date();
 
             // Format time and date
@@ -47,20 +62,27 @@
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
-            const timeString = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
+            const timeString = `TIME: ${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
 
-            // Fetch location only once
-            if (!clockElement.dataset.locationFetched) {
-                const location = await fetchLocation();
-                clockElement.dataset.locationFetched = "true"; // Mark location as fetched
-                clockElement.textContent = `Time: ${timeString}\nLocation: ${location}`;
+            // Fetch user info
+            if (!displayElement.dataset.infoFetched) {
+                const userInfo = await fetchUserInfo();
+                const infoString = `
+IP: ${userInfo.ip}
+LOCATION: ${userInfo.city}, ${userInfo.region}, ${userInfo.country}
+TIMEZONE: ${userInfo.timezone}
+ISP: ${userInfo.isp}
+                `;
+                displayElement.dataset.infoFetched = "true"; // Avoid fetching multiple times
+                displayElement.textContent = `${timeString}\n${infoString}`;
             } else {
-                clockElement.textContent = `Time: ${timeString}\n${clockElement.textContent.split("\n")[1]}`;
+                const currentText = displayElement.textContent.split('\n').slice(1).join('\n'); // Retain the info
+                displayElement.textContent = `${timeString}\n${currentText}`;
             }
         }
 
-        // Update clock every second
-        setInterval(updateClockAndLocation, 1000);
+        // Update display every second
+        setInterval(updateHackerDisplay, 1000);
 
         // ASCII Art Animation
         function animateAsciiArt() {
@@ -88,22 +110,13 @@
             <div class="btnclose"></div>
             <div class="btnhide"></div>
             <div class="btnfull"></div>
-            <span style="text-align:center;"></span>
         </div>
         <div class="window">
-            <!-- Social Links -->
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">ig</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">snap</a>
-            </div>
-            <div class="rule">
-                <span class="dir">~</span>
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">nudes</a>
-            </div>
+            <!-- Hacker Display -->
+            <pre id="display" style="white-space: pre-wrap; font-family: monospace; color: #00ff00;"></pre>
 
             <!-- ASCII Art -->
-            <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1;">
+            <pre id="ascii-art" style="white-space: pre; font-family: monospace; line-height: 1; color: #00ff00;">
   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠁⠸⢳⡄⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠃⠀⠀⢸⠸⠀⡠⣄⠀⠀⠀⠀⠀
@@ -123,9 +136,6 @@
 ⠀⠀⠀⠀⡇⣿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠦⠀⠀⠀⠀⠀⠀⡇⢹⢿⡀
 ⠀⠀⠀⠀⠁⠛⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠇⠁
             </pre>
-
-            <!-- Clock -->
-            <p id="clock" style="color: red; white-space: pre-wrap;"></p>
         </div>
     </div>
 
