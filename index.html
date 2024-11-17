@@ -29,7 +29,6 @@
             }
         });
     </script>
-
 </head>
 <body oncontextmenu="return false;">
     <div class="terminal">
@@ -43,12 +42,8 @@
             <!-- فلسطين حرة🇵🇸 -->
             <div class="rule">
                 <span class="dir">~</span>
-                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">
-
-ig</a> - 
-                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">
-
-snap</a>
+                <a href="https://www.instagram.com/cheapie" target="_blank" rel="noopener noreferrer">ig</a> - 
+                <a href="https://www.snapchat.com/add/cadenwastaken" target="_blank" rel="noopener noreferrer">snap</a>
             </div>
             <div class="rule">
                 <span class="dir">~</span>
@@ -79,6 +74,10 @@ snap</a>
 
             <!-- فلسطين حرة🇵🇸 -->
             <p id="clock" style="color: red;"></p>
+            <!-- Shake Intensity -->
+            <div id="shake-meter" style="margin-top: 20px; padding: 10px; background: lightblue; font-size: 1.2rem;">
+                Shake Intensity: 0
+            </div>
         </div>
     </div>
 
@@ -86,11 +85,11 @@ snap</a>
     <embed src="http://caden.fun/jammmm.mp3" loop="true" autostart="true" hidden="true" mastersound>
 
     <script>
-        // فلسطين حرة🇵🇸
+        // Update clock functionality
         function updateClock() {
             const now = new Date();
-            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' }); // Monday, etc.
-            const month = now.toLocaleString('en-us', { month: 'long' }); // January, etc.
+            const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
+            const month = now.toLocaleString('en-us', { month: 'long' });
             const day = now.getDate();
             const year = now.getFullYear();
             const hours = now.getHours().toString().padStart(2, '0');
@@ -99,9 +98,9 @@ snap</a>
             const fullDate = `${dayOfWeek}, ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
             document.getElementById('clock').textContent = fullDate;
         }
-        setInterval(updateClock, 1000); // فلسطين حرة🇵🇸
+        setInterval(updateClock, 1000);
 
-        // فلسطين حرة🇵🇸
+        // ASCII art animation
         function animateAsciiArt() {
             const asciiArt = document.getElementById('ascii-art');
             const characters = asciiArt.innerText.split('');
@@ -110,15 +109,45 @@ snap</a>
 
             asciiArt.innerHTML = characters
                 .map((char, index) => {
-                    if (char.trim() === '') return char; // فلسطين حرة🇵🇸
-                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5); // فلسطين حرة🇵🇸
-                    const color = `hsl(${hue + index * 10}, 80%, 60%)`; // فلسطين حرة🇵🇸
+                    if (char.trim() === '') return char;
+                    const opacity = 0.5 + 0.5 * Math.sin(now / 200 + index / 5);
+                    const color = `hsl(${hue + index * 10}, 80%, 60%)`;
                     hue = (hue + 1) % 360;
                     return `<span style="opacity: ${opacity}; color: ${color};">${char}</span>`;
                 })
                 .join('');
         }
-        setInterval(animateAsciiArt, 50); // فلسطين حرة🇵🇸
+        setInterval(animateAsciiArt, 50);
+
+        // Shake detection
+        let shakeThreshold = 15;
+        let lastX = 0, lastY = 0, lastZ = 0;
+
+        window.addEventListener('devicemotion', event => {
+            const { x, y, z } = event.accelerationIncludingGravity;
+            const deltaX = Math.abs(x - lastX);
+            const deltaY = Math.abs(y - lastY);
+            const deltaZ = Math.abs(z - lastZ);
+
+            // Calculate shake intensity
+            const shakeIntensity = deltaX + deltaY + deltaZ;
+
+            // Update the shake meter
+            document.getElementById('shake-meter').textContent = `Shake Intensity: ${shakeIntensity.toFixed(2)}`;
+
+            // Optional: trigger a special effect if intensity exceeds threshold
+            if (shakeIntensity > shakeThreshold) {
+                document.getElementById('shake-meter').style.background = 'lightgreen';
+                setTimeout(() => {
+                    document.getElementById('shake-meter').style.background = 'lightblue';
+                }, 500);
+            }
+
+            // Update last known values
+            lastX = x;
+            lastY = y;
+            lastZ = z;
+        });
     </script>
 </body>
 </html>
