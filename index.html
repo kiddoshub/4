@@ -1,51 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>las vegas 🪩⚡️🌹</title>
-    <style>
-      body {
-        margin: 0;
-        background-color: black;
-        overflow: hidden;
-      }
-      .watermark {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 40vw;
-        opacity: 0.07;
-        transform: translate(-50%, -50%);
-        animation: spin 100s linear infinite;
-        z-index: 1;
-      }
-      .quote {
-        position: absolute;
-        bottom: 3vh;
-        width: 100%;
-        text-align: center;
-        font-size: 1.3em;
-        font-family: 'Courier New', monospace;
-        color: white;
-        text-shadow: 0 0 5px black;
-        animation: fadeIn 4s ease forwards;
-        opacity: 0;
-        z-index: 2;
-      }
-      @keyframes spin {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-      }
-      @keyframes fadeIn {
-        to { opacity: 1; }
-      }
-    </style>
-  </head>
-  <body>
-    <img src="IMG_7020.jpeg" style="width:100vw; height:100vh; object-fit:cover; position:absolute; z-index:-1;">
-    
-    <!-- External watermark image (Steal Your Face) -->
-    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Grateful_Dead_-_Steal_Your_Face_album_cover.jpg/440px-Grateful_Dead_-_Steal_Your_Face_album_cover.jpg" class="watermark">
-
-    <div class="quote">"Let it be known there is a fountain that was not made by the hands of men."</div>
+  <head><title></title></head>
+  <body style="margin:0;">
+    <img src="IMG_7020.jpeg" style="width:100vw; height:100vh; object-fit:cover;">
   </body>
 </html>
