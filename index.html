@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Trippy Grid (Mobile Optimized)</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concert Calendar – Dead & Company + Billy Strings</title>
   <style>
     @font-face {
       font-family: 'ArnoldBoecklin';
@@ -12,100 +12,123 @@
 
     body {
       margin: 0;
-      background: black;
-      overflow: hidden;
+      background: #000;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
     }
 
-    .grid {
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    header {
+      text-align: center;
+      font-family: 'ArnoldBoecklin', cursive;
+      color: #ff00ff;
+      text-shadow: 0 0 4px #00ffff;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      color: #39ff14;
+    }
+
+    ul {
+      padding-left: 1rem;
+    }
+
+    .date {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #00ffff;
+      margin-top: -1rem;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
       display: grid;
       grid-template-columns: repeat(50, 1fr);
       grid-template-rows: repeat(50, 1fr);
-      width: 100vw;
-      height: 100vh;
-      position: absolute;
-      top: 0;
-      left: 0;
-      animation: gridPulse 15s ease-in-out infinite;
+      animation: drift 20s infinite alternate ease-in-out;
     }
 
-    .tab {
+    .cell {
       background-image: url('IMG_7020.jpeg');
       background-size: 5000% 5000%;
       background-repeat: no-repeat;
-      animation: tabShift 8s ease-in-out infinite alternate;
     }
 
-    @keyframes gridPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.01); }
-    }
-
-    @keyframes tabShift {
-      0% { transform: scale(1); filter: hue-rotate(0deg); }
-      100% { transform: scale(1.02); filter: hue-rotate(30deg); }
-    }
-
-    .lsd-tag {
-      position: absolute;
-      bottom: 12px;
-      left: 16px;
-      font-size: clamp(12px, 3vw, 20px);
-      font-family: 'ArnoldBoecklin', serif;
-      color: #ff00ff;
-      text-shadow: 0 0 4px #00ffff;
-      animation: tagFloat 6s ease-in-out infinite;
-      z-index: 10;
-      pointer-events: auto;
-      text-decoration: none;
-    }
-
-    @keyframes tagFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    .trip-button {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      padding: 10px 20px;
-      font-family: monospace;
-      font-size: 12px;
-      color: white;
-      background: rgba(255, 0, 255, 0.2);
-      border: 1px solid #ff00ff;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 10;
+    @keyframes drift {
+      0%   { transform: scale(1) rotate(0deg); }
+      50%  { transform: scale(1.01) rotate(0.1deg); }
+      100% { transform: scale(0.99) rotate(-0.1deg); }
     }
   </style>
 </head>
 <body>
-  <div class="grid" id="grid"></div>
+  <div class="background" id="bg"></div>
 
-  <a href="https://www.instagram.com/cheapie" class="lsd-tag">@cheapie</a>
-  <div class="trip-button" onclick="intensifyTrip()">trip intensifier</div>
+  <main>
+    <header>
+      <h1>Trippy Concert Calendar</h1>
+      <div class="date" id="today"></div>
+    </header>
+
+    <section>
+      <h2>Dead & Company – 2025</h2>
+      <ul>
+        <li>May 15–17 – Sphere, Las Vegas, NV</li>
+        <li>August 1–3 – Golden Gate Park, San Francisco, CA</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Billy Strings – 2025</h2>
+      <ul>
+        <li>May 13 – Phoenix, AZ</li>
+        <li>May 15 – Chula Vista, CA</li>
+        <li>May 16 – Hollywood Bowl, CA</li>
+        <li>May 18 – Wheatland, CA</li>
+        <li>May 20 – Nampa, ID</li>
+        <li>May 24 – Ridgefield, WA</li>
+        <li>May 25 – Gorge, WA</li>
+        <li>May 30–31 – Grand Rapids, MI</li>
+        <li>June 6–7 – Rosemont, IL</li>
+        <li>June 13–14 – St. Louis, MO</li>
+      </ul>
+    </section>
+  </main>
 
   <script>
-    const grid = document.getElementById("grid");
-
+    const bg = document.getElementById('bg');
     for (let i = 0; i < 2500; i++) {
-      const div = document.createElement('div');
-      div.className = 'tab';
-      div.style.backgroundPosition = `${(i % 50)}% ${(Math.floor(i / 50))}%`;
-      grid.appendChild(div);
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.style.backgroundPosition = `${(i % 50)}% ${(Math.floor(i / 50))}%`;
+      bg.appendChild(cell);
     }
 
-    let intensity = 1;
-
-    function intensifyTrip() {
-      intensity++;
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.style.animationDuration = `${Math.max(1, 8 - intensity)}s`;
-        tab.style.filter = `hue-rotate(${intensity * 45}deg)`;
+    document.getElementById('today').textContent =
+      new Date().toLocaleDateString(undefined, {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
       });
-      grid.style.animationDuration = `${Math.max(5, 15 - intensity * 2)}s`;
-    }
   </script>
 </body>
 </html>
