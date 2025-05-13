@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Concert Calendar – Dead & Company + Billy Strings</title>
+  <title>Concert Calendar</title>
   <style>
     @font-face {
       font-family: 'ArnoldBoecklin';
@@ -19,10 +19,10 @@
     }
 
     main {
-      max-width: 600px;
+      max-width: 640px;
       margin: auto;
       padding: 2rem;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
     }
 
     header {
@@ -30,10 +30,6 @@
       font-family: 'ArnoldBoecklin', cursive;
       color: #ff00ff;
       text-shadow: 0 0 4px #00ffff;
-    }
-
-    h1 {
-      font-size: 2.5rem;
     }
 
     h2 {
@@ -46,11 +42,15 @@
       padding-left: 1rem;
     }
 
+    li {
+      margin: 0.25rem 0;
+    }
+
     .date {
       text-align: center;
       font-size: 1.1rem;
       color: #00ffff;
-      margin-top: -1rem;
+      margin-top: -0.5rem;
     }
 
     .background {
@@ -84,7 +84,6 @@
 
   <main>
     <header>
-      <h1>Trippy Concert Calendar</h1>
       <div class="date" id="today"></div>
     </header>
 
@@ -114,6 +113,7 @@
   </main>
 
   <script>
+    // Grid animation
     const bg = document.getElementById('bg');
     for (let i = 0; i < 2500; i++) {
       const cell = document.createElement('div');
@@ -122,6 +122,7 @@
       bg.appendChild(cell);
     }
 
+    // Current date
     document.getElementById('today').textContent =
       new Date().toLocaleDateString(undefined, {
         weekday: 'long',
