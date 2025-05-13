@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Concert Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      --primary-color: #00ffff;
-      --secondary-color: #ff00ff;
-      --background-opacity: rgba(0, 0, 0, 0.6);
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --primary: #00ffff;
+      --accent: #ff00ff;
+      --bg-opacity: rgba(0, 0, 0, 0.6);
+      --font: monospace;
     }
 
     body {
@@ -17,8 +17,7 @@
       background: black url('IMG_7020.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      font-family: var(--font-family);
-      line-height: 1.6;
+      font-family: var(--font);
     }
 
     header {
@@ -26,104 +25,104 @@
       top: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--background-opacity);
-      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.4rem 0.8rem;
       border-radius: 6px;
-      font-size: 0.9rem;
-      color: var(--primary-color);
+      font-size: 0.75rem;
+      color: var(--primary);
+      letter-spacing: 0.05em;
       z-index: 10;
       text-align: center;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 5rem 1rem 2rem;
-      max-width: 600px;
-      margin: 0 auto;
+      min-width: 180px;
     }
 
     section.calendar {
-      background: var(--background-opacity);
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-opacity);
       padding: 1rem;
-      border: 1px solid var(--primary-color);
+      border: 1px solid var(--primary);
       border-radius: 8px;
+      max-width: 320px;
+      font-size: 0.9rem;
+      z-index: 10;
     }
 
     details summary {
-      color: var(--secondary-color);
+      color: var(--accent);
       font-weight: bold;
       cursor: pointer;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.5rem;
     }
 
     ul {
       padding-left: 1.2rem;
-      list-style-type: disc;
     }
 
     li {
       margin: 0.3em 0;
     }
 
-    footer {
+    aside.signature {
       position: fixed;
       bottom: 1rem;
       left: 1rem;
       font-size: 0.8rem;
-      color: var(--secondary-color);
+      color: var(--accent);
       z-index: 10;
-    }
-
-    @media (min-width: 600px) {
-      main {
-        grid-template-columns: repeat(2, 1fr);
-      }
     }
   </style>
 </head>
 <body>
 
-  <header id="current-date"></header>
+  <header id="date-clock" aria-label="Current Date and Time"></header>
 
-  <main>
-    <section class="calendar">
-      <details open>
-        <summary>Dead & Company – 2025</summary>
-        <ul>
-          <li>May 15–17 – Sphere, Las Vegas, NV</li>
-          <li>August 1–3 – Golden Gate Park, San Francisco, CA</li>
-        </ul>
-      </details>
-    </section>
+  <section class="calendar" aria-label="Concert Calendar">
+    <details open>
+      <summary>Dead & Company – 2025</summary>
+      <ul>
+        <li data-date="2025-05-15">May 15–17 – Sphere, Las Vegas, NV</li>
+        <li data-date="2025-08-01">August 1–3 – Golden Gate Park, San Francisco, CA</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Billy Strings – 2025</summary>
+      <ul>
+        <li data-date="2025-05-13">May 13 – Phoenix, AZ</li>
+        <li data-date="2025-05-15">May 15 – Chula Vista, CA</li>
+        <li data-date="2025-05-16">May 16 – Hollywood Bowl, CA</li>
+        <li data-date="2025-05-18">May 18 – Wheatland, CA</li>
+        <li data-date="2025-05-20">May 20 – Nampa, ID</li>
+        <li data-date="2025-05-24">May 24 – Ridgefield, WA</li>
+        <li data-date="2025-05-25">May 25 – Gorge, WA</li>
+        <li data-date="2025-05-30">May 30–31 – Grand Rapids, MI</li>
+        <li data-date="2025-06-06">June 6–7 – Rosemont, IL</li>
+        <li data-date="2025-06-13">June 13–14 – St. Louis, MO</li>
+      </ul>
+    </details>
+  </section>
 
-    <section class="calendar">
-      <details>
-        <summary>Billy Strings – 2025</summary>
-        <ul>
-          <li>May 13 – Phoenix, AZ</li>
-          <li>May 15 – Chula Vista, CA</li>
-          <li>May 16 – Hollywood Bowl, CA</li>
-          <li>May 18 – Wheatland, CA</li>
-          <li>May 20 – Nampa, ID</li>
-          <li>May 24 – Ridgefield, WA</li>
-          <li>May 25 – Gorge, WA</li>
-          <li>May 30–31 – Grand Rapids, MI</li>
-          <li>June 6–7 – Rosemont, IL</li>
-          <li>June 13–14 – St. Louis, MO</li>
-        </ul>
-      </details>
-    </section>
-  </main>
-
-  <footer>@cheapie</footer>
+  <aside class="signature">@cheapie</aside>
 
   <script>
-    const dateBox = document.getElementById('current-date');
-    const today = new Date();
-    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    dateBox.textContent = `LIVE • ${today.toLocaleDateString(undefined, options).toUpperCase()}`;
+    const dateEl = document.getElementById("date-clock");
+
+    function updateClock() {
+      const now = new Date();
+      const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+      const dateStr = now.toLocaleDateString(undefined, options).toUpperCase();
+      const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+
+      const todayISO = now.toISOString().slice(0, 10);
+      const concertDates = [...document.querySelectorAll('li[data-date]')].map(li => li.dataset.date);
+      const isLive = concertDates.includes(todayISO);
+
+      dateEl.textContent = `${isLive ? 'LIVE • ' : ''}${dateStr} • ${timeStr}`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 10000);
   </script>
 
 </body>
