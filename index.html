@@ -1,35 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Further</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
       font-family: 'ArnoldBoecklin';
-      src: url('https://db.onlinewebfonts.com/t/bdc957d9230fdb3edef32f9dfd5b015f.woff2') format('woff2'),
-           url('https://db.onlinewebfonts.com/t/bdc957d9230fdb3edef32f9dfd5b015f.woff') format('woff');
-    }
-
-    @keyframes tieDyeShift {
-      0%   { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
-      25%  { color: #ff8c00; text-shadow: 0 0 4px #ff8c00; }
-      50%  { color: #00ffff; text-shadow: 0 0 4px #00ffff; }
-      75%  { color: #39ff14; text-shadow: 0 0 4px #39ff14; }
-      100% { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
-    }
-
-    @keyframes gentleFloat {
-      0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
-      50%  { transform: translate3d(0, -1.5px, 0) rotate(0.3deg); }
-      100% { transform: translate3d(0, 0, 0) rotate(-0.3deg); }
+      src: url('https://db.onlinewebfonts.com/t/bdc957d9230fdb3edef32f9dfd5b015f.woff2') format('woff2');
     }
 
     body {
       margin: 0;
       background: black;
       overflow: hidden;
-      position: relative;
     }
 
     .grid {
@@ -41,25 +25,69 @@
       position: absolute;
       top: 0;
       left: 0;
+      animation: phaseShift 18s infinite ease-in-out;
     }
 
     .tab {
       background-image: url('IMG_7020.jpeg');
       background-size: 10000% 10000%;
       background-repeat: no-repeat;
-      will-change: transform;
+      animation: tabLiquid 9s ease-in-out infinite alternate;
+    }
+
+    @keyframes tabLiquid {
+      0%   { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+      50%  { transform: scale(1.02) rotate(0.1deg); filter: hue-rotate(60deg); }
+      100% { transform: scale(0.98) rotate(-0.1deg); filter: hue-rotate(-40deg); }
+    }
+
+    @keyframes phaseShift {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50%      { transform: rotate(0.2deg) scale(1.01); }
     }
 
     .lsd-tag {
       position: absolute;
       bottom: 12px;
-      right: 16px;
-      font-size: clamp(10px, 2vw, 14px);
+      left: 16px;
+      font-size: clamp(12px, 3vw, 20px);
       font-family: 'ArnoldBoecklin', serif;
-      text-decoration: none;
-      animation: tieDyeShift 6s infinite linear, gentleFloat 4s infinite ease-in-out;
+      color: #ff00ff;
+      text-shadow: 0 0 4px #00ffff;
+      animation: breathe 5s infinite ease-in-out, floatTag 7s infinite ease-in-out;
       z-index: 10;
       pointer-events: auto;
+      text-decoration: none;
+    }
+
+    @keyframes breathe {
+      0%, 100% { filter: blur(0); }
+      50% { filter: blur(0.4px); }
+    }
+
+    @keyframes floatTag {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px) rotate(0.3deg); }
+    }
+
+    .acid-overlay {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: monospace;
+      font-size: 2.2vw;
+      color: rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+      animation: flashOverlay 13s infinite ease-in-out;
+      z-index: 1;
+      letter-spacing: 0.1em;
+    }
+
+    @keyframes flashOverlay {
+      0%, 100% { opacity: 0.02; transform: translateX(-50%) scale(1); }
+      30% { opacity: 0.08; transform: translateX(-50%) scale(1.03); }
+      70% { opacity: 0.03; transform: translateX(-50%) scale(0.98); }
     }
   </style>
 </head>
@@ -74,6 +102,9 @@
       }
     </script>
   </div>
-  <a href="https://www.instagram.com/cheapie" target="_blank" class="lsd-tag">@cheapie</a>
+
+  <a href="https://www.instagram.com/cheapie" class="lsd-tag">@cheapie</a>
+
+  <div class="acid-overlay">CAN YOU PASS THE ACID TEST</div>
 </body>
 </html>
