@@ -1,36 +1,76 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
-    <style>
-      @keyframes tieDyeShift {
-        0%   { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
-        25%  { color: #ff8c00; text-shadow: 0 0 4px #ff8c00; }
-        50%  { color: #00ffff; text-shadow: 0 0 4px #00ffff; }
-        75%  { color: #39ff14; text-shadow: 0 0 4px #39ff14; }
-        100% { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
-      }
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    @font-face {
+      font-family: 'ArnoldBoecklin';
+      src: url('https://db.onlinewebfonts.com/t/bdc957d9230fdb3edef32f9dfd5b015f.woff2') format('woff2'),
+           url('https://db.onlinewebfonts.com/t/bdc957d9230fdb3edef32f9dfd5b015f.woff') format('woff');
+    }
 
-      @keyframes gentleFloat {
-        0%   { transform: translateY(0px) rotate(0deg); }
-        50%  { transform: translateY(-1.5px) rotate(0.2deg); }
-        100% { transform: translateY(0px) rotate(-0.2deg); }
-      }
+    @keyframes tieDyeShift {
+      0%   { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
+      25%  { color: #ff8c00; text-shadow: 0 0 4px #ff8c00; }
+      50%  { color: #00ffff; text-shadow: 0 0 4px #00ffff; }
+      75%  { color: #39ff14; text-shadow: 0 0 4px #39ff14; }
+      100% { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
+    }
 
-      .lsd-tag {
-        position: absolute;
-        bottom: 10px;
-        right: 14px;
-        font-size: 11px;
-        font-family: 'Rye', cursive;
-        text-decoration: none;
-        animation: tieDyeShift 6s infinite linear, gentleFloat 4s infinite ease-in-out;
+    @keyframes gentleFloat {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      50%  { transform: translateY(-1.5px) rotate(0.3deg); }
+      100% { transform: translateY(0px) rotate(-0.3deg); }
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      position: relative;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(100, 1fr);
+      grid-template-rows: repeat(100, 1fr);
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .tab {
+      background-image: url('IMG_7020.jpeg');
+      background-size: 10000% 10000%;
+      background-repeat: no-repeat;
+    }
+
+    .lsd-tag {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 11px;
+      font-family: 'ArnoldBoecklin', serif;
+      text-decoration: none;
+      animation: tieDyeShift 6s infinite linear, gentleFloat 4s infinite ease-in-out;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <script>
+      for (let i = 0; i < 10000; i++) {
+        const div = document.createElement('div');
+        div.className = 'tab';
+        div.style.backgroundPosition = `${(i % 100)}% ${(Math.floor(i / 100))}%`;
+        document.querySelector('.grid').appendChild(div);
       }
-    </style>
-  </head>
-  <body style="margin:0; position:relative; background:black;">
-    <img src="IMG_7020.jpeg" style="width:100vw; height:100vh; object-fit:cover;">
-    <a href="https://www.instagram.com/cheapie" target="_blank" class="lsd-tag">@cheapie</a>
-  </body>
+    </script>
+  </div>
+  <a href="https://www.instagram.com/cheapie" target="_blank" class="lsd-tag">@cheapie</a>
+</body>
 </html>
