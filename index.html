@@ -3,6 +3,7 @@
 <head>
   <title></title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
       font-family: 'ArnoldBoecklin';
@@ -19,15 +20,15 @@
     }
 
     @keyframes gentleFloat {
-      0%   { transform: translateY(0px) rotate(0deg); }
-      50%  { transform: translateY(-1.5px) rotate(0.3deg); }
-      100% { transform: translateY(0px) rotate(-0.3deg); }
+      0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50%  { transform: translate3d(0, -1.5px, 0) rotate(0.3deg); }
+      100% { transform: translate3d(0, 0, 0) rotate(-0.3deg); }
     }
 
     body {
       margin: 0;
-      overflow: hidden;
       background: black;
+      overflow: hidden;
       position: relative;
     }
 
@@ -46,17 +47,19 @@
       background-image: url('IMG_7020.jpeg');
       background-size: 10000% 10000%;
       background-repeat: no-repeat;
+      will-change: transform;
     }
 
     .lsd-tag {
       position: absolute;
-      bottom: 10px;
-      right: 14px;
-      font-size: 11px;
+      bottom: 12px;
+      right: 16px;
+      font-size: clamp(10px, 2vw, 14px);
       font-family: 'ArnoldBoecklin', serif;
       text-decoration: none;
       animation: tieDyeShift 6s infinite linear, gentleFloat 4s infinite ease-in-out;
       z-index: 10;
+      pointer-events: auto;
     }
   </style>
 </head>
