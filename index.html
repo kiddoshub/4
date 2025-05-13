@@ -159,15 +159,16 @@
     updateClock();
     setInterval(updateClock, 10000);
 
-    // Mandelbrot mini renderer
+    // Animated Mandelbrot Zoom
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+    let zoom = 1.5;
+    let moveX = -0.6, moveY = 0;
+    let zoomStep = 0.98;
 
-    function drawMandelbrot() {
-      const w = canvas.width, h = canvas.height;
+    function drawMandelbrotFrame() {
       const img = ctx.createImageData(w, h);
-      const zoom = 1.5;
-      const moveX = -0.6, moveY = 0;
       const maxIter = 40;
 
       for (let x = 0; x < w; x++) {
@@ -185,7 +186,7 @@
           }
 
           const p = (y * w + x) * 4;
-          const c = i === 0 ? 0 : 255 - i * 8;
+          const c = i === 0 ? 0 : 255 - i * 6;
           img.data[p] = c;
           img.data[p + 1] = c;
           img.data[p + 2] = c;
@@ -194,9 +195,13 @@
       }
 
       ctx.putImageData(img, 0, 0);
+      zoom *= zoomStep;
+      if (zoom < 0.00005) zoom = 1.5;
+      requestAnimationFrame(drawMandelbrotFrame);
     }
 
-    drawMandelbrot();
+    drawMandelbrotFrame();
   </script>
+
 </body>
 </html>
