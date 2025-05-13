@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Concert Calendar + Ticket Tracker</title>
+  <title>Concert Calendar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --primary: #b6ffe0;
       --accent: #ff00cc;
       --live-glow: #ff9900;
-      --button-glow: #ffee00;
       --bg-opacity: rgba(0, 0, 0, 0.6);
       --font: monospace;
     }
@@ -84,24 +82,6 @@
       color: var(--accent);
       z-index: 10;
     }
-
-    .graph-container {
-      position: fixed;
-      bottom: 6rem;
-      right: 1.5rem;
-      width: 280px;
-      max-width: 280px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 1px solid var(--primary);
-      border-radius: 8px;
-      padding: 0.5rem;
-      z-index: 5;
-    }
-
-    canvas {
-      background: #111;
-      border-radius: 4px;
-    }
   </style>
 </head>
 <body>
@@ -133,14 +113,8 @@
     </details>
   </section>
 
-  <div class="graph-container">
-    <h4 style="margin:0 0 0.5rem;color:#00ffff;">Ticket Prices</h4>
-    <canvas id="ticketChart" width="240" height="120"></canvas>
-  </div>
-
   <aside class="signature">@cheapie</aside>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const dateEl = document.getElementById("date-clock");
 
@@ -171,49 +145,7 @@
 
     updateClock();
     setInterval(updateClock, 10000);
-
-    const ctx = document.getElementById('ticketChart').getContext('2d');
-    const ticketChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [{
-          label: 'Ticket Price ($)',
-          data: [],
-          backgroundColor: 'rgba(255,0,204,0.2)',
-          borderColor: '#ff00cc',
-          borderWidth: 2,
-          pointBackgroundColor: '#ffee00',
-          tension: 0.4
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {
-            labels: { color: '#fff' }
-          }
-        },
-        scales: {
-          x: { ticks: { color: '#ccc' }, grid: { color: '#333' } },
-          y: { ticks: { color: '#ccc' }, grid: { color: '#333' } }
-        }
-      }
-    });
-
-    function simulatePriceUpdate() {
-      const simulatedPrice = Math.floor(Math.random() * 60) + 120;
-      const time = new Date().toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-      if (ticketChart.data.labels.length > 10) {
-        ticketChart.data.labels.shift();
-        ticketChart.data.datasets[0].data.shift();
-      }
-      ticketChart.data.labels.push(time);
-      ticketChart.data.datasets[0].data.push(simulatedPrice);
-      ticketChart.update();
-    }
-
-    setInterval(simulatePriceUpdate, 60000);
-    simulatePriceUpdate();
   </script>
+
 </body>
 </html>
