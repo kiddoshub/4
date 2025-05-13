@@ -82,11 +82,24 @@
       color: var(--accent);
       z-index: 10;
     }
+
+    canvas#mandelbrot {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+      border-radius: 8px;
+      opacity: 0.85;
+    }
   </style>
 </head>
 <body>
 
   <header id="date-clock"></header>
+
+  <canvas id="mandelbrot" width="120" height="120"></canvas>
 
   <section class="calendar">
     <details open>
@@ -145,7 +158,45 @@
 
     updateClock();
     setInterval(updateClock, 10000);
-  </script>
 
+    // Mandelbrot mini renderer
+    const canvas = document.getElementById("mandelbrot");
+    const ctx = canvas.getContext("2d");
+
+    function drawMandelbrot() {
+      const w = canvas.width, h = canvas.height;
+      const img = ctx.createImageData(w, h);
+      const zoom = 1.5;
+      const moveX = -0.6, moveY = 0;
+      const maxIter = 40;
+
+      for (let x = 0; x < w; x++) {
+        for (let y = 0; y < h; y++) {
+          let zx = 0, zy = 0;
+          const cx = (x - w / 2) / (0.5 * zoom * w) + moveX;
+          const cy = (y - h / 2) / (0.5 * zoom * h) + moveY;
+          let i = maxIter;
+
+          while (zx * zx + zy * zy < 4 && i > 0) {
+            const tmp = zx * zx - zy * zy + cx;
+            zy = 2.0 * zx * zy + cy;
+            zx = tmp;
+            i--;
+          }
+
+          const p = (y * w + x) * 4;
+          const c = i === 0 ? 0 : 255 - i * 8;
+          img.data[p] = c;
+          img.data[p + 1] = c;
+          img.data[p + 2] = c;
+          img.data[p + 3] = 255;
+        }
+      }
+
+      ctx.putImageData(img, 0, 0);
+    }
+
+    drawMandelbrot();
+  </script>
 </body>
 </html>
