@@ -74,6 +74,12 @@
       margin: 0.3em 0;
     }
 
+    li.attending {
+      color: var(--accent);
+      font-weight: bold;
+      text-shadow: 0 0 4px var(--accent);
+    }
+
     .signature {
       position: fixed;
       bottom: 1rem;
@@ -119,15 +125,15 @@
     <details open>
       <summary>Dead & Company – 2025</summary>
       <ul>
+        <li class="attending" data-date="2025-08-01" data-artist="Dead & Company">★ August 1–3 – Golden Gate Park, San Francisco, CA</li>
         <li data-date="2025-05-15" data-artist="Dead & Company">May 15–17 – Sphere, Las Vegas, NV</li>
-        <li data-date="2025-08-01" data-artist="Dead & Company">August 1–3 – Golden Gate Park, San Francisco, CA</li>
       </ul>
     </details>
     <details>
       <summary>Billy Strings – 2025</summary>
       <ul>
-        <li data-date="2025-05-13" data-artist="Billy Strings">May 13 – Phoenix, AZ</li>
-        <li data-date="2025-05-15" data-artist="Billy Strings">May 15 – Chula Vista, CA</li>
+        <li class="attending" data-date="2025-05-13" data-artist="Billy Strings">★ May 13 – Phoenix, AZ</li>
+        <li class="attending" data-date="2025-05-15" data-artist="Billy Strings">★ May 15 – Chula Vista, CA</li>
         <li data-date="2025-05-16" data-artist="Billy Strings">May 16 – Hollywood Bowl, CA</li>
         <li data-date="2025-05-18" data-artist="Billy Strings">May 18 – Wheatland, CA</li>
         <li data-date="2025-05-20" data-artist="Billy Strings">May 20 – Nampa, ID</li>
@@ -142,7 +148,6 @@
 
   <aside class="signature">@cheapie</aside>
 
-  <!-- Floating Jerry Garcia images -->
   <div class="jerry-gallery">
     <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;">
     <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay: 5s;">
