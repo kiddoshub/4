@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Further</title>
+  <title>Trippy Grid (Mobile Optimized)</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -18,32 +18,31 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(100, 1fr);
-      grid-template-rows: repeat(100, 1fr);
+      grid-template-columns: repeat(50, 1fr);
+      grid-template-rows: repeat(50, 1fr);
       width: 100vw;
       height: 100vh;
       position: absolute;
       top: 0;
       left: 0;
-      animation: phaseShift 18s infinite ease-in-out;
+      animation: gridPulse 15s ease-in-out infinite;
     }
 
     .tab {
       background-image: url('IMG_7020.jpeg');
-      background-size: 10000% 10000%;
+      background-size: 5000% 5000%;
       background-repeat: no-repeat;
-      animation: tabLiquid 9s ease-in-out infinite alternate;
+      animation: tabShift 8s ease-in-out infinite alternate;
     }
 
-    @keyframes tabLiquid {
-      0%   { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
-      50%  { transform: scale(1.02) rotate(0.1deg); filter: hue-rotate(60deg); }
-      100% { transform: scale(0.98) rotate(-0.1deg); filter: hue-rotate(-40deg); }
+    @keyframes gridPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.01); }
     }
 
-    @keyframes phaseShift {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      50%      { transform: rotate(0.2deg) scale(1.01); }
+    @keyframes tabShift {
+      0% { transform: scale(1); filter: hue-rotate(0deg); }
+      100% { transform: scale(1.02); filter: hue-rotate(30deg); }
     }
 
     .lsd-tag {
@@ -54,40 +53,30 @@
       font-family: 'ArnoldBoecklin', serif;
       color: #ff00ff;
       text-shadow: 0 0 4px #00ffff;
-      animation: breathe 5s infinite ease-in-out, floatTag 7s infinite ease-in-out;
+      animation: tagFloat 6s ease-in-out infinite;
       z-index: 10;
       pointer-events: auto;
       text-decoration: none;
     }
 
-    @keyframes breathe {
-      0%, 100% { filter: blur(0); }
-      50% { filter: blur(0.4px); }
-    }
-
-    @keyframes floatTag {
+    @keyframes tagFloat {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px) rotate(0.3deg); }
+      50% { transform: translateY(-3px); }
     }
 
-    .acid-overlay {
+    .trip-button {
       position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 16px;
+      right: 16px;
+      padding: 10px 20px;
       font-family: monospace;
-      font-size: 2.2vw;
-      color: rgba(255, 255, 255, 0.06);
-      pointer-events: none;
-      animation: flashOverlay 13s infinite ease-in-out;
-      z-index: 1;
-      letter-spacing: 0.1em;
-    }
-
-    @keyframes flashOverlay {
-      0%, 100% { opacity: 0.02; transform: translateX(-50%) scale(1); }
-      30% { opacity: 0.08; transform: translateX(-50%) scale(1.03); }
-      70% { opacity: 0.03; transform: translateX(-50%) scale(0.98); }
+      font-size: 12px;
+      color: white;
+      background: rgba(255, 0, 255, 0.2);
+      border: 1px solid #ff00ff;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 10;
     }
   </style>
 </head>
@@ -95,19 +84,28 @@
   <div class="grid" id="grid"></div>
 
   <a href="https://www.instagram.com/cheapie" class="lsd-tag">@cheapie</a>
-  <div class="acid-overlay">CAN YOU PASS THE ACID TEST</div>
+  <div class="trip-button" onclick="intensifyTrip()">trip intensifier</div>
 
   <script>
-    // Only run this after the page loads
-    document.addEventListener("DOMContentLoaded", () => {
-      const grid = document.getElementById("grid");
-      for (let i = 0; i < 10000; i++) {
-        const div = document.createElement('div');
-        div.className = 'tab';
-        div.style.backgroundPosition = `${(i % 100)}% ${(Math.floor(i / 100))}%`;
-        grid.appendChild(div);
-      }
-    });
+    const grid = document.getElementById("grid");
+
+    for (let i = 0; i < 2500; i++) {
+      const div = document.createElement('div');
+      div.className = 'tab';
+      div.style.backgroundPosition = `${(i % 50)}% ${(Math.floor(i / 50))}%`;
+      grid.appendChild(div);
+    }
+
+    let intensity = 1;
+
+    function intensifyTrip() {
+      intensity++;
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.style.animationDuration = `${Math.max(1, 8 - intensity)}s`;
+        tab.style.filter = `hue-rotate(${intensity * 45}deg)`;
+      });
+      grid.style.animationDuration = `${Math.max(5, 15 - intensity * 2)}s`;
+    }
   </script>
 </body>
 </html>
