@@ -1,7 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head><title></title></head>
-  <body style="margin:0;">
+  <head>
+    <title></title>
+    <style>
+      @keyframes pulseGlow {
+        0% {
+          text-shadow: 0 0 2px #39ff14, 0 0 4px #39ff14, 0 0 6px #39ff14;
+          transform: scale(1);
+        }
+        50% {
+          text-shadow: 0 0 6px #39ff14, 0 0 10px #ff00ff, 0 0 14px #00ffff;
+          transform: scale(1.04);
+        }
+        100% {
+          text-shadow: 0 0 2px #39ff14, 0 0 4px #39ff14, 0 0 6px #39ff14;
+          transform: scale(1);
+        }
+      }
+
+      .lsd-tag {
+        position: absolute;
+        bottom: 8px;
+        right: 12px;
+        font-size: 9px;
+        color: #39ff14;
+        font-family: 'Courier New', monospace;
+        text-decoration: none;
+        animation: pulseGlow 3s infinite ease-in-out;
+      }
+    </style>
+  </head>
+  <body style="margin:0; position:relative; background:black;">
     <img src="IMG_7020.jpeg" style="width:100vw; height:100vh; object-fit:cover;">
+    <a href="https://www.instagram.com/cheapie" target="_blank" class="lsd-tag">@cheapie</a>
   </body>
 </html>
