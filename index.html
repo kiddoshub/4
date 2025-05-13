@@ -3,30 +3,28 @@
   <head>
     <title></title>
     <style>
-      @keyframes pulseGlow {
-        0% {
-          text-shadow: 0 0 2px #39ff14, 0 0 4px #39ff14, 0 0 6px #39ff14;
-          transform: scale(1);
-        }
-        50% {
-          text-shadow: 0 0 6px #39ff14, 0 0 10px #ff00ff, 0 0 14px #00ffff;
-          transform: scale(1.04);
-        }
-        100% {
-          text-shadow: 0 0 2px #39ff14, 0 0 4px #39ff14, 0 0 6px #39ff14;
-          transform: scale(1);
-        }
+      @keyframes tieDyeShift {
+        0%   { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
+        25%  { color: #ff8c00; text-shadow: 0 0 4px #ff8c00; }
+        50%  { color: #00ffff; text-shadow: 0 0 4px #00ffff; }
+        75%  { color: #39ff14; text-shadow: 0 0 4px #39ff14; }
+        100% { color: #ff0080; text-shadow: 0 0 4px #ff0080; }
+      }
+
+      @keyframes gentleFloat {
+        0%   { transform: translateY(0px) rotate(0deg); }
+        50%  { transform: translateY(-1.5px) rotate(0.2deg); }
+        100% { transform: translateY(0px) rotate(-0.2deg); }
       }
 
       .lsd-tag {
         position: absolute;
-        bottom: 8px;
-        right: 12px;
-        font-size: 9px;
-        color: #39ff14;
+        bottom: 10px;
+        right: 14px;
+        font-size: 10px;
         font-family: 'Courier New', monospace;
         text-decoration: none;
-        animation: pulseGlow 3s infinite ease-in-out;
+        animation: tieDyeShift 6s infinite linear, gentleFloat 4s infinite ease-in-out;
       }
     </style>
   </head>
