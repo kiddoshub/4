@@ -92,19 +92,22 @@
   </style>
 </head>
 <body>
-  <div class="grid">
-    <script>
+  <div class="grid" id="grid"></div>
+
+  <a href="https://www.instagram.com/cheapie" class="lsd-tag">@cheapie</a>
+  <div class="acid-overlay">CAN YOU PASS THE ACID TEST</div>
+
+  <script>
+    // Only run this after the page loads
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("grid");
       for (let i = 0; i < 10000; i++) {
         const div = document.createElement('div');
         div.className = 'tab';
         div.style.backgroundPosition = `${(i % 100)}% ${(Math.floor(i / 100))}%`;
-        document.querySelector('.grid').appendChild(div);
+        grid.appendChild(div);
       }
-    </script>
-  </div>
-
-  <a href="https://www.instagram.com/cheapie" class="lsd-tag">@cheapie</a>
-
-  <div class="acid-overlay">CAN YOU PASS THE ACID TEST</div>
+    });
+  </script>
 </body>
 </html>
