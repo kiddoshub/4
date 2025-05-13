@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live Music Calendar</title>
+  <title>Concert Calendar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -10,83 +10,71 @@
       background: black;
       color: white;
       font-family: monospace;
+      background-image: url('IMG_7020.jpeg'); /* Make sure the image is in the same folder */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
-    .grid {
+    .date-header {
       position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      display: grid;
-      grid-template-columns: repeat(50, 1fr);
-      grid-template-rows: repeat(50, 1fr);
-      width: 100vw;
-      height: 100vh;
-      animation: pulse 20s ease-in-out infinite;
-    }
-
-    .tile {
-      background-image: url('IMG_7020.jpeg');
-      background-size: 5000% 5000%;
-      background-repeat: no-repeat;
-    }
-
-    @keyframes pulse {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.01) rotate(0.1deg); }
-      100% { transform: scale(1); }
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #00ffff;
+      z-index: 10;
+      text-align: center;
+      box-shadow: 0 0 8px #00ffff44;
     }
 
     .calendar {
       position: fixed;
-      bottom: 1em;
-      right: 1em;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 1em;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 1rem;
       border: 1px solid #00ffff;
-      border-radius: 5px;
+      border-radius: 8px;
       max-width: 300px;
-      font-size: 0.9em;
+      font-size: 0.9rem;
+      z-index: 10;
+      box-shadow: 0 0 10px #00ffff33;
     }
 
-    summary {
+    .calendar summary {
       color: #ff00ff;
       font-weight: bold;
       cursor: pointer;
+      margin-bottom: 0.5em;
     }
 
     .calendar ul {
-      padding-left: 1em;
+      padding-left: 1.2rem;
     }
 
     .calendar li {
       margin: 0.3em 0;
     }
 
-    .today {
-      position: fixed;
-      top: 1em;
-      right: 1em;
-      color: #00ffff;
-      font-size: 0.95em;
-    }
-
     .signature {
       position: fixed;
-      bottom: 1em;
-      left: 1em;
-      font-family: monospace;
-      font-size: 0.75em;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      font-size: 0.8rem;
       color: #ff00ff;
-      text-shadow: 0 0 3px #00ffff;
+      font-family: monospace;
+      text-shadow: 0 0 4px #00ffff;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
 
-  <div class="grid" id="background"></div>
-
-  <div class="today" id="date"></div>
+  <div class="date-header" id="current-date"></div>
 
   <div class="calendar">
     <details open>
@@ -116,23 +104,11 @@
   <div class="signature">@cheapie</div>
 
   <script>
-    // Set the current date
+    const dateBox = document.getElementById('current-date');
     const today = new Date();
-    document.getElementById('date').textContent = today.toLocaleDateString(undefined, {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-
-    // Render a lightweight animated grid
-    const grid = document.getElementById('background');
-    for (let i = 0; i < 2500; i++) {
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-      tile.style.backgroundPosition = `${(i % 50)}% ${(Math.floor(i / 50))}%`;
-      grid.appendChild(tile);
-    }
+    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+    dateBox.textContent = today.toLocaleDateString(undefined, options);
   </script>
+
 </body>
 </html>
