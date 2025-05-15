@@ -225,33 +225,37 @@
     drawMandelbrotLive();
 
     const dateEl = document.getElementById("date-clock");
-    function updateClock() {
-      const now = new Date();
-      const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-      const dateStr = now.toLocaleDateString(undefined, options).toUpperCase();
-      const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
-      const todayISO = now.toISOString().slice(0, 10);
-      const allDates = document.querySelectorAll('li[data-date]');
-      let liveArtist = null;
+function updateClock() {
+  const now = new Date();
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  const dateStr = now.toLocaleDateString(undefined, options).toUpperCase();
+  const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
-      allDates.forEach(li => {
-        if (li.dataset.date === todayISO) {
-          liveArtist = li.dataset.artist;
-        }
-      });
+  const todayISO = now.toISOString().slice(0, 10);
+  const allDates = document.querySelectorAll('li[data-start], li[data-date]');
+  let liveArtist = null;
 
-      if (liveArtist) {
-        dateEl.textContent = `LIVE: ${liveArtist.toUpperCase()} • ${dateStr} • ${timeStr}`;
-        dateEl.classList.add('live');
-      } else {
-        dateEl.textContent = `${dateStr} • ${timeStr}`;
-        dateEl.classList.remove('live');
-      }
+  allDates.forEach(li => {
+    const start = li.dataset.start || li.dataset.date;
+    const end = li.dataset.end || start;
+
+    if (todayISO >= start && todayISO <= end) {
+      liveArtist = li.dataset.artist;
     }
+  });
 
-    updateClock();
-    setInterval(updateClock, 10000);
+  if (liveArtist) {
+    dateEl.textContent = `LIVE: ${liveArtist.toUpperCase()} • ${dateStr} • ${timeStr}`;
+    dateEl.classList.add('live');
+  } else {
+    dateEl.textContent = `${dateStr} • ${timeStr}`;
+    dateEl.classList.remove('live');
+  }
+}
+
+updateClock();
+setInterval(updateClock, 10000);
   </script>
 </body>
 </html>
