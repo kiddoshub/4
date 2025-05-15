@@ -93,20 +93,21 @@
       border-radius: 8px;
       opacity: 0.95;
     }
-    .jerry-gallery img {
-      position: absolute;
-      width: 100px;
-      height: auto;
-      opacity: 0.14;
-      pointer-events: none;
-      animation: float 40s linear infinite;
-      z-index: 0;
-    }
-    @keyframes float {
-      0%   { transform: translate(0, 100vh) rotate(0deg); }
-      50%  { transform: translate(10px, 50vh) rotate(180deg); }
-      100% { transform: translate(0, -100vh) rotate(360deg); }
-    }
+    ..jerry-gallery img {
+  position: absolute;
+  width: 100px;
+  height: auto;
+  opacity: 0.14;
+  pointer-events: none;
+  animation: float 40s linear infinite;
+  z-index: 0;
+}
+
+@keyframes float {
+  0%   { transform: translate(0, 100vh) rotate(0deg); }
+  50%  { transform: translate(10px, 50vh) rotate(180deg); }
+  100% { transform: translate(0, -100vh) rotate(360deg); }
+}
   </style>
 </head>
 <body>
