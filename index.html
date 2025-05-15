@@ -224,35 +224,23 @@
 
     drawMandelbrotLive();
 
-const dateEl = document.getElementById("date-clock");
+    const dateEl = document.getElementById("date-clock");
 
 function updateClock() {
   const now = new Date();
-  const localYear = now.getFullYear();
-  const localMonth = String(now.getMonth() + 1).padStart(2, '0');
-  const localDay = String(now.getDate()).padStart(2, '0');
-  const todayLocal = `${localYear}-${localMonth}-${localDay}`; // YYYY-MM-DD
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  const dateStr = now.toLocaleDateString(undefined, options).toUpperCase();
+  const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
-  const dateStr = now.toLocaleDateString(undefined, {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  }).toUpperCase();
-
-  const timeStr = now.toLocaleTimeString(undefined, {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-
-  const allDates = document.querySelectorAll('li[data-date], li[data-start]');
+  const todayISO = now.toISOString().slice(0, 10);
+  const allDates = document.querySelectorAll('li[data-start], li[data-date]');
   let liveArtist = null;
 
   allDates.forEach(li => {
     const start = li.dataset.start || li.dataset.date;
     const end = li.dataset.end || start;
 
-    if (todayLocal >= start && todayLocal <= end) {
+    if (todayISO >= start && todayISO <= end) {
       liveArtist = li.dataset.artist;
     }
   });
@@ -268,5 +256,8 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 10000);
+  </script>
 </body>
 </html>
+
+fix the clock, it doesnt work it says theres a show live right now
