@@ -93,22 +93,31 @@
       border-radius: 8px;
       opacity: 0.95;
     }
-    ..jerry-gallery img {
+.jerry-gallery {
   position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.jerry-gallery img {
+  position: absolute;
+  bottom: -150px; /* ensures smooth entry from bottom */
+  left: var(--x, 50%);
   width: 100px;
   height: auto;
   opacity: 0.14;
   pointer-events: none;
   animation: float 40s linear infinite;
-  z-index: 0;
+  animation-delay: var(--delay, 0s);
 }
 
 @keyframes float {
-  0%   { transform: translate(0, 100vh) rotate(0deg); }
-  50%  { transform: translate(10px, 50vh) rotate(180deg); }
-  100% { transform: translate(0, -100vh) rotate(360deg); }
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-50vh) rotate(180deg); }
+  100% { transform: translateY(-100vh) rotate(360deg); }
 }
-  </style>
 </head>
 <body>
 
@@ -145,21 +154,22 @@
   <aside class="signature">@cheapie</aside>
 
 <div class="jerry-gallery">
-  <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg" style="left:5%; animation-delay: 0s;" aria-hidden="true">
-  <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg" style="left:15%; animation-delay: 5s;" aria-hidden="true">
-  <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg" style="left:25%; animation-delay: 10s;" aria-hidden="true">
-  <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:35%; animation-delay: 15s;" aria-hidden="true">
-  <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:45%; animation-delay: 20s;" aria-hidden="true">
-  <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg" style="left:55%; animation-delay: 25s;" aria-hidden="true">
-  <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:65%; animation-delay: 30s;" aria-hidden="true">
+  <!-- Existing Online Images -->
+  <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg" style="--x:5%; --delay:0s;">
+  <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg" style="--x:15%; --delay:5s;">
+  <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg" style="--x:25%; --delay:10s;">
+  <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="--x:35%; --delay:15s;">
+  <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="--x:45%; --delay:20s;">
+  <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg" style="--x:55%; --delay:25s;">
+  <img src="https://s14.gifyu.com/images/bsKXm.gif" style="--x:65%; --delay:30s;">
 
-  <!-- Newly Added Local Images -->
-  <img src="IMG_6955.jpeg" style="left:10%; animation-delay: 35s;" aria-hidden="true">
-  <img src="IMG_6956.jpeg" style="left:30%; animation-delay: 40s;" aria-hidden="true">
-  <img src="IMG_7004.jpeg" style="left:50%; animation-delay: 45s;" aria-hidden="true">
-  <img src="IMG_7012.jpeg" style="left:70%; animation-delay: 50s;" aria-hidden="true">
-  <img src="IMG_7029.jpeg" style="left:85%; animation-delay: 55s;" aria-hidden="true">
-  <img src="IMG_7039.jpeg" style="left:95%; animation-delay: 60s;" aria-hidden="true">
+  <!-- Local Images -->
+  <img src="IMG_6955.jpeg" style="--x:10%; --delay:35s;">
+  <img src="IMG_6956.jpeg" style="--x:30%; --delay:40s;">
+  <img src="IMG_7004.jpeg" style="--x:50%; --delay:45s;">
+  <img src="IMG_7012.jpeg" style="--x:70%; --delay:50s;">
+  <img src="IMG_7029.jpeg" style="--x:85%; --delay:55s;">
+  <img src="IMG_7039.jpeg" style="--x:95%; --delay:60s;">
 </div>
   <script>
     const canvas = document.getElementById("mandelbrot");
