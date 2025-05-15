@@ -224,76 +224,38 @@
 
     drawMandelbrotLive();
 
-<script>
-  const dateEl = document.getElementById("date-clock");
+    const dateEl = document.getElementById("date-clock");
 
-  function getTodayLocalISO() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Force local midnight
-    return today.toISOString().split("T")[0]; // YYYY-MM-DD
-  }
+function updateClock() {
+  const now = new Date();
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  const dateStr = now.toLocaleDateString(undefined, options).toUpperCase();
+  const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
-  function updateClock() {
-    const now = new Date();
-    const todayISO = getTodayLocalISO();
+  const todayISO = now.toISOString().slice(0, 10);
+  const allDates = document.querySelectorAll('li[data-start], li[data-date]');
+  let liveArtist = null;
 
-    const dateStr = now.toLocaleDateString(undefined, {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    }).toUpperCase();
+  allDates.forEach(li => {
+    const start = li.dataset.start || li.dataset.date;
+    const end = li.dataset.end || start;
 
-    const timeStr = now.toLocaleTimeString(undefined, {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-
-    let liveArtist = null;
-
-    document.querySelectorAll('li[data-date], li[data-start]').forEach(li => {
-      const start = li.dataset.start || li.dataset.date;
-      const end = li.dataset.end || start;
-      const artist = li.dataset.artist;
-
-      const nowDate = new Date(todayISO);
-      const startDate = new Date(start);
-      const endDate = new Date(end);
-
-      // Normalize time for comparisons
-      nowDate.setHours(0, 0, 0, 0);
-      startDate.setHours(0, 0, 0, 0);
-      endDate.setHours(0, 0, 0, 0);
-
-      // Determine past
-      if (nowDate > endDate && !li.classList.contains("done")) {
-        li.classList.add("done");
-
-        // Only wrap text with <s> if not already
-        if (!li.innerHTML.includes("<s>")) {
-          const cleanText = li.textContent.trim().replace(/^★\s*/, '');
-          li.innerHTML = `★ <s>${cleanText}</s>`;
-        }
-      }
-
-      // Determine if live today
-      if (nowDate >= startDate && nowDate <= endDate) {
-        liveArtist = artist;
-      }
-    });
-
-    // Update top header
-    if (liveArtist) {
-      dateEl.textContent = `LIVE: ${liveArtist.toUpperCase()} • ${dateStr} • ${timeStr}`;
-      dateEl.classList.add("live");
-    } else {
-      dateEl.textContent = `${dateStr} • ${timeStr}`;
-      dateEl.classList.remove("live");
+    if (todayISO >= start && todayISO <= end) {
+      liveArtist = li.dataset.artist;
     }
-  }
+  });
 
-  updateClock();
-  setInterval(updateClock, 10000);
-</script>
+  if (liveArtist) {
+    dateEl.textContent = `LIVE: ${liveArtist.toUpperCase()} • ${dateStr} • ${timeStr}`;
+    dateEl.classList.add('live');
+  } else {
+    dateEl.textContent = `${dateStr} • ${timeStr}`;
+    dateEl.classList.remove('live');
+  }
+}
+
+updateClock();
+setInterval(updateClock, 10000);
+  </script>
 </body>
 </html>
