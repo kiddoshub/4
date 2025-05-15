@@ -80,6 +80,11 @@
       text-shadow: 0 0 4px var(--accent);
     }
 
+    li.done s {
+      opacity: 0.6;
+      text-decoration-thickness: 2px;
+    }
+
     .signature {
       position: fixed;
       bottom: 1rem;
@@ -118,32 +123,32 @@
 </head>
 <body>
 
-  <header id="date-clock"></header>
+  <header id="date-clock" role="status" aria-live="polite"></header>
   <canvas id="mandelbrot" width="120" height="120"></canvas>
 
   <section class="calendar">
     <details open>
       <summary>Dead & Company – 2025</summary>
       <ul>
-        <li class="attending" data-date="2025-08-01" data-artist="Dead & Company">★ August 1–3 – Golden Gate Park, San Francisco, CA</li>
-        <li data-date="2025-05-15" data-artist="Dead & Company">May 15–17 – Sphere, Las Vegas, NV</li>
+        <li class="attending" data-start="2025-08-01" data-end="2025-08-03" data-artist="Dead & Company">★ August 1–3 – Golden Gate Park, San Francisco, CA</li>
+        <li data-start="2025-05-15" data-end="2025-05-17" data-artist="Dead & Company">May 15–17 – Sphere, Las Vegas, NV</li>
       </ul>
     </details>
     <details>
       <summary>Billy Strings – 2025</summary>
       <ul>
-<li class="attending done" data-date="2025-05-13" data-artist="Billy Strings">
-  ★ <s>May 13 – Phoenix, AZ</s>
-</li>
-        <li class="attending" data-date="2025-05-15" data-artist="Billy Strings">★ May 15 – Chula Vista, CA</li>
-        <li data-date="2025-05-16" data-artist="Billy Strings">May 16 – Hollywood Bowl, CA</li>
-        <li data-date="2025-05-18" data-artist="Billy Strings">May 18 – Wheatland, CA</li>
-        <li data-date="2025-05-20" data-artist="Billy Strings">May 20 – Nampa, ID</li>
-        <li data-date="2025-05-24" data-artist="Billy Strings">May 24 – Ridgefield, WA</li>
-        <li data-date="2025-05-25" data-artist="Billy Strings">May 25 – Gorge, WA</li>
-        <li data-date="2025-05-30" data-artist="Billy Strings">May 30–31 – Grand Rapids, MI</li>
-        <li data-date="2025-06-06" data-artist="Billy Strings">June 6–7 – Rosemont, IL</li>
-        <li data-date="2025-06-13" data-artist="Billy Strings">June 13–14 – St. Louis, MO</li>
+        <li class="attending done" data-start="2025-05-13" data-end="2025-05-13" data-artist="Billy Strings">
+          ★ <s>May 13 – Phoenix, AZ</s>
+        </li>
+        <li class="attending" data-start="2025-05-15" data-end="2025-05-15" data-artist="Billy Strings">★ May 15 – Chula Vista, CA</li>
+        <li data-start="2025-05-16" data-end="2025-05-16" data-artist="Billy Strings">May 16 – Hollywood Bowl, CA</li>
+        <li data-start="2025-05-18" data-end="2025-05-18" data-artist="Billy Strings">May 18 – Wheatland, CA</li>
+        <li data-start="2025-05-20" data-end="2025-05-20" data-artist="Billy Strings">May 20 – Nampa, ID</li>
+        <li data-start="2025-05-24" data-end="2025-05-24" data-artist="Billy Strings">May 24 – Ridgefield, WA</li>
+        <li data-start="2025-05-25" data-end="2025-05-25" data-artist="Billy Strings">May 25 – Gorge, WA</li>
+        <li data-start="2025-05-30" data-end="2025-05-31" data-artist="Billy Strings">May 30–31 – Grand Rapids, MI</li>
+        <li data-start="2025-06-06" data-end="2025-06-07" data-artist="Billy Strings">June 6–7 – Rosemont, IL</li>
+        <li data-start="2025-06-13" data-end="2025-06-14" data-artist="Billy Strings">June 13–14 – St. Louis, MO</li>
       </ul>
     </details>
   </section>
@@ -151,13 +156,13 @@
   <aside class="signature">@cheapie</aside>
 
   <div class="jerry-gallery">
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;">
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay: 5s;">
-    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay: 10s;">
-    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay: 15s;">
-    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay: 20s;">
-    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay: 25s;">
-    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay: 30s;">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;" aria-hidden="true">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay: 5s;" aria-hidden="true">
+    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay: 10s;" aria-hidden="true">
+    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay: 15s;" aria-hidden="true">
+    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay: 20s;" aria-hidden="true">
+    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay: 25s;" aria-hidden="true">
+    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay: 30s;" aria-hidden="true">
   </div>
 
   <script>
@@ -203,8 +208,10 @@
   }
 
   function hslToRgb(h, s, l) {
-    let r, g, b;
-    if (s === 0) return [l * 255, l * 255, l * 255];
+    if (s === 0) {
+      const gray = Math.round(l * 255);
+      return [gray, gray, gray];
+    }
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
     const p = 2 * l - q;
     const hue2rgb = (p, q, t) => {
@@ -216,9 +223,9 @@
       return p;
     };
     return [
-      hue2rgb(p, q, h + 1 / 3) * 255,
-      hue2rgb(p, q, h) * 255,
-      hue2rgb(p, q, h - 1 / 3) * 255
+      Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+      Math.round(hue2rgb(p, q, h) * 255),
+      Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
     ];
   }
 
@@ -229,7 +236,7 @@
   function updateClock() {
     const now = new Date();
 
-    // Use local YYYY-MM-DD
+    // Local YYYY-MM-DD format
     const yyyy = now.getFullYear();
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const dd = String(now.getDate()).padStart(2, '0');
@@ -247,7 +254,7 @@
       minute: '2-digit'
     });
 
-    const allDates = document.querySelectorAll('li[data-date], li[data-start]');
+    const allDates = document.querySelectorAll('li[data-start], li[data-date]');
     let liveArtist = null;
 
     allDates.forEach(li => {
@@ -270,6 +277,6 @@
 
   updateClock();
   setInterval(updateClock, 10000);
-</script>
+  </script>
 </body>
 </html>
