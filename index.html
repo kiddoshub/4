@@ -159,115 +159,116 @@
     <img src="IMG_7029.jpeg" style="left:70%; animation-delay: 55s;" aria-hidden="true">
     <img src="IMG_7039.jpeg" style="left:85%; animation-delay: 60s;" aria-hidden="true">
   </div>
-  <script>
-    const canvas = document.getElementById("mandelbrot");
-    const ctx = canvas.getContext("2d");
-    const w = canvas.width, h = canvas.height;
-    let time = 0;
+<script>
+  const canvas = document.getElementById("mandelbrot");
+  const ctx = canvas.getContext("2d");
+  const w = canvas.width, h = canvas.height;
+  let time = 0;
 
-    function drawMandelbrotLive() {
-      const image = ctx.createImageData(w, h);
-      const maxIter = 80;
-      const scale = 2.5;
-      const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
-      const centerY = 0 + 0.2 * Math.cos(time * 0.002);
+  function drawMandelbrotLive() {
+    const image = ctx.createImageData(w, h);
+    const maxIter = 80;
+    const scale = 2.5;
+    const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
+    const centerY = 0 + 0.2 * Math.cos(time * 0.002);
 
-      for (let x = 0; x < w; x++) {
-        for (let y = 0; y < h; y++) {
-          let zx = 0, zy = 0;
-          const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
-          const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
+    for (let x = 0; x < w; x++) {
+      for (let y = 0; y < h; y++) {
+        let zx = 0, zy = 0;
+        const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
+        const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
 
-          let i = 0;
-          while (zx * zx + zy * zy < 4 && i < maxIter) {
-            const xt = zx * zx - zy * zy + cx;
-            zy = 2.0 * zx * zy + cy;
-            zx = xt;
-            i++;
-          }
-
-          const p = (y * w + x) * 4;
-          const hue = (i / maxIter * 360 + time * 0.1) % 360;
-          const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
-          image.data[p] = r;
-          image.data[p + 1] = g;
-          image.data[p + 2] = b;
-          image.data[p + 3] = 255;
+        let i = 0;
+        while (zx * zx + zy * zy < 4 && i < maxIter) {
+          const xt = zx * zx - zy * zy + cx;
+          zy = 2.0 * zx * zy + cy;
+          zx = xt;
+          i++;
         }
-      }
 
-      ctx.putImageData(image, 0, 0);
-      time += 1;
-      requestAnimationFrame(drawMandelbrotLive);
-    }
-
-    function hslToRgb(h, s, l) {
-      if (s === 0) {
-        const gray = Math.round(l * 255);
-        return [gray, gray, gray];
-      }
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      const p = 2 * l - q;
-      const hue2rgb = (p, q, t) => {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1 / 6) return p + (q - p) * 6 * t;
-        if (t < 1 / 2) return q;
-        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-        return p;
-      };
-      return [
-        Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
-        Math.round(hue2rgb(p, q, h) * 255),
-        Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
-      ];
-    }
-
-    drawMandelbrotLive();
-
-    const dateEl = document.getElementById("date-clock");
-
-    function updateClock() {
-      const now = new Date();
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-      const dateStr = now.toLocaleDateString(undefined, {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-      }).toUpperCase();
-
-      const timeStr = now.toLocaleTimeString(undefined, {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-
-      const allDates = document.querySelectorAll('li[data-start], li[data-date]');
-      let liveArtist = null;
-
-      allDates.forEach(li => {
-        const startDateStr = li.dataset.start || li.dataset.date;
-        const endDateStr = li.dataset.end || startDateStr;
-
-        const startDate = new Date(startDateStr + 'T00:00:00');
-        const endDate = new Date(endDateStr + 'T23:59:59');
-
-        if (today >= startDate && today <= endDate) {
-          liveArtist = li.dataset.artist;
-        }
-      });
-
-      if (liveArtist) {
-        dateEl.textContent = `LIVE: ${liveArtist.toUpperCase()} • ${dateStr} • ${timeStr}`;
-        dateEl.classList.add('live');
-      } else {
-        dateEl.textContent = `${dateStr} • ${timeStr}`;
-        dateEl.classList.remove('live');
+        const p = (y * w + x) * 4;
+        const hue = (i / maxIter * 360 + time * 0.1) % 360;
+        const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
+        image.data[p] = r;
+        image.data[p + 1] = g;
+        image.data[p + 2] = b;
+        image.data[p + 3] = 255;
       }
     }
 
-    updateClock();
-    setInterval(updateClock, 10000);
-  </script>
+    ctx.putImageData(image, 0, 0);
+    time += 1;
+    requestAnimationFrame(drawMandelbrotLive);
+  }
+
+  function hslToRgb(h, s, l) {
+    if (s === 0) {
+      const gray = Math.round(l * 255);
+      return [gray, gray, gray];
+    }
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    return [
+      Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+      Math.round(hue2rgb(p, q, h) * 255),
+      Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
+    ];
+  }
+
+  drawMandelbrotLive();
+
+  const dateEl = document.getElementById("date-clock");
+
+  function updateClock() {
+    const now = new Date();
+    const todayStr = now.toISOString().split("T")[0];
+
+    const dateStr = now.toLocaleDateString(undefined, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).toUpperCase();
+
+    const timeStr = now.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    let liveArtist = null;
+
+    const allDates = document.querySelectorAll('li[data-start], li[data-date]');
+    allDates.forEach(li => {
+      const start = li.dataset.start || li.dataset.date;
+      const end = li.dataset.end || start;
+
+      // Reset any previously marked "live" show
+      li.classList.remove('live');
+
+      if (todayStr >= start && todayStr <= end) {
+        liveArtist = li.dataset.artist;
+        li.classList.add('live');
+      }
+    });
+
+    if (liveArtist) {
+      dateEl.textContent = `LIVE: ${liveArtist.toUpperCase()} • ${dateStr} • ${timeStr}`;
+      dateEl.classList.add('live');
+    } else {
+      dateEl.textContent = `${dateStr} • ${timeStr}`;
+      dateEl.classList.remove('live');
+    }
+  }
+
+  updateClock();
+  setInterval(updateClock, 10000);
+</script>
 </body
