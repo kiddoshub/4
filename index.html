@@ -12,26 +12,20 @@
       --font: monospace;
     }
 
-    body {
+    html, body {
       margin: 0;
       font-family: var(--font);
+      background: #0a0a0a;
       color: #eaeaea;
       overflow: hidden;
-      background-color: #0a0a0a;
-      position: relative;
       background-blend-mode: overlay, darken;
       animation: twitch 3s infinite;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        overflow: auto;
-      }
+      visibility: hidden;
     }
 
     @keyframes twitch {
       0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(0.2px, -0.3px); }
+      50% { transform: translate(0.3px, -0.2px); }
     }
 
     body::before {
@@ -41,11 +35,9 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('IMG_7020.jpeg') no-repeat center center;
-      background-size: cover;
-      background-attachment: scroll;
+      background: url('IMG_7020.jpeg') center/cover no-repeat;
       z-index: -2;
-      filter: brightness(0.7) saturate(1.1) blur(0.6px);
+      filter: brightness(0.65) saturate(1.1) blur(0.6px);
       opacity: 0.8;
     }
 
@@ -104,7 +96,6 @@
     .jerry-gallery img {
       position: absolute;
       width: 100px;
-      height: auto;
       opacity: 0.13;
       pointer-events: none;
       animation: float 40s linear infinite;
@@ -123,76 +114,83 @@
       }
     }
   </style>
+  <script>
+    // Prevent FOUC
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.style.visibility = "visible";
+    });
+  </script>
 </head>
 <body>
 
   <header id="date-clock" class="live" role="status" aria-live="polite"></header>
-  <canvas id="mandelbrot" width="120" height="120"></canvas>
-  <aside class="signature"><a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a></aside>
+  <canvas id="mandelbrot"></canvas>
+  <aside class="signature" aria-label="Instagram link">
+    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a>
+  </aside>
 
   <div class="jerry-gallery">
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;" aria-hidden="true">
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay: 5s;" aria-hidden="true">
-    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay: 10s;" aria-hidden="true">
-    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay: 15s;" aria-hidden="true">
-    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay: 20s;" aria-hidden="true">
-    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay: 25s;" aria-hidden="true">
-    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay: 30s;" aria-hidden="true">
-    <img src="IMG_6955.jpeg" style="left:10%; animation-delay: 35s;" aria-hidden="true">
-    <img src="IMG_6956.jpeg" style="left:25%; animation-delay: 40s;" aria-hidden="true">
-    <img src="IMG_7004.jpeg" style="left:40%; animation-delay: 45s;" aria-hidden="true">
-    <img src="IMG_7012.jpeg" style="left:55%; animation-delay: 50s;" aria-hidden="true">
-    <img src="IMG_7029.jpeg" style="left:70%; animation-delay: 55s;" aria-hidden="true">
-    <img src="IMG_7039.jpeg" style="left:85%; animation-delay: 60s;" aria-hidden="true">
+    <img loading="lazy" src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;" alt="" />
+    <img loading="lazy" src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay: 5s;" alt="" />
+    <img loading="lazy" src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay: 10s;" alt="" />
+    <img loading="lazy" src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay: 15s;" alt="" />
+    <img loading="lazy" src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay: 20s;" alt="" />
+    <img loading="lazy" src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay: 25s;" alt="" />
+    <img loading="lazy" src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay: 30s;" alt="" />
+    <img loading="lazy" src="IMG_6955.jpeg" style="left:10%; animation-delay: 35s;" alt="" />
+    <img loading="lazy" src="IMG_6956.jpeg" style="left:25%; animation-delay: 40s;" alt="" />
+    <img loading="lazy" src="IMG_7004.jpeg" style="left:40%; animation-delay: 45s;" alt="" />
+    <img loading="lazy" src="IMG_7012.jpeg" style="left:55%; animation-delay: 50s;" alt="" />
+    <img loading="lazy" src="IMG_7029.jpeg" style="left:70%; animation-delay: 55s;" alt="" />
+    <img loading="lazy" src="IMG_7039.jpeg" style="left:85%; animation-delay: 60s;" alt="" />
   </div>
 
   <script>
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
-    const w = canvas.width, h = canvas.height;
-    let time = 0;
+    const dpr = window.devicePixelRatio || 1;
+    const baseSize = 120;
+    canvas.width = baseSize * dpr;
+    canvas.height = baseSize * dpr;
+    canvas.style.width = `${baseSize}px`;
+    canvas.style.height = `${baseSize}px`;
+    ctx.scale(dpr, dpr);
 
-    function drawMandelbrotLive() {
-      const image = ctx.createImageData(w, h);
+    let time = 0;
+    const w = baseSize, h = baseSize;
+
+    function drawMandelbrot() {
+      const img = ctx.createImageData(w, h);
       const maxIter = 80;
       const scale = 2.5;
-      const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
-      const centerY = 0 + 0.2 * Math.cos(time * 0.002);
+      const cx = -0.6 + 0.2 * Math.sin(time * 0.002);
+      const cy = 0 + 0.2 * Math.cos(time * 0.002);
 
       for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
           let zx = 0, zy = 0;
-          const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
-          const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
-
+          const real = (x - w / 2) / (0.5 * scale * w) + cx;
+          const imag = (y - h / 2) / (0.5 * scale * h) + cy;
           let i = 0;
           while (zx * zx + zy * zy < 4 && i < maxIter) {
-            const xt = zx * zx - zy * zy + cx;
-            zy = 2.0 * zx * zy + cy;
-            zx = xt;
+            const tmp = zx * zx - zy * zy + real;
+            zy = 2.0 * zx * zy + imag;
+            zx = tmp;
             i++;
           }
-
-          const p = (y * w + x) * 4;
+          const idx = (y * w + x) * 4;
           const hue = (i / maxIter * 360 + time * 0.1) % 360;
           const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
-          image.data[p] = r;
-          image.data[p + 1] = g;
-          image.data[p + 2] = b;
-          image.data[p + 3] = 255;
+          img.data.set([r, g, b, 255], idx);
         }
       }
 
-      ctx.putImageData(image, 0, 0);
-      time += 1;
-      requestAnimationFrame(drawMandelbrotLive);
+      ctx.putImageData(img, 0, 0);
+      time++;
+      requestAnimationFrame(drawMandelbrot);
     }
 
     function hslToRgb(h, s, l) {
-      if (s === 0) {
-        const gray = Math.round(l * 255);
-        return [gray, gray, gray];
-      }
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
       const hue2rgb = (p, q, t) => {
@@ -210,28 +208,25 @@
       ];
     }
 
-    drawMandelbrotLive();
+    drawMandelbrot();
 
     const dateEl = document.getElementById("date-clock");
-
     function updateCountdown() {
       const now = new Date();
-      const eventDate = new Date("2025-08-01T00:00:00");
-      const diff = eventDate - now;
+      const event = new Date("2025-08-01T00:00:00");
+      const diff = event - now;
 
       if (diff <= 0) {
         dateEl.textContent = "★ DEAD & CO – SAN FRANCISCO IS LIVE!";
         return;
       }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      dateEl.textContent = `COUNTDOWN TO DEAD & CO SF: ${d}D ${h}H ${m}M ${s}S`;
 
-      dateEl.textContent = `COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S`;
-
-      // Optional: Animate background hue over time
       document.body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
     }
 
