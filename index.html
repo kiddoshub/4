@@ -4,12 +4,17 @@
   <meta charset="UTF-8" />
   <title>2004</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Trippy countdown to Dead & Co, with live Mandelbrot render and Garcia collage.">
+  <meta property="og:title" content="Dead & Co Countdown 2004">
+  <meta property="og:image" content="IMG_7020.jpeg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#ff00cc">
   <style>
     :root {
       --primary: #b6ffe0;
       --accent: #ff00cc;
       --live-glow: #ff9900;
-      --font: monospace;
+      --font: 'Courier New', Courier, monospace;
     }
 
     body {
@@ -18,7 +23,6 @@
       color: #eaeaea;
       overflow: hidden;
       background-color: #0a0a0a;
-      position: relative;
       background-blend-mode: overlay, darken;
       animation: twitch 3s infinite;
     }
@@ -73,6 +77,13 @@
       box-shadow: 0 0 8px var(--live-glow);
     }
 
+    header.event-live {
+      color: var(--accent);
+      background: rgba(255, 0, 204, 0.15);
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
     .signature {
       position: fixed;
       bottom: 1rem;
@@ -125,35 +136,34 @@
   </style>
 </head>
 <body>
-
-  <header id="date-clock" class="live" role="status" aria-live="polite"></header>
+  <header id="date-clock" class="live" role="timer" aria-live="polite"></header>
   <canvas id="mandelbrot" width="120" height="120"></canvas>
   <aside class="signature"><a href="https://yourlink.com" target="_blank" rel="noopener">@cheapie</a></aside>
 
   <div class="jerry-gallery">
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;" aria-hidden="true">
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay: 5s;" aria-hidden="true">
-    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay: 10s;" aria-hidden="true">
-    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay: 15s;" aria-hidden="true">
-    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay: 20s;" aria-hidden="true">
-    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay: 25s;" aria-hidden="true">
-    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay: 30s;" aria-hidden="true">
-    <img src="IMG_6955.jpeg" style="left:10%; animation-delay: 35s;" aria-hidden="true">
-    <img src="IMG_6956.jpeg" style="left:25%; animation-delay: 40s;" aria-hidden="true">
-    <img src="IMG_7004.jpeg" style="left:40%; animation-delay: 45s;" aria-hidden="true">
-    <img src="IMG_7012.jpeg" style="left:55%; animation-delay: 50s;" aria-hidden="true">
-    <img src="IMG_7029.jpeg" style="left:70%; animation-delay: 55s;" aria-hidden="true">
-    <img src="IMG_7039.jpeg" style="left:85%; animation-delay: 60s;" aria-hidden="true">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%;" role="presentation" alt="" loading="lazy">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%;" role="presentation" alt="" loading="lazy">
+    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%;" role="presentation" alt="" loading="lazy">
+    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%;" role="presentation" alt="" loading="lazy">
+    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%;" role="presentation" alt="" loading="lazy">
+    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%;" role="presentation" alt="" loading="lazy">
+    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%;" role="presentation" alt="" loading="lazy">
+    <img src="IMG_6955.jpeg" style="left:10%;" role="presentation" alt="" loading="lazy">
+    <img src="IMG_6956.jpeg" style="left:25%;" role="presentation" alt="" loading="lazy">
+    <img src="IMG_7004.jpeg" style="left:40%;" role="presentation" alt="" loading="lazy">
+    <img src="IMG_7012.jpeg" style="left:55%;" role="presentation" alt="" loading="lazy">
+    <img src="IMG_7029.jpeg" style="left:70%;" role="presentation" alt="" loading="lazy">
+    <img src="IMG_7039.jpeg" style="left:85%;" role="presentation" alt="" loading="lazy">
   </div>
 
   <script>
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
     const w = canvas.width, h = canvas.height;
+    const image = ctx.createImageData(w, h);
     let time = 0;
 
     function drawMandelbrotLive() {
-      const image = ctx.createImageData(w, h);
       const maxIter = 80;
       const scale = 2.5;
       const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
@@ -189,15 +199,10 @@
     }
 
     function hslToRgb(h, s, l) {
-      if (s === 0) {
-        const gray = Math.round(l * 255);
-        return [gray, gray, gray];
-      }
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
       const hue2rgb = (p, q, t) => {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
+        t = (t + 1) % 1;
         if (t < 1 / 6) return p + (q - p) * 6 * t;
         if (t < 1 / 2) return q;
         if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
@@ -221,6 +226,8 @@
 
       if (diff <= 0) {
         dateEl.textContent = "★ DEAD & CO – SAN FRANCISCO IS LIVE!";
+        dateEl.classList.remove("live");
+        dateEl.classList.add("event-live");
         return;
       }
 
@@ -230,13 +237,17 @@
       const seconds = Math.floor((diff / 1000) % 60);
 
       dateEl.textContent = `COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S`;
-
-      // Optional: Animate background hue over time
       document.body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Randomize float animation delay and duration
+    document.querySelectorAll('.jerry-gallery img').forEach(img => {
+      img.style.animationDelay = `${(Math.random() * 60).toFixed(1)}s`;
+      img.style.animationDuration = `${35 + Math.random() * 15}s`;
+    });
   </script>
 </body>
 </html>
