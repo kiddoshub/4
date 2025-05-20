@@ -19,8 +19,14 @@
       overflow: hidden;
       background-color: #0a0a0a;
       position: relative;
-      background-blend-mode: overlay;
+      background-blend-mode: overlay, darken;
       animation: twitch 3s infinite;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        overflow: auto;
+      }
     }
 
     @keyframes twitch {
@@ -78,6 +84,11 @@
       text-shadow: 0 0 2px #000;
     }
 
+    .signature a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
     canvas#mandelbrot {
       position: fixed;
       top: 1rem;
@@ -105,13 +116,19 @@
       0%   { transform: translateY(100vh) rotate(0deg); }
       100% { transform: translateY(-150vh) rotate(360deg); }
     }
+
+    @media (max-width: 768px) {
+      .jerry-gallery img:nth-child(n+7) {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
 
   <header id="date-clock" class="live" role="status" aria-live="polite"></header>
   <canvas id="mandelbrot" width="120" height="120"></canvas>
-  <aside class="signature">@cheapie</aside>
+  <aside class="signature"><a href="https://yourlink.com" target="_blank" rel="noopener">@cheapie</a></aside>
 
   <div class="jerry-gallery">
     <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;" aria-hidden="true">
@@ -213,6 +230,9 @@
       const seconds = Math.floor((diff / 1000) % 60);
 
       dateEl.textContent = `COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S`;
+
+      // Optional: Animate background hue over time
+      document.body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
     }
 
     updateCountdown();
