@@ -4,103 +4,153 @@
   <meta charset="UTF-8" />
   <title>2004</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style>
-  :root {
-    --primary: #b6ffe0;
-    --accent: #ff00cc;
-    --live-glow: #ff9900;
-    --bg-opacity: rgba(0, 0, 0, 0.6);
-    --font: monospace;
-  }
+  <style>
+    :root {
+      --primary: #d8d8d8;
+      --accent: #ff00cc;
+      --live-glow: #ff3c00;
+      --bg-opacity: rgba(0, 0, 0, 0.6);
+      --font: monospace;
+    }
 
-  body {
-    margin: 0;
-    font-family: var(--font);
-    color: white;
-    overflow: hidden;
-    background-color: black;
-    position: relative;
-  }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: #eee;
+      overflow: hidden;
+      background-color: #0b0b0b;
+      position: relative;
+      filter: brightness(0.72) contrast(1.25) grayscale(0.6);
+      background-blend-mode: overlay;
+      cursor: crosshair;
+      animation: twitch 1.9s infinite;
+    }
 
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    background: url('IMG_7020.jpeg') no-repeat center center;
-    background-size: cover;
-    background-attachment: scroll;
-    z-index: -2;
-  }
+    @keyframes twitch {
+      0%, 100% { transform: translate(0, 0); }
+      30% { transform: translate(-0.3px, 0.6px); }
+      50% { transform: translate(0.6px, -0.5px); }
+      70% { transform: translate(-0.2px, -0.2px); }
+    }
 
-  header {
-    position: fixed;
-    top: 0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.45);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    color: var(--primary);
-    letter-spacing: 0.06em;
-    z-index: 10;
-    text-align: center;
-    min-width: 240px;
-  }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: url('IMG_7020.jpeg') no-repeat center center;
+      background-size: cover;
+      background-attachment: scroll;
+      z-index: -2;
+      filter: grayscale(0.7) blur(1.4px) brightness(0.6);
+      opacity: 0.85;
+    }
 
-  header.live {
-    color: var(--live-glow);
-    background: rgba(255, 140, 0, 0.15);
-    border: 1px solid var(--live-glow);
-    box-shadow: 0 0 8px var(--live-glow);
-    text-shadow: 0 0 2px var(--live-glow);
-  }
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      pointer-events: none;
+      background-image: url('https://i.imgur.com/xkMdVnF.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0.04;
+      mix-blend-mode: overlay;
+      z-index: 99;
+    }
 
-  .signature {
-    position: fixed;
-    bottom: 1rem;
-    left: 1rem;
-    font-size: 0.8rem;
-    color: var(--accent);
-    z-index: 10;
-  }
+    header {
+      position: fixed;
+      top: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      z-index: 10;
+      text-align: center;
+      min-width: 240px;
+      opacity: 0.7;
+      text-shadow: 0 0 3px #111;
+    }
 
-  canvas#mandelbrot {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    width: 120px;
-    height: 120px;
-    z-index: 1;
-    border-radius: 8px;
-    opacity: 0.95;
-  }
+    header.live {
+      color: var(--live-glow);
+      background: rgba(255, 50, 0, 0.1);
+      border: 1px solid var(--live-glow);
+      box-shadow: 0 0 8px var(--live-glow);
+      text-shadow: 0 0 2px var(--live-glow);
+    }
 
-  .jerry-gallery img {
-    position: absolute;
-    width: 100px;
-    height: auto;
-    opacity: 0.14;
-    pointer-events: none;
-    animation: float 40s linear infinite;
-    z-index: 0;
-  }
+    .signature {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      z-index: 10;
+      opacity: 0.6;
+      text-shadow: 0 0 2px #000;
+    }
 
-  @keyframes float {
-    0%   { transform: translateY(100vh) rotate(0deg); }
-    100% { transform: translateY(-150vh) rotate(360deg); }
-  }
-</style>
+    canvas#mandelbrot {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+      border-radius: 8px;
+      opacity: 0.85;
+      filter: blur(0.6px);
+    }
+
+    .jerry-gallery img {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      opacity: 0.08;
+      pointer-events: none;
+      animation: float 40s linear infinite;
+      z-index: 0;
+      filter: grayscale(1) blur(0.7px);
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-150vh) rotate(360deg); }
+    }
+
+    #burn-mark {
+      position: fixed;
+      bottom: 2%;
+      left: 50%;
+      transform: translateX(-50%) rotate(-10deg);
+      width: 26px;
+      height: 26px;
+      background: radial-gradient(ellipse at center, #2a0d0d 0%, #000000 80%);
+      border-radius: 50%;
+      opacity: 0.3;
+      z-index: 8;
+      pointer-events: none;
+      box-shadow: 0 0 12px rgba(255,0,0,0.07);
+    }
+  </style>
 </head>
 <body>
 
   <header id="date-clock" class="live" role="status" aria-live="polite"></header>
   <canvas id="mandelbrot" width="120" height="120"></canvas>
-
   <aside class="signature">@cheapie</aside>
+  <div id="burn-mark"></div>
 
   <div class="jerry-gallery">
     <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay: 0s;" aria-hidden="true">
@@ -119,7 +169,6 @@
   </div>
 
   <script>
-    // Mandelbrot animation
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
     const w = canvas.width, h = canvas.height;
@@ -162,18 +211,15 @@
     }
 
     function hslToRgb(h, s, l) {
-      if (s === 0) {
-        const gray = Math.round(l * 255);
-        return [gray, gray, gray];
-      }
+      if (s === 0) return [Math.round(l * 255), Math.round(l * 255), Math.round(l * 255)];
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
       const hue2rgb = (p, q, t) => {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
-        if (t < 1 / 6) return p + (q - p) * 6 * t;
-        if (t < 1 / 2) return q;
-        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
         return p;
       };
       return [
@@ -185,7 +231,6 @@
 
     drawMandelbrotLive();
 
-    // Countdown
     const dateEl = document.getElementById("date-clock");
 
     function updateCountdown() {
