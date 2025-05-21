@@ -127,7 +127,9 @@
 </head>
 <body>
 
-  <header id="date-clock" class="live" role="status" aria-live="polite"></header>
+<header id="date-clock" class="live" role="status" aria-live="polite">
+  <span id="year-roller">2004</span>
+</header>
   <canvas id="mandelbrot" width="120" height="120"></canvas>
   <aside class="signature">
     <a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a>
@@ -245,5 +247,17 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
   </script>
+  <script>
+  const yearEl = document.getElementById("year-roller");
+  let dynamicYear = 2004;
+
+  function rollYear() {
+    dynamicYear += 1;
+    if (dynamicYear > 9999) dynamicYear = 2004;
+    yearEl.textContent = dynamicYear;
+  }
+
+  setInterval(rollYear, 120);
+</script>
 </body>
 </html>
