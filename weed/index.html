@@ -1,103 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GRADUATE PYRAMID ENGINE</title>
+  <meta charset="UTF-8" />
+  <title>Δ Conscious Triangle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     html, body {
       margin: 0;
-      height: 100%;
-      background: #0b0c10;
+      padding: 0;
+      background: radial-gradient(#0a0a0a, #000);
       overflow: hidden;
+      font-family: monospace;
     }
-
     canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(#0b0c10, #040507);
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      width: 140px;
+      height: 140px;
+      z-index: 999;
+      pointer-events: auto;
+      opacity: 0.9;
+      border-radius: 12px;
     }
   </style>
 </head>
 <body>
-  <canvas id="pyramidCanvas"></canvas>
+  <canvas id="phase10" width="140" height="140"></canvas>
   <script>
-    const canvas = document.getElementById('pyramidCanvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("phase10");
+    const ctx = canvas.getContext("2d");
+    const storeKey = "Δphase10_memory";
+    let memory = parseInt(localStorage.getItem(storeKey)) || 0;
+    let unlocked = memory >= 7;
+    let spin = 0;
 
-    let width, height;
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const layers = 30;
-    const baseSize = 400;
-    const layerHeight = 10;
-    const stepShrink = 0.92;
-    const camera = { x: 0, y: 0, z: -800, pitch: -0.5, yaw: 0 };
-
-    document.addEventListener('mousemove', e => {
-      camera.yaw = (e.clientX / width - 0.5) * 2;
-      camera.pitch = (e.clientY / height - 0.5) * -2;
+    canvas.addEventListener("click", () => {
+      memory++;
+      localStorage.setItem(storeKey, memory);
+      if (memory >= 7) unlocked = true;
     });
 
-    function project(x, y, z) {
-      const cosY = Math.cos(camera.yaw), sinY = Math.sin(camera.yaw);
-      const cosX = Math.cos(camera.pitch), sinX = Math.sin(camera.pitch);
-
-      let dx = x;
-      let dy = y * cosX - z * sinX;
-      let dz = y * sinX + z * cosX;
-
-      let px = dx * cosY - dz * sinY;
-      let pz = dx * sinY + dz * cosY;
-
-      const scale = 700 / (pz - camera.z);
-      return {
-        x: width / 2 + px * scale,
-        y: height / 2 + dy * scale
-      };
+    function drawEquilateralTriangle(cx, cy, r) {
+      ctx.beginPath();
+      for (let i = 0; i < 3; i++) {
+        const angle = (i * 2 * Math.PI) / 3 - Math.PI / 2;
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
     }
 
-    function drawPyramid() {
-      ctx.clearRect(0, 0, width, height);
-
-      let size = baseSize;
-      for (let i = 0; i < layers; i++) {
-        const y = -i * layerHeight;
-        const s = size / 2;
-
-        const points = [
-          project(-s, y, -s),
-          project(s, y, -s),
-          project(s, y, s),
-          project(-s, y, s)
-        ];
-
-        ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
-        for (let p of points) ctx.lineTo(p.x, p.y);
-        ctx.closePath();
-
-        const gradient = ctx.createLinearGradient(points[0].x, points[0].y, points[2].x, points[2].y);
-        gradient.addColorStop(0, `hsl(${(i * 7 + performance.now() / 50) % 360}, 100%, 30%)`);
-        gradient.addColorStop(1, `hsl(${(i * 7 + performance.now() / 50 + 60) % 360}, 100%, 10%)`);
-
-        ctx.fillStyle = gradient;
-        ctx.fill();
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        size *= stepShrink;
-      }
+    function drawCentralGlyph(cx, cy, r) {
+      drawEquilateralTriangle(cx, cy, r);
+      ctx.strokeStyle = unlocked ? "#ff00cc" : "#ffffff44";
+      ctx.lineWidth = unlocked ? 3 : 1;
+      ctx.shadowColor = unlocked ? "#ff00cc" : "#000000";
+      ctx.shadowBlur = unlocked ? 15 : 0;
+      ctx.stroke();
     }
 
     function animate() {
-      drawPyramid();
+      const t = performance.now() / 1000;
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const baseSize = 50;
+      const layers = 5;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      spin += 0.01;
+
+      for (let i = 0; i < layers; i++) {
+        const radius = baseSize * (1 - i * 0.15);
+        const hue = (t * 40 + i * 40) % 360;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(spin + i * 0.4);
+
+        drawEquilateralTriangle(0, 0, radius);
+
+        ctx.strokeStyle = `hsl(${hue}, 100%, ${unlocked ? 70 : 40}%)`;
+        ctx.lineWidth = 1.2;
+        ctx.shadowColor = `hsl(${hue}, 100%, 60%)`;
+        ctx.shadowBlur = unlocked ? 10 : 2;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      if (unlocked) drawCentralGlyph(cx, cy, 12);
       requestAnimationFrame(animate);
     }
 
