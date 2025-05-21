@@ -1,87 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Δ HYPERTRIAD</title>
+  <meta charset="UTF-8">
+  <title>GRADUATE PYRAMID ENGINE</title>
   <style>
     html, body {
       margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
       height: 100%;
+      background: #0b0c10;
+      overflow: hidden;
     }
 
     canvas {
       display: block;
       width: 100%;
       height: 100%;
+      background: radial-gradient(#0b0c10, #040507);
     }
   </style>
 </head>
 <body>
-  <canvas id="triangleCanvas"></canvas>
-
+  <canvas id="pyramidCanvas"></canvas>
   <script>
-    const canvas = document.getElementById('triangleCanvas');
+    const canvas = document.getElementById('pyramidCanvas');
     const ctx = canvas.getContext('2d');
-    let w, h;
 
+    let width, height;
     function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     }
-
     window.addEventListener('resize', resize);
     resize();
 
-    const maxDepth = 7;
-    let tick = 0;
+    const layers = 30;
+    const baseSize = 400;
+    const layerHeight = 10;
+    const stepShrink = 0.92;
+    const camera = { x: 0, y: 0, z: -800, pitch: -0.5, yaw: 0 };
 
-    function drawTriangle(x1, y1, x2, y2, x3, y3, depth) {
-      if (depth <= 0) {
+    document.addEventListener('mousemove', e => {
+      camera.yaw = (e.clientX / width - 0.5) * 2;
+      camera.pitch = (e.clientY / height - 0.5) * -2;
+    });
+
+    function project(x, y, z) {
+      const cosY = Math.cos(camera.yaw), sinY = Math.sin(camera.yaw);
+      const cosX = Math.cos(camera.pitch), sinX = Math.sin(camera.pitch);
+
+      let dx = x;
+      let dy = y * cosX - z * sinX;
+      let dz = y * sinX + z * cosX;
+
+      let px = dx * cosY - dz * sinY;
+      let pz = dx * sinY + dz * cosY;
+
+      const scale = 700 / (pz - camera.z);
+      return {
+        x: width / 2 + px * scale,
+        y: height / 2 + dy * scale
+      };
+    }
+
+    function drawPyramid() {
+      ctx.clearRect(0, 0, width, height);
+
+      let size = baseSize;
+      for (let i = 0; i < layers; i++) {
+        const y = -i * layerHeight;
+        const s = size / 2;
+
+        const points = [
+          project(-s, y, -s),
+          project(s, y, -s),
+          project(s, y, s),
+          project(-s, y, s)
+        ];
+
         ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.lineTo(x3, y3);
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let p of points) ctx.lineTo(p.x, p.y);
         ctx.closePath();
-        ctx.strokeStyle = `hsl(${(tick + depth * 20) % 360}, 100%, 60%)`;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = ctx.strokeStyle;
+
+        const gradient = ctx.createLinearGradient(points[0].x, points[0].y, points[2].x, points[2].y);
+        gradient.addColorStop(0, `hsl(${(i * 7 + performance.now() / 50) % 360}, 100%, 30%)`);
+        gradient.addColorStop(1, `hsl(${(i * 7 + performance.now() / 50 + 60) % 360}, 100%, 10%)`);
+
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1;
         ctx.stroke();
-        return;
+
+        size *= stepShrink;
       }
-
-      const mx1 = (x1 + x2) / 2;
-      const my1 = (y1 + y2) / 2;
-      const mx2 = (x2 + x3) / 2;
-      const my2 = (y2 + y3) / 2;
-      const mx3 = (x3 + x1) / 2;
-      const my3 = (y3 + y1) / 2;
-
-      drawTriangle(x1, y1, mx1, my1, mx3, my3, depth - 1);
-      drawTriangle(x2, y2, mx2, my2, mx1, my1, depth - 1);
-      drawTriangle(x3, y3, mx3, my3, mx2, my2, depth - 1);
     }
 
     function animate() {
-      tick += 0.5;
-      ctx.clearRect(0, 0, w, h);
-
-      const size = Math.min(w, h) * 0.9;
-      const height = size * Math.sqrt(3) / 2;
-
-      const x1 = w / 2;
-      const y1 = h / 2 - height / 2;
-      const x2 = w / 2 - size / 2;
-      const y2 = h / 2 + height / 2;
-      const x3 = w / 2 + size / 2;
-      const y3 = h / 2 + height / 2;
-
-      ctx.lineWidth = 1.5 + Math.sin(tick * 0.05) * 0.5;
-
-      drawTriangle(x1, y1, x2, y2, x3, y3, maxDepth);
-
+      drawPyramid();
       requestAnimationFrame(animate);
     }
 
