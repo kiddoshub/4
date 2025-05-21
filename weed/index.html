@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      --bg: #0c001a;
-      --pulse: #ff6dfd;
-      --flare: #00ffe4;
-      --text: #e9ffe8;
-      --font-main: 'Courier New', monospace;
+      --bg: #0d001f;
+      --accent: #ff6dfd;
+      --highlight: #00ffe4;
+      --font: 'Courier New', monospace;
+      --glow: 0 0 1rem #ff00cc;
     }
 
     * {
@@ -19,111 +19,79 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
-      font-family: var(--font-main);
-      background: var(--bg);
-      color: var(--text);
+    body {
+      background: radial-gradient(ellipse at center, #14001a 0%, #050013 100%);
+      color: #e0ffe9;
+      font-family: var(--font);
       overflow-x: hidden;
       scroll-snap-type: y mandatory;
     }
 
-    .verse {
-      scroll-snap-align: center;
+    section {
       min-height: 100vh;
-      padding: 10vh 8vw;
+      scroll-snap-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      font-size: clamp(1.25rem, 3vw + 1rem, 4rem);
-      line-height: 1.4;
+      padding: 4rem;
       position: relative;
-      z-index: 1;
-      text-shadow: 0 0 0.5em var(--flare);
-      animation: flareFade 12s infinite ease-in-out;
+      font-size: clamp(1.5rem, 3vw, 4rem);
+      line-height: 1.4;
+      text-align: center;
+      text-shadow: var(--glow);
+      animation: fadein 3s ease-in-out forwards;
+      opacity: 0;
     }
 
-    .verse:nth-child(odd) {
-      background: linear-gradient(135deg, rgba(0, 255, 210, 0.05), rgba(255, 0, 230, 0.03));
+    section:nth-child(even) {
+      background: linear-gradient(135deg, rgba(255,0,200,0.05), rgba(0,255,200,0.03));
     }
 
-    .verse:nth-child(even) {
-      background: linear-gradient(45deg, rgba(255, 0, 230, 0.05), rgba(0, 255, 210, 0.03));
+    section:nth-child(odd) {
+      background: linear-gradient(45deg, rgba(0,255,200,0.05), rgba(255,0,200,0.03));
     }
 
-    @keyframes flareFade {
-      0%, 100% { text-shadow: 0 0 0.5em var(--flare); }
-      50% { text-shadow: 0 0 1.2em var(--pulse); }
+    @keyframes fadein {
+      0% { opacity: 0; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, #ff00cc22 0%, transparent 70%), repeating-conic-gradient(from 0deg, #0ff 0deg 10deg, transparent 10deg 20deg);
-      background-blend-mode: overlay;
-      mix-blend-mode: screen;
-      animation: pulse 20s infinite linear;
-      z-index: 0;
-    }
-
-    @keyframes pulse {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.05); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-
-    .overlay-glow {
+    .aura {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at center, #ffffff11 0%, transparent 80%);
-      z-index: 0;
-      animation: breathingGlow 16s ease-in-out infinite;
+      background: conic-gradient(from 0deg, #ff00cc11, #00ffee11, #ff00cc11);
+      mix-blend-mode: overlay;
+      animation: spin 60s linear infinite;
+      z-index: -1;
     }
 
-    @keyframes breathingGlow {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 0.5; }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <div class="overlay-glow"></div>
 
-  <div class="verse">My time coming, any day, don't worry 'bout me, no</div>
-  <div class="verse">Been so long I felt this way, I'm in no hurry, no</div>
-  <div class="verse">Rainbows end down that highway where ocean breezes blow</div>
-  <div class="verse">My time coming, voices saying, they tell me where to go</div>
-  <div class="verse">Don't worry 'bout me, no no, don't worry 'bout me, no</div>
-  <div class="verse">And I'm in no hurry, no no no, I know where to go</div>
-  <div class="verse">California, preaching on the burning shore</div>
-  <div class="verse">California, I'll be knocking on the golden door</div>
-  <div class="verse">Like an angel, standing in a shaft of light</div>
-  <div class="verse">Rising up to paradise, I know I'm gonna shine</div>
-  <div class="verse">He come walking through the jungle sound</div>
-  <div class="verse">With a sermon, no one could ignore</div>
-  <div class="verse">He said all I know is I'm not gonna go</div>
-  <div class="verse">I'm gonna go where the water tastes like wine</div>
-  <div class="verse">I'm gonna go where the water tastes like wine</div>
-  <div class="verse">I don't know, but I been told</div>
-  <div class="verse">It's hard to run with the weight of gold</div>
-  <div class="verse">Other hand I have heard it said</div>
-  <div class="verse">It's just as hard with the weight of lead</div>
-  <div class="verse">Who can deny, who can deny, it's not just a change in style?</div>
-  <div class="verse">One step done and another begun</div>
-  <div class="verse">And I wonder how many miles?</div>
-  <div class="verse">I spent a little time on the mountain, spent a little time on the hill</div>
-  <div class="verse">Heard some say, "Better run away", others say "Better stand still"</div>
-  <div class="verse">I don't know but I been told</div>
-  <div class="verse">If the horse don't pull you got to carry the load</div>
-  <div class="verse">I don't know whose back's that strong</div>
-  <div class="verse">Maybe find out before too long</div>
-  <div class="verse">One way or another, one way or another</div>
-  <div class="verse">One way or another, this darkness got to give</div>
+<div class="aura"></div>
+
+<section>My time coming, any day, don't worry 'bout me, no</section>
+<section>Been so long I felt this way, I'm in no hurry, no</section>
+<section>Rainbows end down that highway where ocean breezes blow</section>
+<section>My time coming, voices saying, they tell me where to go</section>
+<section>Don't worry 'bout me, no no, don't worry 'bout me, no</section>
+<section>California, preaching on the burning shore</section>
+<section>California, I'll be knocking on the golden door</section>
+<section>Like an angel, standing in a shaft of light</section>
+<section>Rising up to paradise, I know I'm gonna shine</section>
+<section>He come walking through the jungle sound</section>
+<section>With a sermon, no one could ignore</section>
+<section>One step done and another begun</section>
+<section>And I wonder how many miles?</section>
+<section>I'm gonna go where the water tastes like wine</section>
+<section>It's just as hard with the weight of lead</section>
+<section>This darkness got to give</section>
+
 </body>
 </html>
