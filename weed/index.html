@@ -2,64 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mesoamerican Pyramid</title>
+  <title>Δ HYPERTRIAD</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      background: radial-gradient(circle at center, #1e1e1e 0%, #0c0c0c 100%);
-      display: flex;
-      justify-content: center;
-      align-items: end;
-      height: 100vh;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100%;
     }
 
-    .pyramid {
-      position: relative;
+    canvas {
+      display: block;
       width: 100%;
-      max-width: 400px;
-      height: 60vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
+      height: 100%;
     }
-
-    .step {
-      width: 100%;
-      height: 5%;
-      background: linear-gradient(to top, #5b4024, #a08358);
-      border: 2px solid #3c2a1a;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.6);
-      margin-bottom: 3px;
-      transform-origin: bottom center;
-    }
-
-    /* Shrink each step */
-    .step:nth-child(1) { width: 100%; }
-    .step:nth-child(2) { width: 90%; }
-    .step:nth-child(3) { width: 80%; }
-    .step:nth-child(4) { width: 70%; }
-    .step:nth-child(5) { width: 60%; }
-    .step:nth-child(6) { width: 50%; }
-    .step:nth-child(7) { width: 40%; }
-    .step:nth-child(8) { width: 30%; }
-    .step:nth-child(9) { width: 20%; }
-    .step:nth-child(10) { width: 10%; background: gold; }
   </style>
 </head>
 <body>
-  <div class="pyramid">
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-    <div class="step"></div>
-  </div>
+  <canvas id="triangleCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('triangleCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    const maxDepth = 7;
+    let tick = 0;
+
+    function drawTriangle(x1, y1, x2, y2, x3, y3, depth) {
+      if (depth <= 0) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.closePath();
+        ctx.strokeStyle = `hsl(${(tick + depth * 20) % 360}, 100%, 60%)`;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = ctx.strokeStyle;
+        ctx.stroke();
+        return;
+      }
+
+      const mx1 = (x1 + x2) / 2;
+      const my1 = (y1 + y2) / 2;
+      const mx2 = (x2 + x3) / 2;
+      const my2 = (y2 + y3) / 2;
+      const mx3 = (x3 + x1) / 2;
+      const my3 = (y3 + y1) / 2;
+
+      drawTriangle(x1, y1, mx1, my1, mx3, my3, depth - 1);
+      drawTriangle(x2, y2, mx2, my2, mx1, my1, depth - 1);
+      drawTriangle(x3, y3, mx3, my3, mx2, my2, depth - 1);
+    }
+
+    function animate() {
+      tick += 0.5;
+      ctx.clearRect(0, 0, w, h);
+
+      const size = Math.min(w, h) * 0.9;
+      const height = size * Math.sqrt(3) / 2;
+
+      const x1 = w / 2;
+      const y1 = h / 2 - height / 2;
+      const x2 = w / 2 - size / 2;
+      const y2 = h / 2 + height / 2;
+      const x3 = w / 2 + size / 2;
+      const y3 = h / 2 + height / 2;
+
+      ctx.lineWidth = 1.5 + Math.sin(tick * 0.05) * 0.5;
+
+      drawTriangle(x1, y1, x2, y2, x3, y3, maxDepth);
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
