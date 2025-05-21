@@ -12,26 +12,32 @@
       --font: monospace;
     }
 
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: var(--font);
       color: #eaeaea;
-      overflow: hidden;
       background-color: #0a0a0a;
-      position: relative;
+      overflow: hidden;
       background-blend-mode: overlay, darken;
       animation: twitch 3s infinite;
+      position: relative;
+    }
+
+    @keyframes twitch {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(0.2px, -0.3px); }
     }
 
     @media (max-width: 600px) {
       body {
         overflow: auto;
       }
-    }
-
-    @keyframes twitch {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(0.2px, -0.3px); }
     }
 
     body::before {
@@ -41,9 +47,8 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://i.imgur.com/your_image.jpg') center center no-repeat;
+      background: url('IMG_7020.jpeg') center center no-repeat;
       background-size: cover;
-      background-attachment: scroll;
       filter: brightness(0.7) saturate(1.1) blur(0.6px);
       opacity: 0.8;
       z-index: -2;
@@ -59,7 +64,6 @@
       background: rgba(0, 0, 0, 0.5);
       color: var(--primary);
       font-size: 0.75rem;
-      font-weight: normal;
       letter-spacing: 0.06em;
       text-align: center;
       border-radius: 8px;
@@ -122,15 +126,23 @@
       50% { transform: scale(1.25); opacity: 0.25; }
     }
 
+    .jerry-gallery {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .jerry-gallery img {
       position: absolute;
       width: 100px;
       height: auto;
       opacity: 0.13;
-      pointer-events: none;
-      animation: float 40s linear infinite;
       filter: grayscale(0.7) blur(0.4px);
-      z-index: 0;
+      animation: float 40s linear infinite;
     }
 
     @keyframes float {
@@ -157,26 +169,27 @@
     <a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a>
   </aside>
 
-<div class="jerry-gallery" aria-hidden="true">
-  <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay:0s;" alt="">
-  <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay:5s;" alt="">
-  <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay:10s;" alt="">
-  <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay:15s;" alt="">
-  <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay:20s;" alt="">
-  <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay:25s;" alt="">
-  <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay:30s;" alt="">
-  <img src="IMG_6955.jpeg" style="left:10%; animation-delay:35s;" alt="">
-  <img src="IMG_6956.jpeg" style="left:25%; animation-delay:40s;" alt="">
-  <img src="IMG_7004.jpeg" style="left:40%; animation-delay:45s;" alt="">
-  <img src="IMG_7012.jpeg" style="left:55%; animation-delay:50s;" alt="">
-  <img src="IMG_7029.jpeg" style="left:70%; animation-delay:55s;" alt="">
-  <img src="IMG_7039.jpeg" style="left:85%; animation-delay:60s;" alt="">
-</div>
+  <div class="jerry-gallery" aria-hidden="true" role="presentation">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay:0s;" alt="">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay:5s;" alt="">
+    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay:10s;" alt="">
+    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay:15s;" alt="">
+    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay:20s;" alt="">
+    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay:25s;" alt="">
+    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay:30s;" alt="">
+    <img src="IMG_6955.jpeg" style="left:10%; animation-delay:35s;" alt="">
+    <img src="IMG_6956.jpeg" style="left:25%; animation-delay:40s;" alt="">
+    <img src="IMG_7004.jpeg" style="left:40%; animation-delay:45s;" alt="">
+    <img src="IMG_7012.jpeg" style="left:55%; animation-delay:50s;" alt="">
+    <img src="IMG_7029.jpeg" style="left:70%; animation-delay:55s;" alt="">
+    <img src="IMG_7039.jpeg" style="left:85%; animation-delay:60s;" alt="">
+  </div>
 
   <script>
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
-    const w = canvas.width, h = canvas.height;
+    const w = canvas.width;
+    const h = canvas.height;
     let time = 0;
 
     function drawMandelbrotLive() {
@@ -184,7 +197,7 @@
       const maxIter = 80;
       const scale = 2.5;
       const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
-      const centerY = 0 + 0.2 * Math.cos(time * 0.002);
+      const centerY = 0.2 * Math.cos(time * 0.002);
 
       for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
@@ -216,7 +229,7 @@
     }
 
     function hslToRgb(h, s, l) {
-      if (s === 0) return [l * 255, l * 255, l * 255].map(Math.round);
+      if (s === 0) return [l * 255, l * 255, l * 255];
 
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
@@ -233,4 +246,47 @@
       return [
         Math.round(hue2rgb(p, q, h + 1/3) * 255),
         Math.round(hue2rgb(p, q, h) * 255),
-        Math.round(hue2rgb(p, q, h - 1/3) *  
+        Math.round(hue2rgb(p, q, h - 1/3) * 255)
+      ];
+    }
+
+    drawMandelbrotLive();
+
+    const dateEl = document.getElementById("date-clock");
+    const yearEl = document.getElementById("year-roller");
+    let dynamicYear = 2004;
+
+    function updateCountdown() {
+      const now = new Date();
+      const eventDate = new Date("2025-08-01T00:00:00");
+      const diff = eventDate - now;
+
+      if (diff <= 0) {
+        dateEl.innerHTML = `<span id="year-roller">${dynamicYear}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      dateEl.innerHTML =
+        `<span id="year-roller">${dynamicYear}</span><br>` +
+        `COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S`;
+
+      document.body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
+    }
+
+    function rollYear() {
+      dynamicYear++;
+      if (dynamicYear > 9999) dynamicYear = 2004;
+      document.title = dynamicYear;
+    }
+
+    setInterval(rollYear, 120);
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
