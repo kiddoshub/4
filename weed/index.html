@@ -2,100 +2,200 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Δ Conscious Triangle</title>
+  <title>Elements of Design — Full Spectrum</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    :root {
+      --primary: #b6ffe0;
+      --accent: #ff00cc;
+      --live-glow: #ff9900;
+      --font: monospace;
+      --dark: #0a0a0a;
+      --light: #fafafa;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(#0a0a0a, #000);
-      overflow: hidden;
-      font-family: monospace;
+      font-family: var(--font);
+      background-color: var(--dark);
+      color: var(--light);
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-x: hidden;
     }
-    canvas {
-      position: fixed;
+
+    section {
+      height: 100vh;
+      width: 100vw;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 2rem;
+      z-index: 1;
+    }
+
+    section h1 {
+      font-size: clamp(3rem, 8vw, 10rem);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 12px var(--accent);
+    }
+
+    section p {
+      font-size: clamp(1.2rem, 2vw, 2.2rem);
+      max-width: 70ch;
+      line-height: 1.7;
+      margin: 1.5rem auto 0 auto;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    /* INDIVIDUAL BACKGROUNDS */
+
+    #line {
+      background: linear-gradient(90deg, #ff0080, #7928ca);
+    }
+
+    #line::before {
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 0px,
+        rgba(255, 255, 255, 0.1) 2px,
+        transparent 2px,
+        transparent 8px
+      );
+    }
+
+    #shape {
+      background: radial-gradient(circle at center, #0ff, #0047ff);
+    }
+
+    #shape::before {
+      background: conic-gradient(from 0deg, #0000 25%, rgba(255,255,255,0.05) 25% 50%, #0000 50% 75%, rgba(255,255,255,0.05) 75%);
+      mask-image: radial-gradient(circle, black 60%, transparent 100%);
+    }
+
+    #color {
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+      animation: hueShift 20s linear infinite;
+    }
+
+    @keyframes hueShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    #texture {
+      background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+      background-size: 200px;
+    }
+
+    #value {
+      background: linear-gradient(to bottom, #000, #222, #444, #666, #888, #aaa, #ccc, #fff);
+    }
+
+    #form {
+      background: radial-gradient(ellipse at center, #222 0%, #000 100%);
+      perspective: 800px;
+    }
+
+    #form::before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: #fff2;
+      border: 2px solid #fff5;
+      transform: rotateX(45deg) rotateY(30deg) translateZ(30px);
+      box-shadow: 0 0 12px #fff5;
+      animation: cubeSpin 12s infinite linear;
+    }
+
+    @keyframes cubeSpin {
+      0% { transform: rotateX(45deg) rotateY(0deg); }
+      100% { transform: rotateX(45deg) rotateY(360deg); }
+    }
+
+    #space {
+      background: radial-gradient(circle, #000 20%, #111 60%, #000 100%);
+    }
+
+    #space::before {
+      background: repeating-radial-gradient(circle, #222 1px, transparent 2px);
+      background-size: 20px 20px;
+    }
+
+    .label {
+      position: absolute;
       bottom: 1rem;
-      right: 1rem;
-      width: 140px;
-      height: 140px;
-      z-index: 999;
-      pointer-events: auto;
-      opacity: 0.9;
-      border-radius: 12px;
+      font-size: 0.9rem;
+      opacity: 0.4;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
   </style>
 </head>
 <body>
-  <canvas id="phase10" width="140" height="140"></canvas>
-  <script>
-    const canvas = document.getElementById("phase10");
-    const ctx = canvas.getContext("2d");
-    const storeKey = "Δphase10_memory";
-    let memory = parseInt(localStorage.getItem(storeKey)) || 0;
-    let unlocked = memory >= 7;
-    let spin = 0;
 
-    canvas.addEventListener("click", () => {
-      memory++;
-      localStorage.setItem(storeKey, memory);
-      if (memory >= 7) unlocked = true;
-    });
+  <section id="line">
+    <h1>Line</h1>
+    <p>The visual path that enables the eye to move within the piece. Lines can lead, divide, and generate rhythm across composition.</p>
+    <div class="label">1 / 7 — Direction & Flow</div>
+  </section>
 
-    function drawEquilateralTriangle(cx, cy, r) {
-      ctx.beginPath();
-      for (let i = 0; i < 3; i++) {
-        const angle = (i * 2 * Math.PI) / 3 - Math.PI / 2;
-        const x = cx + r * Math.cos(angle);
-        const y = cy + r * Math.sin(angle);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.closePath();
-    }
+  <section id="shape">
+    <h1>Shape</h1>
+    <p>Defined areas—geometric or organic—shapes build structure, unity, and the bones of design.</p>
+    <div class="label">2 / 7 — Structure</div>
+  </section>
 
-    function drawCentralGlyph(cx, cy, r) {
-      drawEquilateralTriangle(cx, cy, r);
-      ctx.strokeStyle = unlocked ? "#ff00cc" : "#ffffff44";
-      ctx.lineWidth = unlocked ? 3 : 1;
-      ctx.shadowColor = unlocked ? "#ff00cc" : "#000000";
-      ctx.shadowBlur = unlocked ? 15 : 0;
-      ctx.stroke();
-    }
+  <section id="color">
+    <h1>Color</h1>
+    <p>Color evokes emotion, builds contrast, and defines mood. Hue, brightness, saturation—each element matters.</p>
+    <div class="label">3 / 7 — Emotion</div>
+  </section>
 
-    function animate() {
-      const t = performance.now() / 1000;
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-      const baseSize = 50;
-      const layers = 5;
+  <section id="texture">
+    <h1>Texture</h1>
+    <p>Texture gives visual or physical tactility—felt or faked. Adds realism, depth, and grit to flat surfaces.</p>
+    <div class="label">4 / 7 — Feel</div>
+  </section>
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      spin += 0.01;
+  <section id="value">
+    <h1>Value</h1>
+    <p>Value is the scale of light to dark. It creates highlights, shadows, and the full range of tone between.</p>
+    <div class="label">5 / 7 — Light & Dark</div>
+  </section>
 
-      for (let i = 0; i < layers; i++) {
-        const radius = baseSize * (1 - i * 0.15);
-        const hue = (t * 40 + i * 40) % 360;
+  <section id="form">
+    <h1>Form</h1>
+    <p>Form is shape with depth. Through light and perspective, flat becomes full and dimensional.</p>
+    <div class="label">6 / 7 — Volume</div>
+  </section>
 
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(spin + i * 0.4);
+  <section id="space">
+    <h1>Space</h1>
+    <p>Space is what surrounds, divides, or isolates. Positive space is subject. Negative space is breath.</p>
+    <div class="label">7 / 7 — Depth</div>
+  </section>
 
-        drawEquilateralTriangle(0, 0, radius);
-
-        ctx.strokeStyle = `hsl(${hue}, 100%, ${unlocked ? 70 : 40}%)`;
-        ctx.lineWidth = 1.2;
-        ctx.shadowColor = `hsl(${hue}, 100%, 60%)`;
-        ctx.shadowBlur = unlocked ? 10 : 2;
-        ctx.stroke();
-
-        ctx.restore();
-      }
-
-      if (unlocked) drawCentralGlyph(cx, cy, 12);
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
 </body>
 </html>
