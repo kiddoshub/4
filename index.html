@@ -9,21 +9,23 @@
       --primary: #b6ffe0;
       --accent: #ff00cc;
       --live-glow: #ff9900;
-      --font: 'Courier New', Courier, monospace;
+      --font: monospace;
     }
 
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
       font-family: var(--font);
-      color: #f0f0f0;
-      overflow: hidden;
-      background-color: #000;
-      animation: twitch 3s infinite;
+      color: #eaeaea;
+      background-color: #0a0a0a;
       background-blend-mode: overlay, darken;
+      animation: twitch 3s infinite;
+      overflow: hidden;
     }
 
     @media (max-width: 600px) {
@@ -45,8 +47,8 @@
       width: 100vw;
       height: 100vh;
       background: url('IMG_7020.jpeg') center center / cover no-repeat;
-      filter: brightness(0.7) saturate(1.2) blur(0.6px);
-      opacity: 0.75;
+      filter: brightness(0.7) saturate(1.1) blur(0.6px);
+      opacity: 0.8;
       z-index: -2;
     }
 
@@ -55,35 +57,28 @@
       top: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
+      min-width: 240px;
       padding: 0.5rem 1rem;
       background: rgba(0, 0, 0, 0.5);
       color: var(--primary);
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-align: center;
       border-radius: 8px;
       text-shadow: 0 0 4px var(--live-glow);
       z-index: 20;
     }
 
     header.live {
+      color: var(--live-glow);
       background: rgba(255, 140, 0, 0.12);
       border: 1px solid var(--live-glow);
-      box-shadow: 0 0 10px var(--live-glow);
+      box-shadow: 0 0 8px var(--live-glow);
     }
 
-    .signature {
-      position: fixed;
-      bottom: 1rem;
-      left: 1rem;
-      font-size: 0.8rem;
-      opacity: 0.7;
-      color: var(--accent);
-      z-index: 15;
-    }
-
-    .signature a {
-      color: var(--accent);
-      text-decoration: none;
+    main {
+      position: relative;
+      z-index: 5;
     }
 
     canvas#mandelbrot {
@@ -92,19 +87,43 @@
       left: 1rem;
       width: 120px;
       height: 120px;
-      border-radius: 10px;
-      filter: hue-rotate(210deg) contrast(1.3) saturate(1.4);
-      z-index: 5;
+      border-radius: 8px;
+      filter: hue-rotate(220deg) contrast(1.2) saturate(1.5);
+      z-index: 10;
+    }
+
+    .signature {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      opacity: 0.7;
+      text-shadow: 0 0 2px #000;
+      z-index: 20;
+    }
+
+    .signature a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .jerry-gallery {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .jerry-gallery img {
       position: absolute;
       width: 100px;
-      height: auto;
-      opacity: 0.14;
+      opacity: 0.13;
+      filter: grayscale(0.7) blur(0.4px);
       animation: float 40s linear infinite;
-      pointer-events: none;
-      filter: grayscale(0.7) blur(0.3px);
     }
 
     @keyframes float {
@@ -117,28 +136,24 @@
         display: none;
       }
     }
-
-    main {
-      display: block;
-      height: 100vh;
-      overflow: hidden;
-    }
   </style>
 </head>
 <body>
+
   <header id="date-clock" class="live" role="status" aria-live="polite">
     <span id="year-roller">2004</span>
   </header>
 
-  <main aria-hidden="true">
-    <canvas id="mandelbrot" width="120" height="120" aria-label="Live Mandelbrot fractal visualization"></canvas>
-    <div class="jerry-gallery">
-      <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640" alt="" style="left:5%; animation-delay:0s;">
-      <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835" alt="" style="left:20%; animation-delay:5s;">
-      <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640" alt="" style="left:35%; animation-delay:10s;">
+  <main>
+    <canvas id="mandelbrot" width="120" height="120" aria-label="Live Mandelbrot Fractal Visualization" role="img"></canvas>
+
+    <div class="jerry-gallery" aria-hidden="true">
+      <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg" alt="" style="left:5%; animation-delay:0s;">
+      <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg" alt="" style="left:20%; animation-delay:5s;">
+      <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg" alt="" style="left:35%; animation-delay:10s;">
       <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" alt="" style="left:50%; animation-delay:15s;">
       <img src="https://i.redd.it/yb7h2dsyot301.jpg" alt="" style="left:65%; animation-delay:20s;">
-      <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640" alt="" style="left:80%; animation-delay:25s;">
+      <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg" alt="" style="left:80%; animation-delay:25s;">
       <img src="https://s14.gifyu.com/images/bsKXm.gif" alt="" style="left:90%; animation-delay:30s;">
       <img src="IMG_6955.jpeg" alt="" style="left:10%; animation-delay:35s;">
       <img src="IMG_6956.jpeg" alt="" style="left:25%; animation-delay:40s;">
@@ -150,27 +165,28 @@
   </main>
 
   <aside class="signature">
-    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a>
+    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener noreferrer">@cheapie</a>
   </aside>
 
   <script>
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
-    const w = canvas.width, h = canvas.height;
+    const width = canvas.width;
+    const height = canvas.height;
     let time = 0;
 
-    function drawMandelbrotLive() {
-      const image = ctx.createImageData(w, h);
+    function drawMandelbrotFrame() {
+      const image = ctx.createImageData(width, height);
       const maxIter = 80;
       const scale = 2.5;
       const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
-      const centerY = 0 + 0.2 * Math.cos(time * 0.002);
+      const centerY = 0.2 * Math.cos(time * 0.002);
 
-      for (let x = 0; x < w; x++) {
-        for (let y = 0; y < h; y++) {
+      for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
           let zx = 0, zy = 0;
-          const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
-          const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
+          const cx = (x - width / 2) / (0.5 * scale * width) + centerX;
+          const cy = (y - height / 2) / (0.5 * scale * height) + centerY;
 
           let i = 0;
           while (zx * zx + zy * zy < 4 && i < maxIter) {
@@ -180,31 +196,22 @@
             i++;
           }
 
-          const p = (y * w + x) * 4;
+          const pixel = (y * width + x) * 4;
           const hue = (i / maxIter * 360 + time * 0.1) % 360;
           const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
-          image.data[p] = r;
-          image.data[p + 1] = g;
-          image.data[p + 2] = b;
-          image.data[p + 3] = 255;
+          image.data[pixel]     = r;
+          image.data[pixel + 1] = g;
+          image.data[pixel + 2] = b;
+          image.data[pixel + 3] = 255;
         }
       }
 
       ctx.putImageData(image, 0, 0);
       time++;
-      requestAnimationFrame(drawMandelbrotLive);
+      requestAnimationFrame(drawMandelbrotFrame);
     }
 
     function hslToRgb(h, s, l) {
-      const hue2rgb = (p, q, t) => {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1/6) return p + (q - p) * 6 * t;
-        if (t < 1/2) return q;
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-        return p;
-      };
-
       if (s === 0) {
         const val = Math.round(l * 255);
         return [val, val, val];
@@ -213,26 +220,35 @@
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
 
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+
       return [
-        Math.round(hue2rgb(p, q, h + 1/3) * 255),
+        Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
         Math.round(hue2rgb(p, q, h) * 255),
-        Math.round(hue2rgb(p, q, h - 1/3) * 255)
+        Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
       ];
     }
 
-    drawMandelbrotLive();
+    drawMandelbrotFrame();
 
-    const dateEl = document.getElementById("date-clock");
     const yearEl = document.getElementById("year-roller");
-    let dynamicYear = 2004;
+    const clockEl = document.getElementById("date-clock");
+    let year = 2004;
 
     function updateCountdown() {
       const now = new Date();
-      const eventDate = new Date("2025-08-01T00:00:00");
-      const diff = eventDate - now;
+      const eventTime = new Date("2025-08-01T00:00:00");
+      const diff = eventTime - now;
 
       if (diff <= 0) {
-        dateEl.innerHTML = `<span id="year-roller">${dynamicYear}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
+        clockEl.innerHTML = `<span id="year-roller">${year}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
         return;
       }
 
@@ -241,19 +257,20 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      dateEl.innerHTML =
-        `<span id="year-roller">${dynamicYear}</span><br>` +
-        `COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S`;
+      clockEl.innerHTML = `
+        <span id="year-roller">${year}</span><br>
+        COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S
+      `;
 
       document.body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
     }
 
-    function rollYear() {
-      dynamicYear = (dynamicYear + 1) > 9999 ? 2004 : dynamicYear + 1;
-      document.title = dynamicYear;
+    function cycleYear() {
+      year = (year + 1 > 9999) ? 2004 : year + 1;
+      document.title = year;
     }
 
-    setInterval(rollYear, 120);
+    setInterval(cycleYear, 120);
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
