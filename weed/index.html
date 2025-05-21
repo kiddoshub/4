@@ -2,96 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Estimated Prophet</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mesoamerican Pyramid</title>
   <style>
-    :root {
-      --bg: #0d001f;
-      --accent: #ff6dfd;
-      --highlight: #00ffe4;
-      --font: 'Courier New', monospace;
-      --glow: 0 0 1rem #ff00cc;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      background: radial-gradient(ellipse at center, #14001a 0%, #050013 100%);
-      color: #e0ffe9;
-      font-family: var(--font);
-      overflow-x: hidden;
-      scroll-snap-type: y mandatory;
-    }
-
-    section {
-      min-height: 100vh;
-      scroll-snap-align: center;
+      margin: 0;
+      background: radial-gradient(circle at center, #1e1e1e 0%, #0c0c0c 100%);
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 4rem;
+      align-items: end;
+      height: 100vh;
+    }
+
+    .pyramid {
       position: relative;
-      font-size: clamp(1.5rem, 3vw, 4rem);
-      line-height: 1.4;
-      text-align: center;
-      text-shadow: var(--glow);
-      animation: fadein 3s ease-in-out forwards;
-      opacity: 0;
+      width: 100%;
+      max-width: 400px;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
     }
 
-    section:nth-child(even) {
-      background: linear-gradient(135deg, rgba(255,0,200,0.05), rgba(0,255,200,0.03));
+    .step {
+      width: 100%;
+      height: 5%;
+      background: linear-gradient(to top, #5b4024, #a08358);
+      border: 2px solid #3c2a1a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 3px;
+      transform-origin: bottom center;
     }
 
-    section:nth-child(odd) {
-      background: linear-gradient(45deg, rgba(0,255,200,0.05), rgba(255,0,200,0.03));
-    }
-
-    @keyframes fadein {
-      0% { opacity: 0; transform: scale(0.98); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    .aura {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: conic-gradient(from 0deg, #ff00cc11, #00ffee11, #ff00cc11);
-      mix-blend-mode: overlay;
-      animation: spin 60s linear infinite;
-      z-index: -1;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    /* Shrink each step */
+    .step:nth-child(1) { width: 100%; }
+    .step:nth-child(2) { width: 90%; }
+    .step:nth-child(3) { width: 80%; }
+    .step:nth-child(4) { width: 70%; }
+    .step:nth-child(5) { width: 60%; }
+    .step:nth-child(6) { width: 50%; }
+    .step:nth-child(7) { width: 40%; }
+    .step:nth-child(8) { width: 30%; }
+    .step:nth-child(9) { width: 20%; }
+    .step:nth-child(10) { width: 10%; background: gold; }
   </style>
 </head>
 <body>
-
-<div class="aura"></div>
-
-<section>My time coming, any day, don't worry 'bout me, no</section>
-<section>Been so long I felt this way, I'm in no hurry, no</section>
-<section>Rainbows end down that highway where ocean breezes blow</section>
-<section>My time coming, voices saying, they tell me where to go</section>
-<section>Don't worry 'bout me, no no, don't worry 'bout me, no</section>
-<section>California, preaching on the burning shore</section>
-<section>California, I'll be knocking on the golden door</section>
-<section>Like an angel, standing in a shaft of light</section>
-<section>Rising up to paradise, I know I'm gonna shine</section>
-<section>He come walking through the jungle sound</section>
-<section>With a sermon, no one could ignore</section>
-<section>One step done and another begun</section>
-<section>And I wonder how many miles?</section>
-<section>I'm gonna go where the water tastes like wine</section>
-<section>It's just as hard with the weight of lead</section>
-<section>This darkness got to give</section>
-
+  <div class="pyramid">
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+  </div>
 </body>
 </html>
