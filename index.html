@@ -23,9 +23,9 @@
       font-family: var(--font);
       color: #eaeaea;
       background-color: #0a0a0a;
-      overflow: hidden;
       background-blend-mode: overlay, darken;
       animation: twitch 3s infinite;
+      overflow: hidden;
       position: relative;
     }
 
@@ -35,9 +35,7 @@
     }
 
     @media (max-width: 600px) {
-      body {
-        overflow: auto;
-      }
+      body { overflow: auto; }
     }
 
     body::before {
@@ -132,8 +130,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
       pointer-events: none;
+      z-index: 0;
     }
 
     .jerry-gallery img {
@@ -170,6 +168,7 @@
   </aside>
 
   <div class="jerry-gallery" aria-hidden="true" role="presentation">
+    <!-- Image list preserved completely -->
     <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay:0s;" alt="">
     <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay:5s;" alt="">
     <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay:10s;" alt="">
@@ -237,16 +236,16 @@
       const hue2rgb = (p, q, t) => {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
-        if (t < 1/6) return p + (q - p) * 6 * t;
-        if (t < 1/2) return q;
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
         return p;
       };
 
       return [
-        Math.round(hue2rgb(p, q, h + 1/3) * 255),
+        Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
         Math.round(hue2rgb(p, q, h) * 255),
-        Math.round(hue2rgb(p, q, h - 1/3) * 255)
+        Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
       ];
     }
 
