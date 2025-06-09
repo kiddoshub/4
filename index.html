@@ -4,19 +4,14 @@
   <meta charset="UTF-8" />
   <title>2004</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A tribute page with a retro, glitchy aesthetic, featuring a countdown and interactive visuals." />
   <style>
-    /* CSS Variables for easy theme management */
     :root {
       --primary: #b6ffe0;
       --accent: #ff00cc;
       --live-glow: #ff9900;
       --font: monospace;
-      --bg-color: #0a0a0a;
-      --text-color: #eaeaea;
     }
 
-    /* General styling and accessibility improvements */
     *,
     *::before,
     *::after {
@@ -26,23 +21,23 @@
     body {
       margin: 0;
       font-family: var(--font);
-      color: var(--text-color);
-      background-color: var(--bg-color);
+      color: #eaeaea;
+      background-color: #0a0a0a;
       background-blend-mode: overlay, darken;
-      animation: twitch 5s infinite;
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      animation: twitch 3s infinite;
+      overflow: hidden;
       position: relative;
-      transition: filter 1s linear; /* Smooth filter transitions */
     }
 
-    /* Respect user's motion preferences */
-    @media (prefers-reduced-motion: reduce) {
-      body, .jerry-gallery img, canvas#mandelbrot::before {
-        animation: none !important;
-      }
+    @keyframes twitch {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(0.2px, -0.3px); }
     }
 
-    /* Background image styling */
+    @media (max-width: 600px) {
+      body { overflow: auto; }
+    }
+
     body::before {
       content: "";
       position: fixed;
@@ -50,20 +45,13 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://images.unsplash.com/photo-1516415951775-6ddc4f4a3523?q=80&w=2070') center center no-repeat;
+      background: url('IMG_7020.jpeg') center center no-repeat;
       background-size: cover;
       filter: brightness(0.7) saturate(1.1) blur(0.6px);
       opacity: 0.8;
       z-index: -2;
     }
-    
-    /* Glitch animation */
-    @keyframes twitch {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(0.3px, -0.4px); }
-    }
 
-    /* Header styling for countdown */
     header {
       position: fixed;
       top: 0.5rem;
@@ -71,7 +59,7 @@
       transform: translateX(-50%);
       min-width: 240px;
       padding: 0.5rem 1rem;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.5);
       color: var(--primary);
       font-size: 0.75rem;
       letter-spacing: 0.06em;
@@ -79,33 +67,31 @@
       border-radius: 8px;
       text-shadow: 0 0 4px var(--live-glow);
       z-index: 10;
-      transition: color 0.5s, background 0.5s, box-shadow 0.5s;
     }
 
     header.live {
       color: var(--live-glow);
-      background: rgba(255, 140, 0, 0.2);
+      background: rgba(255, 140, 0, 0.12);
       border: 1px solid var(--live-glow);
-      box-shadow: 0 0 12px var(--live-glow);
+      box-shadow: 0 0 8px var(--live-glow);
     }
 
-    /* Signature/credit styling */
     .signature {
       position: fixed;
       bottom: 1rem;
       left: 1rem;
       font-size: 0.8rem;
       color: var(--accent);
-      text-shadow: 0 0 3px #000;
+      opacity: 0.7;
+      text-shadow: 0 0 2px #000;
       z-index: 10;
     }
 
     .signature a {
-      color: inherit;
+      color: var(--accent);
       text-decoration: none;
     }
 
-    /* Mandelbrot canvas styling */
     canvas#mandelbrot {
       position: fixed;
       top: 1rem;
@@ -116,7 +102,6 @@
       opacity: 0.9;
       filter: hue-rotate(220deg) contrast(1.2) saturate(1.5);
       z-index: 1;
-      will-change: transform; /* Performance hint */
     }
 
     canvas#mandelbrot::before {
@@ -139,7 +124,6 @@
       50% { transform: scale(1.25); opacity: 0.25; }
     }
 
-    /* Floating image gallery styling */
     .jerry-gallery {
       position: absolute;
       top: 0;
@@ -154,20 +138,18 @@
       position: absolute;
       width: 100px;
       height: auto;
-      opacity: 0.15;
+      opacity: 0.13;
       filter: grayscale(0.7) blur(0.4px);
       animation: float 40s linear infinite;
-      will-change: transform; /* Performance hint */
     }
 
     @keyframes float {
-      0% { transform: translateY(110vh) rotate(0deg); }
-      100% { transform: translateY(-150px) rotate(360deg); }
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-150vh) rotate(360deg); }
     }
-    
-    /* Hide some images on smaller screens for performance */
+
     @media (max-width: 768px) {
-      .jerry-gallery img:nth-child(n+6) {
+      .jerry-gallery img:nth-child(n+7) {
         display: none;
       }
     }
@@ -175,53 +157,46 @@
 </head>
 <body>
 
-  <header id="date-clock" role="status" aria-live="polite">
+  <header id="date-clock" class="live" role="status" aria-live="polite">
     <span id="year-roller">2004</span>
   </header>
 
   <canvas id="mandelbrot" width="120" height="120"></canvas>
 
   <aside class="signature">
-    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener noreferrer">@cheapie</a>
+    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a>
   </aside>
 
   <div class="jerry-gallery" aria-hidden="true" role="presentation">
-    <img src="https://i.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg" style="left:5%; animation-delay:0s;" alt="Jerry Garcia smiling, close-up shot from the 1980s.">
-    <img src="https://i.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg" style="left:20%; animation-delay:5s;" alt="Jerry Garcia playing guitar on stage, bathed in blue light.">
-    <img src="https://i.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg" style="left:35%; animation-delay:10s;" alt="A candid black and white photo of Jerry Garcia laughing.">
-    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay:15s;" alt="A detailed photo of Jerry Garcia's 'Tiger' custom guitar.">
-    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay:20s;" alt="Jerry Garcia with a beard, looking thoughtful in a portrait.">
-    <img src="https://i.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg" style="left:80%; animation-delay:25s;" alt="Jerry Garcia singing into a microphone during a live performance.">
-    <img src="https://placehold.co/100x120/000000/FFFFFF?text=Jerry" style="left:90%; animation-delay:30s;" alt="Placeholder image.">
-    <img src="https://placehold.co/100x120/000000/FFFFFF?text=Garcia" style="left:10%; animation-delay:35s;" alt="Placeholder image.">
+    <!-- Image list preserved completely -->
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay:0s;" alt="">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay:5s;" alt="">
+    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay:10s;" alt="">
+    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay:15s;" alt="">
+    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay:20s;" alt="">
+    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay:25s;" alt="">
+    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay:30s;" alt="">
+    <img src="IMG_6955.jpeg" style="left:10%; animation-delay:35s;" alt="">
+    <img src="IMG_6956.jpeg" style="left:25%; animation-delay:40s;" alt="">
+    <img src="IMG_7004.jpeg" style="left:40%; animation-delay:45s;" alt="">
+    <img src="IMG_7012.jpeg" style="left:55%; animation-delay:50s;" alt="">
+    <img src="IMG_7029.jpeg" style="left:70%; animation-delay:55s;" alt="">
+    <img src="IMG_7039.jpeg" style="left:85%; animation-delay:60s;" alt="">
   </div>
 
-<script>
-  // Encapsulate script in an IIFE to avoid polluting the global scope
-  (function() {
-    'use strict';
-
-    // --- Element References ---
+  <script>
     const canvas = document.getElementById("mandelbrot");
     const ctx = canvas.getContext("2d");
-    const dateEl = document.getElementById("date-clock");
-    const yearEl = document.getElementById("year-roller");
-
-    // --- State Variables ---
+    const w = canvas.width;
+    const h = canvas.height;
     let time = 0;
-    let dynamicYear = 2004;
-    const eventDate = new Date("2025-08-01T00:00:00");
 
-    // --- Mandelbrot Set Renderer ---
     function drawMandelbrotLive() {
-      const w = canvas.width;
-      const h = canvas.height;
       const image = ctx.createImageData(w, h);
       const maxIter = 80;
       const scale = 2.5;
-      // Slower, smoother animation for the fractal
-      const centerX = -0.6 + 0.2 * Math.sin(time * 0.0005);
-      const centerY = 0.2 * Math.cos(time * 0.0005);
+      const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
+      const centerY = 0.2 * Math.cos(time * 0.002);
 
       for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
@@ -238,9 +213,12 @@
           }
 
           const p = (y * w + x) * 4;
-          const hue = (i / maxIter * 360 + time * 0.05) % 360; // Slower color cycling
+          const hue = (i / maxIter * 360 + time * 0.1) % 360;
           const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
-          image.data.set([r, g, b, 255], p);
+          image.data[p] = r;
+          image.data[p + 1] = g;
+          image.data[p + 2] = b;
+          image.data[p + 3] = 255;
         }
       }
 
@@ -249,12 +227,13 @@
       requestAnimationFrame(drawMandelbrotLive);
     }
 
-    // --- HSL to RGB Color Converter ---
     function hslToRgb(h, s, l) {
       if (s === 0) return [l * 255, l * 255, l * 255];
+
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
-      const hue2rgb = (t) => {
+
+      const hue2rgb = (p, q, t) => {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
         if (t < 1 / 6) return p + (q - p) * 6 * t;
@@ -262,22 +241,27 @@
         if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
         return p;
       };
+
       return [
-        Math.round(hue2rgb(h + 1 / 3) * 255),
-        Math.round(hue2rgb(h) * 255),
-        Math.round(hue2rgb(h - 1 / 3) * 255),
+        Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+        Math.round(hue2rgb(p, q, h) * 255),
+        Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
       ];
     }
-    
-    // --- Countdown Timer ---
+
+    drawMandelbrotLive();
+
+    const dateEl = document.getElementById("date-clock");
+    const yearEl = document.getElementById("year-roller");
+    let dynamicYear = 2004;
+
     function updateCountdown() {
       const now = new Date();
+      const eventDate = new Date("2025-08-01T00:00:00");
       const diff = eventDate - now;
 
       if (diff <= 0) {
-        dateEl.classList.add('live');
-        dateEl.innerHTML = `<span id="year-roller">${yearEl.textContent}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
-        document.body.style.filter = 'hue-rotate(0deg)'; // Reset filter when live
+        dateEl.innerHTML = `<span id="year-roller">${dynamicYear}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
         return;
       }
 
@@ -287,40 +271,23 @@
       const seconds = Math.floor((diff / 1000) % 60);
 
       dateEl.innerHTML =
-        `<span id="year-roller">${yearEl.textContent}</span><br>` +
-        `COUNTDOWN: ${days}D ${hours}H ${minutes}M ${seconds}S`;
-      
-      // Slower, more subtle body hue rotation
-      document.body.style.filter = `hue-rotate(${(now.getTime() / 10000) % 360}deg)`;
+        `<span id="year-roller">${dynamicYear}</span><br>` +
+        `COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S`;
+
+      document.body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
     }
 
-    // --- Year Roller ---
-    // This is purely decorative. Changing the document title this rapidly is
-    // terrible for accessibility (causes screen readers to announce constantly).
-    // We will only update the visible text element.
     function rollYear() {
       dynamicYear++;
-      if (dynamicYear > 9999) dynamicYear = 2004; // Reset
-      if (yearEl) {
-        yearEl.textContent = dynamicYear;
-      }
+      if (dynamicYear > 9999) dynamicYear = 2004;
+      document.title = dynamicYear;
     }
 
-    // --- Initialization ---
-    function init() {
-      // Start the animations and timers
-      drawMandelbrotLive();
-      setInterval(rollYear, 2000); // Slowed down significantly to be less frantic
-      setInterval(updateCountdown, 1000);
-      updateCountdown(); // Initial call
-      
-      console.log("Tribute page initialized. Welcome!");
-    }
-
-    // Run the script once the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', init);
-
-  })();
-</script>
+    setInterval(rollYear, 120);
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
+
+Recode to the highest ability 
