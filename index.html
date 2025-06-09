@@ -1,360 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2004</title>
-    <style>
-        :root {
-            --primary: #b6ffe0;
-            --accent: #ff00cc;
-            --live-glow: #ff9900;
-            --font: monospace;
-        }
+  <meta charset="UTF-8" />
+  <title>2004</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A tribute page with a retro, glitchy aesthetic, featuring a countdown and interactive visuals." />
+  <style>
+    /* CSS Variables for easy theme management */
+    :root {
+      --primary: #b6ffe0;
+      --accent: #ff00cc;
+      --live-glow: #ff9900;
+      --font: monospace;
+      --bg-color: #0a0a0a;
+      --text-color: #eaeaea;
+    }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
+    /* General styling and accessibility improvements */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: var(--font);
-            color: #eaeaea;
-            background-color: #0a0a0a;
-            background-blend-mode: overlay, darken;
-            animation: twitch 3s infinite;
-            overflow: hidden;
-            position: relative;
-        }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      background-blend-mode: overlay, darken;
+      animation: twitch 5s infinite;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+      position: relative;
+      transition: filter 1s linear; /* Smooth filter transitions */
+    }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            /* Using a placeholder background for portability */
-            background: linear-gradient(45deg, #120111, #01121a), url('IMG_7020.jpeg') center/cover no-repeat;
-            filter: brightness(0.7) saturate(1.1) blur(0.6px);
-            opacity: 0.8;
-            z-index: -2;
-        }
+    /* Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      body, .jerry-gallery img, canvas#mandelbrot::before {
+        animation: none !important;
+      }
+    }
 
-        header {
-            position: fixed;
-            top: 0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            min-width: 240px;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--primary);
-            font-size: 0.75rem;
-            letter-spacing: 0.06em;
-            text-align: center;
-            border-radius: 8px;
-            text-shadow: 0 0 4px var(--live-glow);
-            z-index: 10;
-            transition: all 0.4s ease;
-        }
+    /* Background image styling */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1516415951775-6ddc4f4a3523?q=80&w=2070') center center no-repeat;
+      background-size: cover;
+      filter: brightness(0.7) saturate(1.1) blur(0.6px);
+      opacity: 0.8;
+      z-index: -2;
+    }
+    
+    /* Glitch animation */
+    @keyframes twitch {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(0.3px, -0.4px); }
+    }
 
-        header.live {
-            color: var(--live-glow);
-            background: rgba(255, 140, 0, 0.12);
-            border: 1px solid var(--live-glow);
-            box-shadow: 0 0 8px var(--live-glow);
-        }
+    /* Header styling for countdown */
+    header {
+      position: fixed;
+      top: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 240px;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: var(--primary);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-align: center;
+      border-radius: 8px;
+      text-shadow: 0 0 4px var(--live-glow);
+      z-index: 10;
+      transition: color 0.5s, background 0.5s, box-shadow 0.5s;
+    }
 
-        .signature {
-            position: fixed;
-            bottom: 1rem;
-            left: 1rem;
-            font-size: 0.8rem;
-            color: var(--accent);
-            opacity: 0.7;
-            text-shadow: 0 0 2px #000;
-            z-index: 10;
-        }
+    header.live {
+      color: var(--live-glow);
+      background: rgba(255, 140, 0, 0.2);
+      border: 1px solid var(--live-glow);
+      box-shadow: 0 0 12px var(--live-glow);
+    }
 
-        .signature a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+    /* Signature/credit styling */
+    .signature {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-shadow: 0 0 3px #000;
+      z-index: 10;
+    }
 
-        canvas#mandelbrot {
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            width: 120px;
-            height: 120px;
-            border-radius: 8px;
-            opacity: 0.9;
-            filter: hue-rotate(220deg) contrast(1.2) saturate(1.5);
-            z-index: 1;
-        }
+    .signature a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        canvas#mandelbrot::before {
-            content: "";
-            position: absolute;
-            top: -20%;
-            left: -20%;
-            width: 160%;
-            height: 160%;
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: aura 2.4s ease-in-out infinite;
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: -1;
-        }
+    /* Mandelbrot canvas styling */
+    canvas#mandelbrot {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      width: 120px;
+      height: 120px;
+      border-radius: 8px;
+      opacity: 0.9;
+      filter: hue-rotate(220deg) contrast(1.2) saturate(1.5);
+      z-index: 1;
+      will-change: transform; /* Performance hint */
+    }
 
-        .jerry-gallery {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+    canvas#mandelbrot::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      left: -20%;
+      width: 160%;
+      height: 160%;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: aura 2.4s ease-in-out infinite;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        .jerry-gallery figure {
-            margin: 0;
-            position: absolute;
-            width: 100px;
-            height: auto;
-            opacity: 0.13;
-            filter: grayscale(0.7) blur(0.4px);
-            animation: float 40s linear infinite;
-        }
+    @keyframes aura {
+      0%, 100% { transform: scale(1); opacity: 0.12; }
+      50% { transform: scale(1.25); opacity: 0.25; }
+    }
 
-        .jerry-gallery img {
-            width: 100%;
-            height: auto;
-        }
+    /* Floating image gallery styling */
+    .jerry-gallery {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        /* Replaces inline styles for gallery images */
-        .jerry-gallery figure:nth-child(1) { left: 5%; animation-delay: 0s; }
-        .jerry-gallery figure:nth-child(2) { left: 20%; animation-delay: 5s; }
-        .jerry-gallery figure:nth-child(3) { left: 35%; animation-delay: 10s; }
-        .jerry-gallery figure:nth-child(4) { left: 50%; animation-delay: 15s; }
-        .jerry-gallery figure:nth-child(5) { left: 65%; animation-delay: 20s; }
-        .jerry-gallery figure:nth-child(6) { left: 80%; animation-delay: 25s; }
-        .jerry-gallery figure:nth-child(7) { left: 90%; animation-delay: 30s; }
-        .jerry-gallery figure:nth-child(8) { left: 10%; animation-delay: 35s; }
-        .jerry-gallery figure:nth-child(9) { left: 25%; animation-delay: 40s; }
-        .jerry-gallery figure:nth-child(10) { left: 40%; animation-delay: 45s; }
-        .jerry-gallery figure:nth-child(11) { left: 55%; animation-delay: 50s; }
-        .jerry-gallery figure:nth-child(12) { left: 70%; animation-delay: 55s; }
-        .jerry-gallery figure:nth-child(13) { left: 85%; animation-delay: 60s; }
+    .jerry-gallery img {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      opacity: 0.15;
+      filter: grayscale(0.7) blur(0.4px);
+      animation: float 40s linear infinite;
+      will-change: transform; /* Performance hint */
+    }
 
-        /* Animations */
-        @keyframes twitch {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(0.2px, -0.3px); }
-        }
-
-        @keyframes aura {
-            0%, 100% { transform: scale(1); opacity: 0.12; }
-            50% { transform: scale(1.25); opacity: 0.25; }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-150vh) rotate(360deg); }
-        }
-
-        /* Accessibility & Responsiveness */
-        @media (prefers-reduced-motion: reduce) {
-            body, .jerry-gallery figure, canvas#mandelbrot::before, body::before {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .jerry-gallery figure:nth-child(n+7) {
-                display: none;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                overflow: auto;
-            }
-        }
-    </style>
+    @keyframes float {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-150px) rotate(360deg); }
+    }
+    
+    /* Hide some images on smaller screens for performance */
+    @media (max-width: 768px) {
+      .jerry-gallery img:nth-child(n+6) {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <header id="date-clock" class="live" role="status" aria-live="polite">
-        <span id="year-roller">2004</span>
-    </header>
+  <header id="date-clock" role="status" aria-live="polite">
+    <span id="year-roller">2004</span>
+  </header>
 
-    <canvas id="mandelbrot" width="120" height="120" aria-label="An animated Mandelbrot Set fractal"></canvas>
+  <canvas id="mandelbrot" width="120" height="120"></canvas>
 
-    <aside class="signature">
-        <a href="https://instagram.com/cheapie" target="_blank" rel="noopener noreferrer">@cheapie</a>
-    </aside>
+  <aside class="signature">
+    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener noreferrer">@cheapie</a>
+  </aside>
 
-    <div class="jerry-gallery" aria-hidden="true">
-        <figure><img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" alt="Jerry Garcia smiling"></figure>
-        <figure><img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" alt="Jerry Garcia playing guitar on stage"></figure>
-        <figure><img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" alt="A portrait of Jerry Garcia"></figure>
-        <figure><img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" alt="Jerry Garcia's Tiger guitar"></figure>
-        <figure><img src="https://i.redd.it/yb7h2dsyot301.jpg" alt="Jerry Garcia in a candid photo"></figure>
-        <figure><img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" alt="Jerry Garcia with a thoughtful expression"></figure>
-        <figure><img src="https://s14.gifyu.com/images/bsKXm.gif" alt="Animated sketch of Jerry Garcia"></figure>
-        <figure><img src="IMG_6955.jpeg" alt="Jerry Garcia performing live"></figure>
-        <figure><img src="IMG_6956.jpeg" alt="Close-up of Jerry Garcia"></figure>
-        <figure><img src="IMG_7004.jpeg" alt="Jerry Garcia on a colorful background"></figure>
-        <figure><img src="IMG_7012.jpeg" alt="Black and white photo of Jerry Garcia"></figure>
-        <figure><img src="IMG_7029.jpeg" alt="Jerry Garcia, profile view"></figure>
-        <figure><img src="IMG_7039.jpeg" alt="Sketch of Jerry Garcia's hand"></figure>
-    </div>
+  <div class="jerry-gallery" aria-hidden="true" role="presentation">
+    <img src="https://i.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg" style="left:5%; animation-delay:0s;" alt="Jerry Garcia smiling, close-up shot from the 1980s.">
+    <img src="https://i.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg" style="left:20%; animation-delay:5s;" alt="Jerry Garcia playing guitar on stage, bathed in blue light.">
+    <img src="https://i.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg" style="left:35%; animation-delay:10s;" alt="A candid black and white photo of Jerry Garcia laughing.">
+    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay:15s;" alt="A detailed photo of Jerry Garcia's 'Tiger' custom guitar.">
+    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay:20s;" alt="Jerry Garcia with a beard, looking thoughtful in a portrait.">
+    <img src="https://i.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg" style="left:80%; animation-delay:25s;" alt="Jerry Garcia singing into a microphone during a live performance.">
+    <img src="https://placehold.co/100x120/000000/FFFFFF?text=Jerry" style="left:90%; animation-delay:30s;" alt="Placeholder image.">
+    <img src="https://placehold.co/100x120/000000/FFFFFF?text=Garcia" style="left:10%; animation-delay:35s;" alt="Placeholder image.">
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Element Selection ---
-            const canvas = document.getElementById("mandelbrot");
-            const dateEl = document.getElementById("date-clock");
-            const yearEl = document.getElementById("year-roller");
-            const body = document.body;
-            const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+<script>
+  // Encapsulate script in an IIFE to avoid polluting the global scope
+  (function() {
+    'use strict';
 
-            // --- State & Constants ---
-            let time = 0;
-            let dynamicYear = 2004;
-            let countdownInterval, yearRollInterval;
+    // --- Element References ---
+    const canvas = document.getElementById("mandelbrot");
+    const ctx = canvas.getContext("2d");
+    const dateEl = document.getElementById("date-clock");
+    const yearEl = document.getElementById("year-roller");
 
-            /**
-             * Converts an HSL color value to RGB.
-             */
-            function hslToRgb(h, s, l) {
-                if (s === 0) return [l * 255, l * 255, l * 255];
-                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                const p = 2 * l - q;
-                const hue2rgb = t => {
-                    if (t < 0) t += 1;
-                    if (t > 1) t -= 1;
-                    if (t < 1 / 6) return p + (q - p) * 6 * t;
-                    if (t < 1 / 2) return q;
-                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-                    return p;
-                };
-                return [
-                    Math.round(hue2rgb(h + 1 / 3) * 255),
-                    Math.round(hue2rgb(h) * 255),
-                    Math.round(hue2rgb(h - 1 / 3) * 255),
-                ];
-            }
+    // --- State Variables ---
+    let time = 0;
+    let dynamicYear = 2004;
+    const eventDate = new Date("2025-08-01T00:00:00");
 
-            /**
-             * Initializes and animates the Mandelbrot set on the canvas.
-             */
-            function initMandelbrot() {
-                if (!canvas) return;
-                const ctx = canvas.getContext("2d");
-                const w = canvas.width;
-                const h = canvas.height;
-                const maxIter = 80;
-                const scale = 2.5;
+    // --- Mandelbrot Set Renderer ---
+    function drawMandelbrotLive() {
+      const w = canvas.width;
+      const h = canvas.height;
+      const image = ctx.createImageData(w, h);
+      const maxIter = 80;
+      const scale = 2.5;
+      // Slower, smoother animation for the fractal
+      const centerX = -0.6 + 0.2 * Math.sin(time * 0.0005);
+      const centerY = 0.2 * Math.cos(time * 0.0005);
 
-                function draw() {
-                    const image = ctx.createImageData(w, h);
-                    const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
-                    const centerY = 0.2 * Math.cos(time * 0.002);
+      for (let x = 0; x < w; x++) {
+        for (let y = 0; y < h; y++) {
+          let zx = 0, zy = 0;
+          const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
+          const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
 
-                    for (let x = 0; x < w; x++) {
-                        for (let y = 0; y < h; y++) {
-                            let zx = 0,
-                                zy = 0;
-                            const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
-                            const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
-                            let i = 0;
-                            while (zx * zx + zy * zy < 4 && i < maxIter) {
-                                const xt = zx * zx - zy * zy + cx;
-                                zy = 2.0 * zx * zy + cy;
-                                zx = xt;
-                                i++;
-                            }
-                            const p = (y * w + x) * 4;
-                            const hue = (i / maxIter * 360 + time * 0.1) % 360;
-                            const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
-                            image.data.set([r, g, b, 255], p);
-                        }
-                    }
-                    ctx.putImageData(image, 0, 0);
-                    time++;
-                    requestAnimationFrame(draw);
-                }
-                draw();
-            }
+          let i = 0;
+          while (zx * zx + zy * zy < 4 && i < maxIter) {
+            const xt = zx * zx - zy * zy + cx;
+            zy = 2.0 * zx * zy + cy;
+            zx = xt;
+            i++;
+          }
 
-            /**
-             * Initializes the countdown timer for the event.
-             */
-            function initCountdown() {
-                const eventDate = new Date("2025-08-01T00:00:00");
+          const p = (y * w + x) * 4;
+          const hue = (i / maxIter * 360 + time * 0.05) % 360; // Slower color cycling
+          const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
+          image.data.set([r, g, b, 255], p);
+        }
+      }
 
-                function update() {
-                    const diff = eventDate - new Date();
+      ctx.putImageData(image, 0, 0);
+      time++;
+      requestAnimationFrame(drawMandelbrotLive);
+    }
 
-                    if (diff <= 0) {
-                        dateEl.innerHTML = `<span id="year-roller">${dynamicYear}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
-                        body.style.filter = '';
-                        clearInterval(countdownInterval);
-                        if(yearRollInterval) clearInterval(yearRollInterval); // Stop year roller when countdown ends
-                        return;
-                    }
+    // --- HSL to RGB Color Converter ---
+    function hslToRgb(h, s, l) {
+      if (s === 0) return [l * 255, l * 255, l * 255];
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      const hue2rgb = (t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+      return [
+        Math.round(hue2rgb(h + 1 / 3) * 255),
+        Math.round(hue2rgb(h) * 255),
+        Math.round(hue2rgb(h - 1 / 3) * 255),
+      ];
+    }
+    
+    // --- Countdown Timer ---
+    function updateCountdown() {
+      const now = new Date();
+      const diff = eventDate - now;
 
-                    const days = Math.floor(diff / 86400000);
-                    const hours = Math.floor((diff % 86400000) / 3600000);
-                    const minutes = Math.floor((diff % 3600000) / 60000);
-                    const seconds = Math.floor((diff % 60000) / 1000);
+      if (diff <= 0) {
+        dateEl.classList.add('live');
+        dateEl.innerHTML = `<span id="year-roller">${yearEl.textContent}</span><br>★ DEAD & CO – SAN FRANCISCO IS LIVE!`;
+        document.body.style.filter = 'hue-rotate(0deg)'; // Reset filter when live
+        return;
+      }
 
-                    dateEl.innerHTML = `
-                        <span id="year-roller">${dynamicYear}</span><br>
-                        COUNTDOWN TO DEAD & CO SF: ${days}D ${hours}H ${minutes}M ${seconds}S
-                    `;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
 
-                    if (!motionQuery.matches) {
-                        body.style.filter = `hue-rotate(${(diff / 1000) % 360}deg)`;
-                    }
-                }
-                update();
-                countdownInterval = setInterval(update, 1000);
-            }
+      dateEl.innerHTML =
+        `<span id="year-roller">${yearEl.textContent}</span><br>` +
+        `COUNTDOWN: ${days}D ${hours}H ${minutes}M ${seconds}S`;
+      
+      // Slower, more subtle body hue rotation
+      document.body.style.filter = `hue-rotate(${(now.getTime() / 10000) % 360}deg)`;
+    }
 
-            /**
-             * Initializes the rapidly changing year display.
-             */
-            function initYearRoller() {
-                function roll() {
-                    dynamicYear = (dynamicYear >= 9999) ? 2004 : dynamicYear + 1;
-                    document.title = dynamicYear;
-                    const yearSpan = dateEl.querySelector("#year-roller");
-                    if (yearSpan) yearSpan.textContent = dynamicYear;
-                }
-                yearRollInterval = setInterval(roll, 120);
-            }
+    // --- Year Roller ---
+    // This is purely decorative. Changing the document title this rapidly is
+    // terrible for accessibility (causes screen readers to announce constantly).
+    // We will only update the visible text element.
+    function rollYear() {
+      dynamicYear++;
+      if (dynamicYear > 9999) dynamicYear = 2004; // Reset
+      if (yearEl) {
+        yearEl.textContent = dynamicYear;
+      }
+    }
 
-            // --- App Initialization ---
-            initCountdown();
+    // --- Initialization ---
+    function init() {
+      // Start the animations and timers
+      drawMandelbrotLive();
+      setInterval(rollYear, 2000); // Slowed down significantly to be less frantic
+      setInterval(updateCountdown, 1000);
+      updateCountdown(); // Initial call
+      
+      console.log("Tribute page initialized. Welcome!");
+    }
 
-            // Respect user's motion preferences
-            if (!motionQuery.matches) {
-                initMandelbrot();
-                initYearRoller();
-            } else {
-                // If motion is reduced, just set the initial year and stop.
-                if (yearEl) yearEl.textContent = '2004';
-                document.title = '2004';
-            }
-        });
-    </script>
+    // Run the script once the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', init);
+
+  })();
+</script>
 </body>
 </html>
