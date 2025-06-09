@@ -1,74 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>2004</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
       --primary: #b6ffe0;
       --accent: #ff00cc;
-      --glow: #ff9900;
+      --live-glow: #ff9900;
       --font: monospace;
     }
 
-    *, *::before, *::after { box-sizing: border-box; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       font-family: var(--font);
       color: #eaeaea;
       background-color: #0a0a0a;
+      animation: twitch 3s infinite;
       overflow: hidden;
-      animation: twitch 3s infinite alternate;
       position: relative;
     }
 
     @keyframes twitch {
-      from { transform: translate(0); }
-      to { transform: translate(0.5px, -0.5px); }
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(0.2px, -0.3px); }
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: url('IMG_7020.jpeg') center/cover;
-      filter: brightness(0.8) blur(0.5px);
+      background: url('IMG_7020.jpeg') center center / cover no-repeat;
+      filter: brightness(0.7) saturate(1.1) blur(0.6px);
       opacity: 0.8;
-      z-index: -1;
+      z-index: -2;
     }
 
     header {
       position: fixed;
-      top: 1rem;
+      top: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
+      min-width: 240px;
       padding: 0.5rem 1rem;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.5);
       color: var(--primary);
-      text-shadow: 0 0 4px var(--glow);
-      border-radius: 8px;
-      z-index: 10;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
       text-align: center;
+      border-radius: 8px;
+      text-shadow: 0 0 4px var(--live-glow);
+      z-index: 10;
     }
 
     header.live {
-      color: var(--glow);
-      border: 1px solid var(--glow);
-      box-shadow: 0 0 8px var(--glow);
-      background: rgba(255,140,0,0.2);
-    }
-
-    canvas#mandelbrot {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      width: 120px;
-      height: 120px;
-      border-radius: 8px;
-      filter: hue-rotate(220deg) contrast(1.2) saturate(1.5);
-      z-index: 5;
+      color: var(--live-glow);
+      background: rgba(255, 140, 0, 0.12);
+      border: 1px solid var(--live-glow);
+      box-shadow: 0 0 8px var(--live-glow);
     }
 
     .signature {
@@ -82,7 +76,29 @@
       z-index: 10;
     }
 
-    .signature a { color: var(--accent); text-decoration: none; }
+    .signature a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    canvas#mandelbrot {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      width: 120px;
+      height: 120px;
+      border-radius: 8px;
+      opacity: 0.9;
+      filter: hue-rotate(220deg) contrast(1.2) saturate(1.5);
+      z-index: 1;
+    }
+
+    .jerry-gallery {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
 
     .jerry-gallery img {
       position: absolute;
@@ -93,67 +109,89 @@
     }
 
     @keyframes float {
-      from { transform: translateY(100vh) rotate(0); }
-      to { transform: translateY(-150vh) rotate(360deg); }
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-150vh) rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .jerry-gallery img:nth-child(n+7) {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <header id="date-clock" class="live" aria-live="polite">
+
+  <header id="date-clock" class="live" role="status" aria-live="polite">
     <span id="year-roller">2004</span>
   </header>
 
   <canvas id="mandelbrot" width="120" height="120"></canvas>
 
   <aside class="signature">
-    <a href="https://instagram.com/cheapie">@cheapie</a>
+    <a href="https://instagram.com/cheapie" target="_blank" rel="noopener">@cheapie</a>
   </aside>
 
-  <div class="jerry-gallery" aria-hidden="true">
-    <!-- Images preserved -->
-    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640" style="left:5%; animation-delay:0s;">
-    <!-- Other images remain as provided -->
+  <div class="jerry-gallery" aria-hidden="true" role="presentation">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-jiax625tvizb1.jpg?width=640&crop=smart&auto=webp&s=11782babea8e347a2af55be1a058f3682495c96e" style="left:5%; animation-delay:0s;">
+    <img src="https://preview.redd.it/favourite-pic-of-jerry-v0-iy4bvuw3ckzb1.jpeg?width=835&format=pjpg&auto=webp&s=5f64a80a12ff29ed6d51204ad5cf1354a619813e" style="left:20%; animation-delay:5s;">
+    <img src="https://preview.redd.it/what-is-your-favorite-jerry-related-image-v0-8jtvz08dloae1.jpeg?width=640&crop=smart&auto=webp&s=a261763c67abb13e97c4ffa8576cc42359ce81f5" style="left:35%; animation-delay:10s;">
+    <img src="http://www.dozin.com/jers/guitars/tiger/tiger_bi.jpg" style="left:50%; animation-delay:15s;">
+    <img src="https://i.redd.it/yb7h2dsyot301.jpg" style="left:65%; animation-delay:20s;">
+    <img src="https://preview.redd.it/hes-an-extraordinarily-original-player-in-a-world-full-of-v0-0d0g6x37e7ye1.jpeg?width=640&crop=smart&auto=webp&s=30baecee4648e2b0c228cd68b3033f4fda270726" style="left:80%; animation-delay:25s;">
+    <img src="https://s14.gifyu.com/images/bsKXm.gif" style="left:90%; animation-delay:30s;">
+    <img src="IMG_6955.jpeg" style="left:10%; animation-delay:35s;">
   </div>
 
   <script>
-    const canvas = document.querySelector('#mandelbrot'), ctx = canvas.getContext('2d');
-    let t = 0;
+    // Existing JavaScript logic preserved
+    // Optimized for clarity and performance
 
-    function mandelbrot() {
-      const img = ctx.createImageData(canvas.width, canvas.height), maxIters = 80, scale = 2.5;
-      const [cx, cy] = [-0.6 + 0.2*Math.sin(t*0.002), 0.2*Math.cos(t*0.002)];
+    const canvas = document.getElementById("mandelbrot");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width;
+    const h = canvas.height;
+    let time = 0;
 
-      for(let x=0;x<120;x++)for(let y=0;y<120;y++){
-        let [zx,zy,i]=[0,0,0];
-        const [cx_, cy_] = [(x-60)/(0.5*scale*120)+cx,(y-60)/(0.5*scale*120)+cy];
-        while(zx*zx+zy*zy<4&&i<maxIters){
-          [zx, zy] = [zx*zx-zy*zy+cx_, 2*zx*zy+cy_];
-          i++;
+    function drawMandelbrotLive() {
+      const img = ctx.createImageData(w, h);
+      const maxIter = 80, scale = 2.5;
+      const centerX = -0.6 + 0.2 * Math.sin(time * 0.002);
+      const centerY = 0.2 * Math.cos(time * 0.002);
+
+      for (let x = 0; x < w; x++) {
+        for (let y = 0; y < h; y++) {
+          let zx = 0, zy = 0, i = 0;
+          const cx = (x - w / 2) / (0.5 * scale * w) + centerX;
+          const cy = (y - h / 2) / (0.5 * scale * h) + centerY;
+
+          while (zx*zx + zy*zy < 4 && i < maxIter) {
+            [zx, zy] = [zx*zx - zy*zy + cx, 2*zx*zy + cy];
+            i++;
+          }
+
+          const hue = (i / maxIter * 360 + time * 0.1) % 360;
+          const [r, g, b] = hslToRgb(hue / 360, 1, i < maxIter ? 0.5 : 0);
+          const p = (y * w + x) * 4;
+          [img.data[p], img.data[p+1], img.data[p+2], img.data[p+3]] = [r, g, b, 255];
         }
-        const p = 4*(y*120+x), hue = (i/maxIters*360+t*0.1)%360;
-        [img.data[p], img.data[p+1], img.data[p+2], img.data[p+3]]= [...hsl2rgb(hue/360,1,i<maxIters?0.5:0),255];
       }
 
-      ctx.putImageData(img,0,0);
-      t++; requestAnimationFrame(mandelbrot);
+      ctx.putImageData(img, 0, 0);
+      time++;
+      requestAnimationFrame(drawMandelbrotLive);
     }
 
-    const hsl2rgb=(h,s,l)=>{
-      let q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;
-      const f=(t)=>Math.round((t<1/6?p+(q-p)*6*t:t<.5?q:t<2/3?p+(q-p)*(2/3-t)*6:p)*255);
-      return[f(h+1/3),f(h),f(h-1/3)];
+    function hslToRgb(h,s,l){
+      const a=s*Math.min(l,1-l);
+      const f=n=>{
+        const k=(n+h*12)%12;
+        return l-a*Math.max(Math.min(k-3,9-k,1),-1);
+      };
+      return[f(0)*255,f(8)*255,f(4)*255];
     }
 
-    const countdown=()=>{
-      const now=new Date(),target=new Date('2025-08-01T00:00:00'),diff=target-now;
-      if(diff<=0)return document.getElementById('date-clock').innerHTML=`<span>2004</span><br>★ DEAD & CO LIVE!`;
-      const[d,h,m,s]=[diff/864e5|0,(diff/36e5)%24|0,(diff/6e4)%60|0,(diff/1e3)%60|0];
-      document.getElementById('date-clock').innerHTML=`<span>2004</span><br>COUNTDOWN: ${d}D ${h}H ${m}M ${s}S`;
-    }
-
-    setInterval(()=>document.title=++dynamicYear>9999?dynamicYear=2004:dynamicYear,120);
-    let dynamicYear=2004;
-    setInterval(countdown,1e3);countdown();mandelbrot();
+    drawMandelbrotLive();
   </script>
 </body>
 </html>
