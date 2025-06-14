@@ -153,8 +153,25 @@
         display: none;
       }
     }
+    .birth-time {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95rem;
+  font-family: var(--font);
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent), 0 0 12px #ff44dd, 0 0 18px #ff66dd, 0 0 24px #ff88ee;
+  opacity: 0.16;
+  z-index: 9;
+  pointer-events: none;
+  animation: soulPulse 5s ease-in-out infinite alternate;
+}
   </style>
 </head>
+<div class="birth-time" aria-hidden="true">
+  Born 4:44 · August 4th, 2004
+</div>
 <body>
 
   <header id="date-clock" class="live" role="status" aria-live="polite">
