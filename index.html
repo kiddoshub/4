@@ -103,69 +103,50 @@
             90% { opacity: 0.98; }
         }
 
-        /* Keyframes for a highly complex 3D border effect */
-        @keyframes complexBorderAnim {
+        /* --- New Keyframes for Border Animation --- */
+        @keyframes borderGlowAndShift {
             0% {
-                transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
                 border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
                 box-shadow:
-                    0 0 30px rgba(0, 255, 255, 0.9),
-                    0 0 60px rgba(255, 0, 255, 0.8),
-                    -10px -10px 40px rgba(255, 255, 0, 0.6), /* Deeper shadow top-left */
-                    10px 10px 40px rgba(0, 255, 0, 0.6), /* Deeper shadow bottom-right */
-                    inset 0 0 20px rgba(0, 255, 255, 0.5); /* Inner glow */
-                filter: hue-rotate(0deg) brightness(1) saturate(1.5);
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Full rectangle */
+                    0 0 30px rgba(0, 255, 255, 0.9),    /* Cyan glow */
+                    0 0 60px rgba(255, 0, 255, 0.8);    /* Magenta glow */
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(0deg);
             }
             25% {
-                transform: translate3d(5px, -5px, 20px) rotateX(5deg) rotateY(-5deg) scale(1.01);
                 border-radius: 70px 20px 60px 30px / 30px 60px 20px 70px;
                 box-shadow:
-                    0 0 35px rgba(255, 255, 0, 0.9),
-                    0 0 70px rgba(0, 255, 0, 0.8),
-                    -15px 5px 45px rgba(255, 0, 255, 0.7),
-                    5px -15px 45px rgba(0, 0, 255, 0.7),
-                    inset 0 0 25px rgba(255, 255, 0, 0.6);
-                filter: hue-rotate(90deg) brightness(1.1) saturate(1.6);
-                clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0 95%); /* Slightly skewed */
+                    0 0 35px rgba(255, 255, 0, 0.9),    /* Yellow glow */
+                    0 0 70px rgba(0, 255, 0, 0.8);      /* Green glow */
+                transform: scale(1.01) rotate(2deg);
+                filter: hue-rotate(90deg);
             }
             50% {
-                transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
                 border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px;
                 box-shadow:
-                    0 0 40px rgba(255, 0, 255, 0.9),
-                    0 0 80px rgba(0, 0, 255, 0.8),
-                    -10px 10px 50px rgba(0, 255, 255, 0.7),
-                    10px -10px 50px rgba(255, 0, 0, 0.7),
-                    inset 0 0 30px rgba(255, 0, 255, 0.6);
-                filter: hue-rotate(180deg) brightness(1.2) saturate(1.7);
-                clip-path: polygon(0 10%, 90% 0, 100% 90%, 10% 100%); /* More skewed, wavy */
+                    0 0 40px rgba(255, 0, 255, 0.9),    /* Magenta glow */
+                    0 0 80px rgba(0, 0, 255, 0.8);      /* Blue glow */
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(180deg);
             }
             75% {
-                transform: translate3d(-5px, 5px, 20px) rotateX(-5deg) rotateY(5deg) scale(1.01);
                 border-radius: 60px 30px 70px 20px / 20px 70px 30px 60px;
                 box-shadow:
-                    0 0 35px rgba(0, 255, 0, 0.9),
-                    0 0 70px rgba(255, 255, 0, 0.8),
-                    15px 5px 45px rgba(0, 255, 255, 0.7),
-                    -5px 15px 45px rgba(255, 0, 0, 0.7),
-                    inset 0 0 25px rgba(0, 255, 0, 0.6);
-                filter: hue-rotate(270deg) brightness(1.1) saturate(1.6);
-                clip-path: polygon(10% 0, 100% 10%, 90% 100%, 0 90%); /* Another skew */
+                    0 0 35px rgba(0, 255, 0, 0.9),      /* Green glow */
+                    0 0 70px rgba(255, 255, 0, 0.8);    /* Yellow glow */
+                transform: scale(1.01) rotate(-2deg);
+                filter: hue-rotate(270deg);
             }
             100% {
-                transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
                 border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
                 box-shadow:
-                    0 0 30px rgba(0, 255, 255, 0.9),
-                    0 0 60px rgba(255, 0, 255, 0.8),
-                    -10px -10px 40px rgba(255, 255, 0, 0.6),
-                    10px 10px 40px rgba(0, 255, 0, 0.6),
-                    inset 0 0 20px rgba(0, 255, 255, 0.5);
-                filter: hue-rotate(360deg) brightness(1) saturate(1.5);
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Back to full rectangle */
+                    0 0 30px rgba(0, 255, 255, 0.9),    /* Cyan glow */
+                    0 0 60px rgba(255, 0, 255, 0.8);    /* Magenta glow */
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(360deg);
             }
         }
+        /* --- End New Keyframes --- */
 
 
         .main-content {
@@ -182,12 +163,12 @@
             padding: 30px;
             position: relative; /* Establish positioning context for pseudo-elements */
             z-index: 1; /* Ensure content is above the border effects */
-            transform-style: preserve-3d; /* Enable 3D transforms for its children */
+            /* transform-style: preserve-3d; Removed as it's not needed for the simpler border */
             animation: fadeIn 2s ease-in-out forwards; /* Keep content fade-in */
             overflow: visible; /* Allow shadows/transforms to go outside */
         }
 
-        /* Pseudo-element for the primary 3D border layer */
+        /* Pseudo-element for the primary animated border layer */
         .main-content::before {
             content: '';
             position: absolute;
@@ -197,9 +178,10 @@
             bottom: -15px;
             background: transparent; /* This layer's own background is transparent */
             z-index: -1; /* Place behind the main content */
-            animation: complexBorderAnim 15s infinite alternate ease-in-out; /* Longer, smoother animation */
+            animation: borderGlowAndShift 15s infinite alternate ease-in-out; /* Use the new animation */
             transform-origin: center center; /* Ensure transforms are from the center */
             pointer-events: none; /* Make it unclickable */
+            /* Removed clip-path from here, as it was problematic */
         }
 
         /* Optional: Second pseudo-element for even more depth/complexity */
@@ -212,11 +194,12 @@
             bottom: -25px;
             background: transparent;
             z-index: -2; /* Even further back */
-            animation: complexBorderAnim 15s infinite alternate-reverse ease-in-out; /* Reversed animation for counter-movement */
+            animation: borderGlowAndShift 15s infinite alternate-reverse ease-in-out; /* Reversed animation for counter-movement */
             transform-origin: center center;
             opacity: 0.7; /* Slightly less opaque */
             pointer-events: none;
-            filter: blur(5px); /* Add a subtle blur for depth */
+            filter: blur(8px); /* Increased blur for more depth and less harshness */
+            /* Removed clip-path from here */
         }
 
         @keyframes fadeIn {
