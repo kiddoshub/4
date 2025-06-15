@@ -8,10 +8,23 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* Custom Bitmap Font */
+        @font-face {
+            font-family: 'Apricot256L'; /* A unique name for your new font */
+            src: url('fonts/Web437_Apricot_256L-2y.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            /* Critical for pixel fonts to prevent blurring */
+            -webkit-font-smoothing: none; /* For Chrome, Safari, etc. */
+            font-smoothing: none;        /* Standard (less common support) */
+            image-rendering: pixelated; /* Ensures crisp pixel rendering */
+        }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+            /* Prioritize your new font, then Press Start 2P, then generic monospace */
+            font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', Courier, monospace;
             background:
                 url('IMG_8002.gif') center center / cover no-repeat,
                 url('IMG_6955.jpeg') repeat,
@@ -216,6 +229,11 @@
                 0 0 10px #ffff00,
                 0 0 20px #ffff00,
                 4px 4px #000;
+            /* Apply the new pixel font here */
+            font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', Courier, monospace;
+            -webkit-font-smoothing: none; /* Crucial for pixel fonts */
+            font-smoothing: none;
+            image-rendering: pixelated;
         }
 
         .birthdate {
@@ -225,6 +243,11 @@
             text-shadow:
                 0 0 5px #00ffff,
                 2px 2px #000;
+            /* Apply the new pixel font here */
+            font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', Courier, monospace;
+            -webkit-font-smoothing: none; /* Crucial for pixel fonts */
+            font-smoothing: none;
+            image-rendering: pixelated;
         }
 
         .gif-frame {
@@ -289,8 +312,12 @@
             cursor: pointer;
             box-shadow: 0 0 15px #ffffff, 0 0 25px #ff00ff;
             font-size: 1.2rem;
-            font-family: 'Press Start 2P', monospace;
+            /* Apply the new pixel font here */
+            font-family: 'Apricot256L', 'Press Start 2P', monospace;
             transition: all 0.2s ease-in-out;
+            -webkit-font-smoothing: none; /* Crucial for pixel fonts */
+            font-smoothing: none;
+            image-rendering: pixelated;
         }
 
         .psychedelic-button:hover {
@@ -397,7 +424,7 @@
             <img src="IMG_1328.jpeg" alt="IMG 1328">
             <img src="IMG_6977.jpeg" alt="IMG 6977">
         </div>
-        <button class="psychedelic-button" onclick="triggerPsychedelia()">Enter the Vortex!</button>
+        <button class="psychedelic-button" onclick="triggerPsychedelia(); return false;">Enter the Vortex!</button>
     </div>
 
     <img src="IMG_7993.gif" alt="IMG 7993" class="gif-outside gif-outside-1">
