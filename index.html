@@ -1,86 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Caden Sailor Robson</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=VT323&display=swap');
-
-    :root {
-      --bg-noise: repeating-linear-gradient(
-        45deg,
-        #111 0px,
-        #111 4px,
-        #000 4px,
-        #000 8px
-      );
-      --glow-green: #00ff99;
-      --glow-purple: #bb33ff;
-      --font-alien: 'Orbitron', sans-serif;
-      --font-terminal: 'VT323', monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
+    html, body {
       margin: 0;
-      height: 100vh;
-      background: var(--bg-noise);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--glow-green);
-      font-family: var(--font-terminal);
-      overflow: hidden;
-      animation: scanlines 1.5s linear infinite;
+      padding: 0;
+      background: radial-gradient(circle at center, #0ff0ff 0%, #220022 100%);
+      background-image: url('https://i.gifer.com/Y1l0.gif'); /* trippy repeating background */
+      font-family: 'Courier New', monospace;
+      color: #00ffcc;
+      overflow-x: hidden;
+      animation: bgShift 60s linear infinite;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 3000px 3000px; }
     }
 
     h1 {
-      font-family: var(--font-alien);
-      font-size: 4rem;
-      color: var(--glow-purple);
-      text-shadow: 0 0 10px var(--glow-purple), 0 0 20px var(--glow-green);
-      letter-spacing: 0.15em;
-      animation: glitch 4s infinite alternate;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 3rem;
+      color: #ff66ff;
+      text-align: center;
+      margin-top: 2rem;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+      animation: pulseName 4s infinite alternate;
     }
 
-    p {
+    @keyframes pulseName {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.05) rotate(-1deg); }
+    }
+
+    .birthdate {
+      text-align: center;
       font-size: 1.6rem;
-      text-shadow: 0 0 5px var(--glow-green);
-      animation: flicker 6s infinite alternate;
+      color: #ffff66;
+      font-family: 'Lucida Console', monospace;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 4px #ff66ff;
+      animation: wiggle 3s ease-in-out infinite;
     }
 
-    @keyframes glitch {
-      0% { transform: skew(0.5deg); }
-      25% { transform: skew(-1deg); }
-      50% { transform: skew(0.3deg); }
-      75% { transform: skew(-0.7deg); }
-      100% { transform: skew(0deg); }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
     }
 
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-      }
-      20%, 24%, 55% {
-        opacity: 0.4;
-      }
+    .alien {
+      display: block;
+      margin: 2rem auto;
+      max-width: 300px;
+      border: 4px dashed #ff00cc;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #ff00cc;
     }
 
-    @keyframes scanlines {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 8px; }
+    .gif-frame {
+      border: 5px double #00ffff;
+      padding: 10px;
+      background: #000000aa;
+      display: inline-block;
+      margin: 1rem auto;
+      box-shadow: 0 0 12px #00ffff;
+    }
+
+    .gif-decoration {
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+    }
+
+    .cursor {
+      position: fixed;
+      pointer-events: none;
+      width: 24px;
+      height: 24px;
+      background: url('https://www.animatedimages.org/data/media/458/animated-star-image-0018.gif') no-repeat center center;
+      background-size: cover;
+      z-index: 9999;
+    }
+
+    .trippy-button {
+      display: block;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(45deg, #ff00cc, #00ffff);
+      border: 3px solid #ffcc00;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 0 12px #fff;
+      animation: buttonPulse 2s infinite alternate;
+    }
+
+    @keyframes buttonPulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    .psychedelic-flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: repeating-radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,0,255,0.3) 5%, rgba(0,255,255,0.3) 10%);
+      mix-blend-mode: screen;
+      animation: flash 0.3s ease-in-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes flash {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+  <h1>Caden Sailor Robson</h1>
+  <div class="birthdate">August 4th, 2004 – 4:44 AM</div>
 
-  <h1>CADEN SAILOR ROBSON</h1>
-  <p>August 4th, 2004 — 4:44 AM</p>
+  <div class="gif-frame">
+    <img class="alien" src="https://media.tenor.com/Uo1BtcPqF8kAAAAC/psychedelic-alien.gif" alt="Psychedelic Alien">
+  </div>
 
+  <div style="text-align:center">
+    <img src="https://www.animatedimages.org/data/media/458/animated-star-image-0005.gif" class="gif-decoration" alt="">
+    <img src="https://www.animatedimages.org/data/media/458/animated-star-image-0015.gif" class="gif-decoration" alt="">
+    <img src="https://www.animatedimages.org/data/media/458/animated-star-image-0021.gif" class="gif-decoration" alt="">
+  </div>
+
+  <button class="trippy-button" onclick="triggerFlash()">Enter The Vision</button>
+
+  <script>
+    // Cursor trail
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor';
+    document.body.appendChild(cursor);
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.pageX + 'px';
+      cursor.style.top = e.pageY + 'px';
+    });
+
+    // Psychedelic flash animation
+    function triggerFlash() {
+      const flash = document.createElement('div');
+      flash.className = 'psychedelic-flash';
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 600);
+    }
+  </script>
 </body>
 </html>
