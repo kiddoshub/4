@@ -3,125 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CADEN SAILOR ROBSON</title>
+  <title>Caden Sailor Robson</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=VT323&display=swap');
 
     :root {
-      --glow-color: #00ff99;
-      --bg-color: #000000;
+      --bg-noise: repeating-linear-gradient(
+        45deg,
+        #111 0px,
+        #111 4px,
+        #000 4px,
+        #000 8px
+      );
+      --glow-green: #00ff99;
+      --glow-purple: #bb33ff;
+      --font-alien: 'Orbitron', sans-serif;
+      --font-terminal: 'VT323', monospace;
     }
 
-    html, body {
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
       margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--glow-color);
-      font-family: 'Major Mono Display', monospace;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      text-align: center;
+      height: 100vh;
+      background: var(--bg-noise);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      color: var(--glow-green);
+      font-family: var(--font-terminal);
+      overflow: hidden;
+      animation: scanlines 1.5s linear infinite;
     }
 
     h1 {
-      font-size: 3.5rem;
-      text-shadow: 0 0 6px var(--glow-color), 0 0 12px var(--glow-color);
-      margin: 0.5em 0 0.2em;
+      font-family: var(--font-alien);
+      font-size: 4rem;
+      color: var(--glow-purple);
+      text-shadow: 0 0 10px var(--glow-purple), 0 0 20px var(--glow-green);
+      letter-spacing: 0.15em;
+      animation: glitch 4s infinite alternate;
     }
 
     p {
-      font-size: 1.2rem;
-      text-shadow: 0 0 5px var(--glow-color);
-      margin-bottom: 1.5em;
+      font-size: 1.6rem;
+      text-shadow: 0 0 5px var(--glow-green);
+      animation: flicker 6s infinite alternate;
     }
 
-    #mandelbrot {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
+    @keyframes glitch {
+      0% { transform: skew(0.5deg); }
+      25% { transform: skew(-1deg); }
+      50% { transform: skew(0.3deg); }
+      75% { transform: skew(-0.7deg); }
+      100% { transform: skew(0deg); }
     }
 
-    .gallery {
-      position: absolute;
-      bottom: 5%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      padding: 0 1rem;
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+      }
+      20%, 24%, 55% {
+        opacity: 0.4;
+      }
     }
 
-    .gallery img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      border: 1px solid var(--glow-color);
-      box-shadow: 0 0 10px var(--glow-color);
-      border-radius: 4px;
+    @keyframes scanlines {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 8px; }
     }
   </style>
 </head>
 <body>
 
   <h1>CADEN SAILOR ROBSON</h1>
-  <p>August 4, 2004 — 4:44 AM</p>
-
-  <canvas id="mandelbrot"></canvas>
-
-  <div class="gallery">
-    <!-- Drop your photos here -->
-    <img src="photo1.jpg" alt="Caden Photo 1">
-    <img src="photo2.jpg" alt="Caden Photo 2">
-  </div>
-
-  <script>
-    const canvas = document.getElementById('mandelbrot');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    function generateMandelbrot() {
-      const img = ctx.createImageData(canvas.width, canvas.height);
-      const maxIter = 300;
-
-      for (let x = 0; x < canvas.width; x++) {
-        for (let y = 0; y < canvas.height; y++) {
-          let a = (x - canvas.width / 2) * 4 / canvas.width;
-          let b = (y - canvas.height / 2) * 4 / canvas.width;
-          let ca = a;
-          let cb = b;
-          let n = 0;
-
-          while (n < maxIter) {
-            let aa = a * a - b * b;
-            let bb = 2 * a * b;
-            a = aa + ca;
-            b = bb + cb;
-            if (a * a + b * b > 16) break;
-            n++;
-          }
-
-          const pix = (x + y * canvas.width) * 4;
-          const shade = Math.floor(255 * n / maxIter);
-          img.data[pix] = 0;
-          img.data[pix + 1] = shade;
-          img.data[pix + 2] = 0;
-          img.data[pix + 3] = 255;
-        }
-      }
-      ctx.putImageData(img, 0, 0);
-    }
-
-    generateMandelbrot();
-  </script>
+  <p>August 4th, 2004 — 4:44 AM</p>
 
 </body>
 </html>
