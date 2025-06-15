@@ -3,87 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caden Sailor Robson</title>
+    <title>Caden Sailor Robson - Psychedelic Realm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
-            background: url('https://media.giphy.com/media/RNQicqGA7F6zu/giphy.gif') repeat, linear-gradient(45deg, #ff00cc, #00ffcc);
-            background-blend-mode: multiply;
-            color: #00ff00;
-            text-shadow: 2px 2px #000;
+            /* Using a retro font as a fallback */
+            font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+            
+            /* Enhanced background for alien landscape effect */
+            background: 
+                url('https://media.giphy.com/media/RNQicqGA7F6zu/giphy.gif') repeat top left / 200px, /* Smaller GIF repeat for texture */
+                url('https://i.imgur.com/your-psychedelic-pattern.png') repeat, /* Placeholder for Stanley Mouse-like pattern (create/find one) */
+                linear-gradient(45deg, #ff00cc, #00ffcc, #ffcc00, #00ffff); /* Vibrant gradient */
+            background-blend-mode: multiply, overlay, screen; /* Layering blend modes for psychedelic effect */
+            background-attachment: fixed; /* Keeps background fixed on scroll if content grows */
+            
+            color: #00ff00; /* Neon green */
+            text-shadow: 
+                0 0 5px #00ff00, /* Subtle glow */
+                0 0 10px #00ff00,
+                2px 2px #000; /* Stronger shadow */
+            
             cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto;
             overflow-x: hidden;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex; /* Use flexbox for main content centering */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
+        /* Keyframes for text wave animation */
         @keyframes waveText {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); text-shadow: 2px 2px #000; }
+            25% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px #00ff00, 4px 4px #000; }
+            50% { transform: translateY(-10px) rotate(-2deg); text-shadow: 0 0 15px #00ff00, 6px 6px #000; }
+            75% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px #00ff00, 4px 4px #000; }
+        }
+
+        /* Keyframes for button pulse animation */
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 25px #ff00ff; }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px #ffffff, 0 0 40px #ff00ff; }
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 10px;
+            display: flex; /* Changed to flexbox for simpler centering and stacking */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             padding: 20px;
+            text-align: center; /* Center content within this div */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+            border: 5px outset #00ffff; /* Retro border */
+            box-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff; /* Glowing border effect */
+            max-width: 90%; /* Limit width for better presentation */
+            margin: 20px auto; /* Center the content box */
+            padding: 30px;
+            animation: fadeIn 2s ease-in-out; /* Simple fade-in animation for content */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .name {
-            grid-column: 2;
-            text-align: center;
-            font-size: 2.5rem;
-            animation: waveText 2s infinite;
-            font-family: 'Press Start 2P', monospace;
+            font-size: 3.5rem; /* Increased size */
+            animation: waveText 2.5s infinite; /* Slightly slower wave */
+            margin-bottom: 10px;
+            color: #ffff00; /* Different color for name */
+            text-shadow: 
+                0 0 10px #ffff00,
+                0 0 20px #ffff00,
+                4px 4px #000;
         }
 
         .birthdate {
-            grid-column: 2;
-            text-align: center;
-            font-size: 1.2rem;
-            margin-top: -20px;
+            font-size: 1.5rem; /* Increased size */
+            margin-top: 0;
+            color: #00ffff; /* Different color for birthdate */
+            text-shadow: 
+                0 0 5px #00ffff,
+                2px 2px #000;
         }
 
         .gif-frame {
-            grid-column: 1 / span 3;
             display: flex;
+            flex-wrap: wrap; /* Allow GIFs to wrap on smaller screens */
             justify-content: space-around;
             align-items: center;
             margin-top: 30px;
+            margin-bottom: 30px;
+            width: 100%; /* Take full width of parent */
         }
 
         .gif-frame img {
-            width: 100px;
+            width: 120px; /* Slightly larger GIFs */
             height: auto;
+            margin: 10px; /* Spacing between GIFs */
+            border: 3px solid #ff00ff; /* Border around GIFs */
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; /* Glowing effect */
+            animation: floatAndGlow 3s infinite alternate ease-in-out; /* New animation for GIFs */
+        }
+
+        @keyframes floatAndGlow {
+            0% { transform: translateY(0); box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
+            50% { transform: translateY(-15px); box-shadow: 0 0 20px #ffff00, 0 0 30px #00ff00; }
+            100% { transform: translateY(0); box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
         }
 
         .psychedelic-button {
             display: block;
             margin: 30px auto;
-            padding: 10px;
-            background: #ff00ff;
-            color: #ffff00;
-            border: 3px ridge #00ffff;
+            padding: 15px 25px; /* Larger padding */
+            background: #ff00ff; /* Magenta */
+            color: #ffff00; /* Yellow */
+            border: 5px ridge #00ffff; /* Cyan */
             cursor: pointer;
-            box-shadow: 0 0 15px #ffffff;
+            box-shadow: 0 0 15px #ffffff, 0 0 25px #ff00ff; /* White and magenta glow */
+            font-size: 1.2rem;
+            font-family: 'Press Start 2P', monospace;
+            transition: all 0.2s ease-in-out; /* Smooth transition for hover */
+        }
+
+        .psychedelic-button:hover {
+            background: #ffff00; /* Yellow on hover */
+            color: #ff00ff; /* Magenta text on hover */
+            box-shadow: 0 0 20px #00ffff, 0 0 35px #ffff00; /* Cyan and yellow glow */
+            transform: scale(1.05); /* Slight scale on hover */
         }
 
         .psychedelic-button:active {
-            animation: buttonPulse 0.2s infinite;
+            animation: buttonPulse 0.4s forwards; /* Use 'forwards' to keep final state */
         }
-
-        @keyframes buttonPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
         /* Cursor Trail */
-        .trail { position: absolute; height: 10px; width: 10px; border-radius: 50%; pointer-events: none; }
+        .trail { 
+            position: absolute; 
+            height: 15px; /* Larger trail dots */
+            width: 15px; 
+            border-radius: 50%; 
+            pointer-events: none; 
+            opacity: 0.8; /* Slightly transparent */
+            filter: blur(2px); /* Soft blur for a glowy effect */
+            animation: fadeOutTrail 0.5s forwards; /* Faster fade out */
+        }
+
+        @keyframes fadeOutTrail {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.5); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            .birthdate {
+                font-size: 1.1rem;
+            }
+            .gif-frame img {
+                width: 90px;
+            }
+            .psychedelic-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .name {
+                font-size: 1.8rem;
+            }
+            .birthdate {
+                font-size: 0.9rem;
+            }
+            .gif-frame img {
+                width: 70px;
+                margin: 5px;
+            }
+            .main-content {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -91,16 +198,31 @@
         <div class="name">Caden Sailor Robson</div>
         <div class="birthdate">Born: August 4th, 2004</div>
         <div class="gif-frame">
-            <img src="https://media.giphy.com/media/26gspEfpyv31Z11os/giphy.gif">
-            <img src="https://media.giphy.com/media/l2JhJ2g8fNZJSKZkk/giphy.gif">
-            <img src="https://media.giphy.com/media/26FPF8NbtfHgrnLdu/giphy.gif">
+            <img src="https://media.giphy.com/media/26gspEfpyv31Z11os/giphy.gif" alt="Trippy swirl GIF">
+            <img src="https://media.giphy.com/media/l2JhJ2g8fNZJSKZkk/giphy.gif" alt="Abstract pulsating GIF">
+            <img src="https://media.giphy.com/media/26FPF8NbtfHgrnLdu/giphy.gif" alt="Colorful cosmic GIF">
         </div>
-        <button class="psychedelic-button" onclick="triggerPsychedelia()">Click Me!</button>
+        <button class="psychedelic-button" onclick="triggerPsychedelia()">Enter the Vortex!</button>
     </div>
 
     <script>
         function triggerPsychedelia() {
+            // Random hue rotation for the whole body
             document.body.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
+            
+            // Optional: Also change background blend modes or colors for more intense effect
+            const blendModes = ['multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn'];
+            const randomBlendMode1 = blendModes[Math.floor(Math.random() * blendModes.length)];
+            const randomBlendMode2 = blendModes[Math.floor(Math.random() * blendModes.length)];
+            document.body.style.backgroundBlendMode = `multiply, ${randomBlendMode1}, ${randomBlendMode2}`;
+
+            // Optional: Trigger a temporary text shadow change for more dynamic feedback
+            const nameElement = document.querySelector('.name');
+            const originalTextShadow = nameElement.style.textShadow;
+            nameElement.style.textShadow = '0 0 30px #ffffff, 0 0 50px #ff00ff';
+            setTimeout(() => {
+                nameElement.style.textShadow = originalTextShadow; // Revert after a short time
+            }, 500);
         }
 
         document.addEventListener('mousemove', function(e) {
@@ -108,9 +230,13 @@
             trail.className = 'trail';
             trail.style.top = e.pageY + 'px';
             trail.style.left = e.pageX + 'px';
-            trail.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            
+            // More vibrant and random colors for the trail
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
+            trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
             document.body.appendChild(trail);
-            setTimeout(() => { trail.remove(); }, 500);
+            setTimeout(() => { trail.remove(); }, 500); // Trail fades out in 0.5s
         });
     </script>
 </body>
