@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caden Sailor Robson - Mobile Psychedelic Realm</title>
+    <title>Caden Sailor Robson - Psychedelic Realm</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        /* Your existing CSS (including Apricot256L font, body, CRT overlay, image rendering, etc.) */
+        /* Custom Bitmap Font */
         @font-face {
-            font-family: 'Apricot256L';
+            font-family: 'Apricot256L'; /* A unique name for your new font */
             src: url('fonts/Web437_Apricot_256L-2y.woff') format('woff');
             font-weight: normal;
             font-style: normal;
-            -webkit-font-smoothing: none;
-            font-smoothing: none;
-            image-rendering: pixelated;
+            /* Critical for pixel fonts to prevent blurring */
+            -webkit-font-smoothing: none; /* For Chrome, Safari, etc. */
+            font-smoothing: none;        /* Standard (less common support) */
+            image-rendering: pixelated; /* Ensures crisp pixel rendering */
         }
 
         body {
             margin: 0;
             padding: 0;
+            /* Prioritize your new font, then Press Start 2P, then generic monospace */
             font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', Courier, monospace;
             background:
                 url('IMG_8002.gif') center center / cover no-repeat,
@@ -34,47 +36,332 @@
                 0 0 5px #00ff00,
                 0 0 10px #00ff00,
                 2px 2px #000;
-            cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto; /* Desktop fallback */
+            cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto;
             overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            perspective: 1500px;
+            position: relative; /* Needed for the CRT overlay and 3D context */
+            perspective: 1500px; /* Stronger perspective for whole page */
             transform-style: preserve-3d;
-            transition: filter 0.1s ease-out, background-blend-mode 0.1s ease-out; /* Smooth transitions for warp effects */
+            transition: filter 0.1s ease-out, background-blend-mode 0.1s ease-out; /* Added for smoother transitions outside of warp */
         }
 
-        /* Existing ::before and ::after for CRT/borders */
-        body::before { /* CRT Overlay */
+        /* CRT/Scanline Overlay */
+        body::before {
             content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 1000;
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 1000; /* Ensure it's on top of everything */
             background:
-                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px),
-                repeating-linear-gradient(90deg, rgba(255, 0, 255, 0.05), rgba(0, 255, 255, 0.05) 1px, transparent 1px, transparent 2px);
-            opacity: 0.7;
-            filter: grayscale(20%);
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 0, 255, 0.05),
+                    rgba(0, 255, 255, 0.05) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            opacity: 0.7; /* Adjust for intensity */
+            filter: grayscale(20%); /* Slight vintage feel */
         }
 
+        /* Pixelated Image Effect for all images */
         img {
-            image-rendering: pixelated; /* Simplified for brevity */
+            image-rendering: optimizeSpeed; /* Deprecated, but good fallback */
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: -o-crisp-edges; /* Opera */
+            image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard property) */
+            image-rendering: pixelated; /* Standard property */
+            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
         }
 
-        @keyframes waveText { /* existing */ }
-        @keyframes buttonPulse { /* existing */ }
-        @keyframes flicker { /* existing */ }
-        @keyframes borderGlowAndShift { /* existing */ }
-        @keyframes fadeIn { /* existing */ }
-        @keyframes floatAndGlow { /* existing */ }
-        @keyframes rotateForever { /* existing */ }
+        /* Keyframes for text wave animation */
+        @keyframes waveText {
+            0%, 100% { transform: translateY(0) rotate(0deg); text-shadow: 2px 2px #000; }
+            25% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px #00ff00, 4px 4px #000; }
+            50% { transform: translateY(-10px) rotate(-2deg); text-shadow: 0 0 15px #00ff00, 6px 6px #000; }
+            75% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px #00ff00, 4px 4px #000; }
+        }
+
+        /* Keyframes for button pulse animation */
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 25px #ff00ff; }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px #ffffff, 0 0 40px #ff00ff; }
+        }
+
+        /* Keyframes for subtle flicker */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 4px 4px #000; }
+            5% { opacity: 0.9; text-shadow: 0 0 8px #ffff00, 0 0 18px #ffff00, 3px 3px #000; }
+            10% { opacity: 1; text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 4px 4px #000; }
+            15% { opacity: 0.85; text-shadow: 0 0 7px #ffff00, 0 0 15px #ffff00, 2px 2px #000; }
+            20% { opacity: 1; text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 4px 4px #000; }
+            /* More random intervals can be added */
+            50% { opacity: 0.95; }
+            60% { opacity: 1; }
+            70% { opacity: 0.9; }
+            80% { opacity: 1; }
+            90% { opacity: 0.98; }
+        }
+
+        /* --- New Keyframes for Border Animation --- */
+        @keyframes borderGlowAndShift {
+            0% {
+                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
+                box-shadow:
+                    0 0 30px rgba(0, 255, 255, 0.9),    /* Cyan glow */
+                    0 0 60px rgba(255, 0, 255, 0.8);    /* Magenta glow */
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(0deg);
+            }
+            25% {
+                border-radius: 70px 20px 60px 30px / 30px 60px 20px 70px;
+                box-shadow:
+                    0 0 35px rgba(255, 255, 0, 0.9),    /* Yellow glow */
+                    0 0 70px rgba(0, 255, 0, 0.8);      /* Green glow */
+                transform: scale(1.01) rotate(2deg);
+                filter: hue-rotate(90deg);
+            }
+            50% {
+                border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px;
+                box-shadow:
+                    0 0 40px rgba(255, 0, 255, 0.9),    /* Magenta glow */
+                    0 0 80px rgba(0, 0, 255, 0.8);      /* Blue glow */
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(180deg);
+            }
+            75% {
+                border-radius: 60px 30px 70px 20px / 20px 70px 30px 60px;
+                box-shadow:
+                    0 0 35px rgba(0, 255, 0, 0.9),      /* Green glow */
+                    0 0 70px rgba(255, 255, 0, 0.8);    /* Yellow glow */
+                transform: scale(1.01) rotate(-2deg);
+                filter: hue-rotate(270deg);
+            }
+            100% {
+                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
+                box-shadow:
+                    0 0 30px rgba(0, 255, 255, 0.9),    /* Cyan glow */
+                    0 0 60px rgba(255, 0, 255, 0.8);    /* Magenta glow */
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(360deg);
+            }
+        }
+        /* --- End New Keyframes --- */
+
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Base background for the content */
+            border: none; /* Remove default border, we'll use pseudo-elements for the effect */
+            max-width: 90%;
+            margin: 20px auto;
+            padding: 30px;
+            position: relative; /* Establish positioning context for pseudo-elements */
+            z-index: 1; /* Ensure content is above the border effects */
+            animation: fadeIn 2s ease-in-out forwards; /* Keep content fade-in */
+            overflow: visible; /* Allow shadows/transforms to go outside */
+        }
+
+        /* Pseudo-element for the primary animated border layer */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: -15px; /* Adjust to control border thickness and offset */
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: transparent; /* This layer's own background is transparent */
+            z-index: -1; /* Place behind the main content */
+            animation: borderGlowAndShift 15s infinite alternate ease-in-out; /* Use the new animation */
+            transform-origin: center center; /* Ensure transforms are from the center */
+            pointer-events: none; /* Make it unclickable */
+        }
+
+        /* Optional: Second pseudo-element for even more depth/complexity */
+        .main-content::after {
+            content: '';
+            position: absolute;
+            top: -25px; /* Further offset */
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            background: transparent;
+            z-index: -2; /* Even further back */
+            animation: borderGlowAndShift 15s infinite alternate-reverse ease-in-out; /* Reversed animation for counter-movement */
+            transform-origin: center center;
+            opacity: 0.7; /* Slightly less opaque */
+            pointer-events: none;
+            filter: blur(8px); /* Increased blur for more depth and less harshness */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .name {
+            font-size: 3.5rem;
+            animation: waveText 2.5s infinite, flicker 3s infinite alternate; /* Added flicker animation */
+            margin-bottom: 10px;
+            color: #ffff00;
+            text-shadow:
+                0 0 10px #ffff00,
+                0 0 20px #ffff00,
+                4px 4px #000;
+            /* Apply the new pixel font here */
+            font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', Courier, monospace;
+            -webkit-font-smoothing: none; /* Crucial for pixel fonts */
+            font-smoothing: none;
+            image-rendering: pixelated;
+        }
+
+        .birthdate {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: #00ffff;
+            text-shadow:
+                0 0 5px #00ffff,
+                2px 2px #000;
+            /* Apply the new pixel font here */
+            font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', Courier, monospace;
+            -webkit-font-smoothing: none; /* Crucial for pixel fonts */
+            font-smoothing: none;
+            image-rendering: pixelated;
+        }
+
+        /* New styles for the time display */
+        .time-display {
+            font-size: 0.9rem; /* Smaller font size for utility info */
+            color: #00ffcc; /* A different vibrant color */
+            text-shadow:
+                0 0 3px #00ffcc,
+                1px 1px #000;
+            margin-top: 15px; /* Space it out a bit */
+            margin-bottom: 15px;
+            animation: flicker 4s infinite alternate; /* Give it a subtle flicker too */
+            font-family: 'Apricot256L', 'Press Start 2P', monospace; /* Ensure pixel font */
+            -webkit-font-smoothing: none;
+            font-smoothing: none;
+            image-rendering: pixelated;
+        }
+
+
+        .gif-frame {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .gif-frame img {
+            width: 120px;
+            height: auto;
+            margin: 10px;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            animation: floatAndGlow 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatAndGlow {
+            0% { transform: translateY(0); box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
+            50% { transform: translateY(-15px); box-shadow: 0 0 20px #ffff00, 0 0 30px #00ff00; }
+            100% { transform: translateY(0); box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
+        }
+
+        /* Styles for GIFs outside the box */
+        .gif-outside {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            animation: floatAndGlow 3s infinite alternate ease-in-out, rotateForever 10s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotateForever {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .gif-outside-1 {
+            top: 10%;
+            left: 5%;
+        }
+
+        .gif-outside-2 {
+            bottom: 10%;
+            right: 5%;
+        }
+
+
+        .psychedelic-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 25px;
+            background: #ff00ff;
+            color: #ffff00;
+            border: 5px ridge #00ffff;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ffffff, 0 0 25px #ff00ff;
+            font-size: 1.2rem;
+            /* Apply the new pixel font here */
+            font-family: 'Apricot256L', 'Press Start 2P', monospace;
+            transition: all 0.2s ease-in-out;
+            -webkit-font-smoothing: none; /* Crucial for pixel fonts */
+            font-smoothing: none;
+            image-rendering: pixelated;
+        }
+
+        .psychedelic-button:hover {
+            background: #ffff00;
+            color: #ff00ff;
+            box-shadow: 0 0 20px #00ffff, 0 0 35px #ffff00;
+            transform: scale(1.05);
+        }
+
+        .psychedelic-button:active {
+            animation: buttonPulse 0.4s forwards;
+        }
+
+        /* Cursor Trail */
+        .trail {
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+            filter: blur(2px);
+            animation: fadeOutTrail 0.5s forwards;
+        }
+
+        @keyframes fadeOutTrail {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.5); }
+        }
 
         /* New: Warp Effect Classes */
         .warp-effect-active {
@@ -114,25 +401,6 @@
             box-shadow: 0 0 10px #00ffff, 0 0 20px #ffff00;
         }
 
-        /* Existing .main-content and other styles */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            max-width: 90%;
-            margin: 20px auto;
-            padding: 30px;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 2s ease-in-out forwards;
-            overflow: visible;
-        }
-        .main-content::before, .main-content::after { /* existing border animations */ }
-
         /* New: Content sections for teleportation */
         .portal-destination-content {
             display: none; /* Hidden by default */
@@ -145,24 +413,57 @@
             animation: flicker 2s infinite alternate;
         }
 
-        /* Responsive adjustments (existing ones are good) */
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .name { font-size: 2.5rem; }
-            .birthdate { font-size: 1.1rem; }
-            .time-display { font-size: 0.7rem; }
-            .gif-frame img { width: 90px; }
-            .portal-button { padding: 10px 20px; font-size: 1.1rem; }
-            .gif-outside { width: 70px; }
+            .name {
+                font-size: 2.5rem;
+            }
+            .birthdate {
+                font-size: 1.1rem;
+            }
+            .time-display {
+                font-size: 0.7rem;
+            }
+            .gif-frame img {
+                width: 90px;
+            }
+            .psychedelic-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            .gif-outside {
+                width: 70px;
+            }
+            /* Adjust portal button for medium screens */
+            .portal-button {
+                font-size: 1.2rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .name { font-size: 1.8rem; }
-            .birthdate { font-size: 0.9rem; }
-            .time-display { font-size: 0.6rem; }
-            .gif-frame img { width: 70px; margin: 5px; }
-            .main-content { padding: 15px; }
-            .gif-outside { width: 50px; }
-            .portal-button { font-size: 1rem; }
+            .name {
+                font-size: 1.8rem;
+            }
+            .birthdate {
+                font-size: 0.9rem;
+            }
+            .time-display {
+                font-size: 0.6rem;
+            }
+            .gif-frame img {
+                width: 70px;
+                margin: 5px;
+            }
+            .main-content {
+                padding: 15px;
+            }
+            .gif-outside {
+                width: 50px;
+            }
+            /* Adjust portal button for small screens */
+            .portal-button {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -178,8 +479,34 @@
         <div class="gif-frame">
             <img src="IMG_7976.gif" alt="IMG 7976">
             <img src="IMG_7977.gif" alt="IMG 7977">
+            <img src="IMG_7978.gif" alt="IMG 7978">
+            <img src="IMG_7979.gif" alt="IMG 7979">
+            <img src="IMG_7980.gif" alt="IMG 7980">
+            <img src="IMG_7981.gif" alt="IMG 7981">
+            <img src="IMG_7982.gif" alt="IMG 7982">
+            <img src="IMG_7983.gif" alt="IMG 7983">
+            <img src="IMG_7984.gif" alt="IMG 7984">
+            <img src="IMG_7990.gif" alt="IMG 7985">
+            <img src="IMG_2516.JPEG" alt="IMG 2516">
+            <img src="IMG_0042.jpeg" alt="IMG 0042">
+            <img src="IMG_0125.jpeg" alt="IMG 0125">
+            <img src="IMG_0150.jpeg" alt="IMG 0150">
+            <img src="IMG_9901.jpeg" alt="IMG 9901">
+            <img src="IMG_0148.jpeg" alt="IMG 0148">
+            <img src="IMG_7986.gif" alt="IMG 7986">
+            <img src="IMG_7987.gif" alt="IMG 7987">
+            <img src="IMG_7991.gif" alt="IMG 7991">
+            <img src="IMG_7994.gif" alt="IMG 7994">
+            <img src="IMG_7995.gif" alt="IMG 7995">
+            <img src="IMG_7999.gif" alt="IMG 7999">
+            <img src="IMG_7998.gif" alt="IMG 7998">
+            <img src="IMG_7997.gif" alt="IMG 7997">
+
             <img src="IMG_2431.jpeg" alt="IMG 2431">
             <img src="IMG_2441.jpeg" alt="IMG 2441">
+            <img src="IMG_2826.jpeg" alt="IMG 2826">
+            <img src="IMG_1328.jpeg" alt="IMG 1328">
+            <img src="IMG_6977.jpeg" alt="IMG 6977">
         </div>
         <button class="psychedelic-button portal-button" onclick="activatePortal(); return false;">Activate Portal!</button>
     </div>
@@ -192,7 +519,9 @@
             <img src="IMG_7996.gif" alt="New GIF 2">
             <img src="IMG_7998.gif" alt="New GIF 3">
             <img src="IMG_7999.gif" alt="New GIF 4">
-            </div>
+            <img src="IMG_8002.gif" alt="New GIF 5">
+            <img src="IMG_6955.jpeg" alt="New Image 6">
+        </div>
         <button class="psychedelic-button" onclick="deactivatePortal(); return false;">Return to Origin</button>
     </div>
 
@@ -201,11 +530,12 @@
     <img src="IMG_7996.gif" alt="IMG 7996" class="gif-outside gif-outside-2">
 
     <script>
-        const startTime = new Date();
-        const originalBodyFilter = document.body.style.filter;
-        const originalBodyBlendMode = document.body.style.backgroundBlendMode;
+        const startTime = new Date(); // Record the time the script starts (page loads)
+        const originalBodyFilter = document.body.style.filter; // Save original filter
+        const originalBodyBlendMode = document.body.style.backgroundBlendMode; // Save original blend mode
 
-        function updateTimeDisplay() { /* existing function */
+        function updateTimeDisplay() {
+            // Current Time
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -213,7 +543,8 @@
             const currentTimeStr = `CURRENT: ${hours}:${minutes}:${seconds}`;
             document.getElementById('currentTime').textContent = currentTimeStr;
 
-            const elapsedTime = now.getTime() - startTime.getTime();
+            // Uptime Calculation
+            const elapsedTime = now.getTime() - startTime.getTime(); // in milliseconds
             const totalSeconds = Math.floor(elapsedTime / 1000);
             const upt_hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
             const upt_minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
@@ -222,8 +553,28 @@
             document.getElementById('uptimeDisplay').textContent = uptimeStr;
         }
 
+        // Update time immediately on load, then every second
         updateTimeDisplay();
-        setInterval(updateTimeDisplay, 1000);
+        setInterval(updateTimeDisplay, 1000); // Call every 1000 milliseconds (1 second)
+
+
+        function triggerPsychedelia() {
+            // This function is now for the original "Enter the Vortex" button.
+            // It still provides a random hue shift and blend mode change.
+            document.body.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
+
+            const blendModes = ['multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn'];
+            const randomBlendMode1 = blendModes[Math.floor(Math.random() * blendModes.length)];
+            const randomBlendMode2 = blendModes[Math.floor(Math.random() * blendModes.length)];
+            document.body.style.backgroundBlendMode = `multiply, ${randomBlendMode1}, ${randomBlendMode2}`;
+
+            const nameElement = document.querySelector('.name');
+            const originalTextShadow = nameElement.style.textShadow;
+            nameElement.style.textShadow = '0 0 30px #ffffff, 0 0 50px #ff00ff';
+            setTimeout(() => {
+                nameElement.style.textShadow = originalTextShadow; // Revert after a short time
+            }, 500);
+        }
 
         // --- New Portal Logic ---
         const originalRealm = document.getElementById('original-realm');
@@ -232,17 +583,21 @@
         function activatePortal() {
             // 1. Haptic Feedback (Vibration)
             if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100, 50, 100, 50, 200]); // A more intense pattern
+                // Intense, complex vibration pattern for a strong 'warp' feeling
+                navigator.vibrate([100, 50, 100, 50, 100, 50, 200]);
             }
 
             // 2. Intense Visual Warp Effect
             const body = document.body;
             let warpCount = 0;
             const maxWarps = 10; // Number of rapid flashes/changes
+            const originalBackgroundColor = body.style.backgroundColor; // Store current background color
 
             const warpInterval = setInterval(() => {
                 // Apply random filters and background flashes
                 body.style.filter = `hue-rotate(${Math.random() * 360}deg) saturate(${100 + Math.random() * 200}%) contrast(${100 + Math.random() * 100}%) blur(${Math.random() * 2}px)`;
+                
+                // Rapidly flash different colors
                 if (Math.random() > 0.5) {
                     body.classList.add('warp-effect-flash'); // White flash
                     setTimeout(() => body.classList.remove('warp-effect-flash'), 50);
@@ -256,31 +611,36 @@
                     clearInterval(warpInterval);
 
                     // 3. Smooth Transition to New Realm
-                    body.style.filter = 'none'; // Reset body filter before transition
-                    body.classList.add('warp-effect-flash'); // Final flash to transition
+                    body.style.filter = 'none'; // Reset body filter before final transition
+                    body.classList.add('warp-effect-flash'); // Final flash to black out for transition
                     setTimeout(() => {
                         body.classList.remove('warp-effect-flash');
-                        originalRealm.style.display = 'none';
-                        newRealm.style.display = 'flex'; // Show the new realm
-                        // Optional: Reset hue for the new realm if desired
-                        body.style.filter = 'hue-rotate(0deg)';
-                        body.style.backgroundBlendMode = originalBodyBlendMode; // Reset blend mode
-                    }, 200); // Duration of the final flash
+                        originalRealm.style.display = 'none'; // Hide the original content
+                        newRealm.style.display = 'flex'; // Show the new realm content
+                        
+                        // Set specific psychedelic background/filters for the new realm if desired
+                        body.style.filter = 'hue-rotate(180deg) saturate(150%)'; // Example: new realm has different base hue
+                        body.style.backgroundBlendMode = 'overlay, screen, multiply'; // Example: new realm has different blend mode
+                        
+                    }, 200); // Duration of the final flash before content swap
                 }
             }, 100); // Rapidly change every 100ms
         }
 
         function deactivatePortal() {
+            // Haptic Feedback (Vibration) for returning
             if (navigator.vibrate) {
                 navigator.vibrate(150); // A simpler vibration for returning
             }
 
             const body = document.body;
-            body.classList.add('warp-effect-flash'); // Flash white for transition back
+            // Quick flash to black out for transition back
+            body.classList.add('warp-effect-flash');
             setTimeout(() => {
                 body.classList.remove('warp-effect-flash');
-                newRealm.style.display = 'none';
-                originalRealm.style.display = 'flex'; // Show original realm
+                newRealm.style.display = 'none'; // Hide the new realm content
+                originalRealm.style.display = 'flex'; // Show original realm content
+                
                 // Restore original body styles
                 body.style.filter = originalBodyFilter;
                 body.style.backgroundBlendMode = originalBodyBlendMode;
@@ -293,16 +653,17 @@
             trail.style.top = e.pageY + 'px';
             trail.style.left = e.pageX + 'px';
 
+            // More vibrant and random colors for the trail
             const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
             trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
             document.body.appendChild(trail);
-            setTimeout(() => { trail.remove(); }, 500);
+            setTimeout(() => { trail.remove(); }, 500); // Trail fades out in 0.5s
         });
 
         // Hide desktop cursor on touch devices for a cleaner look
         if ('ontouchstart' in window || navigator.maxTouchPoints) {
-            document.body.style.cursor = 'default'; // Or none, if you prefer
+            document.body.style.cursor = 'default'; // Or 'none', if you prefer a completely hidden cursor
         }
     </script>
 </body>
