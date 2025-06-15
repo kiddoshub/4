@@ -30,7 +30,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative; /* Needed for the CRT overlay */
+            position: relative; /* Needed for the CRT overlay and 3D context */
+            perspective: 1500px; /* Stronger perspective for whole page */
+            transform-style: preserve-3d;
         }
 
         /* CRT/Scanline Overlay */
@@ -101,34 +103,70 @@
             90% { opacity: 0.98; }
         }
 
-        /* Keyframes for border image and snake-like animation */
-        @keyframes borderGlow {
+        /* Keyframes for a highly complex 3D border effect */
+        @keyframes complexBorderAnim {
             0% {
-                border-image-source: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
-                box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff, inset 0 0 10px #00ffff;
-                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px; /* Start shape */
+                transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
+                box-shadow:
+                    0 0 30px rgba(0, 255, 255, 0.9),
+                    0 0 60px rgba(255, 0, 255, 0.8),
+                    -10px -10px 40px rgba(255, 255, 0, 0.6), /* Deeper shadow top-left */
+                    10px 10px 40px rgba(0, 255, 0, 0.6), /* Deeper shadow bottom-right */
+                    inset 0 0 20px rgba(0, 255, 255, 0.5); /* Inner glow */
+                filter: hue-rotate(0deg) brightness(1) saturate(1.5);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Full rectangle */
             }
             25% {
-                border-image-source: linear-gradient(90deg, #00ffff, #ffff00, #ff00ff);
-                box-shadow: 0 0 25px #ffff00, 0 0 50px #00ff00, inset 0 0 12px #ffff00;
-                border-radius: 70px 20px 60px 30px / 30px 60px 20px 70px; /* Morph 1 */
+                transform: translate3d(5px, -5px, 20px) rotateX(5deg) rotateY(-5deg) scale(1.01);
+                border-radius: 70px 20px 60px 30px / 30px 60px 20px 70px;
+                box-shadow:
+                    0 0 35px rgba(255, 255, 0, 0.9),
+                    0 0 70px rgba(0, 255, 0, 0.8),
+                    -15px 5px 45px rgba(255, 0, 255, 0.7),
+                    5px -15px 45px rgba(0, 0, 255, 0.7),
+                    inset 0 0 25px rgba(255, 255, 0, 0.6);
+                filter: hue-rotate(90deg) brightness(1.1) saturate(1.6);
+                clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0 95%); /* Slightly skewed */
             }
             50% {
-                border-image-source: linear-gradient(135deg, #ffff00, #ff00ff, #00ffff);
-                box-shadow: 0 0 30px #ff00ff, 0 0 60px #00ffff, inset 0 0 15px #ff00ff;
-                border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px; /* Morph 2 */
+                transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+                border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px;
+                box-shadow:
+                    0 0 40px rgba(255, 0, 255, 0.9),
+                    0 0 80px rgba(0, 0, 255, 0.8),
+                    -10px 10px 50px rgba(0, 255, 255, 0.7),
+                    10px -10px 50px rgba(255, 0, 0, 0.7),
+                    inset 0 0 30px rgba(255, 0, 255, 0.6);
+                filter: hue-rotate(180deg) brightness(1.2) saturate(1.7);
+                clip-path: polygon(0 10%, 90% 0, 100% 90%, 10% 100%); /* More skewed, wavy */
             }
             75% {
-                border-image-source: linear-gradient(180deg, #ff00ff, #ffff00, #00ffff);
-                box-shadow: 0 0 25px #00ff00, 0 0 50px #ffff00, inset 0 0 12px #00ff00;
-                border-radius: 60px 30px 70px 20px / 20px 70px 30px 60px; /* Morph 3 */
+                transform: translate3d(-5px, 5px, 20px) rotateX(-5deg) rotateY(5deg) scale(1.01);
+                border-radius: 60px 30px 70px 20px / 20px 70px 30px 60px;
+                box-shadow:
+                    0 0 35px rgba(0, 255, 0, 0.9),
+                    0 0 70px rgba(255, 255, 0, 0.8),
+                    15px 5px 45px rgba(0, 255, 255, 0.7),
+                    -5px 15px 45px rgba(255, 0, 0, 0.7),
+                    inset 0 0 25px rgba(0, 255, 0, 0.6);
+                filter: hue-rotate(270deg) brightness(1.1) saturate(1.6);
+                clip-path: polygon(10% 0, 100% 10%, 90% 100%, 0 90%); /* Another skew */
             }
             100% {
-                border-image-source: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
-                box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff, inset 0 0 10px #00ffff;
-                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px; /* Return to start */
+                transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
+                box-shadow:
+                    0 0 30px rgba(0, 255, 255, 0.9),
+                    0 0 60px rgba(255, 0, 255, 0.8),
+                    -10px -10px 40px rgba(255, 255, 0, 0.6),
+                    10px 10px 40px rgba(0, 255, 0, 0.6),
+                    inset 0 0 20px rgba(0, 255, 255, 0.5);
+                filter: hue-rotate(360deg) brightness(1) saturate(1.5);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Back to full rectangle */
             }
         }
+
 
         .main-content {
             display: flex;
@@ -137,20 +175,48 @@
             justify-content: center;
             padding: 20px;
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 8px solid; /* Increased border width for better visibility of image */
-            border-image-slice: 1; /* Essential for border-image to work */
-            border-image-outset: 0; /* Prevents border from drawing outside element */
-            /* Initial border-radius (will be overridden by animation on load) */
-            border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
-            animation: fadeIn 2s ease-in-out forwards, borderGlow 8s infinite alternate ease-in-out; /* Added borderGlow animation and increased duration */
+            background-color: rgba(0, 0, 0, 0.5); /* Base background for the content */
+            border: none; /* Remove default border, we'll use pseudo-elements for the effect */
             max-width: 90%;
             margin: 20px auto;
             padding: 30px;
-            position: relative;
-            z-index: 1;
-            /* Optional: Filter for subtle distortion */
-            filter: saturate(1.2) contrast(1.1);
+            position: relative; /* Establish positioning context for pseudo-elements */
+            z-index: 1; /* Ensure content is above the border effects */
+            transform-style: preserve-3d; /* Enable 3D transforms for its children */
+            animation: fadeIn 2s ease-in-out forwards; /* Keep content fade-in */
+            overflow: visible; /* Allow shadows/transforms to go outside */
+        }
+
+        /* Pseudo-element for the primary 3D border layer */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: -15px; /* Adjust to control border thickness and offset */
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: transparent; /* This layer's own background is transparent */
+            z-index: -1; /* Place behind the main content */
+            animation: complexBorderAnim 15s infinite alternate ease-in-out; /* Longer, smoother animation */
+            transform-origin: center center; /* Ensure transforms are from the center */
+            pointer-events: none; /* Make it unclickable */
+        }
+
+        /* Optional: Second pseudo-element for even more depth/complexity */
+        .main-content::after {
+            content: '';
+            position: absolute;
+            top: -25px; /* Further offset */
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            background: transparent;
+            z-index: -2; /* Even further back */
+            animation: complexBorderAnim 15s infinite alternate-reverse ease-in-out; /* Reversed animation for counter-movement */
+            transform-origin: center center;
+            opacity: 0.7; /* Slightly less opaque */
+            pointer-events: none;
+            filter: blur(5px); /* Add a subtle blur for depth */
         }
 
         @keyframes fadeIn {
