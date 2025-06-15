@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CADEN SAILOR ROBSON</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+
+    :root {
+      --glow-color: #00ff99;
+      --bg-color: #000000;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--glow-color);
+      font-family: 'Major Mono Display', monospace;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      text-shadow: 0 0 6px var(--glow-color), 0 0 12px var(--glow-color);
+      margin: 0.5em 0 0.2em;
+    }
+
+    p {
+      font-size: 1.2rem;
+      text-shadow: 0 0 5px var(--glow-color);
+      margin-bottom: 1.5em;
+    }
+
+    #mandelbrot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .gallery {
+      position: absolute;
+      bottom: 5%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 1rem;
+    }
+
+    .gallery img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border: 1px solid var(--glow-color);
+      box-shadow: 0 0 10px var(--glow-color);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CADEN SAILOR ROBSON</h1>
+  <p>August 4, 2004 — 4:44 AM</p>
+
+  <canvas id="mandelbrot"></canvas>
+
+  <div class="gallery">
+    <!-- Drop your photos here -->
+    <img src="photo1.jpg" alt="Caden Photo 1">
+    <img src="photo2.jpg" alt="Caden Photo 2">
+  </div>
+
+  <script>
+    const canvas = document.getElementById('mandelbrot');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function generateMandelbrot() {
+      const img = ctx.createImageData(canvas.width, canvas.height);
+      const maxIter = 300;
+
+      for (let x = 0; x < canvas.width; x++) {
+        for (let y = 0; y < canvas.height; y++) {
+          let a = (x - canvas.width / 2) * 4 / canvas.width;
+          let b = (y - canvas.height / 2) * 4 / canvas.width;
+          let ca = a;
+          let cb = b;
+          let n = 0;
+
+          while (n < maxIter) {
+            let aa = a * a - b * b;
+            let bb = 2 * a * b;
+            a = aa + ca;
+            b = bb + cb;
+            if (a * a + b * b > 16) break;
+            n++;
+          }
+
+          const pix = (x + y * canvas.width) * 4;
+          const shade = Math.floor(255 * n / maxIter);
+          img.data[pix] = 0;
+          img.data[pix + 1] = shade;
+          img.data[pix + 2] = 0;
+          img.data[pix + 3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+
+    generateMandelbrot();
+  </script>
+
+</body>
+</html>
