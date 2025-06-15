@@ -512,8 +512,9 @@
     </div>
 
     <div id="new-realm" class="main-content portal-destination-content">
-        <div class="name">REGISTRY ENTRY: ACTIVE</div>
-        <p style="font-size: 1.2rem;">PROTOCOL 7.0 ACKNOWLEDGED. AUTHENTICATION SUCCESSFUL. TELEMETRY STABLE. READY FOR DATA EXCHANGE.</p>
+        <div id="portalMessage" style="font-size: 1.1rem; color: #ffcc00; text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00; margin-bottom: 20px;"></div>
+        <div class="name">WELCOME TO THE OTHER-WORLD!</div>
+        <p style="font-size: 1.2rem;">Realms Shifted. Visions Altered. Delight in the New Course.</p>
         <div class="gif-frame">
             <img src="IMG_7993.gif" alt="New GIF 1">
             <img src="IMG_7996.gif" alt="New GIF 2">
@@ -525,17 +526,15 @@
         <button class="psychedelic-button" onclick="deactivatePortal(); return false;">Return to Origin</button>
     </div>
 
-
     <img src="IMG_7993.gif" alt="IMG 7993" class="gif-outside gif-outside-1">
     <img src="IMG_7996.gif" alt="IMG 7996" class="gif-outside gif-outside-2">
 
     <script>
-        const startTime = new Date(); // Record the time the script starts (page loads)
-        const originalBodyFilter = document.body.style.filter; // Save original filter
-        const originalBodyBlendMode = document.body.style.backgroundBlendMode; // Save original blend mode
+        const startTime = new Date();
+        const originalBodyFilter = document.body.style.filter;
+        const originalBodyBlendMode = document.body.style.backgroundBlendMode;
 
         function updateTimeDisplay() {
-            // Current Time
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -543,8 +542,7 @@
             const currentTimeStr = `CURRENT: ${hours}:${minutes}:${seconds}`;
             document.getElementById('currentTime').textContent = currentTimeStr;
 
-            // Uptime Calculation
-            const elapsedTime = now.getTime() - startTime.getTime(); // in milliseconds
+            const elapsedTime = now.getTime() - startTime.getTime();
             const totalSeconds = Math.floor(elapsedTime / 1000);
             const upt_hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
             const upt_minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
@@ -553,32 +551,46 @@
             document.getElementById('uptimeDisplay').textContent = uptimeStr;
         }
 
-        // Update time immediately on load, then every second
         updateTimeDisplay();
-        setInterval(updateTimeDisplay, 1000); // Call every 1000 milliseconds (1 second)
+        setInterval(updateTimeDisplay, 1000);
 
-
+        // The triggerPsychedelia function is not used in the new portal logic,
+        // so it can be kept or removed based on whether you have another button using it.
         function triggerPsychedelia() {
-            // This function is now for the original "Enter the Vortex" button.
-            // It still provides a random hue shift and blend mode change.
             document.body.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
-
             const blendModes = ['multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn'];
             const randomBlendMode1 = blendModes[Math.floor(Math.random() * blendModes.length)];
             const randomBlendMode2 = blendModes[Math.floor(Math.random() * blendModes.length)];
             document.body.style.backgroundBlendMode = `multiply, ${randomBlendMode1}, ${randomBlendMode2}`;
-
             const nameElement = document.querySelector('.name');
             const originalTextShadow = nameElement.style.textShadow;
             nameElement.style.textShadow = '0 0 30px #ffffff, 0 0 50px #ff00ff';
             setTimeout(() => {
-                nameElement.style.textShadow = originalTextShadow; // Revert after a short time
+                nameElement.style.textShadow = originalTextShadow;
             }, 500);
         }
 
         // --- New Portal Logic ---
         const originalRealm = document.getElementById('original-realm');
         const newRealm = document.getElementById('new-realm');
+        const portalMessageElement = document.getElementById('portalMessage'); // Get the new message element
+
+        // Define a pool of unique, personalized messages using pre-1700s vocabulary
+        const portalMessages = [
+            "ASTRAL PASSAGE GRANTED: Caden, thy spirit ascends to a fresh plane of sight.",
+            "THE VEIL RENDS: Caden, enter now a realm oft hid from mortal ken.",
+            "GATEWAYS UNFURLED: Caden, the very fabric of place doth shift for thee.",
+            "MIND'S EYE OPENED: Caden, perceive wonders beyond what the common world allows.",
+            "STARWARD JOURNEY BEGINS: Caden, cast off earth's bonds, embrace the void's embrace.",
+            "CHRONOS STOPS: Caden, time's own currents bend to thy passage. Beholding awaits!",
+            "THE BORDER THINS: Caden, step into the expanse where reason's chains fall.",
+            "SOUL'S ANCHOR LIFTED: Caden, drift through spheres of pure, bright knowing.",
+            "DIMENSIONS BECKON: Caden, a grand vista of forms and hues reveals itself.",
+            "THE COSMOS WHISPERS: Caden, listen to the silent truths now laid bare.",
+            "REALITY UNMADE: Caden, thou art now within the unbound, the ever-changing flux.",
+            "SPIRIT'S FLIGHT: Caden, soar where mundane sight cannot follow, into the depths of marvel.",
+            "THE GREAT AWAKENING: Caden, thy inner sight pierces the worldly guise. Behold the true form!"
+        ];
 
         function activatePortal() {
             // 1. Haptic Feedback (Vibration)
@@ -591,7 +603,10 @@
             const body = document.body;
             let warpCount = 0;
             const maxWarps = 10; // Number of rapid flashes/changes
-            const originalBackgroundColor = body.style.backgroundColor; // Store current background color
+
+            // Clear any previous message and set initial opacity for fade-in
+            portalMessageElement.textContent = '';
+            portalMessageElement.style.opacity = 0;
 
             const warpInterval = setInterval(() => {
                 // Apply random filters and background flashes
@@ -621,6 +636,21 @@
                         // Set specific psychedelic background/filters for the new realm if desired
                         body.style.filter = 'hue-rotate(180deg) saturate(150%)'; // Example: new realm has different base hue
                         body.style.backgroundBlendMode = 'overlay, screen, multiply'; // Example: new realm has different blend mode
+                        
+                        // Select a random message and display it with fade-in
+                        const randomMessage = portalMessages[Math.floor(Math.random() * portalMessages.length)];
+                        portalMessageElement.textContent = randomMessage;
+                        setTimeout(() => {
+                            portalMessageElement.style.opacity = 1; // Fade in the message
+                        }, 50); // Small delay after content swap for visual effect
+
+                        // Hide the message after a few seconds with fade-out
+                        setTimeout(() => {
+                            portalMessageElement.style.opacity = 0; // Fade out
+                            setTimeout(() => {
+                                portalMessageElement.textContent = ''; // Clear content after fade out
+                            }, 500); // Wait for fade out transition to complete before clearing
+                        }, 4000); // Message displayed for 4 seconds
                         
                     }, 200); // Duration of the final flash before content swap
                 }
@@ -667,4 +697,3 @@
         }
     </script>
 </body>
-</html>
