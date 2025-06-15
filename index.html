@@ -12,14 +12,14 @@
             margin: 0;
             padding: 0;
             /* Using a retro font as a fallback */
-        font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+            font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
 
-/* Enhanced background with animated alien GIF + trippy red pattern + neon gradient */
-background:
-    url('IMG_8002.gif') center center / cover no-repeat, /* Main animated alien GIF */
-    url('IMG_6955.jpeg') repeat, /* Your uploaded red pattern overlay */
-    linear-gradient(45deg, #ff00cc, #00ffcc, #ffcc00, #00ffff); /* Psychedelic gradient glow */
-background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & trip */
+            /* Enhanced background with animated alien GIF + trippy red pattern + neon gradient */
+            background:
+                url('IMG_8002.gif') center center / cover no-repeat, /* Main animated alien GIF */
+                url('IMG_6955.jpeg') repeat, /* Your uploaded red pattern overlay */
+                linear-gradient(45deg, #ff00cc, #00ffcc, #ffcc00, #00ffff); /* Psychedelic gradient glow */
+            background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & trip */
             background-attachment: fixed; /* Keeps background fixed on scroll if content grows */
 
             color: #00ff00; /* Neon green */
@@ -65,6 +65,8 @@ background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & tr
             margin: 20px auto; /* Center the content box */
             padding: 30px;
             animation: fadeIn 2s ease-in-out; /* Simple fade-in animation for content */
+            position: relative; /* Needed for z-index to work correctly relative to absolutely positioned elements */
+            z-index: 1; /* Ensure main content stays on top of the floating GIFs */
         }
 
         @keyframes fadeIn {
@@ -116,6 +118,33 @@ background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & tr
             50% { transform: translateY(-15px); box-shadow: 0 0 20px #ffff00, 0 0 30px #00ff00; }
             100% { transform: translateY(0); box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
         }
+
+        /* New styles for GIFs outside the box */
+        .gif-outside {
+            position: absolute; /* Position them relative to the body */
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            animation: floatAndGlow 3s infinite alternate ease-in-out, rotateForever 10s linear infinite; /* Add a rotation animation */
+            z-index: 0; /* Ensure they are behind the main content */
+        }
+
+        @keyframes rotateForever {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .gif-outside-1 {
+            top: 10%; /* Adjust vertical position */
+            left: 5%; /* Adjust horizontal position */
+        }
+
+        .gif-outside-2 {
+            bottom: 10%; /* Adjust vertical position */
+            right: 5%; /* Adjust horizontal position */
+        }
+
 
         .psychedelic-button {
             display: block;
@@ -174,6 +203,9 @@ background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & tr
                 padding: 10px 20px;
                 font-size: 1rem;
             }
+            .gif-outside {
+                width: 70px; /* Make them smaller on mobile */
+            }
         }
 
         @media (max-width: 480px) {
@@ -190,6 +222,9 @@ background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & tr
             .main-content {
                 padding: 15px;
             }
+            .gif-outside {
+                width: 50px; /* Even smaller on very small screens */
+            }
         }
     </style>
 </head>
@@ -198,41 +233,41 @@ background-blend-mode: multiply, overlay, screen; /* Blend layers for depth & tr
         <div class="name">Caden Sailor Robson</div>
         <div class="birthdate">Born: August 4th, 2004, 4:44 AM</div>
         <div class="gif-frame">
-    <img src="IMG_7976.gif" alt="IMG 7976">
-    <img src="IMG_7977.gif" alt="IMG 7977">
-    <img src="IMG_7978.gif" alt="IMG 7978">
-    <img src="IMG_7979.gif" alt="IMG 7979">
-    <img src="IMG_7980.gif" alt="IMG 7980">
-    <img src="IMG_7981.gif" alt="IMG 7981">
-    <img src="IMG_7982.gif" alt="IMG 7982">
-    <img src="IMG_7983.gif" alt="IMG 7983">
-    <img src="IMG_7984.gif" alt="IMG 7984">
-    <img src="IMG_7990.gif" alt="IMG 7985">
-    <img src="IMG_2516.JPEG" alt="IMG 2516">
-<img src="IMG_0042.jpeg" alt="IMG 0042">
-<img src="IMG_0125.jpeg" alt="IMG 0125">
-<img src="IMG_0150.jpeg" alt="IMG 0150">
-<img src="IMG_9901.jpeg" alt="IMG 9901">
-<img src="IMG_0148.jpeg" alt="IMG 0148">
-    <img src="IMG_7986.gif" alt="IMG 7986">
-    <img src="IMG_7987.gif" alt="IMG 7987">
-        <img src="IMG_7991.gif" alt="IMG 7991">
-<img src="IMG_7993.gif" alt="IMG 7993">
-<img src="IMG_7996.gif" alt="IMG 7996">
-<img src="IMG_7994.gif" alt="IMG 7994">
-<img src="IMG_7995.gif" alt="IMG 7995">
-<img src="IMG_7999.gif" alt="IMG 7999">
-<img src="IMG_7998.gif" alt="IMG 7998">
-<img src="IMG_7997.gif" alt="IMG 7997">
+            <img src="IMG_7976.gif" alt="IMG 7976">
+            <img src="IMG_7977.gif" alt="IMG 7977">
+            <img src="IMG_7978.gif" alt="IMG 7978">
+            <img src="IMG_7979.gif" alt="IMG 7979">
+            <img src="IMG_7980.gif" alt="IMG 7980">
+            <img src="IMG_7981.gif" alt="IMG 7981">
+            <img src="IMG_7982.gif" alt="IMG 7982">
+            <img src="IMG_7983.gif" alt="IMG 7983">
+            <img src="IMG_7984.gif" alt="IMG 7984">
+            <img src="IMG_7990.gif" alt="IMG 7985">
+            <img src="IMG_2516.JPEG" alt="IMG 2516">
+            <img src="IMG_0042.jpeg" alt="IMG 0042">
+            <img src="IMG_0125.jpeg" alt="IMG 0125">
+            <img src="IMG_0150.jpeg" alt="IMG 0150">
+            <img src="IMG_9901.jpeg" alt="IMG 9901">
+            <img src="IMG_0148.jpeg" alt="IMG 0148">
+            <img src="IMG_7986.gif" alt="IMG 7986">
+            <img src="IMG_7987.gif" alt="IMG 7987">
+            <img src="IMG_7991.gif" alt="IMG 7991"> <img src="IMG_7994.gif" alt="IMG 7994">
+            <img src="IMG_7995.gif" alt="IMG 7995">
+            <img src="IMG_7999.gif" alt="IMG 7999">
+            <img src="IMG_7998.gif" alt="IMG 7998">
+            <img src="IMG_7997.gif" alt="IMG 7997">
 
-<img src="IMG_2431.jpeg" alt="IMG 2431">
-<img src="IMG_2441.jpeg" alt="IMG 2441">
-<img src="IMG_2826.jpeg" alt="IMG 2826">
-<img src="IMG_1328.jpeg" alt="IMG 1328">
-<img src="IMG_6977.jpeg" alt="IMG 6977">
-</div>
+            <img src="IMG_2431.jpeg" alt="IMG 2431">
+            <img src="IMG_2441.jpeg" alt="IMG 2441">
+            <img src="IMG_2826.jpeg" alt="IMG 2826">
+            <img src="IMG_1328.jpeg" alt="IMG 1328">
+            <img src="IMG_6977.jpeg" alt="IMG 6977">
+        </div>
         <button class="psychedelic-button" onclick="triggerPsychedelia()">Enter the Vortex!</button>
     </div>
+
+    <img src="IMG_7993.gif" alt="IMG 7993" class="gif-outside gif-outside-1">
+    <img src="IMG_7996.gif" alt="IMG 7996" class="gif-outside gif-outside-2">
 
     <script>
         function triggerPsychedelia() {
