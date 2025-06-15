@@ -1,212 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Caden Sailor Robson</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
-      font-family: 'Courier New', monospace;
-      color: #00ffcc;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caden Sailor Robson</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background: url('https://media.giphy.com/media/RNQicqGA7F6zu/giphy.gif') repeat, linear-gradient(45deg, #ff00cc, #00ffcc);
+            background-blend-mode: multiply;
+            color: #00ff00;
+            text-shadow: 2px 2px #000;
+            cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto;
+            overflow-x: hidden;
+        }
 
-    canvas#mandelbrot {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -2;
-      display: block;
-    }
+        @keyframes waveText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-    h1 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 2.8rem;
-      text-align: center;
-      margin-top: 1.5rem;
-      color: #ff66ff;
-      text-shadow: 0 0 12px #00ffff, 0 0 24px #ff00ff;
-      animation: wave 5s infinite ease-in-out;
-    }
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
 
-    @keyframes wave {
-      0%, 100% { transform: rotate(-1deg) scale(1); }
-      50% { transform: rotate(1deg) scale(1.05); }
-    }
+        .name {
+            grid-column: 2;
+            text-align: center;
+            font-size: 2.5rem;
+            animation: waveText 2s infinite;
+            font-family: 'Press Start 2P', monospace;
+        }
 
-    .birthdate {
-      font-size: 1.4rem;
-      color: #ffff66;
-      text-align: center;
-      margin-bottom: 1rem;
-      font-family: 'Lucida Console', monospace;
-      text-shadow: 0 0 6px #ff66ff;
-      animation: pulse 2.5s infinite alternate;
-    }
+        .birthdate {
+            grid-column: 2;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: -20px;
+        }
 
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
+        .gif-frame {
+            grid-column: 1 / span 3;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 30px;
+        }
 
-    .gif-frame {
-      display: table;
-      margin: 0 auto;
-      padding: 0.5rem;
-      border: 6px ridge #ff00cc;
-      background: rgba(0,0,0,0.7);
-    }
+        .gif-frame img {
+            width: 100px;
+            height: auto;
+        }
 
-    .alien-img {
-      max-width: 320px;
-      display: block;
-      margin: 1rem auto;
-      border: 4px double #00ffff;
-      border-radius: 12px;
-      box-shadow: 0 0 12px #ff00ff;
-    }
+        .psychedelic-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px;
+            background: #ff00ff;
+            color: #ffff00;
+            border: 3px ridge #00ffff;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ffffff;
+        }
 
-    .gif-decoration {
-      width: 64px;
-      height: 64px;
-      margin: 6px;
-    }
+        .psychedelic-button:active {
+            animation: buttonPulse 0.2s infinite;
+        }
 
-    .cursor {
-      position: fixed;
-      width: 24px;
-      height: 24px;
-      background: url('https://www.animatedimages.org/data/media/458/animated-star-image-0021.gif') no-repeat center center;
-      background-size: cover;
-      pointer-events: none;
-      z-index: 9999;
-    }
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
 
-    .trippy-button {
-      display: block;
-      margin: 2rem auto;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(45deg, #ff00cc, #00ffff);
-      border: 3px solid #ffcc00;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 0 0 14px #fff;
-      animation: flicker 1.5s infinite alternate;
-    }
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-    @keyframes flicker {
-      from { opacity: 0.85; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.05); }
-    }
-
-    .psychedelic-flash {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: repeating-radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,0,255,0.3) 5%, rgba(0,255,255,0.3) 10%);
-      mix-blend-mode: screen;
-      animation: flash 0.3s ease-in-out forwards;
-      z-index: 9998;
-    }
-
-    @keyframes flash {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        /* Cursor Trail */
+        .trail { position: absolute; height: 10px; width: 10px; border-radius: 50%; pointer-events: none; }
+    </style>
 </head>
 <body>
+    <div class="main-content">
+        <div class="name">Caden Sailor Robson</div>
+        <div class="birthdate">Born: August 4th, 2004</div>
+        <div class="gif-frame">
+            <img src="https://media.giphy.com/media/26gspEfpyv31Z11os/giphy.gif">
+            <img src="https://media.giphy.com/media/l2JhJ2g8fNZJSKZkk/giphy.gif">
+            <img src="https://media.giphy.com/media/26FPF8NbtfHgrnLdu/giphy.gif">
+        </div>
+        <button class="psychedelic-button" onclick="triggerPsychedelia()">Click Me!</button>
+    </div>
 
-  <canvas id="mandelbrot"></canvas>
-
-  <h1>Caden Sailor Robson</h1>
-  <div class="birthdate">August 4th, 2004 – 4:44 AM</div>
-
-  <div class="gif-frame">
-    <img class="alien-img" src="https://media.tenor.com/Uo1BtcPqF8kAAAAC/psychedelic-alien.gif" alt="Psychedelic Alien">
-  </div>
-
-  <div style="text-align:center">
-    <img src="https://www.animatedimages.org/data/media/458/animated-star-image-0005.gif" class="gif-decoration" alt="">
-    <img src="https://www.animatedimages.org/data/media/458/animated-star-image-0015.gif" class="gif-decoration" alt="">
-    <img src="https://www.animatedimages.org/data/media/458/animated-star-image-0021.gif" class="gif-decoration" alt="">
-  </div>
-
-  <button class="trippy-button" onclick="triggerFlash()">Enter The Vision</button>
-
-  <script>
-    // Mandelbrot Fractal
-    const canvas = document.getElementById('mandelbrot');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    function renderMandelbrot(scale = 250, offsetX = -2.5, offsetY = -1.5, zoom = 1) {
-      const imgData = ctx.createImageData(canvas.width, canvas.height);
-      const maxIter = 64;
-
-      for (let x = 0; x < canvas.width; x++) {
-        for (let y = 0; y < canvas.height; y++) {
-          let a = (x / scale / zoom) + offsetX;
-          let b = (y / scale / zoom) + offsetY;
-          const ca = a, cb = b;
-          let n = 0;
-
-          while (n < maxIter) {
-            const aa = a * a - b * b;
-            const bb = 2 * a * b;
-            a = aa + ca;
-            b = bb + cb;
-            if (a * a + b * b > 16) break;
-            n++;
-          }
-
-          const pix = (x + y * canvas.width) * 4;
-          const col = n === maxIter ? 0 : 255 - Math.floor(n * 9);
-          imgData.data[pix + 0] = col;
-          imgData.data[pix + 1] = (col * 1.5) % 255;
-          imgData.data[pix + 2] = (col * 2.5) % 255;
-          imgData.data[pix + 3] = 255;
+    <script>
+        function triggerPsychedelia() {
+            document.body.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
         }
-      }
 
-      ctx.putImageData(imgData, 0, 0);
-    }
-
-    let z = 1;
-    function animateFractal() {
-      renderMandelbrot(260, -2.5, -1.8, z);
-      z *= 1.007;
-      requestAnimationFrame(animateFractal);
-    }
-
-    animateFractal();
-
-    // Cursor trail
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor';
-    document.body.appendChild(cursor);
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.pageX + 'px';
-      cursor.style.top = e.pageY + 'px';
-    });
-
-    // Flash trigger
-    function triggerFlash() {
-      const flash = document.createElement('div');
-      flash.className = 'psychedelic-flash';
-      document.body.appendChild(flash);
-      setTimeout(() => flash.remove(), 600);
-    }
-  </script>
+        document.addEventListener('mousemove', function(e) {
+            let trail = document.createElement('div');
+            trail.className = 'trail';
+            trail.style.top = e.pageY + 'px';
+            trail.style.left = e.pageX + 'px';
+            trail.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            document.body.appendChild(trail);
+            setTimeout(() => { trail.remove(); }, 500);
+        });
+    </script>
 </body>
 </html>
