@@ -259,7 +259,7 @@
             border: 5px ridge var(--secondary-glow-color); cursor: pointer;
             box-shadow: 0 0 15px #ffffff, 0 0 25px var(--tertiary-glow-color);
             font-size: 1.2rem; transition: all 0.2s ease-in-out;
-            font-family: var(--pixel-font-family); /* <-- ADDED THIS LINE */
+            font-family: var(--pixel-font-family);
         }
 
         .psychedelic-button:hover {
@@ -351,6 +351,17 @@
             const activatePortalButton = document.getElementById('activatePortalBtn');
             const deactivatePortalButton = document.getElementById('deactivatePortalBtn');
             const portalMessages = ["A journey of a thousand miles begins with a single step.", "You will soon be blessed with a fascinating discovery.", "The wise man questions himself, the fool, others. Ponder this.", "Good things come to those who wait, but better things come to those who pursue them.", "Your determination will bring you success. Keep striving.", "Embrace the unexpected; it holds the key to your next adventure.", "A new perspective awaits you beyond this threshold. Be ready to see."];
+
+            // --- SCRIPT FOR TITLE ANIMATION ---
+            function animateTitle() {
+                const hearts = ['🩵', '💙', '💜', '💚', '💛', '🧡', '❤️'];
+                let heartIndex = 0;
+                setInterval(() => {
+                    document.title = `csr - caden ${hearts[heartIndex]}`;
+                    heartIndex = (heartIndex + 1) % hearts.length;
+                }, 500);
+            }
+            // --- END SCRIPT FOR TITLE ANIMATION ---
 
             function updateTimeDisplay() {
                 const now = new Date();
@@ -448,6 +459,7 @@
                 }
             }
             
+            animateTitle(); // <-- CALL THE NEW FUNCTION
             updateTimeDisplay();
             setInterval(updateTimeDisplay, 1000);
             activatePortalButton.addEventListener('click', () => portalTransition(newRealm, originalRealm));
