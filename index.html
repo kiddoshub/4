@@ -59,7 +59,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            perspective: 1500px; /* Stronger perspective for whole page */
+            perspective: 1500px;
             transform-style: preserve-3d;
             transition: filter 0.1s ease-out, background-blend-mode 0.1s ease-out;
             /* NEW: Apply the SVG glitch filter defined in the HTML */
@@ -100,7 +100,6 @@
             -ms-interpolation-mode: nearest-neighbor;
         }
         
-        /* Keyframes for text wave animation */
         @keyframes waveText {
             0%, 100% { transform: translateY(0) rotate(0deg); text-shadow: var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000; }
             25% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px var(--primary-glow-color), 4px 4px #000; }
@@ -108,24 +107,18 @@
             75% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px var(--primary-glow-color), 4px 4px #000; }
         }
 
-        /* Keyframes for button pulse animation */
         @keyframes buttonPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 25px var(--tertiary-glow-color); }
             50% { transform: scale(1.1); box-shadow: 0 0 25px #ffffff, 0 0 40px var(--tertiary-glow-color); }
         }
 
-        /* Keyframes for subtle flicker */
         @keyframes flicker {
             0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
             5% { opacity: 0.9; text-shadow: 0 0 8px var(--quaternary-glow-color), 0 0 18px var(--quaternary-glow-color), 3px 3px #000; }
             10% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
             15% { opacity: 0.85; text-shadow: 0 0 7px var(--quaternary-glow-color), 0 0 15px var(--quaternary-glow-color), 2px 2px #000; }
             20% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
-            50% { opacity: 0.95; }
-            60% { opacity: 1; }
-            70% { opacity: 0.9; }
-            80% { opacity: 1; }
-            90% { opacity: 0.98; }
+            50% { opacity: 0.95; } 60% { opacity: 1; } 70% { opacity: 0.9; } 80% { opacity: 1; } 90% { opacity: 0.98; }
         }
 
         /* ENHANCED: Keyframes for a more chaotic, glitchy border animation */
@@ -176,10 +169,10 @@
             position: relative;
             z-index: 1;
             overflow: visible;
-            transform-style: preserve-3d; /* Enable 3D transforms for children */
+            transform-style: preserve-3d;
             /* NEW: Apply 3D rotation based on CSS variables updated by JS */
             transform: rotateX(calc(var(--rotate-x) * 1deg)) rotateY(calc(var(--rotate-y) * 1deg));
-            transition: transform 0.1s ease-out; /* Smooth the 3D rotation */
+            transition: transform 0.1s ease-out;
         }
 
         /* Fade-in animation for content appearing */
@@ -223,7 +216,7 @@
             transform-origin: center center;
             opacity: 0.7;
             pointer-events: none;
-            filter: blur(10px); /* Increased blur */
+            filter: blur(10px);
         }
         
         .name {
@@ -238,7 +231,7 @@
         
         /* NEW: Text Scramble Effect on Hover */
         .name:hover, .birthdate:hover {
-            animation: waveText 2.5s infinite, flicker 3s infinite alternate, textScramble 1.5s infinite;
+            animation: waveText 2.5s infinite, flicker 3s infinite alternate;
         }
 
         .birthdate {
@@ -278,7 +271,7 @@
             border: 3px solid var(--tertiary-glow-color);
             box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
             animation: floatAndGlow 3s infinite alternate ease-in-out;
-            transition: transform 0.2s ease-out; /* Smooth transition for hover effect */
+            transition: transform 0.2s ease-out;
         }
         
         /* NEW: 3D hover effect for GIFs inside the frame */
@@ -294,14 +287,13 @@
         }
 
         .gif-outside {
-            position: fixed; /* Changed to fixed to stay in viewport */
+            position: fixed;
             width: 100px;
             height: auto;
             border: 3px solid var(--tertiary-glow-color);
             box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
             animation: floatAndGlow 3s infinite alternate ease-in-out, rotateForever 10s linear infinite;
             z-index: 0;
-            /* NEW: Apply the 3D mouse tracking to these as well, but inverted */
             transform: rotateX(calc(var(--rotate-x) * -1.2deg)) rotateY(calc(var(--rotate-y) * -1.2deg)) translateZ(100px);
             transition: transform 0.1s ease-out;
         }
@@ -333,7 +325,7 @@
             background: var(--quaternary-glow-color);
             color: var(--tertiary-glow-color);
             box-shadow: 0 0 20px var(--secondary-glow-color), 0 0 35px var(--quaternary-glow-color);
-            transform: scale(1.05) translateZ(20px); /* Add 3D effect on hover */
+            transform: scale(1.05) translateZ(20px);
         }
 
         .psychedelic-button:active { animation: buttonPulse 0.4s forwards; }
@@ -342,7 +334,7 @@
             position: absolute;
             height: 12px;
             width: 12px;
-            border-radius: 3px; /* NEW: Square trail for a more digital/glitchy look */
+            border-radius: 3px;
             pointer-events: none;
             opacity: 1;
             filter: blur(1px);
@@ -372,7 +364,6 @@
         }
         
         .portal-destination-content {
-            /* Now handled by JS adding/removing .visible class */
             display: none;
         }
 
@@ -404,22 +395,16 @@
             <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warp" />
             
             <feOffset dx="-2" dy="0" in="SourceGraphic" result="red-channel" />
-            <feColorMatrix in="red-channel" type="matrix" values="1 0 0 0 0
-                                                                   0 0 0 0 0
-                                                                   0 0 0 0 0
-                                                                   0 0 0 1 0" result="red-final"/>
+            <feColorMatrix in="red-channel" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red-final"/>
 
             <feOffset dx="2" dy="0" in="SourceGraphic" result="cyan-channel" />
-            <feColorMatrix in="cyan-channel" type="matrix" values="0 0 0 0 0
-                                                                    0 1 0 0 0
-                                                                    0 0 1 0 0
-                                                                    0 0 0 1 0" result="cyan-final"/>
+            <feColorMatrix in="cyan-channel" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" result="cyan-final"/>
             
             <feComposite in="red-final" in2="cyan-final" operator="screen" />
         </filter>
     </svg>
 
-    <div id="original-realm" class="main-content visible">
+    <div id="original-realm" class="main-content">
         <div class="name" data-text-scramble>Caden Sailor Robson</div>
         <div class="birthdate" data-text-scramble>Born: August 4th, 2004, 4:44 AM</div>
 
@@ -428,14 +413,68 @@
             <span id="uptimeDisplay">Loading Uptime...</span>
         </div>
         <div class="gif-frame">
-            </div>
+            <img src="IMG_7976.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8042.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7977.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7978.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7979.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7980.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7981.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7982.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7983.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7984.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7990.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_2516.JPEG" alt="A colorful abstract image.">
+            <img src="IMG_0042.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_0125.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_0150.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_9901.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_0148.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_7986.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7987.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7991.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7994.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7995.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7999.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7998.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_7997.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8039.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8038.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8037.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8036.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8035.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8033.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8032.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8031.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_8034.gif" alt="A colorful abstract GIF.">
+            <img src="IMG_2431.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_2441.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_2826.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_1328.jpeg" alt="A colorful abstract image.">
+            <img src="IMG_6977.jpeg" alt="A colorful abstract image.">
+        </div>
         <button id="activatePortalBtn" class="psychedelic-button portal-button">Activate Portal!</button>
     </div>
 
     <div id="new-realm" class="main-content">
         <div id="portalMessage" style="font-size: 1.1rem; color: #ffcc00; text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00; margin-bottom: 20px;"></div>
         <div class="gif-frame">
-            </div>
+            <img src="IMG_7993.gif" alt="A psychedelic GIF.">
+            <img src="IMG_7996.gif" alt="A psychedelic GIF.">
+            <img src="IMG_7998.gif" alt="A psychedelic GIF.">
+            <img src="IMG_7999.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8002.gif" alt="A psychedelic GIF.">
+            <img src="IMG_6955.jpeg" alt="A psychedelic image.">
+            <img src="IMG_8010.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8011.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8012.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8014.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8015.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8018.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8019.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8020.gif" alt="A psychedelic GIF.">
+            <img src="IMG_8021.gif" alt="A psychedelic GIF.">
+        </div>
         <button id="deactivatePortalBtn" class="psychedelic-button">Return to Origin</button>
     </div>
 
@@ -446,7 +485,6 @@
         const originalBodyFilter = document.body.style.filter;
         const startTime = new Date();
 
-        // --- DOM element references ---
         const root = document.documentElement;
         const currentTimeDisplay = document.getElementById('currentTime');
         const uptimeDisplay = document.getElementById('uptimeDisplay');
@@ -473,9 +511,6 @@
             uptimeDisplay.textContent = `UPTIME: ${upt_hours}:${upt_minutes}:${upt_seconds}`;
         }
         
-        /**
-         * ENHANCED: Activates a more dramatic portal effect with 3D animation.
-         */
         function activatePortal() {
             if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
             
@@ -493,49 +528,39 @@
                 if (warpCount >= maxWarps) {
                     clearInterval(warpInterval);
 
-                    // Set random values for the fly-out animation
                     root.style.setProperty('--random-x', `${(Math.random() - 0.5) * 200}vw`);
                     root.style.setProperty('--random-y', `${(Math.random() - 0.5) * 200}vh`);
                     root.style.setProperty('--random-rot', `${(Math.random() - 0.5) * 720}deg`);
 
-                    // Trigger the fly-out animation
                     originalRealm.classList.remove('visible');
                     originalRealm.classList.add('hidden');
 
-                    // Wait for the animation to finish before swapping content
                     setTimeout(() => {
-                        originalRealm.style.display = 'none'; // Fully hide after animation
+                        originalRealm.style.display = 'none';
                         newRealm.style.display = 'flex';
                         newRealm.classList.remove('hidden');
                         newRealm.classList.add('visible');
 
-                        // Reset body filter for the new realm
                         body.style.filter = 'hue-rotate(180deg) saturate(150%) url(#glitch-filter)';
 
-                        // Display portal message
                         portalMessageElement.style.opacity = '0';
                         const randomMessage = portalMessages[Math.floor(Math.random() * portalMessages.length)];
                         portalMessageElement.textContent = randomMessage;
                         setTimeout(() => { portalMessageElement.style.opacity = '1'; }, 100);
                         setTimeout(() => { portalMessageElement.style.opacity = '0'; }, 4000);
 
-                    }, 700); // Match animation duration
+                    }, 700);
                 }
-            }, 80); // Faster interval
+            }, 80);
         }
         
-        /**
-         * ENHANCED: Deactivates portal with a similar 3D animation.
-         */
         function deactivatePortal() {
             if (navigator.vibrate) navigator.vibrate(150);
 
-            // Set random values for the fly-out animation
             root.style.setProperty('--random-x', `${(Math.random() - 0.5) * 200}vw`);
             root.style.setProperty('--random-y', `${(Math.random() - 0.5) * 200}vh`);
             root.style.setProperty('--random-rot', `${(Math.random() - 0.5) * 720}deg`);
             
-            // Trigger the fly-out animation for the new realm
             newRealm.classList.remove('visible');
             newRealm.classList.add('hidden');
             
@@ -545,7 +570,6 @@
                 originalRealm.classList.remove('hidden');
                 originalRealm.classList.add('visible');
                 
-                // Restore original body filter
                 document.body.style.filter = originalBodyFilter;
             }, 700);
         }
@@ -562,16 +586,12 @@
             setTimeout(() => { trail.remove(); }, 400);
         }
 
-        /**
-         * NEW: Updates CSS variables based on mouse position for 3D interaction.
-         */
         function handleMouseMove(e) {
             const { clientX, clientY, currentTarget } = e;
             const { clientWidth, clientHeight } = currentTarget;
-            const x = (clientX / clientWidth) - 0.5; // Range from -0.5 to 0.5
-            const y = (clientY / clientHeight) - 0.5; // Range from -0.5 to 0.5
+            const x = (clientX / clientWidth) - 0.5;
+            const y = (clientY / clientHeight) - 0.5;
             
-            // Adjust strength of rotation by multiplying
             const rotateXStrength = 20; 
             const rotateYStrength = 20;
 
@@ -579,15 +599,13 @@
             root.style.setProperty('--rotate-y', x * rotateYStrength);
         }
         
-        /**
-         * NEW: Text Scrambler Effect
-         */
         class TextScrambler {
             constructor(el) {
                 this.el = el;
                 this.chars = '!<>-_\\/[]{}—=+*^?#________';
                 this.update = this.update.bind(this);
                 this.originalText = this.el.innerText;
+                this.frameRequest = null;
                 this.el.addEventListener('mouseover', () => this.scramble());
                 this.el.addEventListener('mouseout', () => this.reveal());
             }
@@ -605,16 +623,21 @@
             }
             
             reveal() {
-                if (this.frameRequest) cancelAnimationFrame(this.frameRequest);
+                if (this.frameRequest) {
+                    cancelAnimationFrame(this.frameRequest);
+                    this.frameRequest = null;
+                }
                 this.el.innerText = this.originalText;
             }
 
             update() {
                 let output = '';
+                let completed = 0;
                 for (let i = 0, len = this.queue.length; i < len; i++) {
                     const { from, to, start, end } = this.queue[i];
                     if (this.frame >= end) {
                         output += to;
+                        completed++;
                     } else if (this.frame >= start) {
                         if (Math.random() < 0.2) {
                             output += this.chars[Math.floor(Math.random() * this.chars.length)];
@@ -627,14 +650,15 @@
                 }
                 this.el.innerText = output;
 
-                if (output !== this.originalText) {
+                if (completed !== this.queue.length) {
                     this.frame++;
                     this.frameRequest = requestAnimationFrame(this.update);
+                } else {
+                   this.reveal();
                 }
             }
         }
         
-        // --- Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
             updateTimeDisplay();
             setInterval(updateTimeDisplay, 1000);
@@ -643,14 +667,11 @@
             deactivatePortalButton.addEventListener('click', deactivatePortal);
             document.addEventListener('mousemove', createCursorTrail);
             
-            // NEW: Attach interactive listeners
             document.body.addEventListener('mousemove', handleMouseMove);
             
-            // NEW: Initialize text scrambler on target elements
             const scrambleElements = document.querySelectorAll('[data-text-scramble]');
             scrambleElements.forEach(el => new TextScrambler(el));
 
-            // Set initial state
             originalRealm.classList.add('visible');
             originalRealm.style.display = 'flex';
             newRealm.style.display = 'none';
