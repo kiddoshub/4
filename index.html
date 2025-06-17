@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000"> <title>csr - caden🩵</title>
+    <meta name="theme-color" content="#000000">
+    <title>csr - caden🩵</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,6 +20,9 @@
             --background-dark: rgba(0, 0, 0, 0.5);
             --pixel-shadow-offset: 2px;
             --pixel-font-family: 'Apricot256L', 'Press Start 2P', 'Courier New', monospace;
+            /* NEW: Variables for interactive 3D transform on mouse move */
+            --rotate-x: 0;
+            --rotate-y: 0;
         }
 
         /* Custom Bitmap Font */
@@ -27,7 +31,6 @@
             src: url('fonts/Web437_Apricot_256L-2y.woff') format('woff');
             font-weight: normal;
             font-style: normal;
-            /* Critical for pixel fonts to prevent blurring */
             -webkit-font-smoothing: none;
             font-smoothing: none;
             image-rendering: pixelated;
@@ -51,14 +54,16 @@
             cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto;
             overflow-x: hidden;
             min-height: 100vh;
-            display: flex; /* Fixed missing semicolon */
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative; /* Needed for the CRT overlay and 3D context */
+            position: relative;
             perspective: 1500px; /* Stronger perspective for whole page */
             transform-style: preserve-3d;
-            transition: filter 0.1s ease-out, background-blend-mode 0.1s ease-out; /* Added for smoother transitions outside of warp */
+            transition: filter 0.1s ease-out, background-blend-mode 0.1s ease-out;
+            /* NEW: Apply the SVG glitch filter defined in the HTML */
+            filter: url(#glitch-filter);
         }
 
         /* CRT/Scanline Overlay */
@@ -69,8 +74,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Allows clicks to pass through */
-            z-index: 1000; /* Ensure it's on top of everything */
+            pointer-events: none;
+            z-index: 1000;
             background:
                 repeating-linear-gradient(
                     0deg,
@@ -86,20 +91,15 @@
                     transparent 1px,
                     transparent 2px
                 );
-            opacity: 0.7; /* Adjust for intensity */
-            filter: grayscale(20%); /* Slight vintage feel */
+            opacity: 0.7;
+            filter: grayscale(20%);
         }
 
-        /* Pixelated Image Effect for all images */
         img {
-            image-rendering: optimizeSpeed; /* Deprecated, but good fallback */
-            image-rendering: -moz-crisp-edges; /* Firefox */
-            image-rendering: -o-crisp-edges; /* Opera */
-            image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard property) */
-            image-rendering: pixelated; /* Standard property */
-            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+            image-rendering: pixelated;
+            -ms-interpolation-mode: nearest-neighbor;
         }
-
+        
         /* Keyframes for text wave animation */
         @keyframes waveText {
             0%, 100% { transform: translateY(0) rotate(0deg); text-shadow: var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000; }
@@ -121,7 +121,6 @@
             10% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
             15% { opacity: 0.85; text-shadow: 0 0 7px var(--quaternary-glow-color), 0 0 15px var(--quaternary-glow-color), 2px 2px #000; }
             20% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
-            /* More random intervals can be added */
             50% { opacity: 0.95; }
             60% { opacity: 1; }
             70% { opacity: 0.9; }
@@ -129,46 +128,36 @@
             90% { opacity: 0.98; }
         }
 
-        /* Keyframes for Border Animation */
+        /* ENHANCED: Keyframes for a more chaotic, glitchy border animation */
         @keyframes borderGlowAndShift {
             0% {
                 border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
-                box-shadow:
-                    0 0 30px rgba(0, 255, 255, 0.9),    /* Cyan glow */
-                    0 0 60px rgba(255, 0, 255, 0.8);    /* Magenta glow */
-                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 60px rgba(255, 0, 255, 0.8);
+                transform: scale(1) rotate(0deg) skew(0, 0);
                 filter: hue-rotate(0deg);
             }
             25% {
-                border-radius: 70px 20px 60px 30px / 30px 60px 20px 70px;
-                box-shadow:
-                    0 0 35px rgba(255, 255, 0, 0.9),    /* Yellow glow */
-                    0 0 70px rgba(0, 255, 0, 0.8);      /* Green glow */
-                transform: scale(1.01) rotate(2deg);
+                border-radius: 80px 10px 90px 20px / 20px 90px 10px 80px;
+                box-shadow: 0 0 45px rgba(255, 255, 0, 0.9), 0 0 80px rgba(0, 255, 0, 0.8);
+                transform: scale(1.02) rotate(3deg) skew(-5deg, 5deg);
                 filter: hue-rotate(90deg);
             }
             50% {
                 border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px;
-                box-shadow:
-                    0 0 40px rgba(255, 0, 255, 0.9),    /* Magenta glow */
-                    0 0 80px rgba(0, 0, 255, 0.8);      /* Blue glow */
-                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 50px rgba(255, 0, 255, 0.9), 0 0 90px rgba(0, 0, 255, 0.8);
+                transform: scale(0.98) rotate(0deg) skew(0, 0);
                 filter: hue-rotate(180deg);
             }
             75% {
-                border-radius: 60px 30px 70px 20px / 20px 70px 30px 60px;
-                box-shadow:
-                    0 0 35px rgba(0, 255, 0, 0.9),      /* Green glow */
-                    0 0 70px rgba(255, 255, 0, 0.8);    /* Yellow glow */
-                transform: scale(1.01) rotate(-2deg);
+                border-radius: 10px 90px 20px 80px / 90px 10px 80px 20px;
+                box-shadow: 0 0 45px rgba(0, 255, 0, 0.9), 0 0 80px rgba(255, 255, 0, 0.8);
+                transform: scale(1.02) rotate(-3deg) skew(5deg, -5deg);
                 filter: hue-rotate(270deg);
             }
             100% {
                 border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
-                box-shadow:
-                    0 0 30px rgba(0, 255, 255, 0.9),    /* Cyan glow */
-                    0 0 60px rgba(255, 0, 255, 0.8);    /* Magenta glow */
-                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 60px rgba(255, 0, 255, 0.8);
+                transform: scale(1) rotate(0deg) skew(0, 0);
                 filter: hue-rotate(360deg);
             }
         }
@@ -178,97 +167,97 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px; /* Base padding */
+            padding: 30px;
             text-align: center;
-            background-color: var(--background-dark); /* Base background for the content */
-            border: none; /* Remove default border, we'll use pseudo-elements for the effect */
+            background-color: var(--background-dark);
+            border: none;
             max-width: 90%;
             margin: 20px auto;
-            padding: 30px; /* Only one padding value now */
-            position: relative; /* Establish positioning context for pseudo-elements */
-            z-index: 1; /* Ensure content is above the border effects */
-            animation: fadeIn 2s ease-in-out forwards; /* Keep content fade-in */
-            overflow: visible; /* Allow shadows/transforms to go outside */
+            position: relative;
+            z-index: 1;
+            overflow: visible;
+            transform-style: preserve-3d; /* Enable 3D transforms for children */
+            /* NEW: Apply 3D rotation based on CSS variables updated by JS */
+            transform: rotateX(calc(var(--rotate-x) * 1deg)) rotateY(calc(var(--rotate-y) * 1deg));
+            transition: transform 0.1s ease-out; /* Smooth the 3D rotation */
         }
 
-        /* Pseudo-element for the primary animated border layer */
+        /* Fade-in animation for content appearing */
+        @keyframes contentFadeIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* NEW: Fly-out animation for content disappearing during portal activation */
+        @keyframes contentFlyOut {
+            to {
+                opacity: 0;
+                transform: translateY(var(--random-y)) translateX(var(--random-x)) translateZ(-1000px) rotateZ(var(--random-rot));
+            }
+        }
+        
+        /* Apply animations */
+        .main-content.visible {
+            animation: contentFadeIn 1s ease-in-out forwards;
+        }
+        .main-content.hidden {
+            animation: contentFlyOut 0.7s forwards ease-in;
+        }
+
         .main-content::before {
             content: '';
             position: absolute;
-            top: -15px; /* Adjust to control border thickness and offset */
-            left: -15px;
-            right: -15px;
-            bottom: -15px;
-            background: transparent; /* This layer's own background is transparent */
-            z-index: -1; /* Place behind the main content */
-            animation: borderGlowAndShift 15s infinite alternate ease-in-out; /* Use the new animation */
-            transform-origin: center center; /* Ensure transforms are from the center */
-            pointer-events: none; /* Make it unclickable */
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            z-index: -1;
+            animation: borderGlowAndShift 12s infinite alternate ease-in-out;
+            transform-origin: center center;
+            pointer-events: none;
         }
 
-        /* Optional: Second pseudo-element for even more depth/complexity */
         .main-content::after {
             content: '';
             position: absolute;
-            top: -25px; /* Further offset */
-            left: -25px;
-            right: -25px;
-            bottom: -25px;
-            background: transparent;
-            z-index: -2; /* Even further back */
-            animation: borderGlowAndShift 15s infinite alternate-reverse ease-in-out; /* Reversed animation for counter-movement */
+            top: -25px; left: -25px; right: -25px; bottom: -25px;
+            z-index: -2;
+            animation: borderGlowAndShift 12s infinite alternate-reverse ease-in-out;
             transform-origin: center center;
-            opacity: 0.7; /* Slightly less opaque */
+            opacity: 0.7;
             pointer-events: none;
-            filter: blur(8px); /* Increased blur for more depth and less harshness */
+            filter: blur(10px); /* Increased blur */
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        
         .name {
             font-size: 3.5rem;
-            animation: waveText 2.5s infinite, flicker 3s infinite alternate; /* Added flicker animation */
+            animation: waveText 2.5s infinite, flicker 3s infinite alternate;
             margin-bottom: 10px;
             color: var(--quaternary-glow-color);
-            text-shadow:
-                0 0 10px var(--quaternary-glow-color),
-                0 0 20px var(--quaternary-glow-color),
-                var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
+            text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
             font-family: var(--pixel-font-family);
-            -webkit-font-smoothing: none;
-            font-smoothing: none;
             image-rendering: pixelated;
+        }
+        
+        /* NEW: Text Scramble Effect on Hover */
+        .name:hover, .birthdate:hover {
+            animation: waveText 2.5s infinite, flicker 3s infinite alternate, textScramble 1.5s infinite;
         }
 
         .birthdate {
             font-size: 1.5rem;
             margin-top: 0;
             color: var(--secondary-glow-color);
-            text-shadow:
-                0 0 5px var(--secondary-glow-color),
-                var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
+            text-shadow: 0 0 5px var(--secondary-glow-color), var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
             font-family: var(--pixel-font-family);
-            -webkit-font-smoothing: none;
-            font-smoothing: none;
             image-rendering: pixelated;
         }
 
-        /* New styles for the time display */
         .time-display {
-            font-size: 0.9rem; /* Smaller font size for utility info */
-            color: #00ffcc; /* A different vibrant color */
-            text-shadow:
-                0 0 3px #00ffcc,
-                1px 1px #000;
-            margin-top: 15px; /* Space it out a bit */
+            font-size: 0.9rem;
+            color: #00ffcc;
+            text-shadow: 0 0 3px #00ffcc, 1px 1px #000;
+            margin-top: 15px;
             margin-bottom: 15px;
-            animation: flicker 4s infinite alternate; /* Give it a subtle flicker too */
+            animation: flicker 4s infinite alternate;
             font-family: var(--pixel-font-family);
-            -webkit-font-smoothing: none;
-            font-smoothing: none;
             image-rendering: pixelated;
         }
 
@@ -289,23 +278,32 @@
             border: 3px solid var(--tertiary-glow-color);
             box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
             animation: floatAndGlow 3s infinite alternate ease-in-out;
+            transition: transform 0.2s ease-out; /* Smooth transition for hover effect */
+        }
+        
+        /* NEW: 3D hover effect for GIFs inside the frame */
+        .gif-frame img:hover {
+            transform: translateY(-20px) translateZ(50px) scale(1.2);
+            box-shadow: 0 0 30px var(--quaternary-glow-color), 0 0 50px var(--primary-glow-color);
         }
 
         @keyframes floatAndGlow {
-            0% { transform: translateY(0); box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color); }
-            50% { transform: translateY(-15px); box-shadow: 0 0 20px var(--quaternary-glow-color), 0 0 30px var(--primary-glow-color); }
-            100% { transform: translateY(0); box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color); }
+            0% { transform: translateY(0) rotateY(0deg); box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color); }
+            50% { transform: translateY(-15px) rotateY(15deg); box-shadow: 0 0 20px var(--quaternary-glow-color), 0 0 30px var(--primary-glow-color); }
+            100% { transform: translateY(0) rotateY(0deg); box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color); }
         }
 
-        /* Styles for GIFs outside the box */
         .gif-outside {
-            position: absolute;
+            position: fixed; /* Changed to fixed to stay in viewport */
             width: 100px;
             height: auto;
             border: 3px solid var(--tertiary-glow-color);
             box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
             animation: floatAndGlow 3s infinite alternate ease-in-out, rotateForever 10s linear infinite;
             z-index: 0;
+            /* NEW: Apply the 3D mouse tracking to these as well, but inverted */
+            transform: rotateX(calc(var(--rotate-x) * -1.2deg)) rotateY(calc(var(--rotate-y) * -1.2deg)) translateZ(100px);
+            transition: transform 0.1s ease-out;
         }
 
         @keyframes rotateForever {
@@ -313,15 +311,8 @@
             to { transform: rotate(360deg); }
         }
 
-        .gif-outside-1 {
-            top: 10%;
-            left: 5%;
-        }
-
-        .gif-outside-2 {
-            bottom: 10%;
-            right: 5%;
-        }
+        .gif-outside-1 { top: 10%; left: 5%; }
+        .gif-outside-2 { bottom: 10%; right: 5%; }
 
         .psychedelic-button {
             display: block;
@@ -335,8 +326,6 @@
             font-size: 1.2rem;
             font-family: var(--pixel-font-family);
             transition: all 0.2s ease-in-out;
-            -webkit-font-smoothing: none;
-            font-smoothing: none;
             image-rendering: pixelated;
         }
 
@@ -344,207 +333,109 @@
             background: var(--quaternary-glow-color);
             color: var(--tertiary-glow-color);
             box-shadow: 0 0 20px var(--secondary-glow-color), 0 0 35px var(--quaternary-glow-color);
-            transform: scale(1.05);
+            transform: scale(1.05) translateZ(20px); /* Add 3D effect on hover */
         }
 
-        .psychedelic-button:active {
-            animation: buttonPulse 0.4s forwards;
-        }
+        .psychedelic-button:active { animation: buttonPulse 0.4s forwards; }
 
-        /* Cursor Trail */
         .trail {
             position: absolute;
-            height: 15px;
-            width: 15px;
-            border-radius: 50%;
+            height: 12px;
+            width: 12px;
+            border-radius: 3px; /* NEW: Square trail for a more digital/glitchy look */
             pointer-events: none;
-            opacity: 0.8;
-            filter: blur(2px);
-            animation: fadeOutTrail 0.5s forwards;
-            z-index: 999; /* Ensure trail is above other content but below CRT overlay */
+            opacity: 1;
+            filter: blur(1px);
+            animation: fadeOutTrail 0.4s forwards;
+            z-index: 999;
+            transform: scale(1.5);
         }
 
         @keyframes fadeOutTrail {
-            from { opacity: 0.8; transform: scale(1); }
-            to { opacity: 0; transform: scale(0.5); }
+            to { opacity: 0; transform: scale(0); }
         }
 
-        /* Warp Effect Classes */
-        .warp-effect-active {
-            filter: hue-rotate(90deg) saturate(200%) contrast(150%) blur(2px) !important;
-            transition: none !important; /* Disable smooth transition during warp */
-        }
         .warp-effect-flash {
-            background-color: rgba(255, 255, 255, 0.8); /* Flash white */
-            transition: none !important;
-        }
-        .warp-effect-red-flash {
-            background-color: rgba(255, 0, 0, 0.8); /* Flash red */
+            background-color: rgba(255, 255, 255, 0.8) !important;
             transition: none !important;
         }
 
-        /* Portal Specific Styles */
         .portal-button {
-            display: block;
-            margin: 30px auto;
             padding: 15px 25px;
-            background: linear-gradient(45deg, var(--tertiary-glow-color), var(--secondary-glow-color)); /* More complex background */
+            background: linear-gradient(45deg, var(--tertiary-glow-color), var(--secondary-glow-color));
             color: var(--quaternary-glow-color);
             border: 5px ridge #00ffcc;
-            cursor: pointer;
             box-shadow: 0 0 20px #ffffff, 0 0 35px var(--tertiary-glow-color);
-            font-size: 1.4rem; /* Larger for mobile tap target */
-            font-family: var(--pixel-font-family);
-            transition: all 0.3s ease-in-out, transform 0.1s ease-out; /* Smooth transition for hover/active */
-            -webkit-font-smoothing: none;
-            font-smoothing: none;
-            image-rendering: pixelated;
-            animation: buttonPulse 2s infinite alternate, borderGlowAndShift 10s infinite linear; /* Continuous animation */
+            font-size: 1.4rem;
+            transition: all 0.3s ease-in-out, transform 0.1s ease-out;
+            animation: buttonPulse 2s infinite alternate, borderGlowAndShift 10s infinite linear;
         }
-
-        .portal-button:active {
-            transform: scale(0.95); /* Shrink on tap */
-            box-shadow: 0 0 10px var(--secondary-glow-color), 0 0 20px var(--quaternary-glow-color);
-        }
-
-        /* Content sections for teleportation */
+        
         .portal-destination-content {
-            display: none; /* Hidden by default */
-            /* Add unique psychedelic styles for this section */
-            background-color: rgba(50, 0, 50, 0.6); /* Different background */
-            border: 5px dashed var(--tertiary-glow-color);
-            padding: 25px;
-            color: var(--secondary-glow-color);
-            text-shadow: 0 0 5px var(--secondary-glow-color), 0 0 10px var(--secondary-glow-color);
-            animation: flicker 2s infinite alternate;
+            /* Now handled by JS adding/removing .visible class */
+            display: none;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .name {
-                font-size: 2.5rem;
-            }
-            .birthdate {
-                font-size: 1.1rem;
-            }
-            .time-display {
-                font-size: 0.7rem;
-            }
-            .gif-frame img {
-                width: 90px;
-            }
-            .psychedelic-button {
-                padding: 10px 20px;
-                font-size: 1rem;
-            }
-            .gif-outside {
-                width: 70px;
-            }
-            /* Adjust portal button for medium screens */
-            .portal-button {
-                font-size: 1.2rem;
-            }
+            .name { font-size: 2.5rem; }
+            .birthdate { font-size: 1.1rem; }
+            .time-display { font-size: 0.7rem; }
+            .gif-frame img { width: 90px; }
+            .psychedelic-button { padding: 10px 20px; font-size: 1rem; }
+            .gif-outside { width: 70px; }
+            .portal-button { font-size: 1.2rem; }
         }
 
         @media (max-width: 480px) {
-            .name {
-                font-size: 1.8rem;
-            }
-            .birthdate {
-                font-size: 0.9rem;
-            }
-            .time-display {
-                font-size: 0.6rem;
-            }
-            .gif-frame img {
-                width: 70px;
-                margin: 5px;
-            }
-            .main-content {
-                padding: 15px;
-            }
-            .gif-outside {
-                width: 50px;
-            }
-            /* Adjust portal button for small screens */
-            .portal-button {
-                font-size: 1rem;
-            }
+            .name { font-size: 1.8rem; }
+            .birthdate { font-size: 0.9rem; }
+            .time-display { font-size: 0.6rem; }
+            .gif-frame img { width: 70px; margin: 5px; }
+            .main-content { padding: 15px; }
+            .gif-outside { width: 50px; }
+            .portal-button { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <div id="original-realm" class="main-content">
-        <div class="name">Caden Sailor Robson</div>
-        <div class="birthdate">Born: August 4th, 2004, 4:44 AM</div>
+    <svg style="position:absolute; height:0; width:0;">
+        <filter id="glitch-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.005 0.005" numOctaves="1" result="warp" />
+            <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warp" />
+            
+            <feOffset dx="-2" dy="0" in="SourceGraphic" result="red-channel" />
+            <feColorMatrix in="red-channel" type="matrix" values="1 0 0 0 0
+                                                                   0 0 0 0 0
+                                                                   0 0 0 0 0
+                                                                   0 0 0 1 0" result="red-final"/>
+
+            <feOffset dx="2" dy="0" in="SourceGraphic" result="cyan-channel" />
+            <feColorMatrix in="cyan-channel" type="matrix" values="0 0 0 0 0
+                                                                    0 1 0 0 0
+                                                                    0 0 1 0 0
+                                                                    0 0 0 1 0" result="cyan-final"/>
+            
+            <feComposite in="red-final" in2="cyan-final" operator="screen" />
+        </filter>
+    </svg>
+
+    <div id="original-realm" class="main-content visible">
+        <div class="name" data-text-scramble>Caden Sailor Robson</div>
+        <div class="birthdate" data-text-scramble>Born: August 4th, 2004, 4:44 AM</div>
 
         <div class="time-display">
             <span id="currentTime">Loading Current Time...</span><br>
             <span id="uptimeDisplay">Loading Uptime...</span>
         </div>
         <div class="gif-frame">
-            <img src="IMG_7976.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8042.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7977.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7978.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7979.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7980.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7981.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7982.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7983.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7984.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7990.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_2516.JPEG" alt="A colorful abstract image.">
-            <img src="IMG_0042.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_0125.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_0150.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_9901.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_0148.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_7986.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7987.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7991.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7994.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7995.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7999.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7998.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_7997.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8039.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8038.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8037.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8036.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8035.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8033.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8032.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8031.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_8034.gif" alt="A colorful abstract GIF.">
-            <img src="IMG_2431.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_2441.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_2826.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_1328.jpeg" alt="A colorful abstract image.">
-            <img src="IMG_6977.jpeg" alt="A colorful abstract image.">
-        </div>
+            </div>
         <button id="activatePortalBtn" class="psychedelic-button portal-button">Activate Portal!</button>
     </div>
 
-    <div id="new-realm" class="main-content portal-destination-content">
+    <div id="new-realm" class="main-content">
         <div id="portalMessage" style="font-size: 1.1rem; color: #ffcc00; text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00; margin-bottom: 20px;"></div>
         <div class="gif-frame">
-            <img src="IMG_7993.gif" alt="A psychedelic GIF.">
-            <img src="IMG_7996.gif" alt="A psychedelic GIF.">
-            <img src="IMG_7998.gif" alt="A psychedelic GIF.">
-            <img src="IMG_7999.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8002.gif" alt="A psychedelic GIF.">
-            <img src="IMG_6955.jpeg" alt="A psychedelic image.">
-            <img src="IMG_8010.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8011.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8012.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8014.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8015.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8018.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8019.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8020.gif" alt="A psychedelic GIF.">
-            <img src="IMG_8021.gif" alt="A psychedelic GIF.">
-        </div>
+            </div>
         <button id="deactivatePortalBtn" class="psychedelic-button">Return to Origin</button>
     </div>
 
@@ -552,12 +443,11 @@
     <img src="IMG_7996.gif" alt="Another floating psychedelic GIF." class="gif-outside gif-outside-2">
 
     <script>
-        // Store original body filter and blend mode to restore later
         const originalBodyFilter = document.body.style.filter;
-        const originalBodyBlendMode = document.body.style.backgroundBlendMode;
         const startTime = new Date();
 
-        // DOM element references
+        // --- DOM element references ---
+        const root = document.documentElement;
         const currentTimeDisplay = document.getElementById('currentTime');
         const uptimeDisplay = document.getElementById('uptimeDisplay');
         const originalRealm = document.getElementById('original-realm');
@@ -566,40 +456,15 @@
         const activatePortalButton = document.getElementById('activatePortalBtn');
         const deactivatePortalButton = document.getElementById('deactivatePortalBtn');
 
-        // Pool of unique, generic fortune cookie sayings
         const portalMessages = [
-            "A journey of a thousand miles begins with a single step.",
-            "You will soon be blessed with a fascinating discovery.",
-            "The wise man questions himself, the fool, others. Ponder this.",
-            "Good things come to those who wait, but better things come to those who pursue them.",
-            "Your determination will bring you success. Keep striving.",
-            "Embrace the unexpected; it holds the key to your next adventure.",
-            "A new perspective awaits you beyond this threshold. Be ready to see.",
-            "The greatest adventure is yet to unfold. It begins within you.",
-            "Patience is a virtue, especially when traversing the unseen paths.",
-            "Your intuition will guide you through mysteries. Trust it.",
-            "The path to wisdom is paved with questions, not answers.",
-            "A joyful surprise is coming your way. Open your heart.",
-            "Let your spirit guide you where the maps do not reach.",
-            "Curiosity is the compass of discovery. Follow it.",
-            "The world is vast and full of wonders. You are about to experience more."
+            "A journey of a thousand miles begins with a single step.", "You will soon be blessed with a fascinating discovery.", "The wise man questions himself, the fool, others. Ponder this.", "Good things come to those who wait, but better things come to those who pursue them.", "Your determination will bring you success. Keep striving.", "Embrace the unexpected; it holds the key to your next adventure.", "A new perspective awaits you beyond this threshold. Be ready to see.", "The greatest adventure is yet to unfold. It begins within you.", "Patience is a virtue, especially when traversing the unseen paths.", "Your intuition will guide you through mysteries. Trust it.", "The path to wisdom is paved with questions, not answers.", "A joyful surprise is coming your way. Open your heart.", "Let your spirit guide you where the maps do not reach.", "Curiosity is the compass of discovery. Follow it.", "The world is vast and full of wonders. You are about to experience more."
         ];
 
-        /**
-         * Updates the current time and uptime displays.
-         */
         function updateTimeDisplay() {
             const now = new Date();
-            // Helper to pad numbers with leading zero
             const pad = num => String(num).padStart(2, '0');
-
-            // Current Time
-            const hours = pad(now.getHours());
-            const minutes = pad(now.getMinutes());
-            const seconds = pad(now.getSeconds());
+            const hours = pad(now.getHours()), minutes = pad(now.getMinutes()), seconds = pad(now.getSeconds());
             currentTimeDisplay.textContent = `CURRENT: ${hours}:${minutes}:${seconds}`;
-
-            // Uptime
             const elapsedTime = now.getTime() - startTime.getTime();
             const totalSeconds = Math.floor(elapsedTime / 1000);
             const upt_hours = pad(Math.floor(totalSeconds / 3600));
@@ -607,128 +472,191 @@
             const upt_seconds = pad(totalSeconds % 60);
             uptimeDisplay.textContent = `UPTIME: ${upt_hours}:${upt_minutes}:${upt_seconds}`;
         }
-
+        
         /**
-         * Activates the portal effect, transitioning the user to the new realm.
+         * ENHANCED: Activates a more dramatic portal effect with 3D animation.
          */
         function activatePortal() {
-            // Haptic Feedback (Vibration) for a strong 'warp' feeling
-            if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100, 50, 100, 50, 200]);
-            }
-
-            // Clear previous message and set initial opacity for fade-in
-            portalMessageElement.textContent = '';
-            portalMessageElement.style.opacity = '0'; // Use string '0' for opacity
-
-            let warpCount = 0;
-            const maxWarps = 10; // Number of rapid flashes/changes
+            if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
+            
             const body = document.body;
+            let warpCount = 0;
+            const maxWarps = 15;
 
             const warpInterval = setInterval(() => {
-                // Apply random filters and background flashes
-                body.style.filter = `hue-rotate(${Math.random() * 360}deg) saturate(${100 + Math.random() * 200}%) contrast(${100 + Math.random() * 100}%) blur(${Math.random() * 2}px)`;
-
-                // Rapidly flash different colors
+                body.style.filter = `hue-rotate(${Math.random() * 360}deg) saturate(${100 + Math.random() * 300}%) contrast(${100 + Math.random() * 150}%) blur(${Math.random() * 4}px) url(#glitch-filter)`;
                 if (Math.random() > 0.5) {
-                    body.classList.add('warp-effect-flash'); // White flash
-                    setTimeout(() => body.classList.remove('warp-effect-flash'), 50);
-                } else if (Math.random() > 0.7) {
-                    body.classList.add('warp-effect-red-flash'); // Red flash
-                    setTimeout(() => body.classList.remove('warp-effect-red-flash'), 50);
+                    body.classList.add('warp-effect-flash');
+                    setTimeout(() => body.classList.remove('warp-effect-flash'), 60);
                 }
-
                 warpCount++;
                 if (warpCount >= maxWarps) {
                     clearInterval(warpInterval);
 
-                    // Smooth Transition to New Realm after final warp flash
-                    body.style.filter = 'none'; // Reset body filter before final transition
-                    body.classList.add('warp-effect-flash'); // Final flash to black out for transition
+                    // Set random values for the fly-out animation
+                    root.style.setProperty('--random-x', `${(Math.random() - 0.5) * 200}vw`);
+                    root.style.setProperty('--random-y', `${(Math.random() - 0.5) * 200}vh`);
+                    root.style.setProperty('--random-rot', `${(Math.random() - 0.5) * 720}deg`);
+
+                    // Trigger the fly-out animation
+                    originalRealm.classList.remove('visible');
+                    originalRealm.classList.add('hidden');
+
+                    // Wait for the animation to finish before swapping content
                     setTimeout(() => {
-                        body.classList.remove('warp-effect-flash');
-                        originalRealm.style.display = 'none'; // Hide the original content
-                        newRealm.style.display = 'flex'; // Show the new realm content
+                        originalRealm.style.display = 'none'; // Fully hide after animation
+                        newRealm.style.display = 'flex';
+                        newRealm.classList.remove('hidden');
+                        newRealm.classList.add('visible');
 
-                        // Set specific psychedelic background/filters for the new realm
-                        body.style.filter = 'hue-rotate(180deg) saturate(150%)';
-                        body.style.backgroundBlendMode = 'overlay, screen, multiply';
+                        // Reset body filter for the new realm
+                        body.style.filter = 'hue-rotate(180deg) saturate(150%) url(#glitch-filter)';
 
-                        // Select a random message and display it with fade-in
+                        // Display portal message
+                        portalMessageElement.style.opacity = '0';
                         const randomMessage = portalMessages[Math.floor(Math.random() * portalMessages.length)];
                         portalMessageElement.textContent = randomMessage;
-                        setTimeout(() => {
-                            portalMessageElement.style.opacity = '1'; // Fade in the message
-                        }, 50); // Small delay after content swap for visual effect
+                        setTimeout(() => { portalMessageElement.style.opacity = '1'; }, 100);
+                        setTimeout(() => { portalMessageElement.style.opacity = '0'; }, 4000);
 
-                        // Hide the message after a few seconds with fade-out
-                        setTimeout(() => {
-                            portalMessageElement.style.opacity = '0'; // Fade out
-                            setTimeout(() => {
-                                portalMessageElement.textContent = ''; // Clear content after fade out
-                            }, 500); // Wait for fade out transition to complete before clearing
-                        }, 4000); // Message displayed for 4 seconds
-                    }, 200); // Duration of the final flash before content swap
+                    }, 700); // Match animation duration
                 }
-            }, 100); // Rapidly change every 100ms
+            }, 80); // Faster interval
         }
-
+        
         /**
-         * Deactivates the portal, returning the user to the original realm.
+         * ENHANCED: Deactivates portal with a similar 3D animation.
          */
         function deactivatePortal() {
-            // Haptic Feedback (Vibration) for returning
-            if (navigator.vibrate) {
-                navigator.vibrate(150);
-            }
+            if (navigator.vibrate) navigator.vibrate(150);
 
-            const body = document.body;
-            // Quick flash to black out for transition back
-            body.classList.add('warp-effect-flash');
+            // Set random values for the fly-out animation
+            root.style.setProperty('--random-x', `${(Math.random() - 0.5) * 200}vw`);
+            root.style.setProperty('--random-y', `${(Math.random() - 0.5) * 200}vh`);
+            root.style.setProperty('--random-rot', `${(Math.random() - 0.5) * 720}deg`);
+            
+            // Trigger the fly-out animation for the new realm
+            newRealm.classList.remove('visible');
+            newRealm.classList.add('hidden');
+            
             setTimeout(() => {
-                body.classList.remove('warp-effect-flash');
-                newRealm.style.display = 'none'; // Hide the new realm content
-                originalRealm.style.display = 'flex'; // Show original realm content
-
-                // Restore original body styles
-                body.style.filter = originalBodyFilter;
-                body.style.backgroundBlendMode = originalBodyBlendMode;
-            }, 200);
+                newRealm.style.display = 'none';
+                originalRealm.style.display = 'flex';
+                originalRealm.classList.remove('hidden');
+                originalRealm.classList.add('visible');
+                
+                // Restore original body filter
+                document.body.style.filter = originalBodyFilter;
+            }, 700);
         }
 
-        /**
-         * Creates a psychedelic cursor trail.
-         * @param {MouseEvent} e - The mouse event object.
-         */
         function createCursorTrail(e) {
             const trail = document.createElement('div');
             trail.className = 'trail';
             trail.style.top = `${e.pageY}px`;
             trail.style.left = `${e.pageX}px`;
-
-            // More vibrant and random colors for the trail
             const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
-            trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
+            trail.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, transparent 60%)`;
+            trail.style.transform = `rotate(${Math.random() * 360}deg)`;
             document.body.appendChild(trail);
-            setTimeout(() => { trail.remove(); }, 500); // Trail fades out in 0.5s
+            setTimeout(() => { trail.remove(); }, 400);
         }
 
+        /**
+         * NEW: Updates CSS variables based on mouse position for 3D interaction.
+         */
+        function handleMouseMove(e) {
+            const { clientX, clientY, currentTarget } = e;
+            const { clientWidth, clientHeight } = currentTarget;
+            const x = (clientX / clientWidth) - 0.5; // Range from -0.5 to 0.5
+            const y = (clientY / clientHeight) - 0.5; // Range from -0.5 to 0.5
+            
+            // Adjust strength of rotation by multiplying
+            const rotateXStrength = 20; 
+            const rotateYStrength = 20;
+
+            root.style.setProperty('--rotate-x', y * -rotateXStrength);
+            root.style.setProperty('--rotate-y', x * rotateYStrength);
+        }
+        
+        /**
+         * NEW: Text Scrambler Effect
+         */
+        class TextScrambler {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+                this.originalText = this.el.innerText;
+                this.el.addEventListener('mouseover', () => this.scramble());
+                this.el.addEventListener('mouseout', () => this.reveal());
+            }
+
+            scramble() {
+                if (this.frameRequest) cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.queue = this.originalText.split('').map((char, i) => ({
+                    from: this.chars[Math.floor(Math.random() * this.chars.length)],
+                    to: char,
+                    start: Math.floor(Math.random() * 40),
+                    end: Math.floor(Math.random() * 40) + 20
+                }));
+                this.frameRequest = requestAnimationFrame(this.update);
+            }
+            
+            reveal() {
+                if (this.frameRequest) cancelAnimationFrame(this.frameRequest);
+                this.el.innerText = this.originalText;
+            }
+
+            update() {
+                let output = '';
+                for (let i = 0, len = this.queue.length; i < len; i++) {
+                    const { from, to, start, end } = this.queue[i];
+                    if (this.frame >= end) {
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (Math.random() < 0.2) {
+                            output += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        } else {
+                            output += from;
+                        }
+                    } else {
+                        output += ' ';
+                    }
+                }
+                this.el.innerText = output;
+
+                if (output !== this.originalText) {
+                    this.frame++;
+                    this.frameRequest = requestAnimationFrame(this.update);
+                }
+            }
+        }
+        
         // --- Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
-            updateTimeDisplay(); // Initial call
-            setInterval(updateTimeDisplay, 1000); // Update every second
+            updateTimeDisplay();
+            setInterval(updateTimeDisplay, 1000);
 
-            // Attach event listeners to buttons
             activatePortalButton.addEventListener('click', activatePortal);
             deactivatePortalButton.addEventListener('click', deactivatePortal);
-
-            // Cursor trail effect
             document.addEventListener('mousemove', createCursorTrail);
+            
+            // NEW: Attach interactive listeners
+            document.body.addEventListener('mousemove', handleMouseMove);
+            
+            // NEW: Initialize text scrambler on target elements
+            const scrambleElements = document.querySelectorAll('[data-text-scramble]');
+            scrambleElements.forEach(el => new TextScrambler(el));
 
-            // Hide desktop cursor on touch devices for a cleaner look
+            // Set initial state
+            originalRealm.classList.add('visible');
+            originalRealm.style.display = 'flex';
+            newRealm.style.display = 'none';
+
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.body.style.cursor = 'default'; // Or 'none'
+                document.body.style.cursor = 'none';
             }
         });
     </script>
