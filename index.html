@@ -36,9 +36,7 @@
         body {
             margin: 0;
             padding: 0;
-           .psychedelic-button {
-    font-family: var(--pixel-font-family);
-}
+            font-family: var(--pixel-font-family);
             background:
                 url('IMG_8002.gif') center center / cover no-repeat,
                 url('IMG_6955.jpeg') repeat,
@@ -261,6 +259,7 @@
             border: 5px ridge var(--secondary-glow-color); cursor: pointer;
             box-shadow: 0 0 15px #ffffff, 0 0 25px var(--tertiary-glow-color);
             font-size: 1.2rem; transition: all 0.2s ease-in-out;
+            font-family: var(--pixel-font-family); /* <-- ADDED THIS LINE */
         }
 
         .psychedelic-button:hover {
