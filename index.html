@@ -291,8 +291,6 @@
             animation: buttonPulse 2s infinite alternate, borderGlowAndShift 10s infinite linear;
         }
         
-        .portal-destination-content { display: none; }
-
         @media (max-width: 768px) {
             .name { font-size: 2.5rem; } .birthdate { font-size: 1.1rem; } .time-display { font-size: 0.7rem; }
             .gif-frame img { width: 90px; } .psychedelic-button { padding: 10px 20px; font-size: 1rem; }
@@ -362,7 +360,6 @@
             const deactivatePortalButton = document.getElementById('deactivatePortalBtn');
             const portalMessages = ["A journey of a thousand miles begins with a single step.", "You will soon be blessed with a fascinating discovery.", "The wise man questions himself, the fool, others. Ponder this.", "Good things come to those who wait, but better things come to those who pursue them.", "Your determination will bring you success. Keep striving.", "Embrace the unexpected; it holds the key to your next adventure.", "A new perspective awaits you beyond this threshold. Be ready to see."];
 
-            // --- SCRIPT FOR TITLE ANIMATION ---
             function animateTitle() {
                 const hearts = ['🩵', '💙', '💜', '💚', '💛', '🧡', '❤️'];
                 let heartIndex = 0;
@@ -371,7 +368,6 @@
                     heartIndex = (heartIndex + 1) % hearts.length;
                 }, 500);
             }
-            // --- END SCRIPT FOR TITLE ANIMATION ---
 
             function updateTimeDisplay() {
                 const now = new Date();
@@ -391,9 +387,10 @@
                     const warpInterval = setInterval(() => {
                         body.style.filter = `hue-rotate(${Math.random()*360}deg) saturate(${100+Math.random()*300}%) contrast(${100+Math.random()*150}%) blur(${Math.random()*4}px) url(#glitch-filter)`;
                         if (Math.random() > 0.5) { body.classList.add('warp-effect-flash'); setTimeout(() => body.classList.remove('warp-effect-flash'), 60); }
-                        if (++warpCount < maxWarps) return;
-                        clearInterval(warpInterval);
-                        performSwap();
+                        if (++warpCount >= maxWarps) {
+                            clearInterval(warpInterval);
+                            performSwap();
+                        }
                     }, 80);
                 } else {
                     performSwap();
@@ -428,7 +425,8 @@
             function createCursorTrail(e) {
                 const trail = document.createElement('div');
                 trail.className = 'trail';
-                trail.style.top = `${e.pageY}px`; trail.style.left = `${e.pageX}px`;
+                trail.style.top = `${e.pageY}px`;
+                trail.style.left = `${e.pageX}px`;
                 const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
                 trail.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, transparent 60%)`;
                 document.body.appendChild(trail);
@@ -469,7 +467,7 @@
                 }
             }
             
-            animateTitle(); // <-- CALL THE NEW FUNCTION
+            animateTitle();
             updateTimeDisplay();
             setInterval(updateTimeDisplay, 1000);
             activatePortalButton.addEventListener('click', () => portalTransition(newRealm, originalRealm));
