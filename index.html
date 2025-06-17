@@ -3,120 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
     <meta name="description" content="A unique and psychedelic personal website with dynamic visual effects and interactive elements.">
+    <meta name="theme-color" content="#000000">
     <title>csr - caden🩵</title>
 
     <link rel="preload" href="fonts/Web437_Apricot_256L-2y.woff" as="font" type="font/woff" crossorigin>
 
     <style>
-        /* --- CSS Variables for Theme Management --- */
+        /*
+        ==========================================================================
+         1. General Setup & Theming
+        ==========================================================================
+        */
+
         :root {
-            --primary-glow-color: #00ff00; /* Green */
-            --secondary-glow-color: #00ffff; /* Cyan */
-            --tertiary-glow-color: #ff00ff; /* Magenta */
+            /* --- Theme Colors --- */
+            --primary-glow-color: #00ff00;    /* Green */
+            --secondary-glow-color: #00ffff;  /* Cyan */
+            --tertiary-glow-color: #ff00ff;   /* Magenta */
             --quaternary-glow-color: #ffff00; /* Yellow */
-            --background-dark: rgba(0, 0, 0, 0.5);
+
+            /* --- UI Colors & Fonts --- */
+            --background-dark: rgba(0, 0, 0, 0.55);
             --pixel-shadow-offset: 2px;
-            /* Prioritize ONLY the local custom font, with generic monospace as a last resort */
             --pixel-font-family: 'Apricot256L', 'Courier New', monospace;
-            /* Interactive 3D transform variables updated by JavaScript */
-            --rotate-x: 0;
-            --rotate-y: 0;
-            /* Variables for content fly-out animation (set by JS) */
-            --random-x: 0vw;
-            --random-y: 0vh;
-            --random-rot: 0deg;
+
+            /* --- JS-driven Interactive Variables --- */
+            --rotate-x: 0deg;
+            --rotate-y: 0deg;
+            --flyout-x: 0vw;
+            --flyout-y: 0vh;
+            --flyout-rot: 0deg;
         }
 
-        /* --- Custom Bitmap Font Definition --- */
         @font-face {
             font-family: 'Apricot256L';
             src: url('fonts/Web437_Apricot_256L-2y.woff') format('woff');
             font-weight: normal;
             font-style: normal;
-            /* Optimize for pixel rendering */
-            -webkit-font-smoothing: none; /* Disable anti-aliasing for pixelated look */
-            font-smoothing: none; /* Disable anti-aliasing for pixelated look */
-            image-rendering: pixelated; /* Ensure browser renders pixels sharply */
+            /* Force sharp, pixelated rendering */
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            font-smooth: never;
+            image-rendering: pixelated;
         }
 
-        /* --- Global Body Styles --- */
+        /*
+        ==========================================================================
+         2. Core Body & Layout Styles
+        ==========================================================================
+        */
+
         body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--pixel-font-family); /* Use the defined pixel font family */
-            /* Complex layered background for psychedelic effect */
-            background:
-                /* First layer: Main GIF, covers the viewport */
-                url('IMG_8002.gif') center center / cover no-repeat,
-                /* Second layer: Repeating texture */
-                url('IMG_6955.jpeg') repeat,
-                /* Third layer: Gradient as a base */
-                linear-gradient(45deg, #ff00cc, #00ffcc, #ffcc00, #00ffff);
-            /* Blend modes for layered background */
-            background-blend-mode: multiply, overlay, screen;
-            background-attachment: fixed; /* Keep background fixed during scroll */
-            color: var(--primary-glow-color);
-            /* Multiple text shadows for glowing and pixelated effect */
-            text-shadow:
-                0 0 5px var(--primary-glow-color),
-                0 0 10px var(--primary-glow-color),
-                var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
-            /* Custom cursor for thematic consistency */
-            cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            min-height: 100vh; /* Ensure body takes full viewport height */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            perspective: 1500px; /* Enable 3D perspective for child elements */
-            transform-style: preserve-3d; /* Maintain 3D space for children */
-            /* Smooth transitions for filters and blend modes */
-            transition: filter 0.1s ease-out, background-blend-mode 0.1s ease-out;
-            /* Apply SVG glitch filter by default */
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            
+            font-family: var(--pixel-font-family);
+            color: var(--primary-glow-color);
+            text-shadow:
+                0 0 5px var(--primary-glow-color),
+                0 0 10px var(--primary-glow-color),
+                var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
+
+            /* Complex layered background for a psychedelic effect */
+            background:
+                url('IMG_8002.gif') center center / cover no-repeat,
+                url('IMG_6955.jpeg') repeat,
+                linear-gradient(45deg, #ff00cc, #00ffcc, #ffcc00, #00ffff);
+            background-blend-mode: multiply, overlay, screen;
+            background-attachment: fixed;
+            
+            /* 3D transform context */
+            perspective: 1500px;
+            transform-style: preserve-3d;
+
+            /* Effects & Transitions */
             filter: url(#glitch-filter);
+            transition: filter 0.1s ease-out;
+            cursor: url('https://cur.cursors-4u.net/cursors/cur-11/cur1016.cur'), auto;
         }
 
-        /* --- CRT/Scanline Overlay Effect --- */
+        /* CRT/Scanline Overlay Effect */
         body::before {
             content: '';
-            position: fixed; /* Fixed to viewport */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Allows clicks/interactions on elements below */
-            z-index: 1000; /* Ensure it's on top */
-            /* Repeating linear gradients for scanline and color shift effect */
+            pointer-events: none;
+            z-index: 1000;
             background:
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(0, 0, 0, 0.15),
-                    rgba(0, 0, 0, 0.15) 1px,
-                    transparent 1px,
-                    transparent 2px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    rgba(255, 0, 255, 0.05),
-                    rgba(0, 255, 255, 0.05) 1px,
-                    transparent 1px,
-                    transparent 2px
-                );
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0 1px, transparent 1px 2px),
+                repeating-linear-gradient(90deg, rgba(255, 0, 255, 0.05) 0 1px, rgba(0, 255, 255, 0.05) 1px 2px);
             opacity: 0.7;
-            filter: grayscale(20%); /* Subtle grayscale effect */
+            filter: grayscale(20%);
         }
 
-        /* --- Image Rendering Optimization for Pixel Art --- */
         img {
-            image-rendering: pixelated; /* Ensures pixel art is sharp */
-            -ms-interpolation-mode: nearest-neighbor; /* IE fallback for pixel rendering */
+            image-rendering: pixelated;
+            -ms-interpolation-mode: nearest-neighbor; /* IE Fallback */
         }
         
-        /* --- Keyframe Animations --- */
+        /*
+        ==========================================================================
+         3. Keyframe Animations
+        ==========================================================================
+        */
+
         @keyframes waveText {
             0%, 100% { transform: translateY(0) rotate(0deg); text-shadow: var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000; }
             25% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px var(--primary-glow-color), 4px 4px #000; }
@@ -124,321 +124,295 @@
             75% { transform: translateY(-5px) rotate(2deg); text-shadow: 0 0 10px var(--primary-glow-color), 4px 4px #000; }
         }
 
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
+            5% { opacity: 0.9; text-shadow: 0 0 8px var(--quaternary-glow-color), 0 0 18px var(--quaternary-glow-color), 3px 3px #000; }
+            15% { opacity: 0.85; text-shadow: 0 0 7px var(--quaternary-glow-color), 0 0 15px var(--quaternary-glow-color), 2px 2px #000; }
+            20%, 50%, 60%, 80%, 90% { opacity: 1; }
+            10%, 70%, 95% { opacity: 0.9; }
+        }
+
         @keyframes buttonPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 25px var(--tertiary-glow-color); }
             50% { transform: scale(1.1); box-shadow: 0 0 25px #ffffff, 0 0 40px var(--tertiary-glow-color); }
         }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
-            5% { opacity: 0.9; text-shadow: 0 0 8px var(--quaternary-glow-color), 0 0 18px var(--quaternary-glow-color), 3px 3px #000; }
-            10% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
-            15% { opacity: 0.85; text-shadow: 0 0 7px var(--quaternary-glow-color), 0 0 15px var(--quaternary-glow-color), 2px 2px #000; }
-            20% { opacity: 1; text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), 4px 4px #000; }
-            50% { opacity: 0.95; } 60% { opacity: 1; } 70% { opacity: 0.9; } 80% { opacity: 1; } 90% { opacity: 0.98; }
-        }
-
-        /* Chaotic, Glitchy Border Animation for Main Content */
-        @keyframes borderGlowAndShift {
-            0% {
-                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
-                box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 60px rgba(255, 0, 255, 0.8);
-                transform: scale(1) rotate(0deg) skew(0, 0);
-                filter: hue-rotate(0deg);
-            }
-            25% {
-                border-radius: 80px 10px 90px 20px / 20px 90px 10px 80px;
-                box-shadow: 0 0 45px rgba(255, 255, 0, 0.9), 0 0 80px rgba(0, 255, 0, 0.8);
-                transform: scale(1.02) rotate(3deg) skew(-5deg, 5deg);
-                filter: hue-rotate(90deg);
-            }
-            50% {
-                border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px;
-                box-shadow: 0 0 50px rgba(255, 0, 255, 0.9), 0 0 90px rgba(0, 0, 255, 0.8);
-                transform: scale(0.98) rotate(0deg) skew(0, 0);
-                filter: hue-rotate(180deg);
-            }
-            75% {
-                border-radius: 10px 90px 20px 80px / 90px 10px 80px 20px;
-                box-shadow: 0 0 45px rgba(0, 255, 0, 0.9), 0 0 80px rgba(255, 255, 0, 0.8);
-                transform: scale(1.02) rotate(-3deg) skew(5deg, -5deg);
-                filter: hue-rotate(270deg);
-            }
-            100% {
-                border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px;
-                box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 60px rgba(255, 0, 255, 0.8);
-                transform: scale(1) rotate(0deg) skew(0, 0);
-                filter: hue-rotate(360deg);
-            }
-        }
-
-        /* --- Main Content Section Styling --- */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-            text-align: center;
-            background-color: var(--background-dark);
-            border: none; /* Border is handled by pseudo-elements */
-            max-width: 90%;
-            margin: 20px auto;
-            position: relative;
-            z-index: 1; /* Ensures content is above background elements */
-            overflow: visible; /* Allow pseudo-elements to extend beyond */
-            transform-style: preserve-3d; /* Enable 3D transforms for self and children */
-            /* Apply 3D rotation based on CSS variables updated by JavaScript */
-            transform: rotateX(calc(var(--rotate-x) * 1deg)) rotateY(calc(var(--rotate-y) * 1deg));
-            transition: transform 0.1s ease-out; /* Smooth transition for mouse move effect */
-        }
-
-        /* Fade-in animation for content appearing */
-        @keyframes contentFadeIn {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
-        /* Fly-out animation for content disappearing during portal activation */
-        @keyframes contentFlyOut {
-            to {
-                opacity: 0;
-                /* Use CSS variables for random movement (set by JS) */
-                transform: translateY(var(--random-y)) translateX(var(--random-x)) translateZ(-1000px) rotateZ(var(--random-rot));
-            }
-        }
-        
-        /* Apply content animations based on classes */
-        .main-content.visible {
-            animation: contentFadeIn 1s ease-in-out forwards;
-        }
-        .main-content.hidden {
-            animation: contentFlyOut 0.7s forwards ease-in;
-        }
-
-        /* Pseudo-elements for complex, animated borders */
-        .main-content::before {
-            content: '';
-            position: absolute;
-            /* Slightly offset to create a border effect */
-            top: -15px; left: -15px; right: -15px; bottom: -15px;
-            z-index: -1; /* Behind the main content */
-            animation: borderGlowAndShift 12s infinite alternate ease-in-out;
-            transform-origin: center center;
-            pointer-events: none; /* Ignore mouse events */
-        }
-
-        .main-content::after {
-            content: '';
-            position: absolute;
-            /* Further offset for a layered border effect */
-            top: -25px; left: -25px; right: -25px; bottom: -25px;
-            z-index: -2; /* Behind the first pseudo-element */
-            animation: borderGlowAndShift 12s infinite alternate-reverse ease-in-out;
-            transform-origin: center center;
-            opacity: 0.7;
-            pointer-events: none;
-            filter: blur(10px); /* Blurry outer glow */
-        }
-        
-        /* --- Typography Styles --- */
-        .name {
-            font-size: 3.5rem;
-            /* Combine multiple animations for dynamic effect */
-            animation: waveText 2.5s infinite, flicker 3s infinite alternate;
-            margin-bottom: 10px;
-            color: var(--quaternary-glow-color);
-            /* Multiple text shadows for intense glow and pixel offset */
-            text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
-            font-family: var(--pixel-font-family); /* Explicitly use the custom pixel font */
-            image-rendering: pixelated; /* Ensures text is rendered pixelated if possible */
-        }
-        
-        /* Text Scramble Effect on Hover */
-        /* Note: Actual scrambling handled by JS; this is for visual continuity */
-        .name:hover, .birthdate:hover {
-            animation: none; /* Pause continuous animations during scramble */
-        }
-
-        .birthdate {
-            font-size: 1.5rem;
-            margin-top: 0;
-            color: var(--secondary-glow-color);
-            text-shadow: 0 0 5px var(--secondary-glow-color), var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
-            font-family: var(--pixel-font-family); /* Explicitly use the custom pixel font */
-            image-rendering: pixelated;
-        }
-
-        .time-display {
-            font-size: 0.9rem;
-            color: #00ffcc;
-            text-shadow: 0 0 3px #00ffcc, 1px 1px #000;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            animation: flicker 4s infinite alternate;
-            font-family: var(--pixel-font-family); /* Explicitly use the custom pixel font */
-            image-rendering: pixelated;
-        }
-
-        /* --- GIF Frame Layout --- */
-        .gif-frame {
-            display: flex;
-            flex-wrap: wrap; /* Allow GIFs to wrap to new lines */
-            justify-content: space-around; /* Distribute space evenly */
-            align-items: center;
-            margin-top: 30px;
-            margin-bottom: 30px;
-            width: 100%;
-        }
-
-        .gif-frame img {
-            width: 120px;
-            height: auto; /* Maintain aspect ratio */
-            margin: 10px;
-            border: 3px solid var(--tertiary-glow-color);
-            box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
-            animation: floatAndGlow 3s infinite alternate ease-in-out;
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Smooth hover transition */
-        }
-        
-        /* 3D hover effect for GIFs inside the frame */
-        .gif-frame img:hover {
-            transform: translateY(-20px) translateZ(50px) scale(1.2);
-            box-shadow: 0 0 30px var(--quaternary-glow-color), 0 0 50px var(--primary-glow-color);
-        }
-
-        /* --- GIF Animations --- */
         @keyframes floatAndGlow {
             0% { transform: translateY(0) rotateY(0deg); box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color); }
             50% { transform: translateY(-15px) rotateY(15deg); box-shadow: 0 0 20px var(--quaternary-glow-color), 0 0 30px var(--primary-glow-color); }
             100% { transform: translateY(0) rotateY(0deg); box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color); }
         }
-
-        /* Floating GIFs outside the main content area */
-        .gif-outside {
-            position: fixed; /* Fixed relative to viewport */
-            width: 100px;
-            height: auto;
-            border: 3px solid var(--tertiary-glow-color);
-            box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
-            /* Combine floating/glowing with continuous rotation */
-            animation: floatAndGlow 3s infinite alternate ease-in-out, rotateForever 10s linear infinite;
-            z-index: 0; /* Behind main content */
-            /* Apply inverse 3D rotation based on mouse movement */
-            transform: rotateX(calc(var(--rotate-x) * -1.2deg)) rotateY(calc(var(--rotate-y) * -1.2deg)) translateZ(100px);
-            transition: transform 0.1s ease-out; /* Smooth transition for mouse move effect */
-        }
-
+        
         @keyframes rotateForever {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        /* Positioning for individual outside GIFs */
-        .gif-outside-1 { top: 10%; left: 5%; }
-        .gif-outside-2 { bottom: 10%; right: 5%; }
-
-        /* --- Button Styling --- */
-        .psychedelic-button {
-            display: block;
-            margin: 30px auto;
-            padding: 15px 25px;
-            background: var(--tertiary-glow-color);
-            color: var(--quaternary-glow-color);
-            border: 5px ridge var(--secondary-glow-color);
-            cursor: pointer;
-            box-shadow: 0 0 15px #ffffff, 0 0 25px var(--tertiary-glow-color);
-            font-size: 1.2rem;
-            font-family: var(--pixel-font-family); /* Explicitly use the custom pixel font */
-            transition: all 0.2s ease-in-out; /* Smooth hover and active effects */
-            image-rendering: pixelated;
+        @keyframes borderGlowAndShift {
+            0%   { border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px; box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 60px rgba(255, 0, 255, 0.8); transform: scale(1) rotate(0deg) skew(0, 0); filter: hue-rotate(0deg); }
+            25%  { border-radius: 80px 10px 90px 20px / 20px 90px 10px 80px; box-shadow: 0 0 45px rgba(255, 255, 0, 0.9), 0 0 80px rgba(0, 255, 0, 0.8); transform: scale(1.02) rotate(3deg) skew(-5deg, 5deg); filter: hue-rotate(90deg); }
+            50%  { border-radius: 30px 60px 20px 70px / 70px 20px 60px 30px; box-shadow: 0 0 50px rgba(255, 0, 255, 0.9), 0 0 90px rgba(0, 0, 255, 0.8); transform: scale(0.98) rotate(0deg) skew(0, 0); filter: hue-rotate(180deg); }
+            75%  { border-radius: 10px 90px 20px 80px / 90px 10px 80px 20px; box-shadow: 0 0 45px rgba(0, 255, 0, 0.9), 0 0 80px rgba(255, 255, 0, 0.8); transform: scale(1.02) rotate(-3deg) skew(5deg, -5deg); filter: hue-rotate(270deg); }
+            100% { border-radius: 20px 70px 30px 60px / 60px 30px 70px 20px; box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), 0 0 60px rgba(255, 0, 255, 0.8); transform: scale(1) rotate(0deg) skew(0, 0); filter: hue-rotate(360deg); }
         }
-
-        .psychedelic-button:hover {
-            background: var(--quaternary-glow-color);
-            color: var(--tertiary-glow-color);
-            box-shadow: 0 0 20px var(--secondary-glow-color), 0 0 35px var(--quaternary-glow-color);
-            transform: scale(1.05) translateZ(20px); /* Lift and enlarge on hover */
+        
+        @keyframes contentFadeIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
-
-        .psychedelic-button:active { 
-            animation: buttonPulse 0.4s forwards; /* Short pulse animation on click */
-        }
-
-        /* --- Cursor Trail Effect --- */
-        .trail {
-            position: absolute;
-            height: 12px;
-            width: 12px;
-            border-radius: 3px;
-            pointer-events: none; /* Important: allow clicks through the trail */
-            opacity: 1;
-            filter: blur(1px); /* Soften the trail appearance */
-            animation: fadeOutTrail 0.4s forwards; /* Animation to fade out and shrink */
-            z-index: 999; /* Ensure trail is above most content */
-            transform: scale(1.5); /* Start larger for fadeOutTrail effect */
+        
+        @keyframes contentFlyOut {
+            to {
+                opacity: 0;
+                transform: 
+                    translateY(var(--flyout-y)) 
+                    translateX(var(--flyout-x)) 
+                    translateZ(-1000px) 
+                    rotateZ(var(--flyout-rot));
+            }
         }
 
         @keyframes fadeOutTrail {
             to { opacity: 0; transform: scale(0); }
         }
 
-        /* --- Warp Effect during Portal Activation --- */
-        .warp-effect-flash {
-            background-color: rgba(255, 255, 255, 0.8) !important;
-            transition: none !important; /* Disable transitions during flash for instant effect */
+        /*
+        ==========================================================================
+         4. Main Content & Component Styles
+        ==========================================================================
+        */
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 90%;
+            margin: 20px auto;
+            padding: 30px;
+            text-align: center;
+            background-color: var(--background-dark);
+            border: none; /* Border is handled by animated pseudo-elements */
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+            transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+            transition: transform 0.1s ease-out;
         }
 
-        /* Specific styles for the Portal button */
-        .portal-button {
-            background: linear-gradient(45deg, var(--tertiary-glow-color), var(--secondary-glow-color));
+        /* Animated border pseudo-elements */
+        .main-content::before, .main-content::after {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            transform-origin: center;
+            pointer-events: none;
+            animation-duration: 12s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .main-content::before {
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            animation-name: borderGlowAndShift;
+            animation-direction: alternate;
+        }
+
+        .main-content::after {
+            top: -25px; left: -25px; right: -25px; bottom: -25px;
+            z-index: -2;
+            opacity: 0.7;
+            filter: blur(10px);
+            animation-name: borderGlowAndShift;
+            animation-direction: alternate-reverse;
+        }
+        
+        /* Typography */
+        .name {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
             color: var(--quaternary-glow-color);
-            border: 5px ridge #00ffcc;
-            box-shadow: 0 0 20px #ffffff, 0 0 35px var(--tertiary-glow-color);
+            text-shadow: 0 0 10px var(--quaternary-glow-color), 0 0 20px var(--quaternary-glow-color), var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
+            animation: waveText 2.5s infinite, flicker 3s infinite alternate;
+        }
+        
+        .birthdate {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--secondary-glow-color);
+            text-shadow: 0 0 5px var(--secondary-glow-color), var(--pixel-shadow-offset) var(--pixel-shadow-offset) #000;
+        }
+
+        .time-display {
+            font-size: 0.9rem;
+            margin: 15px 0;
+            color: #00ffcc;
+            text-shadow: 0 0 3px #00ffcc, 1px 1px #000;
+            animation: flicker 4s infinite alternate;
+        }
+
+        /* GIF Containers */
+        .gif-frame {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            margin: 30px 0;
+        }
+
+        .gif-frame img {
+            width: 120px;
+            height: auto;
+            margin: 10px;
+            border: 3px solid var(--tertiary-glow-color);
+            box-shadow: 0 0 10px var(--tertiary-glow-color), 0 0 20px var(--secondary-glow-color);
+            animation: floatAndGlow 3s infinite alternate ease-in-out;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+
+        .gif-outside {
+            position: fixed;
+            width: 100px;
+            height: auto;
+            border: 3px solid var(--tertiary-glow-color);
+            z-index: 0;
+            animation: floatAndGlow 3s infinite alternate ease-in-out, rotateForever 10s linear infinite;
+            /* Apply inverse 3D rotation based on mouse movement for parallax */
+            transform: rotateX(calc(var(--rotate-x) * -1.2)) rotateY(calc(var(--rotate-y) * -1.2)) translateZ(100px);
+            transition: transform 0.1s ease-out;
+        }
+
+        .gif-outside-1 { top: 10%; left: 5%; }
+        .gif-outside-2 { bottom: 10%; right: 5%; }
+
+        /* Buttons */
+        .psychedelic-button {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 25px;
+            font-family: var(--pixel-font-family);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background: var(--tertiary-glow-color);
+            color: var(--quaternary-glow-color);
+            border: 5px ridge var(--secondary-glow-color);
+            box-shadow: 0 0 15px #ffffff, 0 0 25px var(--tertiary-glow-color);
+        }
+
+        .portal-button {
             font-size: 1.4rem;
-            transition: all 0.3s ease-in-out, transform 0.1s ease-out;
-            /* Combines pulse and border glow animations */
+            background: linear-gradient(45deg, var(--tertiary-glow-color), var(--secondary-glow-color));
+            border-color: #00ffcc;
+            box-shadow: 0 0 20px #ffffff, 0 0 35px var(--tertiary-glow-color);
             animation: buttonPulse 2s infinite alternate, borderGlowAndShift 10s infinite linear;
         }
         
-        /* Hide portal destination content by default */
-        .portal-destination-content {
-            display: none;
+        #portalMessage {
+            font-size: 1.1rem;
+            color: #ffcc00;
+            text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00;
+            margin-bottom: 20px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        /*
+        ==========================================================================
+         5. Interactive & Effect Styles
+        ==========================================================================
+        */
+
+        .name:hover, .birthdate:hover {
+            animation: none; /* Pause continuous animations during JS scramble */
+        }
+        
+        .gif-frame img:hover {
+            transform: translateY(-20px) translateZ(50px) scale(1.2);
+            box-shadow: 0 0 30px var(--quaternary-glow-color), 0 0 50px var(--primary-glow-color);
         }
 
-        /* --- Responsive Design (Media Queries) --- */
+        .psychedelic-button:hover {
+            background: var(--quaternary-glow-color);
+            color: var(--tertiary-glow-color);
+            box-shadow: 0 0 20px var(--secondary-glow-color), 0 0 35px var(--quaternary-glow-color);
+            transform: scale(1.05) translateZ(20px);
+        }
+
+        .psychedelic-button:active { 
+            animation: buttonPulse 0.4s forwards;
+        }
+
+        .trail {
+            position: absolute;
+            height: 12px;
+            width: 12px;
+            border-radius: 3px;
+            pointer-events: none;
+            z-index: 999;
+            filter: blur(1px);
+            opacity: 1;
+            transform: scale(1.5);
+            animation: fadeOutTrail 0.4s forwards;
+        }
+
+        /*
+        ==========================================================================
+         6. Utility & State Classes
+        ==========================================================================
+        */
+
+        .visible {
+            animation: contentFadeIn 1s ease-in-out forwards;
+        }
+        
+        .hidden {
+            animation: contentFlyOut 0.7s forwards ease-in;
+        }
+        
+        .warp-effect-flash {
+            background-color: rgba(255, 255, 255, 0.8) !important;
+            transition: none !important;
+        }
+
+        /*
+        ==========================================================================
+         7. Responsive Design (Media Queries)
+        ==========================================================================
+        */
+
         @media (max-width: 768px) {
             .name { font-size: 2.5rem; }
             .birthdate { font-size: 1.1rem; }
             .time-display { font-size: 0.7rem; }
             .gif-frame img { width: 90px; }
             .psychedelic-button { padding: 10px 20px; font-size: 1rem; }
-            .gif-outside { width: 70px; }
             .portal-button { font-size: 1.2rem; }
+            .gif-outside { width: 70px; }
         }
 
         @media (max-width: 480px) {
+            .main-content { padding: 15px; }
             .name { font-size: 1.8rem; }
             .birthdate { font-size: 0.9rem; }
             .time-display { font-size: 0.6rem; }
             .gif-frame img { width: 70px; margin: 5px; }
-            .main-content { padding: 15px; }
             .gif-outside { width: 50px; }
             .portal-button { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <svg style="position:absolute; height:0; width:0; overflow:hidden;">
+    <svg style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true">
         <filter id="glitch-filter">
             <feTurbulence type="fractalNoise" baseFrequency="0.005 0.005" numOctaves="1" result="warp" />
             <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warp" />
             
             <feOffset dx="-2" dy="0" in="SourceGraphic" result="red-channel" />
-            <feColorMatrix in="red-channel" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red-final"/>
+            <feColorMatrix in="red-channel" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red-final"/>
 
             <feOffset dx="2" dy="0" in="SourceGraphic" result="cyan-channel" />
-            <feColorMatrix in="cyan-channel" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" result="cyan-final"/>
+            <feColorMatrix in="cyan-channel" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="cyan-final"/>
             
             <feComposite in="red-final" in2="cyan-final" operator="screen" />
         </filter>
@@ -450,72 +424,20 @@
             <p class="birthdate" data-text-scramble>Born: August 4th, 2004, 4:44 AM</p>
 
             <div class="time-display" role="timer" aria-live="polite" aria-atomic="true">
-                <span id="currentTime">Loading Current Time...</span><br>
-                <span id="uptimeDisplay">Loading Uptime...</span>
+                <span id="currentTime"></span><br>
+                <span id="uptimeDisplay"></span>
             </div>
             
             <div class="gif-frame">
-                <img src="IMG_7976.gif" alt="Abstract pulsating geometric patterns in green and purple.">
-                <img src="IMG_8042.gif" alt="Fluid abstract animation with blue and yellow shifting shapes.">
-                <img src="IMG_7977.gif" alt="Hypnotic spiral of neon lines, red and blue.">
-                <img src="IMG_7978.gif" alt="Retro pixel art animation of a smiling face.">
-                <img src="IMG_7979.gif" alt="Glitching digital art with a spectrum of colors.">
-                <img src="IMG_7980.gif" alt="Trippy kaleidoscope effect with symmetrical patterns.">
-                <img src="IMG_7981.gif" alt="Abstract shapes morphing and glowing in pink and blue.">
-                <img src="IMG_7982.gif" alt="Animated grid lines distorting and shifting.">
-                <img src="IMG_7983.gif" alt="Pixelated cityscape with neon lights.">
-                <img src="IMG_7984.gif" alt="Vibrating abstract art with a dark background.">
-                <img src="IMG_7990.gif" alt="Colorful abstract vortex effect.">
-                <img src="IMG_2516.JPEG" alt="Close-up of vibrant, textured paint strokes.">
-                <img src="IMG_0042.jpeg" alt="Macro shot of iridescent soap bubbles.">
-                <img src="IMG_0125.jpeg" alt="Digital art with a flowing liquid metal effect.">
-                <img src="IMG_0150.jpeg" alt="Colorful abstract light trails in motion.">
-                <img src="IMG_9901.jpeg" alt="Geometric patterns in neon colors.">
-                <img src="IMG_0148.jpeg" alt="Blurred abstract background with vibrant light streaks.">
-                <img src="IMG_7986.gif" alt="Abstract pulsating lines forming a tunnel.">
-                <img src="IMG_7987.gif" alt="Psychedelic pattern with shifting colors.">
-                <img src="IMG_7991.gif" alt="Glitching abstract art with a dark background.">
-                <img src="IMG_7994.gif" alt="Colorful, distorted grid animation.">
-                <img src="IMG_7995.gif" alt="Vibrant abstract pattern that appears to breathe.">
-                <img src="IMG_7999.gif" alt="Seamless loop of abstract, flowing color gradients.">
-                <img src="IMG_7998.gif" alt="Abstract digital art with bright, moving lines.">
-                <img src="IMG_7997.gif" alt="Swirling vortex of neon lights.">
-                <img src="IMG_8039.gif" alt="Abstract light particles moving rapidly.">
-                <img src="IMG_8038.gif" alt="Vibrant abstract art with fluid motion.">
-                <img src="IMG_8037.gif" alt="Geometric pattern with a dynamic, glowing center.">
-                <img src="IMG_8036.gif" alt="Abstract digital landscape with shifting colors.">
-                <img src="IMG_8035.gif" alt="Psychedelic tunnel effect with bright lights.">
-                <img src="IMG_8033.gif" alt="Abstract glowing lines forming a complex network.">
-                <img src="IMG_8032.gif" alt="Fluid abstract animation with bright, contrasting colors.">
-                <img src="IMG_8031.gif" alt="Abstract pattern resembling digital rain.">
-                <img src="IMG_8034.gif" alt="Dynamic abstract background with moving light streaks.">
-                <img src="IMG_2431.jpeg" alt="Textured abstract art with bold color blocks.">
-                <img src="IMG_2441.jpeg" alt="Vibrant abstract painting with expressive brushstrokes.">
-                <img src="IMG_2826.jpeg" alt="Abstract close-up of a shattered glass effect.">
-                <img src="IMG_1328.jpeg" alt="Colorful abstract photo of light refraction.">
-                <img src="IMG_6977.jpeg" alt="Abstract art with glowing, ethereal mist.">
+                <img src="IMG_7976.gif" alt="Abstract pulsating geometric patterns in green and purple."> <img src="IMG_8042.gif" alt="Fluid abstract animation with blue and yellow shifting shapes."> <img src="IMG_7977.gif" alt="Hypnotic spiral of neon lines, red and blue."> <img src="IMG_7978.gif" alt="Retro pixel art animation of a smiling face."> <img src="IMG_7979.gif" alt="Glitching digital art with a spectrum of colors."> <img src="IMG_7980.gif" alt="Trippy kaleidoscope effect with symmetrical patterns."> <img src="IMG_7981.gif" alt="Abstract shapes morphing and glowing in pink and blue."> <img src="IMG_7982.gif" alt="Animated grid lines distorting and shifting."> <img src="IMG_7983.gif" alt="Pixelated cityscape with neon lights."> <img src="IMG_7984.gif" alt="Vibrating abstract art with a dark background."> <img src="IMG_7990.gif" alt="Colorful abstract vortex effect."> <img src="IMG_2516.JPEG" alt="Close-up of vibrant, textured paint strokes."> <img src="IMG_0042.jpeg" alt="Macro shot of iridescent soap bubbles."> <img src="IMG_0125.jpeg" alt="Digital art with a flowing liquid metal effect."> <img src="IMG_0150.jpeg" alt="Colorful abstract light trails in motion."> <img src="IMG_9901.jpeg" alt="Geometric patterns in neon colors."> <img src="IMG_0148.jpeg" alt="Blurred abstract background with vibrant light streaks."> <img src="IMG_7986.gif" alt="Abstract pulsating lines forming a tunnel."> <img src="IMG_7987.gif" alt="Psychedelic pattern with shifting colors."> <img src="IMG_7991.gif" alt="Glitching abstract art with a dark background."> <img src="IMG_7994.gif" alt="Colorful, distorted grid animation."> <img src="IMG_7995.gif" alt="Vibrant abstract pattern that appears to breathe."> <img src="IMG_7999.gif" alt="Seamless loop of abstract, flowing color gradients."> <img src="IMG_7998.gif" alt="Abstract digital art with bright, moving lines."> <img src="IMG_7997.gif" alt="Swirling vortex of neon lights."> <img src="IMG_8039.gif" alt="Abstract light particles moving rapidly."> <img src="IMG_8038.gif" alt="Vibrant abstract art with fluid motion."> <img src="IMG_8037.gif" alt="Geometric pattern with a dynamic, glowing center."> <img src="IMG_8036.gif" alt="Abstract digital landscape with shifting colors."> <img src="IMG_8035.gif" alt="Psychedelic tunnel effect with bright lights."> <img src="IMG_8033.gif" alt="Abstract glowing lines forming a complex network."> <img src="IMG_8032.gif" alt="Fluid abstract animation with bright, contrasting colors."> <img src="IMG_8031.gif" alt="Abstract pattern resembling digital rain."> <img src="IMG_8034.gif" alt="Dynamic abstract background with moving light streaks."> <img src="IMG_2431.jpeg" alt="Textured abstract art with bold color blocks."> <img src="IMG_2441.jpeg" alt="Vibrant abstract painting with expressive brushstrokes."> <img src="IMG_2826.jpeg" alt="Abstract close-up of a shattered glass effect."> <img src="IMG_1328.jpeg" alt="Colorful abstract photo of light refraction."> <img src="IMG_6977.jpeg" alt="Abstract art with glowing, ethereal mist.">
             </div>
             <button id="activatePortalBtn" type="button" class="psychedelic-button portal-button">Activate Portal!</button>
         </section>
 
         <section id="new-realm" class="main-content" style="display: none;">
-            <p id="portalMessage" style="font-size: 1.1rem; color: #ffcc00; text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00; margin-bottom: 20px;" aria-live="polite" aria-atomic="true"></p>
+            <p id="portalMessage" aria-live="polite" aria-atomic="true"></p>
             <div class="gif-frame">
-                <img src="IMG_7993.gif" alt="Abstract glitching pattern with green and purple.">
-                <img src="IMG_7996.gif" alt="Dynamic abstract background with glowing blue lines.">
-                <img src="IMG_7998.gif" alt="Abstract digital art with bright, moving lines.">
-                <img src="IMG_7999.gif" alt="Seamless loop of abstract, flowing color gradients.">
-                <img src="IMG_8002.gif" alt="Psychedelic abstract animation with vibrant colors.">
-                <img src="IMG_6955.jpeg" alt="Abstract image with colorful light trails.">
-                <img src="IMG_8010.gif" alt="Abstract futuristic interface animation.">
-                <img src="IMG_8011.gif" alt="Glitching abstract pattern with a distorted effect.">
-                <img src="IMG_8012.gif" alt="Abstract digital art with a green and black matrix effect.">
-                <img src="IMG_8014.gif" alt="Vibrant abstract waves of color.">
-                <img src="IMG_8015.gif" alt="Hypnotic abstract design with concentric circles.">
-                <img src="IMG_8018.gif" alt="Abstract light trails forming a network.">
-                <img src="IMG_8019.gif" alt="Colorful abstract liquid motion.">
-                <img src="IMG_8020.gif" alt="Abstract pulsating lines creating a tunnel illusion.">
-                <img src="IMG_8021.gif" alt="Dynamic abstract background with shifting geometric shapes.">
+                <img src="IMG_7993.gif" alt="Abstract glitching pattern with green and purple."> <img src="IMG_7996.gif" alt="Dynamic abstract background with glowing blue lines."> <img src="IMG_7998.gif" alt="Abstract digital art with bright, moving lines."> <img src="IMG_7999.gif" alt="Seamless loop of abstract, flowing color gradients."> <img src="IMG_8002.gif" alt="Psychedelic abstract animation with vibrant colors."> <img src="IMG_6955.jpeg" alt="Abstract image with colorful light trails."> <img src="IMG_8010.gif" alt="Abstract futuristic interface animation."> <img src="IMG_8011.gif" alt="Glitching abstract pattern with a distorted effect."> <img src="IMG_8012.gif" alt="Abstract digital art with a green and black matrix effect."> <img src="IMG_8014.gif" alt="Vibrant abstract waves of color."> <img src="IMG_8015.gif" alt="Hypnotic abstract design with concentric circles."> <img src="IMG_8018.gif" alt="Abstract light trails forming a network."> <img src="IMG_8019.gif" alt="Colorful abstract liquid motion."> <img src="IMG_8020.gif" alt="Abstract pulsating lines creating a tunnel illusion."> <img src="IMG_8021.gif" alt="Dynamic abstract background with shifting geometric shapes.">
             </div>
             <button id="deactivatePortalBtn" type="button" class="psychedelic-button">Return to Origin</button>
         </section>
@@ -525,284 +447,239 @@
     <img src="IMG_7996.gif" alt="Another floating, psychedelic abstract GIF." class="gif-outside gif-outside-2">
 
     <script>
-        // Store the initial body filter for later restoration
-        const initialBodyFilter = document.body.style.filter;
-        const startTime = new Date(); // Record page load time for uptime calculation
+        document.addEventListener('DOMContentLoaded', () => {
 
-        // Cache DOM elements for efficient access
-        const rootElement = document.documentElement;
-        const currentTimeDisplay = document.getElementById('currentTime');
-        const uptimeDisplay = document.getElementById('uptimeDisplay');
-        const originalRealm = document.getElementById('original-realm');
-        const newRealm = document.getElementById('new-realm');
-        const portalMessageElement = document.getElementById('portalMessage');
-        const activatePortalButton = document.getElementById('activatePortalBtn');
-        const deactivatePortalButton = document.getElementById('deactivatePortalBtn');
+            // --- Configuration & Constants ---
+            const startTime = new Date();
+            const TRAIL_COLORS = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
+            const PORTAL_MESSAGES = [
+                "A journey of a thousand miles begins with a single step.", "You will soon be blessed with a fascinating discovery.", "The wise man questions himself, the fool, others. Ponder this.", "Good things come to those who wait, but better things come to those who pursue them.", "Your determination will bring you success. Keep striving.", "Embrace the unexpected; it holds the key to your next adventure.", "A new perspective awaits you beyond this threshold. Be ready to see.", "The greatest adventure is yet to unfold. It begins within you.", "Patience is a virtue, especially when traversing the unseen paths.", "Your intuition will guide you through mysteries. Trust it.", "The path to wisdom is paved with questions, not answers.", "A joyful surprise is coming your way. Open your heart.", "Let your spirit guide you where the maps do not reach.", "Curiosity is the compass of discovery. Follow it.", "The world is vast and full of wonders. You are about to experience more."
+            ];
 
-        // Array of motivational/mystical portal messages
-        const portalMessages = [
-            "A journey of a thousand miles begins with a single step.", "You will soon be blessed with a fascinating discovery.", "The wise man questions himself, the fool, others. Ponder this.", "Good things come to those who wait, but better things come to those who pursue them.", "Your determination will bring you success. Keep striving.", "Embrace the unexpected; it holds the key to your next adventure.", "A new perspective awaits you beyond this threshold. Be ready to see.", "The greatest adventure is yet to unfold. It begins within you.", "Patience is a virtue, especially when traversing the unseen paths.", "Your intuition will guide you through mysteries. Trust it.", "The path to wisdom is paved with questions, not answers.", "A joyful surprise is coming your way. Open your heart.", "Let your spirit guide you where the maps do not reach.", "Curiosity is the compass of discovery. Follow it.", "The world is vast and full of wonders. You are about to experience more."
-        ];
-
-        /**
-         * @function updateTimeDisplay
-         * @description Updates the current time and uptime displayed on the page.
-         */
-        function updateTimeDisplay() {
-            const now = new Date();
-            // Helper to add leading zero for single-digit numbers
-            const pad = num => String(num).padStart(2, '0');
-
-            const hours = pad(now.getHours());
-            const minutes = pad(now.getMinutes());
-            const seconds = pad(now.getSeconds());
-            currentTimeDisplay.textContent = `CURRENT: ${hours}:${minutes}:${seconds}`;
-
-            // Calculate uptime
-            const elapsedTime = now.getTime() - startTime.getTime();
-            const totalSeconds = Math.floor(elapsedTime / 1000);
-            const uptHours = pad(Math.floor(totalSeconds / 3600));
-            const uptMinutes = pad(Math.floor((totalSeconds % 3600) / 60));
-            const uptSeconds = pad(totalSeconds % 60);
-            uptimeDisplay.textContent = `UPTIME: ${uptHours}:${uptMinutes}:${uptSeconds}`;
-        }
-        
-        /**
-         * @function activatePortal
-         * @description Initiates the portal activation sequence, applying visual
-         * effects and transitioning content.
-         */
-        function activatePortal() {
-            // Vibrate device if supported, enhancing tactile feedback
-            if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
-            
+            // --- DOM Element Caching ---
+            const root = document.documentElement;
             const body = document.body;
-            let warpCount = 0;
-            const maxWarps = 15; // Number of warp flashes
+            const dom = {
+                currentTime: document.getElementById('currentTime'),
+                uptime: document.getElementById('uptimeDisplay'),
+                originalRealm: document.getElementById('original-realm'),
+                newRealm: document.getElementById('new-realm'),
+                portalMessage: document.getElementById('portalMessage'),
+                activateBtn: document.getElementById('activatePortalBtn'),
+                deactivateBtn: document.getElementById('deactivatePortalBtn'),
+            };
+            const initialBodyFilter = body.style.filter;
 
-            // Interval for rapid visual distortions during portal activation
-            const warpInterval = setInterval(() => {
-                // Apply chaotic filter changes
-                body.style.filter = `hue-rotate(${Math.random() * 360}deg) saturate(${100 + Math.random() * 300}%) contrast(${100 + Math.random() * 150}%) blur(${Math.random() * 4}px) url(#glitch-filter)`;
+            // --- Core Functions ---
+
+            /**
+             * Updates the current time and session uptime display.
+             */
+            const updateTimeDisplay = () => {
+                const now = new Date();
+                const pad = num => String(num).padStart(2, '0');
+
+                dom.currentTime.textContent = `CURRENT: ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+                const uptimeSeconds = Math.floor((now - startTime) / 1000);
+                const h = pad(Math.floor(uptimeSeconds / 3600));
+                const m = pad(Math.floor((uptimeSeconds % 3600) / 60));
+                const s = pad(uptimeSeconds % 60);
+                dom.uptime.textContent = `UPTIME: ${h}:${m}:${s}`;
+            };
+
+            /**
+             * Sets CSS variables to create a randomized fly-out animation target.
+             */
+            const setRandomFlyoutTarget = () => {
+                root.style.setProperty('--flyout-x', `${(Math.random() - 0.5) * 200}vw`);
+                root.style.setProperty('--flyout-y', `${(Math.random() - 0.5) * 200}vh`);
+                root.style.setProperty('--flyout-rot', `${(Math.random() - 0.5) * 720}deg`);
+            };
+
+            /**
+             * Initiates the portal activation sequence with visual effects.
+             */
+            const activatePortal = () => {
+                if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
                 
-                // Randomly apply a white flash effect
-                if (Math.random() > 0.5) {
-                    body.classList.add('warp-effect-flash');
-                    setTimeout(() => body.classList.remove('warp-effect-flash'), 60);
-                }
+                let warpCount = 0;
+                const maxWarps = 15;
 
-                warpCount++;
-                if (warpCount >= maxWarps) {
-                    clearInterval(warpInterval); // Stop warping
+                const warpInterval = setInterval(() => {
+                    body.style.filter = `hue-rotate(${Math.random()*360}deg) saturate(${1+Math.random()*3}) contrast(${1+Math.random()*1.5}) blur(${Math.random()*4}px) url(#glitch-filter)`;
+                    
+                    if (Math.random() > 0.5) {
+                        body.classList.add('warp-effect-flash');
+                        setTimeout(() => body.classList.remove('warp-effect-flash'), 60);
+                    }
 
-                    // Set random CSS variables for content fly-out animation
-                    rootElement.style.setProperty('--random-x', `${(Math.random() - 0.5) * 200}vw`);
-                    rootElement.style.setProperty('--random-y', `${(Math.random() - 0.5) * 200}vh`);
-                    rootElement.style.setProperty('--random-rot', `${(Math.random() - 0.5) * 720}deg`);
+                    if (++warpCount >= maxWarps) {
+                        clearInterval(warpInterval);
+                        setRandomFlyoutTarget();
+                        
+                        dom.originalRealm.classList.remove('visible');
+                        dom.originalRealm.classList.add('hidden');
 
-                    // Trigger fly-out animation for the original realm
-                    originalRealm.classList.remove('visible');
-                    originalRealm.classList.add('hidden');
+                        setTimeout(() => {
+                            dom.originalRealm.style.display = 'none';
+                            dom.newRealm.style.display = 'flex';
+                            dom.newRealm.classList.remove('hidden');
+                            dom.newRealm.classList.add('visible');
+                            
+                            body.style.filter = 'hue-rotate(180deg) saturate(150%) url(#glitch-filter)';
 
-                    // After fly-out animation completes, switch realms
-                    setTimeout(() => {
-                        originalRealm.style.display = 'none'; // Hide original
-                        newRealm.style.display = 'flex'; // Show new
-                        newRealm.classList.remove('hidden');
-                        newRealm.classList.add('visible'); // Trigger fade-in for new realm
+                            dom.portalMessage.style.opacity = '0';
+                            const randomMessage = PORTAL_MESSAGES[Math.floor(Math.random() * PORTAL_MESSAGES.length)];
+                            dom.portalMessage.textContent = randomMessage;
+                            setTimeout(() => { dom.portalMessage.style.opacity = '1'; }, 100);
+                            setTimeout(() => { dom.portalMessage.style.opacity = '0'; }, 4000);
 
-                        // Apply new static filter for the portal realm
-                        body.style.filter = 'hue-rotate(180deg) saturate(150%) url(#glitch-filter)';
-
-                        // Display a random portal message with a fade effect
-                        portalMessageElement.style.opacity = '0';
-                        const randomMessage = portalMessages[Math.floor(Math.random() * portalMessages.length)];
-                        portalMessageElement.textContent = randomMessage;
-                        setTimeout(() => { portalMessageElement.style.opacity = '1'; }, 100);
-                        setTimeout(() => { portalMessageElement.style.opacity = '0'; }, 4000); // Fade out after 4 seconds
-
-                    }, 700); // Matches contentFlyOut animation duration
-                }
-            }, 80); // Interval for warp effect updates
-        }
-        
-        /**
-         * @function deactivatePortal
-         * @description Returns to the original realm, reversing the portal effects.
-         */
-        function deactivatePortal() {
-            if (navigator.vibrate) navigator.vibrate(150); // Single vibrate for deactivation
-
-            // Set random CSS variables for new realm's fly-out animation
-            rootElement.style.setProperty('--random-x', `${(Math.random() - 0.5) * 200}vw`);
-            rootElement.style.setProperty('--random-y', `${(Math.random() - 0.5) * 200}vh`);
-            rootElement.style.setProperty('--random-rot', `${(Math.random() - 0.5) * 720}deg`);
+                        }, 700); // Corresponds to contentFlyOut animation duration
+                    }
+                }, 80);
+            };
             
-            // Trigger fly-out animation for the new realm
-            newRealm.classList.remove('visible');
-            newRealm.classList.add('hidden');
-            
-            // After fly-out animation completes, switch back to original realm
-            setTimeout(() => {
-                newRealm.style.display = 'none'; // Hide new realm
-                originalRealm.style.display = 'flex'; // Show original realm
-                originalRealm.classList.remove('hidden');
-                originalRealm.classList.add('visible'); // Trigger fade-in for original realm
+            /**
+             * Reverses the portal effect, returning to the original content.
+             */
+            const deactivatePortal = () => {
+                if (navigator.vibrate) navigator.vibrate(150);
                 
-                // Restore the body's initial filter settings
-                document.body.style.filter = initialBodyFilter;
-            }, 700); // Matches contentFlyOut animation duration
-        }
+                setRandomFlyoutTarget();
+                
+                dom.newRealm.classList.remove('visible');
+                dom.newRealm.classList.add('hidden');
+                
+                setTimeout(() => {
+                    dom.newRealm.style.display = 'none';
+                    dom.originalRealm.style.display = 'flex';
+                    dom.originalRealm.classList.remove('hidden');
+                    dom.originalRealm.classList.add('visible');
+                    
+                    body.style.filter = initialBodyFilter;
+                }, 700); // Corresponds to contentFlyOut animation duration
+            };
 
-        /**
-         * @function createCursorTrail
-         * @description Creates a small, fading element at the mouse cursor's position.
-         * @param {MouseEvent} e - The mouse event object.
-         */
-        function createCursorTrail(e) {
-            const trail = document.createElement('div');
-            trail.className = 'trail';
-            trail.style.top = `${e.pageY}px`;
-            trail.style.left = `${e.pageX}px`;
-            // Randomly select a color for the trail
-            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
-            trail.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, transparent 60%)`;
-            trail.style.transform = `rotate(${Math.random() * 360}deg)`; // Random rotation
-            document.body.appendChild(trail);
-            // Remove the trail element after its animation
-            setTimeout(() => { trail.remove(); }, 400);
-        }
-
-        /**
-         * @function handleMouseMove
-         * @description Updates CSS variables for 3D body rotation based on mouse position.
-         * @param {MouseEvent} e - The mouse event object.
-         */
-        function handleMouseMove(e) {
-            const { clientX, clientY } = e;
-            const { clientWidth, clientHeight } = document.body; // Use body dimensions
-            
-            // Normalize mouse coordinates to a -0.5 to 0.5 range
-            const xNormalized = (clientX / clientWidth) - 0.5;
-            const yNormalized = (clientY / clientHeight) - 0.5;
-            
-            const rotateXStrength = 20; // Max rotation in degrees for X axis
-            const rotateYStrength = 20; // Max rotation in degrees for Y axis
-
-            // Update CSS custom properties for 3D rotation
-            rootElement.style.setProperty('--rotate-x', yNormalized * -rotateXStrength); // Inverted Y-axis rotation
-            rootElement.style.setProperty('--rotate-y', xNormalized * rotateYStrength);
-        }
-        
-        /**
-         * @class TextScrambler
-         * @description A class to apply a text scrambling effect on HTML elements.
-         */
-        class TextScrambler {
-            /**
-             * @param {HTMLElement} el - The HTML element to apply the scramble effect to.
-             */
-            constructor(el) {
-                this.el = el;
-                this.chars = '!<>-_\\/[]{}—=+*^?#________'; // Characters used for scrambling
-                this.update = this.update.bind(this); // Bind 'this' for requestAnimationFrame callback
-                this.originalText = this.el.innerText; // Store original text
-                this.frameRequest = null; // To hold the requestAnimationFrame ID
-                this.el.addEventListener('mouseover', () => this.scramble());
-                this.el.addEventListener('mouseout', () => this.reveal());
-            }
+            // --- Interactive Effects ---
 
             /**
-             * @method scramble
-             * @description Initializes the scrambling animation.
+             * Creates a fading trail element at the cursor's position.
+             * @param {MouseEvent} e The mouse event object.
              */
-            scramble() {
-                if (this.frameRequest) cancelAnimationFrame(this.frameRequest); // Cancel any ongoing animation
-                this.frame = 0; // Reset animation frame counter
-                this.queue = this.originalText.split('').map((char, i) => ({
-                    from: this.chars[Math.floor(Math.random() * this.chars.length)], // Random starting character
-                    to: char, // Target character
-                    start: Math.floor(Math.random() * 40), // Random start frame for each char
-                    end: Math.floor(Math.random() * 40) + 20 // Random end frame for each char
-                }));
-                this.frameRequest = requestAnimationFrame(this.update); // Start animation loop
-            }
+            const createCursorTrail = (e) => {
+                const trail = document.createElement('div');
+                trail.className = 'trail';
+                trail.style.top = `${e.pageY}px`;
+                trail.style.left = `${e.pageX}px`;
+                const color = TRAIL_COLORS[Math.floor(Math.random() * TRAIL_COLORS.length)];
+                trail.style.background = `radial-gradient(circle, ${color}, transparent 60%)`;
+                trail.style.transform += ` rotate(${Math.random() * 360}deg)`;
+                
+                body.appendChild(trail);
+                setTimeout(() => trail.remove(), 400); // Corresponds to fadeOutTrail animation
+            };
+
+            /**
+             * Updates CSS variables for 3D rotation based on mouse position.
+             * @param {MouseEvent} e The mouse event object.
+             */
+            const handleMouseMove = (e) => {
+                const { clientX, clientY } = e;
+                const { clientWidth, clientHeight } = body;
+                
+                const xNorm = (clientX / clientWidth) - 0.5; // Range: -0.5 to 0.5
+                const yNorm = (clientY / clientHeight) - 0.5; // Range: -0.5 to 0.5
+                
+                const ROTATE_STRENGTH = 20; // Max rotation in degrees
+                root.style.setProperty('--rotate-y', `${xNorm * ROTATE_STRENGTH}deg`);
+                root.style.setProperty('--rotate-x', `${yNorm * -ROTATE_STRENGTH}deg`); // Inverted Y-axis
+            };
             
             /**
-             * @method reveal
-             * @description Stops the scrambling animation and reveals the original text.
+             * Applies a text scrambling effect on hover to an HTML element.
              */
-            reveal() {
-                if (this.frameRequest) {
-                    cancelAnimationFrame(this.frameRequest);
+            class TextScrambler {
+                constructor(el) {
+                    this.el = el;
+                    this.originalText = el.innerText;
+                    this.chars = '!<>-_\\/[]{}—=+*^?#________';
                     this.frameRequest = null;
+                    this.queue = [];
+                    this.frame = 0;
+                    
+                    this.el.addEventListener('mouseover', this.scramble.bind(this));
+                    this.el.addEventListener('mouseout', this.reveal.bind(this));
                 }
-                this.el.innerText = this.originalText; // Ensure original text is displayed
-            }
 
-            /**
-             * @method update
-             * @description The core animation loop for scrambling.
-             */
-            update() {
-                let output = '';
-                let completed = 0;
-                for (let i = 0; i < this.queue.length; i++) {
-                    const { from, to, start, end } = this.queue[i];
-                    if (this.frame >= end) {
-                        output += to; // Character has finished scrambling
-                        completed++;
-                    } else if (this.frame >= start) {
-                        // Display a random scramble character during the active phase
-                        if (Math.random() < 0.2) { // Introduce some randomness in character choice
-                            output += this.chars[Math.floor(Math.random() * this.chars.length)];
+                scramble() {
+                    cancelAnimationFrame(this.frameRequest);
+                    this.frame = 0;
+                    this.queue = this.originalText.split('').map((char, i) => {
+                        const start = Math.floor(Math.random() * 40);
+                        const end = start + Math.floor(Math.random() * 40);
+                        return { from: this.randomChar(), to: char, start, end };
+                    });
+                    this.update();
+                }
+                
+                reveal() {
+                    cancelAnimationFrame(this.frameRequest);
+                    this.el.innerText = this.originalText;
+                }
+
+                update() {
+                    let output = '';
+                    let complete = 0;
+                    for (let i = 0, n = this.queue.length; i < n; i++) {
+                        const { from, to, start, end } = this.queue[i];
+                        if (this.frame >= end) {
+                            output += to;
+                            complete++;
+                        } else if (this.frame >= start) {
+                            output += (Math.random() < 0.2) ? this.randomChar() : from;
                         } else {
-                            output += from; // Keep the 'from' character for consistency
+                            output += ' ';
                         }
-                    } else {
-                        output += ' '; // Before scrambling starts, show a space
+                    }
+                    this.el.innerText = output;
+
+                    if (complete < this.queue.length) {
+                        this.frame++;
+                        this.frameRequest = requestAnimationFrame(this.update.bind(this));
                     }
                 }
-                this.el.innerText = output;
 
-                if (completed !== this.queue.length) {
-                    this.frame++;
-                    this.frameRequest = requestAnimationFrame(this.update); // Continue animation
-                } else {
-                   this.reveal(); // All characters scrambled, revert to original text
+                randomChar() {
+                    return this.chars[Math.floor(Math.random() * this.chars.length)];
                 }
             }
-        }
-        
-        // --- Document Ready / Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initial time display and set interval for continuous updates
+            
+            // --- Initialization ---
+
+            // Initial state setup
             updateTimeDisplay();
+            dom.originalRealm.classList.add('visible');
+            dom.originalRealm.style.display = 'flex';
+            dom.newRealm.style.display = 'none';
+
+            // Start repeating timers
             setInterval(updateTimeDisplay, 1000);
 
-            // Event Listeners for buttons
-            activatePortalButton.addEventListener('click', activatePortal);
-            deactivatePortalButton.addEventListener('click', deactivatePortal);
+            // Attach event listeners
+            dom.activateBtn.addEventListener('click', activatePortal);
+            dom.deactivateBtn.addEventListener('click', deactivatePortal);
+            body.addEventListener('mousemove', handleMouseMove);
             
-            // Event listener for cursor trail effect
-            document.addEventListener('mousemove', createCursorTrail);
-            
-            // Event listener for 3D body rotation on mouse move
-            document.body.addEventListener('mousemove', handleMouseMove);
-            
-            // Initialize TextScrambler for all elements with data-text-scramble attribute
-            const scrambleElements = document.querySelectorAll('[data-text-scramble]');
-            scrambleElements.forEach(el => new TextScrambler(el));
-
-            // Set initial visibility of realms
-            originalRealm.classList.add('visible'); // Ensures fade-in animation plays
-            originalRealm.style.display = 'flex'; // Explicitly set display for initial state
-            newRealm.style.display = 'none'; // Ensure new realm is hidden initially
-
-            // Disable custom cursor on touch devices for better usability
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                document.body.style.cursor = 'none';
+            // Add trail effect unless on a primary touch device
+            if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) {
+                document.addEventListener('mousemove', createCursorTrail);
+            } else {
+                body.style.cursor = 'default'; // Use standard cursor on touch devices
             }
+            
+            // Initialize text scramblers
+            document.querySelectorAll('[data-text-scramble]').forEach(el => new TextScrambler(el));
         });
     </script>
 </body>
