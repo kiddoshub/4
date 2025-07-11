@@ -2,81 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DEAD & CO SF COUNTDOWN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DEAD & COMPANY COUNTDOWN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
       font-family: 'OCR-A';
       src: url('OCR-a___.ttf') format('truetype');
     }
+
     body {
       margin: 0;
-      background-color: black;
-      color: #ff3333;
+      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
+      color: red;
       font-family: 'OCR-A', monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      text-align: center;
-    }
-    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2vh;
+      justify-content: center;
+      height: 100vh;
+      background-color: black;
+      text-align: center;
+      overflow: hidden;
     }
-    .title {
-      font-size: 2.5rem;
-      letter-spacing: 0.1em;
-      margin-bottom: 1vh;
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      pointer-events: none;
     }
-    .label {
-      font-size: 1.2rem;
-      opacity: 0.7;
+
+    .countdown-container {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 2px solid red;
+      box-shadow: 0 0 25px red;
+      border-radius: 12px;
     }
+
+    .headline {
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
     .countdown {
-      font-size: 3rem;
-      letter-spacing: 0.15em;
+      font-size: 3.5rem;
+      letter-spacing: 4px;
+      line-height: 1.5;
     }
+
     @media (max-width: 600px) {
-      .title { font-size: 1.6rem; }
-      .countdown { font-size: 2.2rem; }
+      .countdown {
+        font-size: 2rem;
+        letter-spacing: 2px;
+      }
+
+      .headline {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="title">DEAD & CO // SF</div>
-    <div class="label">AUG 1 2025 · 00:00 · GOLDEN GATE PARK</div>
-    <div class="countdown" id="countdown">--:--:--:--</div>
+  <div class="overlay"></div>
+  <div class="countdown-container">
+    <div class="headline">DEAD & COMPANY - SAN FRANCISCO</div>
+    <div class="countdown" id="countdown">Loading...</div>
   </div>
 
   <script>
-    const countdownEl = document.getElementById("countdown");
-    const target = new Date("2025-08-01T00:00:00-07:00");
+    const countdownEl = document.getElementById('countdown');
+    const targetDate = new Date("2025-08-01T00:00:00-07:00"); // PDT
 
-    function update() {
+    function updateCountdown() {
       const now = new Date();
-      const diff = target - now;
+      const diff = targetDate - now;
 
       if (diff <= 0) {
-        countdownEl.textContent = "00:00:00:00";
+        countdownEl.textContent = "SHOWTIME!";
         return;
       }
 
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
 
-      countdownEl.textContent = 
-        `${String(d).padStart(2, '0')}:${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      countdownEl.innerHTML =
+        `${days} DAYS<br>` +
+        `${hours.toString().padStart(2, '0')} HOURS<br>` +
+        `${minutes.toString().padStart(2, '0')} MINUTES<br>` +
+        `${seconds.toString().padStart(2, '0')} SECONDS`;
     }
 
-    setInterval(update, 1000);
-    update();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
