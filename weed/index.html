@@ -2,17 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dead & Company SF Countdown</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DEAD & COMPANY // SF COUNTDOWN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    @font-face {
+      font-family: 'IBMCourier';
+      src: local('Courier New'), monospace;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      background: #000;
+      background: black;
       color: #00ff66;
-      font-family: monospace;
+      font-family: 'IBMCourier', monospace;
       font-size: 1.2rem;
-      line-height: 1.5;
+      line-height: 1.4;
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -20,122 +26,122 @@
       content: '';
       position: fixed;
       inset: 0;
+      background: 
+        url('IMG_8688.jpeg') center/cover no-repeat,
+        url('IMG_8687.jpeg') center/cover no-repeat,
+        url('IMG_8685.png') center/cover no-repeat,
+        url('IMG_8667.jpeg') center/contain no-repeat;
+      opacity: 0.06;
       z-index: 0;
-      background:
-        url('IMG_8688.jpeg') center center/cover no-repeat,
-        url('IMG_8687.jpeg') center center/cover no-repeat,
-        url('IMG_8685.png') center center/cover no-repeat,
-        url('IMG_8667.jpeg') center center/contain no-repeat;
-      opacity: 0.07;
-      filter: grayscale(1) brightness(0.4) contrast(0.8);
-      pointer-events: none;
+      filter: grayscale(1) brightness(0.6);
     }
 
     #crt {
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(0, 255, 102, 0.03),
-        rgba(0, 255, 102, 0.03) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      mix-blend-mode: screen;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    #main {
       position: relative;
+      padding: 3vh 4vw;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      height: 100vh;
-      padding: 2vh;
-    }
-
-    #header, #footer {
-      font-size: 0.9rem;
-      color: #00cc44;
-      opacity: 0.8;
-    }
-
-    #countdown {
-      font-size: 7vw;
-      font-weight: bold;
-      margin: 3vh 0;
-      letter-spacing: 0.15em;
-      color: #00ff66;
-      text-shadow:
-        0 0 5px #00ff66,
-        0 0 10px #00ff66,
-        0 0 20px #00ff66;
+      align-items: flex-start;
+      text-shadow: 0 0 2px #0f0, 0 0 8px #0f0;
     }
 
     #stealie {
       position: fixed;
-      top: 1rem;
-      right: 1rem;
+      top: 2vh;
+      right: 2vw;
       width: 70px;
-      height: auto;
+      opacity: 0.85;
       z-index: 3;
-      opacity: 0.8;
-      animation: float 6s ease-in-out infinite alternate;
-      pointer-events: none;
+      filter: drop-shadow(0 0 8px #0f0);
+      animation: float 7s ease-in-out infinite alternate;
     }
 
     @keyframes float {
       0% { transform: translateY(0); }
-      100% { transform: translateY(8px); }
+      100% { transform: translateY(-10px); }
     }
 
-    #artists {
-      font-size: 1rem;
+    .label {
+      margin-top: 1em;
       color: #00ff66;
-      white-space: pre-line;
-      margin-top: 2vh;
-      max-width: 90vw;
-      text-shadow: 0 0 3px #00ff66;
+    }
+
+    #countdown {
+      font-size: 3rem;
+      letter-spacing: 0.1em;
+      margin: 0.5em 0;
+    }
+
+    .unit-labels {
+      font-size: 0.9rem;
+      display: flex;
+      gap: 2em;
+      letter-spacing: 0.2em;
+    }
+
+    .summary {
+      margin-top: 1em;
+      font-size: 0.95rem;
+      color: #0f0;
+    }
+
+    .artists {
+      margin-top: 2em;
+      color: #00ff66;
+      font-size: 0.9rem;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div id="crt"></div>
-  <img id="stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie" />
-  <div id="main">
-    <div id="header">GOLDEN GATE PARK // SAN FRANCISCO // AUG 1–3, 2025</div>
-    <div id="countdown">--:--:--:--</div>
-    <div id="footer">60 YEARS OF GRATEFUL DEAD MUSIC</div>
-    <div id="artists">
-      Friday — Billy Strings  
-      Saturday — Sturgill Simpson, Johnny Blue Skies  
-      Sunday — Trey Anastasio Band
+  <img src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie" id="stealie" />
+  <div id="crt">
+    <div class="label">DEAD & COMPANY // MISSION COUNTDOWN</div>
+    <div id="countdown">-- : -- : -- : --</div>
+    <div class="unit-labels">DAYS&nbsp;&nbsp;&nbsp;&nbsp;HRS&nbsp;&nbsp;&nbsp;&nbsp;MIN&nbsp;&nbsp;&nbsp;&nbsp;SEC</div>
+    <div class="summary" id="summary">loading breakdown...</div>
+    <div class="artists">
+      <div>LIVE AT GOLDEN GATE PARK, SAN FRANCISCO</div>
+      <div>AUGUST 1–3, 2025</div>
+      <br>
+      <div><strong>LINEUP:</strong></div>
+      <div>• DEAD & COMPANY</div>
+      <div>• BILLY STRINGS (AUG 1)</div>
+      <div>• STURGILL SIMPSON, JOHNNY BLUE SKIES (AUG 2)</div>
+      <div>• TREY ANASTASIO BAND (AUG 3)</div>
     </div>
   </div>
 
   <script>
+    function pad(n) { return n.toString().padStart(2, '0'); }
+
     function updateCountdown() {
-      const target = new Date('2025-08-01T07:00:00Z'); // midnight PDT = 7am UTC
+      const target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0)); // Aug 1, 2025 at 00:00 PDT == 07:00 UTC
       const now = new Date();
-      const diff = target - now;
+      const nowUTC = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      let diff = target - nowUTC;
 
       if (diff <= 0) {
-        document.getElementById('countdown').textContent = '00:00:00:00';
+        document.getElementById('countdown').textContent = '00 : 00 : 00 : 00';
+        document.getElementById('summary').textContent = 'EVENT IN PROGRESS';
         return;
       }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
 
-      const pad = n => n.toString().padStart(2, '0');
-      document.getElementById('countdown').textContent =
-        `${pad(days)}:${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+      const weeks = Math.floor(days / 7);
+      const totalHours = Math.floor(diff / (1000 * 60 * 60));
+      const totalMinutes = Math.floor(diff / (1000 * 60));
+      const totalSeconds = Math.floor(diff / 1000);
+
+      document.getElementById('countdown').textContent = 
+        `${pad(days)} : ${pad(hours)} : ${pad(minutes)} : ${pad(seconds)}`;
+      document.getElementById('summary').textContent =
+        `Approx. ${weeks} weeks | ${totalHours} hrs | ${totalMinutes} mins | ${totalSeconds} sec`;
     }
 
     setInterval(updateCountdown, 1000);
