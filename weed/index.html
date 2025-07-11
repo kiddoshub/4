@@ -4,232 +4,7 @@
   <meta charset="UTF-8">
   <title>Dead & Company SF Countdown</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    @font-face {
-      font-family: 'Hendrix';
-      src: url('HENDD___.TTF') format('truetype');
-      font-display: swap;
-    }
-    html, body {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      background: #000 url('IMG_8667.jpeg') center center/cover no-repeat fixed;
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      color: #fff;
-      overflow: hidden;
-    }
-    /* Subtle overlay swirl */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover repeat;
-      opacity: 0.22;
-      pointer-events: none;
-      mix-blend-mode: lighten;
-      animation: swirl 44s linear infinite;
-    }
-    @keyframes swirl {
-      0% { background-position: 0 0; }
-      100% { background-position: 320px 200px; }
-    }
-    #main {
-      position: relative;
-      z-index: 1;
-      width: 100vw;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 2vw;
-      padding-top: 6vw;
-    }
-    .headline {
-      font-size: clamp(2.2rem, 5vw, 5rem);
-      text-align: center;
-      background: linear-gradient(90deg,#faff88 5%,#ff70fa 50%,#70fff9 95%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1.2px #151513;
-      margin-bottom: 0.05em;
-      filter: drop-shadow(0 0 15px #70fff944);
-      user-select: none;
-    }
-    .subheadline {
-      font-size: clamp(1.1rem, 3vw, 2.7rem);
-      background: linear-gradient(90deg,#fffdcb 65%,#70fff9 100%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1px #101623bb;
-      margin-bottom: 0.3em;
-      filter: drop-shadow(0 0 10px #faff8844);
-      user-select: none;
-      letter-spacing: 0.1em;
-    }
-    .dates {
-      font-size: clamp(1rem,2vw,1.8rem);
-      color: #faff88;
-      text-shadow: 0 0 13px #fcff7dcc;
-      margin-bottom: 1.3em;
-      letter-spacing: 0.16em;
-      user-select: none;
-    }
-    #countdown-wrap {
-      background: radial-gradient(circle at 50% 45%, #faff8855 0%, #ff70fa44 65%, #0000 100%);
-      padding: 3vw 7vw;
-      border-radius: 40% 60% 52% 55% / 60% 46% 54% 40%;
-      box-shadow: 0 0 90px #faff88aa;
-      margin-bottom: 2vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: blobWobble 10s ease-in-out infinite alternate;
-    }
-    @keyframes blobWobble {
-      0% { border-radius: 40% 60% 52% 55% / 60% 46% 54% 40%; }
-      60% { border-radius: 44% 56% 46% 60% / 55% 62% 38% 53%; }
-      100% { border-radius: 56% 44% 60% 46% / 47% 60% 53% 58%; }
-    }
-    #countdown {
-      font-size: clamp(3.5rem, 14vw, 13rem);
-      background: linear-gradient(90deg, #faff88 0%, #70fff9 50%, #ff70fa 100%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 3.5px #191919cc;
-      text-shadow: 0 0 54px #faff88bb, 0 0 22px #ff70fa88;
-      font-weight: bold;
-      letter-spacing: 0.11em;
-      filter: drop-shadow(0 0 42px #70fff9bb);
-      animation: pulseglow 8s ease-in-out infinite alternate;
-      user-select: all;
-    }
-    @keyframes pulseglow {
-      0%,100% { text-shadow: 0 0 54px #faff88bb, 0 0 22px #ff70fa88;}
-      50% { text-shadow: 0 0 90px #70fff9bb, 0 0 54px #faff88bb;}
-    }
-    .count-labels {
-      font-size: clamp(1rem, 2vw, 2rem);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      width: 100%;
-      margin-top: -1em;
-      gap: 2vw;
-      font-weight: normal;
-    }
-    .count-labels span {
-      flex: 1 1 22%;
-      text-align: center;
-      background: linear-gradient(90deg,#ff70fa,#faff88 50%,#70fff9 90%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1px #1239;
-      user-select: none;
-      letter-spacing: 0.07em;
-    }
-    /* Special guests section */
-    .guests-title {
-      font-size: clamp(1.1rem,3vw,2.2rem);
-      background: linear-gradient(90deg,#ff70fa,#faff88 60%,#70fff9 100%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 0.9px #0a0354;
-      text-shadow: 0 0 9px #fcff7d88;
-      letter-spacing: 0.12em;
-      user-select: none;
-      margin-bottom: 0.3em;
-    }
-    .guests-days {
-      width: 97vw;
-      max-width: 900px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2vw;
-      justify-content: center;
-    }
-    .guests-day {
-      flex: 1 1 140px;
-      min-width: 110px;
-      min-height: 80px;
-      padding: 1vw 2vw;
-      background: radial-gradient(ellipse 90% 60% at 55% 40%, #ff70fa66 0%, #faff8880 100%);
-      border-radius: 45% 48% 60% 42%/50% 60% 55% 44%;
-      box-shadow: 0 0 20px #fcff7d44;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: guestWobble 9s ease-in-out infinite alternate;
-      margin-bottom: 1vw;
-    }
-    @keyframes guestWobble {
-      0% { border-radius: 45% 48% 60% 42%/50% 60% 55% 44%; }
-      38% { border-radius: 48% 44% 63% 44%/53% 62% 52% 44%; }
-      60% { border-radius: 44% 45% 60% 47%/52% 60% 57% 52%; }
-      100% { border-radius: 51% 44% 57% 47%/61% 48% 62% 59%; }
-    }
-    .guests-day h3 {
-      font-size: clamp(.9rem,1.4vw,1.3rem);
-      background: linear-gradient(90deg,#70fff9,#ff70fa 80%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 0.7px #111;
-      margin: 0 0 .13em 0;
-      letter-spacing: 0.09em;
-      text-shadow: 0 0 5px #70fff988;
-      user-select: none;
-    }
-    .guests-list {
-      font-size: clamp(0.8rem,1.1vw,1.09rem);
-      color: #fff;
-      text-align: center;
-      line-height: 1.2;
-      text-shadow: 0 0 5px #70fff9bb,0 1px 3px #ff70fa66;
-      user-select: text;
-    }
-    .location-block {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 2vw 0 2vw 0;
-      gap: 1vw;
-    }
-    .location-block img {
-      width: clamp(65px,12vw,130px);
-      border-radius: 1.5vw 1vw 2vw 1vw;
-      box-shadow: 0 0 18px #fcff7d88, 0 2px 6px #0a0a;
-      background: #fff3;
-      mix-blend-mode: lighten;
-      user-select: none;
-    }
-    .location-block .loc-text {
-      font-size: clamp(0.9rem,2.1vw,1.5rem);
-      background: linear-gradient(90deg,#fcff7d,#ff70fa 90%);
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: .7px #0a0354;
-      text-shadow: 0 0 7px #fcff7d77,0 0 1px #fff,0 1px 4px #0007;
-      border-radius: 0.8vw;
-      padding: 0.12em 1em;
-      filter: drop-shadow(0 0 7px #fcff7daa);
-      user-select: none;
-    }
-    /* Responsive for small screens */
-    @media (max-width: 700px) {
-      #main { padding-top: 13vw;}
-      .headline { font-size: 1.15rem; }
-      .subheadline { font-size: .85rem;}
-      .dates { font-size: .62rem;}
-      #countdown { font-size: 2rem;}
-      .count-labels span { font-size: .8rem;}
-      .guests-title { font-size: .8rem;}
-      .guests-day h3 { font-size: .7rem;}
-      .guests-list { font-size: .7rem;}
-    }
-  </style>
+  <!-- FONT will be added in next step -->
 </head>
 <body>
   <div id="main">
@@ -239,11 +14,14 @@
     <div id="countdown-wrap">
       <div id="countdown"></div>
       <div class="count-labels">
-        <span>DAYS</span><span>HOURS</span><span>MINUTES</span><span>SECONDS</span>
+        <span>DAYS</span>
+        <span>HOURS</span>
+        <span>MINUTES</span>
+        <span>SECONDS</span>
       </div>
     </div>
     <div class="location-block">
-      <img src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="">
+      <img src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park">
       <div class="loc-text">Golden Gate Park</div>
     </div>
     <div class="guests-title">SPECIAL GUESTS</div>
@@ -265,8 +43,7 @@
   <script>
     function pad(n) { return n.toString().padStart(2,'0'); }
     function updateCountdown() {
-      // Target: August 1, 2025, 00:00 PDT (UTC-7)
-      var target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0)); // 00:00 San Francisco = 07:00 UTC
+      var target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0)); // Aug 1, 2025, 00:00 PDT
       var now = new Date();
       var nowUTC = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
       var diff = target - nowUTC;
