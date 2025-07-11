@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Grateful Dead x Matrix: SF Countdown</title>
-  <meta name="viewport" content="width=3840, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <style>
     html, body {
@@ -48,9 +48,11 @@
       filter: brightness(1.12); will-change: transform; mix-blend-mode: screen;
       letter-spacing: 0.045em;
     }
-    @media (max-width: 1920px) {
-      #main-timer { font-size: 12vw; }
-      #ticker { font-size: 4vw; }
+    /* This media query works better with the corrected viewport meta tag */
+    @media (max-width: 1200px) {
+      #main-timer { font-size: 18vw; }
+      #ticker-wrap { top: 65vh; }
+      #ticker { font-size: 5vw; }
     }
     /* CRT scanlines effect */
     #crt { opacity: 0.14; z-index: 50; }
@@ -61,14 +63,10 @@
   </style>
 </head>
 <body>
-  <!-- Replace these .artlayer src with your authentic Dead graphics: -->
   <img class="artlayer" src="IMG_8667.jpeg" style="opacity:0.98;">
-  <!-- Optional: add more images, e.g. skulls, bears, posters, tie-dye scans, all as <img class="artlayer"> -->
-  <!-- CRT scanline overlay: PNG, use your own or e.g. https://i.imgur.com/rLDR2hY.png -->
+  
   <img class="overlay" id="crt" src="https://minkinphotographystore.com/cdn/shop/products/BobMinkinGD08-17-91_24JJ-CMYK_large.jpg?v=1590808710">
-  <!-- VHS static overlay: GIF or PNG, use your own or e.g. https://i.imgur.com/LyPUdT4.gif -->
   <img class="overlay" id="vhs" src="https://gifdb.com/images/high/grateful-dead-album-cover-skeleton-and-roses-80rmjsohi7nl7nwy.gif">
-  <!-- Holo shimmer overlay: PNG or JPG, use your own or e.g. https://i.imgur.com/EcPOlHh.png -->
   <img class="overlay" id="holo" src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cq_auto:eco%2Cw_500/MTc2MjY2OTUxMTM1NDA1MjQ2/the-acid-test-1965.webp">
 
   <canvas id="matrix"></canvas>
@@ -77,131 +75,222 @@
   <div id="ticker-wrap"><div id="ticker"></div></div>
 
 <script>
-/* === Config === */
-const DEAD_DATE = new Date('2025-08-01T00:00:00-07:00'); // SF: Aug 1, 2025, midnight
-const TICKER_TEXT = ' DEAD & COMPANY   •   BILLY STRINGS   •   STURGILL SIMPSON   •   TREY ANASTASIO BAND   • ';
-const FONT = "'VT323', monospace";
+// Refactor: Encapsulating the entire logic in a single object to keep the global scope clean.
+const CountdownApp = {
+    // --- Configuration ---
+    config: {
+        DEAD_DATE: new Date('2025-08-01T00:00:00-07:00'), // SF: Aug 1, 2025, midnight
+        TICKER_TEXT: ' DEAD & COMPANY   •   BILLY STRINGS   •   STURGILL SIMPSON   •   TREY ANASTASIO BAND   • ',
+        COUNTDOWN_COMPLETE_TEXT: "THE GOLDEN ROAD",
+        MATRIX_CHARSET: "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    },
 
-/* === Matrix Code Rain === */
-const canvas = document.getElementById('matrix'), ctx = canvas.getContext('2d');
-let w = window.innerWidth, h = window.innerHeight;
-canvas.width = w; canvas.height = h;
-let fontSize = Math.max(24, Math.floor(w/110));
-let columns = Math.floor(w / fontSize);
-let drops = Array(columns).fill(1);
-let charset = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-function drawMatrix() {
-  ctx.globalAlpha = 0.87;
-  ctx.fillStyle = "#0007";
-  ctx.fillRect(0, 0, w, h);
-  ctx.globalAlpha = 1;
-  ctx.font = fontSize + "px VT323, monospace";
-  for(let i=0; i<drops.length; i++) {
-    let char = charset[Math.floor(Math.random() * charset.length)];
-    ctx.fillStyle = Math.random() > 0.97 ? "#ccffcc" : "#00FF41";
-    let x = i * fontSize, y = drops[i] * fontSize;
-    ctx.shadowColor = "#0f0";
-    ctx.shadowBlur = Math.random()>0.99 ? 20 : 0;
-    ctx.fillText(char, x, y);
-    ctx.shadowBlur = 0;
-    if(y > h && Math.random() > 0.974) drops[i]=0;
-    drops[i]++;
-  }
-}
+    // --- State & Elements ---
+    els: {}, // To store references to DOM elements
+    state: { // To store dynamic values
+        w: 0, h: 0,
+        matrixFontSize: 0, matrixColumns: 0, matrixDrops: [],
+        tickerX: 0,
+        countdownInterval: null,
+        vhsInterval: null,
+        flickerInterval: null,
+    },
 
-/* === Psychedelic Spirals/Triangles === */
-const geo = document.getElementById('psygeo'), gtx = geo.getContext('2d');
-geo.width = w; geo.height = h;
-function drawSpirals() {
-  gtx.clearRect(0,0,w,h);
-  let cx=w/2, cy=h/2, arms=4+Math.floor(Math.random()*3);
-  for(let a=0; a<arms; a++){
-    gtx.save();
-    gtx.translate(cx,cy); gtx.rotate(Math.PI*2*a/arms+performance.now()/3500);
-    gtx.beginPath();
-    let maxR = w/2.6;
-    for(let t=0;t<Math.PI*8;t+=0.08){
-      let r = 12+maxR*t/(Math.PI*8);
-      let x = Math.cos(t)*r, y = Math.sin(t)*r;
-      gtx.lineTo(x, y);
+    /**
+     * Gathers all DOM elements and sets up initial state
+     */
+    setupElements() {
+        this.els.matrixCanvas = document.getElementById('matrix');
+        this.els.matrixCtx = this.els.matrixCanvas.getContext('2d');
+        this.els.geoCanvas = document.getElementById('psygeo');
+        this.els.geoCtx = this.els.geoCanvas.getContext('2d');
+        this.els.mainTimer = document.getElementById('main-timer');
+        this.els.ticker = document.getElementById('ticker');
+        this.els.vhs = document.getElementById('vhs');
+    },
+
+    /**
+     * Sets initial sizes and properties based on window dimensions
+     */
+    setupSizing() {
+        this.state.w = window.innerWidth;
+        this.state.h = window.innerHeight;
+
+        // Canvases
+        this.els.matrixCanvas.width = this.state.w;
+        this.els.matrixCanvas.height = this.state.h;
+        this.els.geoCanvas.width = this.state.w;
+        this.els.geoCanvas.height = this.state.h;
+        
+        // Matrix effect
+        this.state.matrixFontSize = Math.max(24, Math.floor(this.state.w / 110));
+        this.state.matrixColumns = Math.floor(this.state.w / this.state.matrixFontSize);
+        this.state.matrixDrops = Array(this.state.matrixColumns).fill(1);
+        
+        // Ticker
+        this.els.ticker.textContent = this.config.TICKER_TEXT.repeat(8);
+    },
+
+    // --- Drawing Functions ---
+
+    drawMatrix() {
+        const { matrixCtx, mainTimer } = this.els;
+        const { w, h, matrixFontSize, matrixDrops } = this.state;
+        
+        matrixCtx.globalAlpha = 0.87;
+        matrixCtx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Slightly cleaner trail
+        matrixCtx.fillRect(0, 0, w, h);
+        matrixCtx.globalAlpha = 1;
+
+        matrixCtx.font = `${matrixFontSize}px 'VT323', monospace`;
+        for (let i = 0; i < matrixDrops.length; i++) {
+            const char = this.config.MATRIX_CHARSET[Math.floor(Math.random() * this.config.MATRIX_CHARSET.length)];
+            matrixCtx.fillStyle = Math.random() > 0.97 ? "#ccffcc" : "#00FF41";
+            
+            const x = i * matrixFontSize;
+            const y = matrixDrops[i] * matrixFontSize;
+
+            matrixCtx.shadowColor = "#0f0";
+            matrixCtx.shadowBlur = Math.random() > 0.99 ? 20 : 0;
+            matrixCtx.fillText(char, x, y);
+            matrixCtx.shadowBlur = 0;
+
+            if (y > h && Math.random() > 0.974) {
+                matrixDrops[i] = 0;
+            }
+            matrixDrops[i]++;
+        }
+    },
+    
+    drawPsyGeo() {
+        const { geoCtx } = this.els;
+        const { w, h } = this.state;
+        const cx = w / 2, cy = h / 2;
+
+        geoCtx.clearRect(0, 0, w, h);
+        
+        // Spirals
+        const arms = 4 + Math.floor(Math.random() * 3);
+        for (let a = 0; a < arms; a++) {
+            geoCtx.save();
+            geoCtx.translate(cx, cy);
+            geoCtx.rotate(Math.PI * 2 * a / arms + performance.now() / 3500);
+            geoCtx.beginPath();
+            const maxR = w / 2.6;
+            for (let t = 0; t < Math.PI * 8; t += 0.08) {
+                const r = 12 + maxR * t / (Math.PI * 8);
+                const x = Math.cos(t) * r;
+                const y = Math.sin(t) * r;
+                geoCtx.lineTo(x, y);
+            }
+            geoCtx.lineWidth = 1.7 + Math.sin(performance.now() / 320 + a) * 1.1;
+            geoCtx.strokeStyle = "rgba(0,255,65,0.12)";
+            geoCtx.shadowColor = "#60ff60";
+            geoCtx.shadowBlur = 13;
+            geoCtx.stroke();
+            geoCtx.restore();
+        }
+
+        // Triangle
+        const s = w * 0.13;
+        geoCtx.save();
+        geoCtx.beginPath();
+        for (let i = 0; i < 3; i++) {
+            const ang = Math.PI * 2 * i / 3 - Math.PI / 2;
+            geoCtx.lineTo(cx + Math.cos(ang) * s, cy + Math.sin(ang) * s);
+        }
+        geoCtx.closePath();
+        geoCtx.lineWidth = 3.2;
+        geoCtx.strokeStyle = "rgba(0,255,65,0.17)";
+        geoCtx.shadowColor = "#bbffbb";
+        geoCtx.shadowBlur = 12;
+        geoCtx.stroke();
+        geoCtx.restore();
+    },
+
+    moveTicker() {
+        this.state.tickerX -= 1.35;
+        const tickerWidth = this.els.ticker.scrollWidth;
+        // The seamless loop calculation
+        if (-this.state.tickerX > tickerWidth / 8 * 4) { // Based on repeating the text 8 times
+            this.state.tickerX = 0;
+        }
+        this.els.ticker.style.transform = `translateX(${this.state.tickerX}px)`;
+    },
+
+    // --- Timers & Intervals ---
+
+    updateTimer() {
+        const now = new Date();
+        const ms = this.config.DEAD_DATE - now;
+
+        // Refactor: Check if the countdown has finished.
+        if (ms <= 0) {
+            this.els.mainTimer.textContent = this.config.COUNTDOWN_COMPLETE_TEXT;
+            clearInterval(this.state.countdownInterval); // Stop the timer
+            clearInterval(this.state.flickerInterval); // Optional: stop the flicker too
+            this.els.mainTimer.style.textShadow = `0 0 12px #00ff41, 0 0 44px #0F0, 0 0 24px #00FF41, 0 1px 1px #fff, 0 3px 3px #006600`;
+            return;
+        }
+
+        const s = Math.floor(ms / 1000);
+        const d = Math.floor(s / 86400);
+        const h = Math.floor((s % 86400) / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        const sec = Math.floor(s % 60);
+        
+        const out = `${String(d).padStart(2, '0')}:${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+        this.els.mainTimer.textContent = out;
+    },
+    
+    startIntervals() {
+        this.state.countdownInterval = setInterval(() => this.updateTimer(), 1000);
+        this.updateTimer(); // Initial call
+        
+        // VHS static reload
+        this.state.vhsInterval = setInterval(() => {
+            this.els.vhs.src = this.els.vhs.src.split('?')[0] + '?' + Date.now();
+        }, 4100);
+
+        // CRT flicker effect
+        this.state.flickerInterval = setInterval(() => {
+            this.els.mainTimer.style.textShadow =
+                `0 0 12px #00ff41,
+                 1px 2px 8px #0F0,
+                 ${Math.random() * 8 - 4}px ${Math.random() * 4 - 2}px 12px #00FF41,
+                 0 1px 1px #fff,
+                 0 3px 3px #006600`;
+        }, 97);
+    },
+
+    // --- Main Animation Loop ---
+
+    animate() {
+        // Refactor: All visual updates are now in one synchronized loop.
+        this.drawMatrix();
+        this.drawPsyGeo();
+        this.moveTicker();
+        
+        requestAnimationFrame(() => this.animate());
+    },
+
+    // --- Initialization ---
+
+    init() {
+        this.setupElements();
+        this.setupSizing();
+        
+        window.addEventListener('resize', () => this.setupSizing());
+        
+        this.startIntervals();
+        this.animate();
     }
-    gtx.lineWidth = 1.7 + Math.sin(performance.now()/320+a)*1.1;
-    gtx.strokeStyle = "rgba(0,255,65,0.12)";
-    gtx.shadowColor="#60ff60"; gtx.shadowBlur=13;
-    gtx.stroke(); gtx.restore();
-  }
-}
-function drawTriangles() {
-  let cx=w*0.80, cy=h*0.22, s=w*0.13;
-  gtx.save();
-  gtx.beginPath();
-  for(let i=0;i<3;i++){
-    let ang = Math.PI*2*i/3-Math.PI/2;
-    gtx.lineTo(cx+Math.cos(ang)*s, cy+Math.sin(ang)*s);
-  }
-  gtx.closePath();
-  gtx.lineWidth=3.2;
-  gtx.strokeStyle="rgba(0,255,65,0.17)";
-  gtx.shadowColor="#bbffbb"; gtx.shadowBlur=12;
-  gtx.stroke(); gtx.restore();
-}
-function renderGeo() { drawSpirals(); drawTriangles(); requestAnimationFrame(renderGeo);}
-renderGeo();
+};
 
-/* === Main Animation === */
-function render() { drawMatrix(); requestAnimationFrame(render);}
-render();
-
-/* === Responsive === */
-window.addEventListener('resize', ()=>{
-  w = window.innerWidth; h = window.innerHeight;
-  canvas.width = w; canvas.height = h;
-  geo.width = w; geo.height = h;
-  fontSize = Math.max(24, Math.floor(w/110));
-  columns = Math.floor(w / fontSize);
-  drops = Array(columns).fill(1);
+// Run the application once the document is ready
+document.addEventListener('DOMContentLoaded', () => {
+    CountdownApp.init();
 });
-
-/* === Timer === */
-function updateTimer() {
-  let now = new Date(), ms = DEAD_DATE - now;
-  let s = Math.floor(ms/1000), d=Math.max(0,Math.floor(s/86400)),
-      h_=Math.max(0,Math.floor((s%86400)/3600)),
-      m=Math.max(0,Math.floor((s%3600)/60)),
-      sec=Math.max(0,Math.floor(s%60));
-  let out = (d<10?'0':'')+d+":"+(h_<10?'0':'')+h_+":"+(m<10?'0':'')+m+":"+(sec<10?'0':'')+sec;
-  document.getElementById('main-timer').textContent = out;
-}
-setInterval(updateTimer, 900);
-updateTimer();
-
-/* === Ticker === */
-const ticker = document.getElementById('ticker');
-ticker.textContent = TICKER_TEXT.repeat(8);
-let tickerX=0;
-function moveTicker() {
-  tickerX -= 1.35;
-  let tw = ticker.scrollWidth;
-  if (-tickerX > tw/2) tickerX = 0;
-  ticker.style.transform = `translateX(${tickerX}px)`;
-  requestAnimationFrame(moveTicker);
-}
-moveTicker();
-
-/* === Loop VHS static overlay for effect === */
-const vhs = document.getElementById('vhs');
-setInterval(()=>{ vhs.src = vhs.src.split('?')[0]+'?'+Date.now(); }, 4100);
-
-/* === CRT flicker/RGB analog warble on timer === */
-setInterval(()=>{
-  let e=document.getElementById('main-timer');
-  e.style.textShadow=
-    `0 0 12px #00ff41,
-     1px 2px 8px #0F0,
-     ${Math.random()*8-4}px ${Math.random()*4-2}px 12px #00FF41,
-     0 1px 1px #fff,
-     0 3px 3px #006600`;
-}, 97);
 </script>
 </body>
 </html>
