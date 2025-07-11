@@ -1,23 +1,3 @@
-Understood. You want something that:
-	•	Looks like a psychedelic Grateful Dead poster (think: Avalon, Fillmore, late 60s/early 70s).
-	•	Uses your local HENDD___.TTF for all headlines/countdown/major elements.
-	•	Prioritizes visual flow (curved, organic, no boxes), high color contrast, layered art, and centered hierarchy.
-	•	Keeps all text ultra-readable, even with trippy backgrounds.
-	•	Uses Dead art assets as part of the composition, not as background noise.
-	•	Mobile-first, scales well, and has no hard UI “cards.”
-
-Approach:
-	•	All main elements in a single vertical “spine” down the center.
-	•	Countdown in huge, wavy text with a glowing colored shadow.
-	•	Main art (bridge, skeletons, etc.) framing or hugging the spine, with some overlap, but always keeping main content visible.
-	•	Vivid, multi-gradient overlays to pull color up (not just semi-opaque white).
-	•	Heavy use of outlines, shadow, and text-stroke to keep content readable over art.
-	•	No visible rectangles, all content floats or is encircled.
-	•	Guest/day blocks in a horizontal row on large screens, stacked but with a “ticket stub” shape on mobile.
-
-Below is a full index.html with all instructions above. You can tune font size or color as you want.
-Replace fonts/HENDD___.TTF with your real font path if different.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +7,7 @@ Replace fonts/HENDD___.TTF with your real font path if different.
   <style>
     @font-face {
       font-family: 'Hend';
-      src: url('HENDD___.TTF') format('truetype');
+      src: url('HENDD___.TTF') format('truetype'); /* Ensure you have this font file */
       font-display: swap;
     }
     html, body {
@@ -35,7 +15,7 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       padding: 0;
       width: 100vw;
       min-height: 100vh;
-      background: #111 url('IMG_8667.jpeg') center center/cover fixed no-repeat;
+      background: #111 url('IMG_8667.jpeg') center center/cover fixed no-repeat; /* Optional background */
       overflow-x: hidden;
     }
     body::before {
@@ -46,6 +26,12 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
       opacity: 0.4;
       pointer-events: none;
+      /* REFINEMENT: Add subtle animation for a "living poster" effect */
+      animation: slow-pan 90s linear infinite alternate;
+    }
+    @keyframes slow-pan {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
     }
     body, a, button, input, select {
       cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto !important;
@@ -85,15 +71,15 @@ Replace fonts/HENDD___.TTF with your real font path if different.
     .art {
       position: absolute;
       pointer-events: none;
-      z-index: 3;
-      opacity: 0.97;
       user-select: none;
       filter: drop-shadow(0 0 24px #0009);
+      transition: transform 0.5s ease-out;
     }
-    .art.bridge { left: 3vw; bottom: 1vw; width: 30vw; min-width: 110px; transform: rotate(-2deg);}
-    .art.left-skel { left: 1vw; top: 15vw; width: 18vw; min-width: 85px; }
-    .art.right-skel { right: 2vw; top: 15vw; width: 18vw; min-width: 85px;}
-    .art.blimp { right: 7vw; top: 2vw; width: 15vw; min-width: 80px; transform: rotate(-7deg);}
+    .art.bridge { left: 3vw; bottom: 1vw; width: 30vw; min-width: 110px; transform: rotate(-2deg); z-index: 3;}
+    /* REFINEMENT: Tuck skeletons behind the main content for depth */
+    .art.left-skel { left: 1vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; transform: translateX(3vw) rotate(3deg); }
+    .art.right-skel { right: 2vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; transform: translateX(-3vw) rotate(-3deg); }
+    .art.blimp { right: 7vw; top: 2vw; width: 15vw; min-width: 80px; transform: rotate(-7deg); z-index: 3;}
     .art.stealie { left: 50vw; top: 4vw; width: 7vw; min-width: 50px; z-index: 4;}
     .art.logo { left: 50vw; top: 12vw; width: 14vw; min-width: 90px; z-index: 5; mix-blend-mode: lighten;}
 
@@ -103,16 +89,18 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       font-size: clamp(2.2rem, 7vw, 6rem);
       letter-spacing: 0.04em;
       text-align: center;
-      color: #fff;
       padding: 0.3em 0.5em;
-      background: linear-gradient(97deg,#ffe66b 10%,#1698ff 51%,#e4008f 95%);
+      /* REFINEMENT: Simplified gradient for better hierarchy */
+      background: linear-gradient(97deg, #ffe66b, #e4008f);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 3px #1e3b54;
+      /* REFINEMENT: Reduced stroke for cleaner text */
+      -webkit-text-stroke: 1.5px #1e3b54;
       filter: drop-shadow(0 0 20px #ffe66b88) drop-shadow(0 0 12px #0008);
-      text-shadow: 0 2px 28px #8df, 0 2px 3px #000;
-      margin: 0 0 0.4em 0;
+      text-shadow: 0 2px 28px #8df4, 0 2px 3px #000;
+      /* REFINEMENT: Improved vertical rhythm */
+      margin: 0 0 0.8em 0;
       border-radius: 1vw 2vw 1vw 2vw;
       user-select: none;
       z-index: 10;
@@ -124,11 +112,9 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       font-family: 'Hend', serif;
       font-size: clamp(1.3rem, 3vw, 2.7rem);
       text-align: center;
-      background: linear-gradient(80deg, #ffe66b, #1e90ff 70%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1.5px #21232d;
+      /* REFINEMENT: Changed to a solid color for better hierarchy */
+      color: #ffe66b;
+      -webkit-text-stroke: 1px #21232d;
       text-shadow: 0 0 10px #ffe66b77, 0 1px 2px #003a;
       margin-bottom: 0.6vw;
       margin-top: 0vw;
@@ -141,7 +127,7 @@ Replace fonts/HENDD___.TTF with your real font path if different.
     .dates {
       font-family: 'Hend', serif;
       font-size: clamp(1.1rem, 2.1vw, 2.2rem);
-      color: #ffe66b;
+      color: #fff; /* Changed to white for contrast against other yellow elements */
       text-shadow: 0 0 18px #1e90ffcc, 0 1px 4px #000;
       letter-spacing: 0.16em;
       margin-bottom: 1.3vw;
@@ -155,7 +141,8 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 2vw 0 2vw 0;
+      /* REFINEMENT: Added more margin for breathing room */
+      margin: 2vw 0 3vw 0;
       z-index: 10;
       position: relative;
     }
@@ -163,12 +150,15 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       font-family: 'Hend', serif;
       font-size: clamp(4.2rem, 11vw, 10rem);
       letter-spacing: 0.09em;
+      /* This is our "hero" gradient, so we keep it complex */
       background: linear-gradient(90deg,#ffe66b,#1698ff 55%,#e4008f 90%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 5px #1e90ff;
-      text-shadow: 0 0 30px #ffe66b, 0 0 18px #1e90ffb0, 0 0 10px #e4008f60, 0 2px 6px #141f;
+      /* REFINEMENT: Reduced stroke, using a dark color for definition */
+      -webkit-text-stroke: 2px #1e3b54;
+      /* REFINEMENT: Enhanced glow effect */
+      text-shadow: 0 0 45px #ffe66b, 0 0 25px #1e90ffb0, 0 0 15px #e4008f60, 0 2px 6px #141f;
       filter: drop-shadow(0 0 12px #ffe66b80);
       text-align: center;
       border-radius: 60% 45% 55% 70%/65% 60% 75% 55%;
@@ -253,6 +243,7 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       font-family: 'Hend', serif;
       font-size: clamp(1.6rem, 3vw, 3rem);
       letter-spacing: 0.10em;
+      /* REFINEMENT: Simplified gradient */
       background: linear-gradient(90deg,#e4008f,#ffe66b 60%);
       background-clip: text;
       -webkit-background-clip: text;
@@ -274,9 +265,8 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       flex: 1 1 220px;
       min-width: 130px;
       margin: 0.4vw 1vw;
-      padding: 1vw 1vw 0.7vw 1vw;
+      padding: 1.2vw 1.5vw;
       background: linear-gradient(108deg,#ffe66b40 30%,#e4008f20 100%);
-      border-radius: 50% 30% 40% 60%/55% 50% 55% 40%;
       box-shadow: 0 0 15px #ffe66b40,0 0 2px #1e90ffb0;
       display: flex;
       flex-direction: column;
@@ -285,6 +275,15 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       z-index: 10;
       position: relative;
       min-height: 120px;
+      /* REFINEMENT: Use clip-path for a "ticket stub" shape instead of border-radius */
+      border-radius: 0; /* reset border-radius */
+      clip-path: polygon(0% 15%, 15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%);
+      /* REFINEMENT: Add interactive hover effect */
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .guests-day:hover {
+        transform: scale(1.05) rotate(2deg);
+        box-shadow: 0 0 30px #ffe66b77, 0 0 10px #1e90ffdd;
     }
     .guests-day h3 {
       font-family: 'Hend', serif;
@@ -313,7 +312,7 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       .art-blimp { top: 14vw;}
     }
     @media (max-width: 700px) {
-      .art.left-skel, .art.right-skel { width: 22vw;}
+      .art.left-skel, .art.right-skel { width: 22vw; top: 20vw;}
       .art.bridge, .art.blimp { width: 32vw;}
       .art.logo { width: 19vw;}
       .art.stealie { width: 10vw;}
@@ -321,16 +320,16 @@ Replace fonts/HENDD___.TTF with your real font path if different.
       .guests-day {min-width: 130px; width: 85vw; margin: 2vw auto;}
     }
     @media (max-width: 480px) {
-      .headline { font-size: 1.2rem;}
-      .subheadline { font-size: 1rem;}
-      .dates { font-size: .8rem;}
-      #countdown { font-size: 1.6rem;}
-      .location-block .loc-txt { font-size: .9rem;}
+      /* Adjusted font sizes for better readability on small screens */
+      .headline { font-size: clamp(1.8rem, 10vw, 2.2rem); -webkit-text-stroke-width: 1px;}
+      .subheadline { font-size: clamp(1.1rem, 6vw, 1.3rem); }
+      .dates { font-size: clamp(0.9rem, 5vw, 1.1rem); }
+      #countdown { font-size: clamp(3.5rem, 20vw, 4.2rem); -webkit-text-stroke-width: 1.5px;}
+      .location-block .loc-txt { font-size: clamp(1rem, 7vw, 1.4rem); }
     }
   </style>
 </head>
 <body>
-  <!-- WAVY SVG POSTER FRAME -->
   <div class="poster-frame">
     <svg class="frame-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
       <path d="M2,12 Q12,2 20,12 Q28,22 36,12 Q44,2 52,12 Q60,22 68,12 Q76,2 84,12 Q92,22 99,11 L99,99 L1,99 Z"
@@ -339,15 +338,78 @@ Replace fonts/HENDD___.TTF with your real font path if different.
         fill="none" stroke="#e4008f" stroke-width="1.2" opacity="0.29"/>
     </svg>
   </div>
-  <!-- DEAD ART OVERLAYS -->
   <img class="art bridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="">
   <img class="art left-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="">
   <img class="art right-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="">
   <img class="art blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="">
   <img class="art stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
   <img class="art logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="">
+  
   <div class="psy-spine">
     <h1 class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</h1>
     <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="dates">AUGUST 1, 2, 3, 2025</div>
-    <
+    <div class="dates">JULY 18, 19, & 20, 2025</div> <div class="countdown-psy">
+      <div id="countdown">00:00:00:00</div>
+      <div class="count-label">DAYS : HOURS : MINS : SECS</div>
+    </div>
+
+    <div class="location-block">
+      <img src="https://i.scdn.co/image/ab67616d0000b273b7556c7512709337535c8942" alt="Oracle Park stadium view">
+      <div class="loc-txt">ORACLE PARK</div>
+    </div>
+
+    <div class="guests-section">
+      <h2 class="guests-title">WITH SPECIAL GUESTS</h2>
+      <div class="guests-days">
+        <div class="guests-day">
+          <h3>FRIDAY, JUL 18</h3>
+          <div class="guests-list">Sturgill Simpson<br>The War on Drugs</div>
+        </div>
+        <div class="guests-day">
+          <h3>SATURDAY, JUL 19</h3>
+          <div class="guests-list">Khruangbin<br>Bob Weir & Wolf Bros.</div>
+        </div>
+        <div class="guests-day">
+          <h3>SUNDAY, JUL 20</h3>
+          <div class="guests-list">Dead & Company<br>(Full Set)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Countdown Timer Logic
+    const countdownElement = document.getElementById('countdown');
+    // NOTE: The event date is set to July 18, 2025, in the local time of the browser.
+    // This will count down to midnight at the beginning of that day.
+    const countDownDate = new Date("July 18, 2025 00:00:00").getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+
+      if (distance < 0) {
+        countdownElement.innerHTML = "LIVE NOW!";
+        // Optionally hide the label
+        document.querySelector('.count-label').style.display = 'none'; 
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      const format = (num) => num.toString().padStart(2, '0');
+
+      countdownElement.innerHTML = `${format(days)}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    };
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+    // Initial call to display immediately
+    updateCountdown();
+  </script>
+
+</body>
+</html>
