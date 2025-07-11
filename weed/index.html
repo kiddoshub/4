@@ -1,103 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Countdown: Dead & Company SF</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>Countdown to Grateful Dead SF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     html, body {
+      margin: 0;
+      padding: 0;
       background: #000;
       color: #0f0;
-      margin: 0; padding: 0;
-      width: 100vw; height: 100vh;
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      min-height: 100vh;
-      letter-spacing: 0.06em;
-    }
-    .title {
-      color: #8f8;
-      font-size: 2.6em;
-      font-weight: bold;
+      font-family: 'Courier New', monospace;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      text-shadow: 0 0 7px #2f2, 0 0 40px #080;
-      margin-bottom: 1.6em;
-      font-family: inherit;
     }
+
+    h1 {
+      font-size: 2.2vw;
+      text-shadow: 0 0 5px #0f0;
+      margin-bottom: 3vh;
+    }
+
     #countdown {
       font-size: 8vw;
-      min-font-size: 2.3em;
-      font-family: inherit;
-      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    #label {
+      font-size: 1.2vw;
       color: #0f0;
-      text-shadow: 0 0 25px #0f0, 0 0 100px #080;
-      background: #002900;
-      border-radius: 0.3em;
-      padding: 0.08em 0.4em 0.12em 0.4em;
-      box-shadow: 0 0 20px #040;
-      letter-spacing: 0.10em;
-      margin-bottom: 0.5em;
-      user-select: all;
-      transition: font-size 0.12s;
+      margin-top: 1vh;
+      letter-spacing: 0.2em;
+      text-shadow: 0 0 3px #0f0;
     }
-    .labels {
-      font-size: 1.5em;
-      color: #6f6;
-      display: flex;
-      justify-content: center;
-      gap: 2.4em;
-      font-family: inherit;
-      margin-bottom: 1.5em;
+
+    .cursor {
+      display: inline-block;
+      width: 0.7em;
+      height: 1.2em;
+      background: #0f0;
+      animation: blink 1s steps(2, start) infinite;
+      margin-left: 0.3em;
+      vertical-align: bottom;
     }
-    .labels span {
-      width: 4.6em;
-      text-align: center;
-      text-shadow: 0 0 4px #6f6, 0 0 10px #1f1;
+
+    @keyframes blink {
+      to { visibility: hidden; }
     }
-    .event {
-      color: #bfb;
-      font-size: 1.2em;
-      margin-top: 2em;
-      text-align: center;
-      text-shadow: 0 0 7px #4f4;
-    }
-    @media (max-width: 700px) {
-      #countdown { font-size: 3em; }
-      .title { font-size: 1.1em; }
-      .labels { font-size: 1em; }
+
+    @media (max-width: 768px) {
+      #countdown {
+        font-size: 12vw;
+      }
+      h1 {
+        font-size: 4vw;
+      }
+      #label {
+        font-size: 2.5vw;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="title">COUNTDOWN TO<br>DEAD & COMPANY SF</div>
-  <div id="countdown"></div>
-  <div class="labels">
-    <span>DAYS</span><span>HOURS</span><span>MIN</span><span>SEC</span>
-  </div>
-  <div class="event">
-    Celebrating 60 Years of the Grateful Dead<br>
-    Golden Gate Park, San Francisco<br>
-    August 1, 2, 3, 2025
-  </div>
+  <h1>INITIALIZING EVENT SEQUENCE... STANDBY</h1>
+  <div id="countdown">--:--:--:--</div>
+  <div id="label">DAYS : HOURS : MINUTES : SECONDS<span class="cursor"></span></div>
+
   <script>
-    function pad(n) { return n.toString().padStart(2,'0'); }
+    function pad(n) {
+      return n.toString().padStart(2, '0');
+    }
+
     function updateCountdown() {
-      // August 1, 2025, 00:00 PDT = 2025-08-01T07:00:00Z
-      var target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0));
-      var now = new Date();
-      var nowUTC = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-      var diff = target - nowUTC;
+      // August 1, 2025 at 00:00 PDT = UTC-7 => 07:00 UTC
+      const target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0));
+      const now = new Date();
+      const nowUtc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      let diff = target - nowUtc;
+
       if (diff <= 0) {
-        document.getElementById('countdown').innerHTML = "<span>SHOWTIME!</span>";
+        document.getElementById("countdown").textContent = "00:00:00:00";
         return;
       }
-      var days = Math.floor(diff/(1000*60*60*24));
-      var hours = Math.floor((diff/(1000*60*60))%24);
-      var mins = Math.floor((diff/(1000*60))%60);
-      var secs = Math.floor((diff/1000)%60);
-      document.getElementById('countdown').innerHTML =
-        `${pad(days)}:${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("countdown").textContent = 
+        `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
+
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
