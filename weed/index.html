@@ -39,8 +39,10 @@
 
     .overlay-glitch {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: repeating-linear-gradient(
         0deg,
         rgba(0,255,0,0.02),
@@ -56,7 +58,8 @@
 
     .overlay-anim {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
@@ -135,24 +138,24 @@
       position: fixed;
       bottom: 0;
       width: 100%;
+      overflow: hidden;
       background: rgba(0, 0, 0, 0.6);
       padding: 6px 0;
-      font-size: 0.85rem;
-      white-space: nowrap;
-      overflow: hidden;
-      z-index: 10;
       border-top: 1px solid #00ffff;
+      z-index: 10;
     }
 
-    .ticker span {
+    .ticker-track {
       display: inline-block;
+      white-space: nowrap;
       padding-left: 100%;
-      animation: scroll-left 60s linear infinite;
+      animation: scroll-left 90s linear infinite;
+      font-size: 0.85rem;
     }
 
     @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .floating-img {
@@ -189,13 +192,13 @@
     <img src="IMG_8676.gif" alt="glow effect" />
   </div>
 
-  <!-- Floating images -->
+  <!-- Floating Images -->
   <img src="IMG_8687.jpeg" class="floating-img img1" alt="">
   <img src="IMG_8688.jpeg" class="floating-img img2" alt="">
   <img src="IMG_8685.png" class="floating-img img3" alt="">
   <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755660325-K6WPIQGKJ2CY3RALJEK5/deadcochicstage.jpg?format=1500w" class="floating-img img4" alt="">
 
-  <!-- Countdown Box -->
+  <!-- Countdown -->
   <div class="countdown-container">
     <div class="countdown-title">
       DEAD & COMPANY GD<span class="highlight-60">60</span> — SAN FRANCISCO
@@ -204,19 +207,31 @@
     <div class="time-labels">[DAYS] [HOURS] [MINUTES] [SECONDS]</div>
     <div class="details">
       DEAD & COMPANY CELEBRATING <span class="highlight-60">60</span> YEARS OF THE GRATEFUL DEAD’S MUSIC — GOLDEN GATE PARK ·<br>
-      WITH BILLY STRINGS, STURGILL SIMPSON, TREY
+      WITH BILLY STRINGS, STURGILL SIMPSON, TREY, JOHNNY BLUE SKIES
     </div>
   </div>
 
   <!-- Ticker -->
   <div class="ticker">
-    <span style="color:#00ff88">BILLY STRINGS</span>
-    <span style="color:#ffaa00"> • STURGILL SIMPSON</span>
-    <span style="color:#ff66ff"> • TREY ANASTASIO</span>
-    <span style="color:#00ffff"> • DEAD & COMPANY</span>
-    <span style="color:#ffee00"> • AUGUST 1–3 • GOLDEN GATE PARK • </span>
+    <div class="ticker-track">
+      <span style="color:#00ff88">BILLY STRINGS</span>
+      <span style="color:#ffaa00"> • STURGILL SIMPSON</span>
+      <span style="color:#ff66ff"> • TREY ANASTASIO</span>
+      <span style="color:#00ffff"> • DEAD & COMPANY</span>
+      <span style="color:#ffee00"> • JOHNNY BLUE SKIES</span>
+      <span style="color:#ffee00"> • AUGUST 1–3 • GOLDEN GATE PARK • </span>
+
+      <!-- Duplicate for smooth scroll -->
+      <span style="color:#00ff88">BILLY STRINGS</span>
+      <span style="color:#ffaa00"> • STURGILL SIMPSON</span>
+      <span style="color:#ff66ff"> • TREY ANASTASIO</span>
+      <span style="color:#00ffff"> • DEAD & COMPANY</span>
+      <span style="color:#ffee00"> • JOHNNY BLUE SKIES</span>
+      <span style="color:#ffee00"> • AUGUST 1–3 • GOLDEN GATE PARK • </span>
+    </div>
   </div>
 
+  <!-- Countdown Script -->
   <script>
     const countdownEl = document.getElementById('countdown');
     const targetDate = new Date("2025-08-01T00:00:00-07:00");
