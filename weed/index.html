@@ -1,189 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Dead & Company SF Countdown</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<style>
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
-:root {
-  --bg: #000;
-  --tie-dye: linear-gradient(135deg,
-    rgba(255,0,150,0.2),
-    rgba(0,255,200,0.2),
-    rgba(255,255,0,0.2),
-    rgba(0,150,255,0.2));
-  --neon-blue: #00ffe8;
-  --neon-pink: #ff0099;
-  --neon-yellow: #ffff00;
-  --glow: 0 0 12px rgba(255,255,255,0.6), 0 0 32px rgba(255,255,255,0.3);
-  --font-main: 'VT323', monospace;
-}
-
-*{ margin:0; padding:0; box-sizing: border-box; }
-html,body {
-  width:100vw; height:100vh;
-  background: var(--bg);
-  font-family: var(--font-main);
-  overflow:hidden;
-}
-
-.artlayer, .overlay {
-  position:absolute; top:0; left:0;
-  width:100vw; height:100vh;
-  object-fit:cover;
-  pointer-events:none;
-}
-.artlayer {
-  z-index:0;
-  mix-blend-mode: multiply;
-  opacity:0.9;
-}
-.overlay {
-  z-index:2;
-  mix-blend-mode: lighten;
-  opacity:0.8;
-}
-
-/* tie-dye graphic filter overlay */
-.tie-dye {
-  position:absolute; top:0; left:0;
-  width:100vw; height:100vh;
-  background: var(--tie-dye);
-  mix-blend-mode: overlay;
-  pointer-events:none;
-  z-index:1;
-  animation: swirl 30s linear infinite;
-}
-@keyframes swirl {
-  to { transform: rotate(360deg); }
-}
-
-/* countdown display */
-#countdown {
-  position:absolute;
-  top: 50%; left:50%;
-  transform:translate(-50%,-60%);
-  text-align:center;
-  color: var(--neon-yellow);
-  font-size:9vw;
-  line-height:1.1;
-  text-shadow: var(--glow),
-               0 0 8px var(--neon-pink),
-               0 0 16px var(--neon-blue);
-  z-index:3;
-}
-
-/* analog clock */
-#clock {
-  position:absolute;
-  bottom:5vh; right:5vw;
-  width:20vw; height:20vw;
-  z-index:4;
-}
-
-/* optional badges */
-.badge {
-  position:absolute;
-  bottom:5vh; left:5vw;
-  width:15vw; height:auto;
-  opacity:0.8;
-  pointer-events:none;
-  z-index:4;
-}
-.badge.dancing-bear { left:5vw; }
-.badge.skull { left:25vw; }
-
-/* ticker */
-#ticker {
-  position:absolute;
-  bottom:2vh;
-  width:100%;
-  text-align:center;
-  font-size:3.5vw;
-  color: var(--neon-blue);
-  text-shadow: var(--glow);
-  z-index:3;
-  mix-blend-mode: screen;
-}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dead & Company SF Countdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- background images -->
-  <img class="artlayer" src="IMG_8667.jpeg" alt="">
-  <div class="tie-dye"></div>
-  <img class="overlay" src="IMG_8668.jpeg" alt="">
+    <div class="background-animation"></div>
+    <div class="container">
+        <header>
+            <h1>Dead & Company</h1>
+            <h2>San Francisco • Final Tour</h2>
+        </header>
 
-  <!-- countdown text -->
-  <div id="countdown">-- days -- hrs -- min -- sec</div>
+        <main>
+            <div id="countdown">
+                <div><span id="days">--</span> Days</div>
+                <div><span id="hours">--</span> Hours</div>
+                <div><span id="minutes">--</span> Minutes</div>
+                <div><span id="seconds">--</span> Seconds</div>
+            </div>
 
-  <!-- SVG analog clock -->
-  <svg id="clock" viewBox="0 0 200 200">
-    <circle cx="100" cy="100" r="98" stroke="var(--neon-blue)" stroke-width="4" fill="none" filter="url(#glowFilter)"/>
-    <!-- ticks -->
-    <g stroke="var(--neon-pink)" stroke-width="2">
-      ${Array.from({ length: 60 }, (_, i) => {
-        const angle = i * 6;
-        const len = i % 5 === 0 ? 12 : 6;
-        const r = 90;
-        const rad = angle * Math.PI / 180;
-        return `<line x1="${100 + r * Math.cos(rad)}" y1="${100 + r * Math.sin(rad)}" x2="${100 + (r - len) * Math.cos(rad)}" y2="${100 + (r - len) * Math.sin(rad)}"/>`;
-      }).join('')}
-    </g>
-    <!-- hands -->
-    <line id="hour" x1="100" y1="100" x2="100" y2="60" stroke="var(--neon-yellow)" stroke-width="6" filter="url(#glowFilter)"/>
-    <line id="minute" x1="100" y1="100" x2="100" y2="40" stroke="var(--neon-yellow)" stroke-width="4" filter="url(#glowFilter)"/>
-    <line id="second" x1="100" y1="100" x2="100" y2="30" stroke="var(--neon-pink)" stroke-width="2"/>
-    <circle cx="100" cy="100" r="5" fill="var(--neon-yellow)" filter="url(#glowFilter)"/>
-    <defs>
-      <filter id="glowFilter">
-        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-        <feMerge>
-          <feMergeNode in="coloredBlur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    </defs>
-  </svg>
+            <svg id="clock" viewBox="0 0 200 200">
+                <defs>
+                    <filter id="glowFilter">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <circle cx="100" cy="100" r="96" class="clock-face"/>
+                <g class="ticks">
+                    </g>
+                <line id="hour" class="hand" x1="100" y1="100" x2="100" y2="65"/>
+                <line id="minute" class="hand" x1="100" y1="100" x2="100" y2="45"/>
+                <line id="second" class="hand second-hand" x1="100" y1="100" x2="100" y2="35"/>
+                <circle cx="100" cy="100" r="4" class="hand-pivot"/>
+            </svg>
+        </main>
 
-  <!-- optional accents -->
-  <img class="badge dancing-bear" src="https://i.redd.it/qrxk4n1rei721.gif" alt="Dancing Bear">
-  <img class="badge skull" src="https://media.tenor.com/E76XPPYAKTUAAAAM/grateful-dead.gif" alt="Steal Your Face Skull">
-
-  <!-- ticker -->
-  <div id="ticker">DEAD & COMPANY • BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO BAND •</div>
-
-  <script>
-// countdown and clock logic
-const deadline = new Date('2025-08-01T00:00:00-07:00');
-const cdEl = document.getElementById('countdown');
-const hourHand = document.getElementById('hour');
-const minuteHand = document.getElementById('minute');
-const secondHand = document.getElementById('second');
-
-function updateClock() {
-  const now = new Date();
-  const ms = deadline - now;
-
-  const days = Math.floor(ms / 86400000);
-  const hrs  = Math.floor(ms % 86400000 / 3600000);
-  const min  = Math.floor(ms % 3600000 / 60000);
-  const sec  = Math.floor(ms % 60000 / 1000);
-
-  cdEl.textContent = `${days}d ${hrs}h ${min}m ${sec}s`;
-
-  const hAng = 30 * ((now.getHours() % 12) + now.getMinutes()/60);
-  const mAng = 6 * now.getMinutes();
-  const sAng = 6 * now.getSeconds();
-
-  hourHand.setAttribute('transform', `rotate(${hAng},100,100)`);
-  minuteHand.setAttribute('transform', `rotate(${mAng},100,100)`);
-  secondHand.setAttribute('transform', `rotate(${sAng},100,100)`);
-}
-
-setInterval(updateClock, 1000);
-updateClock();
-  </script>
+        <footer>
+            <div id="ticker">
+                <p>DEAD & COMPANY • BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO BAND</p>
+            </div>
+            <div class="badges">
+                <img class="badge" src="https://i.redd.it/qrxk4n1rei721.gif" alt="Dancing Bear">
+                <img class="badge" src="https://media.tenor.com/E76XPPYAKTUAAAAM/grateful-dead.gif" alt="Steal Your Face Skull">
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
