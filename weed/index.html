@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DEAD & COMPANY COUNTDOWN</title>
+  <title>DEAD & COMPANY — SF COUNTDOWN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
@@ -10,103 +10,186 @@
       src: url('OCR-a___.ttf') format('truetype');
     }
 
-    /* Base Layout */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: 'OCR-A', monospace;
-      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
-      background-color: black;
-      color: #ff4dff;
+      background: #000;
+      color: #00ff88;
       overflow: hidden;
     }
 
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
       position: relative;
-      text-align: center;
     }
 
-    /* Countdown Glass Panel */
-    .countdown-container {
+    /* OVERLAY FX */
+    .overlay-glitch {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,255,0,0.03),
+        rgba(0,255,0,0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
       z-index: 2;
-      padding: 40px 60px;
-      background: rgba(0, 0, 0, 0.25);
-      border: 2px solid #00ffff;
-      border-radius: 36px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 15px #00ffffaa, 0 0 30px #ff00ffaa;
+      mix-blend-mode: screen;
+      animation: flicker 2.5s infinite alternate;
     }
 
-    .headline {
-      font-size: 1.3rem;
+    @keyframes flicker {
+      0% { opacity: 0.03; }
+      45% { opacity: 0.07; }
+      100% { opacity: 0.04; }
+    }
+
+    .matrix-fx::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(0,255,0,0.15), transparent 60%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* COUNTDOWN BOX */
+    .countdown-container {
+      position: relative;
+      max-width: 600px;
+      margin: 60px auto;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #00ff99;
+      padding: 30px;
+      text-align: center;
+      z-index: 5;
+      box-shadow: 0 0 10px #00ffcc80;
+      backdrop-filter: blur(4px);
+    }
+
+    .countdown-title {
+      color: #00ff88;
+      font-size: 1.1rem;
       letter-spacing: 2px;
-      color: #00ffff;
-      text-shadow: 0 0 8px #00ffff;
-      margin-bottom: 10px;
+      margin-bottom: 18px;
     }
 
-    .countdown {
-      font-size: 3.5rem;
+    .countdown-timer {
+      font-size: 2.5rem;
+      color: #ff2a2a;
+      background: black;
+      padding: 14px 20px;
+      border: 2px solid #ff2a2a;
+      display: inline-block;
       letter-spacing: 4px;
-      line-height: 1.6;
-      color: #ff4dff;
-      text-shadow: 0 0 10px #ff4dff, 0 0 20px #ff4dff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #ff0000cc;
     }
 
-    /* Floating Image Styling */
+    .time-labels {
+      margin-top: 5px;
+      font-size: 0.85rem;
+      color: #00ff88;
+      letter-spacing: 2px;
+    }
+
+    .details {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #00ff99;
+    }
+
+    /* SCROLLING TICKER */
+    .ticker {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 0;
+      font-size: 0.85rem;
+      color: #00ff99;
+      white-space: nowrap;
+      overflow: hidden;
+      z-index: 10;
+      border-top: 1px solid #00ff88;
+    }
+
+    .ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 60s linear infinite;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* FLOATING IMAGES */
     .floating-img {
       position: absolute;
-      width: 100px;
-      opacity: 0.65;
-      z-index: 1;
+      width: 90px;
+      opacity: 0.7;
+      mix-blend-mode: screen;
       pointer-events: none;
-      animation: floatAnim 18s infinite ease-in-out;
+      z-index: 4;
+      animation: float 18s infinite ease-in-out;
     }
 
-    /* Individual Image Positions */
-    .img1 { top: 5%; left: 5%; animation-delay: 0s; }
-    .img2 { top: 10%; right: 10%; animation-delay: 3s; }
-    .img3 { bottom: 8%; left: 15%; animation-delay: 6s; }
-    .img4 { bottom: 10%; right: 5%; animation-delay: 9s; }
-    .img5 { top: 20%; left: 35%; animation-delay: 12s; }
-    .img6 { bottom: 20%; right: 25%; animation-delay: 15s; }
+    .img1 { top: 10%; left: 5%; animation-delay: 0s; }
+    .img2 { top: 20%; right: 10%; animation-delay: 4s; }
+    .img3 { bottom: 15%; left: 12%; animation-delay: 7s; }
+    .img4 { bottom: 20%; right: 5%; animation-delay: 10s; }
 
-    /* Floating Motion */
-    @keyframes floatAnim {
-      0%   { transform: translateY(0) rotate(0deg); }
-      50%  { transform: translateY(-20px) rotate(3deg); }
-      100% { transform: translateY(0) rotate(-2deg); }
+    @keyframes float {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      50%  { transform: translateY(-25px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(-2deg); }
     }
 
-    /* Mobile Responsiveness */
     @media (max-width: 600px) {
-      .countdown { font-size: 2rem; }
-      .headline { font-size: 1rem; }
-      .floating-img { width: 60px; }
+      .countdown-timer { font-size: 1.8rem; padding: 10px 14px; }
+      .details { font-size: 0.75rem; }
+      .floating-img { width: 50px; }
     }
   </style>
 </head>
-<body>
+<body class="matrix-fx">
 
-  <!-- Floating Background Images -->
-  <img src="IMG_8688.jpeg" class="floating-img img1" alt="">
-  <img src="IMG_8687.jpeg" class="floating-img img2" alt="">
-  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1704511064031-W9H9O9HB74EADRGZ0SS4/IMG_3025.jpeg" class="floating-img img3" alt="">
-  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755796555-SOIDBCRP5SKGHVZ5T8TO/oteil21.jpg" class="floating-img img4" alt="">
-  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755223256-ZKXA81NX1A7RSDMD0OPF/deadcoredrocks21.jpg?format=1500w" class="floating-img img5" alt="">
-  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755660325-K6WPIQGKJ2CY3RALJEK5/deadcochicstage.jpg?format=1500w" class="floating-img img6" alt="">
+  <!-- OVERLAY FX -->
+  <div class="overlay-glitch"></div>
 
-  <!-- Countdown -->
+  <!-- FLOATING IMAGES (replace URLs if needed) -->
+  <img src="IMG_8687.jpeg" class="floating-img img1" alt="">
+  <img src="IMG_8688.jpeg" class="floating-img img2" alt="">
+  <img src="IMG_8685.png" class="floating-img img3" alt="">
+  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755660325-K6WPIQGKJ2CY3RALJEK5/deadcochicstage.jpg?format=1500w" class="floating-img img4" alt="">
+
+  <!-- COUNTDOWN BLOCK -->
   <div class="countdown-container">
-    <div class="headline">DEAD & COMPANY — SAN FRANCISCO</div>
-    <div class="countdown" id="countdown">Loading...</div>
+    <div class="countdown-title">SF MISSION EVENT: DEAD & COMPANY</div>
+    <div class="countdown-timer" id="countdown">LOADING</div>
+    <div class="time-labels">[DAYS] [HOURS] [MINUTES] [SECONDS]</div>
+    <div class="details">
+      OPERATION TIMEPOINT: 01 AUG 2025 — GOLDEN GATE PARK<br>
+      ASSOCIATED UNITS: BILLY STRINGS / STURGILL SIMPSON / JOHNNY BLUE SKIES / TREY ANASTASIO BAND
+    </div>
   </div>
 
-  <!-- JavaScript: Countdown Logic -->
+  <!-- SCROLLING TICKER -->
+  <div class="ticker">
+    <span>BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO • DEAD & COMPANY • GOLDEN GATE • SAN FRANCISCO • AUGUST 1–3 2025 • DEAD50+ • OPERATION ASHBURY •</span>
+  </div>
+
+  <!-- COUNTDOWN SCRIPT -->
   <script>
     const countdownEl = document.getElementById('countdown');
     const targetDate = new Date("2025-08-01T00:00:00-07:00");
@@ -116,7 +199,7 @@
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        countdownEl.textContent = "SHOWTIME!";
+        countdownEl.textContent = "SHOWTIME";
         return;
       }
 
@@ -125,12 +208,8 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdownEl.innerHTML = `
-        ${days} DAYS<br>
-        ${hours.toString().padStart(2, '0')} HOURS<br>
-        ${minutes.toString().padStart(2, '0')} MINUTES<br>
-        ${seconds.toString().padStart(2, '0')} SECONDS
-      `;
+      countdownEl.innerHTML =
+        `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 
     updateCountdown();
