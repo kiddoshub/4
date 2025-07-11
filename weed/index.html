@@ -72,10 +72,10 @@
     const loader = new THREE.TextureLoader();
 
     // Load pyramid texture from your first image
-    const pyramidTexture = loader.load('E7F20829-C0F6-4732-BF12-83CC93C1C9CB.jpeg');
+    const pyramidTexture = loader.load('IMG_8667.jpeg');
 
     // Load sky texture from your second image
-    loader.load('C8D52F16-F90D-41BF-9544-96FEC808CD99.jpeg', function(tex) {
+    loader.load('IMG_8668.jpeg', function(tex) {
       const rt = new THREE.WebGLCubeRenderTarget(tex.image.height);
       rt.fromEquirectangularTexture(renderer, tex);
       scene.background = rt.texture;
