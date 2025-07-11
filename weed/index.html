@@ -1,158 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SF MISSION: DEAD & COMPANY</title>
+  <meta charset="UTF-8">
+  <title>SF MISSION TIMER — DEAD & COMPANY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
       font-family: 'OCR-A';
       src: url('OCR-a___.ttf') format('truetype');
     }
-
     html, body {
-      margin: 0;
-      padding: 0;
-      background-color: black;
-      color: #00FF00;
+      margin: 0; padding: 0;
+      background: #000; color: #00ff00;
       font-family: 'OCR-A', monospace;
-      font-size: 1rem;
-      line-height: 1.4;
+      font-size: 1rem; line-height: 1.4;
       overflow: hidden;
     }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      height: 100vh;
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: url('IMG_8667.jpeg') center/cover no-repeat;
+      opacity: 0.05; z-index: 0;
     }
-
+    .sat {
+      position: fixed; opacity: 0.08; z-index: 1; width: 35vw;
+    }
+    #sat1 { top: 5%; left: 2%; }
+    #sat2 { bottom: 8%; right: 3%; }
+    #sat3 { bottom: 5%; left: 6%; }
     .stealie {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      width: 60px;
-      height: auto;
-      opacity: 0.9;
+      position: fixed; top: 1rem; left: 1rem;
+      width: 60px; opacity: 0.9; z-index: 2;
       animation: float 6s ease-in-out infinite alternate;
     }
-
-    @keyframes float {
-      from { transform: translateY(0px); }
-      to { transform: translateY(8px); }
+    @keyframes float { from { transform: translateY(0);} to { transform: translateY(8px);} }
+    .container {
+      position: relative; z-index: 3;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 100vh; text-align: left; padding: 1rem;
     }
-
-    .satellite {
-      position: absolute;
-      opacity: 0.08;
-      z-index: 0;
-      width: 35vw;
+    .header {
+      font-size: 1.1rem; letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #00ff00;
+      width: 100%; text-align: center;
     }
-
-    #sat1 {
-      bottom: 5%;
-      left: 2%;
-    }
-
-    #sat2 {
-      top: 15%;
-      right: 5%;
-    }
-
-    #sat3 {
-      bottom: 10%;
-      right: 3%;
-    }
-
-    .title {
-      z-index: 1;
-      color: #00ff00;
-      font-size: 1.25rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .countdown-box {
-      z-index: 2;
-      border: 2px solid red;
-      padding: 0.8rem 1.2rem;
+    .countdown {
+      font-size: 3rem; color: #ff3030;
+      padding: 0.2em 0.4em;
+      border: 1px solid #ff3030;
+      text-shadow: 0 0 8px #ff3030;
+      letter-spacing: 0.2em;
+      margin: 1rem 0;
       display: inline-block;
-      font-size: 2rem;
-      font-weight: bold;
-      color: red;
-      background: black;
-      text-shadow: 0 0 8px red;
-      letter-spacing: 0.25em;
     }
-
     .labels {
-      margin-top: 0.6rem;
-      font-size: 0.9rem;
-      letter-spacing: 0.1em;
-      color: #00ff00;
+      font-size: 0.9rem; letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      text-align: center;
+      width: 100%;
     }
-
-    .footer {
-      margin-top: 2rem;
+    .log {
+      font-size: 0.9rem;
+      white-space: pre;
+      text-align: left;
       max-width: 90vw;
-      font-size: 0.9rem;
-      white-space: pre-line;
+      margin-top: 1rem;
+      border-top: 1px solid #00ff00;
+      padding-top: 0.5rem;
     }
-
     @media (max-width: 600px) {
-      .countdown-box {
-        font-size: 1.6rem;
-      }
-      .labels {
-        font-size: 0.75rem;
-      }
+      .countdown { font-size: 2rem; }
+      .header, .labels, .log { font-size: 0.8rem; }
     }
   </style>
 </head>
 <body>
-  <img class="stealie" src="IMG_8667.jpeg" alt="Stealie">
-  <img id="sat1" class="satellite" src="IMG_8685.png" alt="Satellite 1" />
-  <img id="sat2" class="satellite" src="IMG_8687.jpeg" alt="Satellite 2" />
-  <img id="sat3" class="satellite" src="IMG_8688.jpeg" alt="Satellite 3" />
 
-  <div class="title">SF MISSION EVENT: DEAD & COMPANY</div>
+  <img id="sat1" class="sat" src="IMG_8685.png" alt="">
+  <img id="sat2" class="sat" src="IMG_8687.jpeg" alt="">
+  <img id="sat3" class="sat" src="IMG_8688.jpeg" alt="">
+  <img class="stealie" src="stealie.png" alt="Stealie">
 
-  <div class="countdown-box" id="countdown">00:00:00:00</div>
-  <div class="labels">[DAYS]   [HOURS]   [MINUTES]   [SECONDS]</div>
+  <div class="container">
+    <div class="header">
+      CLASS: UNCL // DIST: ALL // NODE: SF-MISSION-COM<br>
+      OPERATION CODE: SF-DNC-0825 // TIMEPOINT: 01 AUG 2025
+    </div>
 
-  <div class="footer">
-OPERATION TIMEPOINT: 01 AUG 2025 — GOLDEN GATE PARK  
-ASSOCIATED UNITS:
-  — BILLY STRINGS  
-  — STURGILL SIMPSON  
-  — JOHNNY BLUE SKIES  
-  — TREY ANASTASIO BAND
+    <div class="countdown" id="cd">--:--:--:--</div>
+    <div class="labels">[DAYS]   [HOURS]   [MINUTES]   [SECONDS]</div>
+
+    <div class="log">
+UNIT LOG — DEAD & COMPANY<br>
+  — BOB WEIR (b.1947) — rhythm guitar & vocals — founding Grateful Dead — ACTIVE<br>
+  — MICKEY HART (b.1943) — drums & percussion — founding member — ACTIVE<br>
+  — JOHN MAYER (b.1977) — lead guitar & vocals — joined 2015 — ACTIVE<br>
+  — OTEIL BURBRIDGE (b.1964) — bass, percussion, vocals — ACTIVE<br>
+  — JEFF CHIMENTI (b.1968) — keyboards, backing vocals — ACTIVE<br>
+  — JAY LANE (b.1964) — drums — replaced 2023 — ACTIVE<br><br>
+GUEST UNITS — GOLDEN GATE RUN<br>
+  • BILLY STRINGS (b.1992) — bluegrass guitarist — OPENING AUG 1<br>
+  • STURGILL SIMPSON (b.1978) — country rock vocalist — OPENING AUG 2<br>
+  • JOHNNY BLUE SKIES — folk singer-songwriter — OPENING AUG 2<br>
+  • TREY ANASTASIO BAND (b.1964) — Phish guitarist — CLOSING AUG 3
+    </div>
   </div>
 
   <script>
-    const countdown = document.getElementById("countdown");
+    const cd = document.getElementById('cd');
     const target = new Date("2025-08-01T00:00:00-07:00").getTime();
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const diff = target - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      countdown.innerHTML =
-        `${days.toString().padStart(2, '0')}:` +
-        `${hours.toString().padStart(2, '0')}:` +
-        `${minutes.toString().padStart(2, '0')}:` +
-        `${seconds.toString().padStart(2, '0')}`;
+    function pad(n){return n.toString().padStart(2,'0');}
+    function update(){
+      const now = Date.now(), d = target - now;
+      if(d <= 0){
+        cd.textContent = "00:00:00:00";
+        return;
+      }
+      const days = Math.floor(d/86400000),
+            hours = Math.floor((d%86400000)/3600000),
+            mins = Math.floor((d%3600000)/60000),
+            secs = Math.floor((d%60000)/1000);
+      cd.textContent = `${pad(days)}:${pad(hours)}:${pad(mins)}:${pad(secs)}`;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    update();
+    setInterval(update, 1000);
   </script>
 </body>
 </html>
