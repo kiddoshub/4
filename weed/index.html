@@ -5,6 +5,311 @@
   <title>Dead & Company SF Countdown</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <!-- CSS will follow -->
+  <style>
+  @font-face {
+    font-family: 'Hendrix';
+    src: url('HENDD___.TTF') format('truetype');
+    font-display: swap;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Hendrix', Arial, Helvetica, sans-serif;
+    background: #222;
+    color: #fff;
+  }
+
+  /* Background image as fixed */
+  #bg-image {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Stealie swirl overlay */
+  #stealie-swirl {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover;
+    opacity: 0.20;
+    z-index: 1;
+    mix-blend-mode: lighten;
+    pointer-events: none;
+  }
+
+  /* Decorative poster assets */
+  #logo-60th {
+    position: fixed;
+    top: 3vw; left: 50%;
+    transform: translateX(-50%);
+    width: 18vw; min-width: 90px; max-width: 260px;
+    z-index: 2;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  #stealie-icon {
+    position: fixed;
+    top: 5vw; left: 3vw;
+    width: 7vw; min-width: 56px; max-width: 90px;
+    z-index: 3;
+    opacity: 0.92;
+    pointer-events: none;
+    filter: drop-shadow(0 0 14px #faff88bb);
+  }
+
+  #golden-gate-bridge {
+    position: fixed;
+    bottom: 12vw; left: 11vw;
+    width: 29vw; min-width: 120px; max-width: 320px;
+    z-index: 3;
+    opacity: 0.92;
+    pointer-events: none;
+  }
+
+  #skeleton-left {
+    position: fixed;
+    bottom: 6vw; left: 1vw;
+    width: 15vw; min-width: 60px; max-width: 140px;
+    z-index: 3;
+    opacity: 0.93;
+    pointer-events: none;
+  }
+
+  #skeleton-right {
+    position: fixed;
+    bottom: 7vw; right: 1vw;
+    width: 18vw; min-width: 80px; max-width: 180px;
+    z-index: 3;
+    opacity: 0.93;
+    pointer-events: none;
+  }
+
+  #blimp {
+    position: fixed;
+    top: 14vw; right: 9vw;
+    width: 13vw; min-width: 52px; max-width: 130px;
+    z-index: 3;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  #golden-gate-park-art {
+    position: fixed;
+    bottom: 23vw; left: 53vw;
+    width: 11vw; min-width: 42px; max-width: 95px;
+    z-index: 3;
+    opacity: 0.90;
+    pointer-events: none;
+  }
+
+  /* Main content above art */
+  #main-content {
+    position: relative;
+    z-index: 10;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vw;
+    padding-top: 8vw;
+    pointer-events: auto;
+  }
+
+  /* Header text */
+  .headline {
+    font-size: clamp(2.2rem, 5vw, 4.7rem);
+    text-align: center;
+    background: linear-gradient(90deg,#faff88 10%,#ff70fa 50%,#70fff9 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1.3px #151513;
+    margin-bottom: 0.1em;
+    filter: drop-shadow(0 0 12px #70fff944);
+    user-select: none;
+    line-height: 1.04;
+    letter-spacing: 0.09em;
+  }
+
+  .subheadline {
+    font-size: clamp(1.1rem, 3vw, 2.2rem);
+    background: linear-gradient(90deg,#fffdcb 65%,#70fff9 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px #101623bb;
+    margin-bottom: 0.2em;
+    filter: drop-shadow(0 0 10px #faff8844);
+    user-select: none;
+    letter-spacing: 0.10em;
+    text-align: center;
+  }
+
+  .dates {
+    font-size: clamp(1rem,2vw,1.6rem);
+    color: #faff88;
+    text-shadow: 0 0 13px #fcff7dcc;
+    margin-bottom: 1.4em;
+    letter-spacing: 0.18em;
+    user-select: none;
+    text-align: center;
+  }
+
+  /* Countdown */
+  #countdown-section {
+    margin: 0 auto 2vw auto;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+  }
+
+  #countdown {
+    font-size: clamp(4rem, 13vw, 13rem);
+    background: linear-gradient(90deg, #faff88 0%, #70fff9 50%, #ff70fa 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 3.5px #191919cc;
+    text-shadow: 0 0 54px #faff88bb, 0 0 22px #ff70fa88;
+    font-weight: bold;
+    letter-spacing: 0.11em;
+    filter: drop-shadow(0 0 40px #70fff9bb);
+    animation: pulseglow 7s ease-in-out infinite alternate;
+    user-select: all;
+    text-align: center;
+    margin-bottom: 0.22em;
+  }
+  @keyframes pulseglow {
+    0%,100% { text-shadow: 0 0 54px #faff88bb, 0 0 22px #ff70fa88;}
+    50% { text-shadow: 0 0 90px #70fff9bb, 0 0 54px #faff88bb;}
+  }
+
+  .count-labels {
+    font-size: clamp(1.1rem, 2vw, 1.9rem);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 3vw;
+    font-weight: normal;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.11em;
+  }
+  .count-labels span {
+    flex: 1 1 22%;
+    background: linear-gradient(90deg,#ff70fa,#faff88 50%,#70fff9 90%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px #1239;
+    user-select: none;
+    text-align: center;
+  }
+
+  /* Location block */
+  .location-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5vw 0 1.6vw 0;
+    gap: 1vw;
+    z-index: 15;
+  }
+  .loc-text {
+    font-size: clamp(0.95rem,2.1vw,1.4rem);
+    background: linear-gradient(90deg,#fcff7d,#ff70fa 90%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: .7px #0a0354;
+    text-shadow: 0 0 7px #fcff7d77,0 0 1px #fff,0 1px 4px #0007;
+    border-radius: 0.8vw;
+    padding: 0.12em 1em;
+    filter: drop-shadow(0 0 7px #fcff7daa);
+    user-select: none;
+  }
+
+  /* Special guests */
+  .guests-title {
+    font-size: clamp(1.05rem,2.3vw,2rem);
+    background: linear-gradient(90deg,#ff70fa,#faff88 60%,#70fff9 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 0.9px #0a0354;
+    text-shadow: 0 0 8px #fcff7d88;
+    letter-spacing: 0.12em;
+    user-select: none;
+    margin-bottom: 0.2em;
+    text-align: center;
+  }
+  .guests-days {
+    width: 97vw;
+    max-width: 850px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    justify-content: center;
+    z-index: 13;
+  }
+  .guests-day {
+    flex: 1 1 120px;
+    min-width: 90px;
+    min-height: 70px;
+    padding: 1vw 2vw;
+    background: radial-gradient(ellipse 90% 60% at 55% 40%, #ff70fa66 0%, #faff8880 100%);
+    border-radius: 45% 48% 60% 42%/50% 60% 55% 44%;
+    box-shadow: 0 0 13px #fcff7d44;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1vw;
+    opacity: 0.96;
+    z-index: 13;
+  }
+  .guests-day h3 {
+    font-size: clamp(.82rem,1.1vw,1.12rem);
+    background: linear-gradient(90deg,#70fff9,#ff70fa 80%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 0.7px #111;
+    margin: 0 0 .13em 0;
+    letter-spacing: 0.09em;
+    text-shadow: 0 0 4px #70fff988;
+    user-select: none;
+    text-align: center;
+  }
+  .guests-list {
+    font-size: clamp(0.7rem,0.95vw,0.98rem);
+    color: #fff;
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 0 0 3px #70fff9bb,0 1px 3px #ff70fa66;
+    user-select: text;
+  }
+
+  /* Responsive mobile adjustments */
+  @media (max-width: 800px) {
+    #main-content { padding-top: 13vw; }
+    .headline { font-size: 1.05rem; }
+    .subheadline { font-size: .75rem;}
+    .dates { font-size: .59rem;}
+    #countdown { font-size: 2.2rem;}
+    .count-labels span { font-size: .75rem;}
+    .guests-title { font-size: .75rem;}
+    .guests-day h3 { font-size: .6rem;}
+    .guests-list { font-size: .7rem;}
+  }
+</style>
 </head>
 <body>
   <!-- BACKGROUND ART LAYERS -->
