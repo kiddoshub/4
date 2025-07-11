@@ -2,190 +2,249 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Grateful Dead x Matrix: SF Countdown</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- VT323 Mono font for that retro feel -->
+  <title>Dead & Company SF Countdown</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style>
+    /*── fonts & globals ──*/
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
     :root {
-      --bg-color:    #000;
-      --clr-primary: #00ffe8;
-      --clr-accent:  #ffec00;
-      --font-mono:   'VT323', monospace;
+      --bg:         #000;
+      --main-clr:   #00ffe8;
+      --accent:     #ffec00;
+      --font-mono:  'VT323', monospace;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body {
+    * { margin:0; padding:0; box-sizing:border-box }
+    html,body {
       width:100vw; height:100vh; overflow:hidden;
-      background: var(--bg-color);
+      background: var(--bg);
       font-family: var(--font-mono);
-      color: var(--clr-primary);
+      color: var(--main-clr);
     }
-    /* Header */
-    #header {
-      position: absolute; top: 3vh; width:100%;
-      text-align: center;
-      font-size: 4vw;
-      color: var(--clr-accent);
-      text-shadow:
-        0 0 8px var(--clr-accent),
-        0 0 20px var(--clr-accent);
-      z-index: 40;
-      pointer-events: none;
-    }
-    /* Full-screen canvases */
-    canvas {
-      position: absolute; top:0; left:0;
+
+    /*── your two images ──*/
+    .artlayer, .overlay {
+      position:absolute; top:0; left:0;
       width:100vw; height:100vh;
-      pointer-events: none;
+      object-fit:cover;
+      pointer-events:none;
     }
-    #matrix { z-index: 1; mix-blend-mode: screen; }
-    #psygeo  { z-index: 2; mix-blend-mode: screen; }
-    /* Timer box */
+    .artlayer {
+      z-index:0;
+      mix-blend-mode:multiply;
+      opacity:0.9;
+    }
+    .overlay {
+      z-index:3;
+      mix-blend-mode:lighten;
+      opacity:0.8;
+    }
+
+    /*── matrix & geo canvases ──*/
+    canvas {
+      position:absolute; top:0; left:0;
+      width:100vw; height:100vh;
+      pointer-events:none;
+    }
+    #matrix { z-index:1; mix-blend-mode:screen }
+    #psygeo  { z-index:2; mix-blend-mode:screen }
+    #vhs     { z-index:4; mix-blend-mode:screen; opacity:0.15 }
+
+    /*── scanlines overlay ──*/
+    #scanlines {
+      position:absolute; top:0; left:0;
+      width:100vw; height:100vh;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.15) 0px,
+        rgba(0,0,0,0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events:none;
+      z-index:5;
+      opacity:0.4;
+      animation: flickerScan 0.2s infinite;
+    }
+    @keyframes flickerScan {
+      0%   { opacity:0.3 }
+      50%  { opacity:0.5 }
+      100% { opacity:0.3 }
+    }
+
+    /*── header, timer, ticker ──*/
+    #header {
+      position:absolute; top:3vh; width:100%;
+      text-align:center; font-size:4vw;
+      color:var(--accent);
+      text-shadow:
+        0 0 8px var(--accent),
+        0 0 20px var(--accent);
+      z-index:6;
+      pointer-events:none;
+    }
     #timer-wrap {
-      position: absolute;
-      top: 40%; left: 50%;
-      transform: translate(-50%,-50%);
-      padding: 1vw 2vw;
-      border: 0.5vw solid var(--clr-accent);
-      z-index: 39;
-      pointer-events: none;
+      position:absolute;
+      top:40%; left:50%;
+      transform:translate(-50%,-50%);
+      padding:1vw 2vw;
+      border:0.5vw solid var(--accent);
+      z-index:7;
     }
     #main-timer {
-      font-size: 12vw;
-      line-height: 1;
-      text-align: center;
-      color: var(--clr-accent);
+      font-size:12vw; line-height:1;
+      text-align:center;
+      color:var(--accent);
       text-shadow:
-        0 0 12px var(--clr-accent),
+        0 0 12px var(--accent),
         0 0 44px #ffd700;
     }
-    /* Scrolling ticker */
     #ticker-wrap {
-      position: absolute; bottom: 5vh; left: 0;
+      position:absolute; bottom:5vh; left:0;
       width:100vw; overflow:hidden;
-      z-index: 38;
-      pointer-events: none;
+      z-index:8;
+      pointer-events:none;
     }
     #ticker {
-      white-space: nowrap;
-      font-size: 3.5vw;
-      color: var(--clr-primary);
-      text-shadow: 0 0 8px var(--clr-primary);
-      will-change: transform;
+      white-space:nowrap;
+      font-size:3.5vw;
+      color:var(--main-clr);
+      text-shadow:0 0 8px var(--main-clr);
+      will-change:transform;
     }
   </style>
 </head>
 <body>
+  <!-- your custom images -->
+  <img class="artlayer" src="IMG_8667.jpeg" alt="">
+  <img class="overlay"  src="IMG_8668.jpeg" alt="">
 
-  <div id="header">GRATEFUL DEAD SF COUNTDOWN</div>
+  <!-- canvases -->
   <canvas id="matrix"></canvas>
   <canvas id="psygeo"></canvas>
+  <canvas id="vhs"></canvas>
+  <div id="scanlines"></div>
 
+  <!-- UI -->
+  <div id="header">DEAD & COMPANY SF COUNTDOWN</div>
   <div id="timer-wrap">
     <div id="main-timer">00:00:00:00</div>
   </div>
-
   <div id="ticker-wrap">
     <div id="ticker"></div>
   </div>
 
   <script>
   (function(){
-    // —— Config —— 
+    // ── config ──
     const cfg = {
-      deadline:    new Date('2025-08-01T00:00:00-07:00'),
-      tickerText:  ' DEAD & COMPANY • BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO BAND • ',
-      doneText:    'THE GOLDEN ROAD',
-      charset:     'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789⚡'
+      deadline:   new Date('2025-08-01T00:00:00-07:00'),
+      tickerText: ' DEAD & COMPANY • BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO BAND • ',
+      doneText:   'THE GOLDEN ROAD',
+      charset:    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789⚡'
     };
 
-    // —— Elements & state —— 
-    const mCanvas = document.getElementById('matrix'),
-          mCtx    = mCanvas.getContext('2d'),
-          gCanvas = document.getElementById('psygeo'),
-          gCtx    = gCanvas.getContext('2d'),
-          timerEl = document.getElementById('main-timer'),
-          tickerEl= document.getElementById('ticker');
-    let W, H, cols, fontSize, drops, tickerX = 0;
+    // ── elements & state ──
+    const mC = document.getElementById('matrix'),
+          m  = mC.getContext('2d'),
+          gC = document.getElementById('psygeo'),
+          g  = gC.getContext('2d'),
+          vC = document.getElementById('vhs'),
+          v  = vC.getContext('2d'),
+          tm = document.getElementById('main-timer'),
+          tk = document.getElementById('ticker');
+    let W, H, cols, fz, drops, tx = 0;
 
-    // —— Resize & init —— 
-    function resize() {
-      W = mCanvas.width = gCanvas.width = window.innerWidth;
-      H = mCanvas.height = gCanvas.height = window.innerHeight;
-      fontSize = Math.max(24, Math.floor(W / 110));
-      cols = Math.floor(W / fontSize);
-      drops = new Array(cols).fill(1);
-      tickerEl.textContent = cfg.tickerText.repeat(6);
+    // ── handle resize ──
+    function resize(){
+      W = mC.width = gC.width = vC.width = window.innerWidth;
+      H = mC.height = gC.height = vC.height = window.innerHeight;
+      fz   = Math.max(24, Math.floor(W/110));
+      cols = Math.floor(W/fz);
+      drops= Array(cols).fill(1);
+      tk.textContent = cfg.tickerText.repeat(6);
     }
     window.addEventListener('resize', resize);
     resize();
 
-    // —— Timer update —— 
+    // ── countdown ──
     function updateTimer(){
       const ms = cfg.deadline - new Date();
-      if(ms <= 0){
-        timerEl.textContent = cfg.doneText;
+      if(ms<=0){
+        tm.textContent = cfg.doneText;
         return;
       }
-      const s   = Math.floor(ms / 1000),
-            d   = Math.floor(s / 86400),
-            h   = Math.floor((s % 86400)/3600),
-            m   = Math.floor((s % 3600)/60),
-            sec = s % 60;
-      timerEl.textContent = [d,h,m,sec]
+      const s   = Math.floor(ms/1000),
+            d   = Math.floor(s/86400),
+            h   = Math.floor((s%86400)/3600),
+            m_  = Math.floor((s%3600)/60),
+            sec = s%60;
+      tm.textContent = [d,h,m_,sec]
         .map(n=>String(n).padStart(2,'0'))
         .join(':');
     }
     setInterval(updateTimer,1000);
     updateTimer();
 
-    // —— Matrix rain —— 
+    // ── Matrix rain ──
     function drawMatrix(){
-      mCtx.fillStyle = 'rgba(0,0,0,0.05)';
-      mCtx.fillRect(0,0,W,H);
-      mCtx.font = `${fontSize}px VT323`;
-      for(let i=0; i<cols; i++){
-        const ch = cfg.charset[Math.floor(Math.random()*cfg.charset.length)];
-        mCtx.fillStyle = (Math.random()>0.97 ? '#ffec00' : '#00ffe8');
-        mCtx.fillText(ch, i*fontSize, drops[i]*fontSize);
-        if(drops[i]*fontSize > H && Math.random()>0.975) drops[i]=0;
+      m.fillStyle = 'rgba(0,0,0,0.05)';
+      m.fillRect(0,0,W,H);
+      m.font = `${fz}px VT323`;
+      for(let i=0;i<cols;i++){
+        const ch = cfg.charset.charAt(Math.floor(Math.random()*cfg.charset.length));
+        m.fillStyle = Math.random()>0.97? '#ffec00':'#00ffe8';
+        m.fillText(ch, i*fz, drops[i]*fz);
+        if(drops[i]*fz>H && Math.random()>0.975) drops[i]=0;
         drops[i]++;
       }
     }
 
-    // —— Psychedelic geometry —— 
+    // ── rotating triangle ──
     function drawGeo(){
-      gCtx.clearRect(0,0,W,H);
-      const cx = W/2, cy = H/2, size = W*0.1;
-      gCtx.save();
-      gCtx.translate(cx, cy);
-      gCtx.rotate(performance.now()/5000);
-      gCtx.beginPath();
+      g.clearRect(0,0,W,H);
+      const cx=W/2, cy=H/2, s=W*0.1;
+      g.save();
+      g.translate(cx,cy);
+      g.rotate(performance.now()/5000);
+      g.beginPath();
       for(let i=0;i<3;i++){
-        const ang = i*(2*Math.PI/3) - Math.PI/2;
-        gCtx.lineTo(Math.cos(ang)*size, Math.sin(ang)*size);
+        const a = i*(2*Math.PI/3)-Math.PI/2;
+        g.lineTo(Math.cos(a)*s, Math.sin(a)*s);
       }
-      gCtx.closePath();
-      gCtx.lineWidth = 4;
-      gCtx.strokeStyle = 'rgba(0,255,232,0.2)';
-      gCtx.shadowColor = '#0ff';
-      gCtx.shadowBlur = 15;
-      gCtx.stroke();
-      gCtx.restore();
+      g.closePath();
+      g.lineWidth   = 4;
+      g.strokeStyle = 'rgba(0,255,232,0.2)';
+      g.shadowColor = '#0ff';
+      g.shadowBlur  = 15;
+      g.stroke();
+      g.restore();
     }
 
-    // —— Ticker scroll & loop —— 
+    // ── VHS noise ──
+    function drawVHS(){
+      v.clearRect(0,0,W,H);
+      const sz = 4;
+      for(let x=0;x<W;x+=sz)
+        for(let y=0;y<H;y+=sz){
+          const val = Math.floor(Math.random()*255);
+          v.fillStyle = `rgba(${val},${val},${val},${Math.random()*0.1})`;
+          v.fillRect(x,y,sz,sz);
+        }
+    }
+    setInterval(drawVHS,100);
+
+    // ── main loop ──
     function loop(){
       drawMatrix();
       drawGeo();
-      tickerX -= 1.5;
-      const tw = tickerEl.scrollWidth;
-      if(-tickerX > tw/2) tickerX = 0;
-      tickerEl.style.transform = `translateX(${tickerX}px)`;
+      // ticker scroll
+      tx -= 1.5;
+      const tw = tk.scrollWidth;
+      if(-tx > tw/2) tx = 0;
+      tk.style.transform = `translateX(${tx}px)`;
       requestAnimationFrame(loop);
     }
     loop();
-
   })();
   </script>
 </body>
