@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DEAD & CO. // SF MISSION TIMER</title>
+  <title>MISSION TIMER — SF: DEAD & CO.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
@@ -13,76 +13,106 @@
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000;
-      color: #00ff66;
+      background: #000;
+      color: #00ff00;
       font-family: 'OCR-A', monospace;
-      font-size: 16px;
-      line-height: 1.6;
       overflow: hidden;
     }
 
-    .screen {
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url('IMG_8667.jpeg') center/cover no-repeat;
+      opacity: 0.05;
+      z-index: 0;
+      filter: grayscale(1);
+    }
+
+    .sat-img {
+      position: fixed;
+      width: 22vmin;
+      opacity: 0.11;
+      z-index: 1;
+      filter: grayscale(1) brightness(0.7);
+    }
+
+    #sat1 { top: 4vh; left: 2vw; }
+    #sat2 { bottom: 4vh; right: 2vw; }
+    #sat3 { bottom: 10vh; left: 6vw; }
+
+    #stealie {
+      position: fixed;
+      top: 2vh;
+      left: 2vw;
+      width: 70px;
+      opacity: 0.12;
+      z-index: 2;
+    }
+
+    .main {
+      position: relative;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
-      padding: 1em;
     }
 
-    h1 {
-      font-size: 1.5em;
-      margin-bottom: 0.5em;
-      text-transform: uppercase;
+    .title {
+      font-size: 1.2rem;
+      margin-bottom: 1em;
       letter-spacing: 0.1em;
     }
 
     .countdown {
-      font-size: 3.5em;
-      color: #ff4040;
+      font-size: 3.8rem;
+      color: #ff3030;
       background: #000;
-      padding: 0.3em 0.5em;
-      border: 1px solid #ff4040;
-      box-shadow: 0 0 10px #ff4040;
-      margin: 0.5em 0;
+      padding: 0.2em 0.4em;
+      border: 1px solid #ff3030;
     }
 
     .labels {
-      display: flex;
-      justify-content: center;
-      font-size: 0.9em;
-      color: #00ff66;
-      margin-top: 0.3em;
-      gap: 1.5em;
+      font-size: 0.85rem;
+      margin-top: 0.6em;
+      color: #00ff00;
+      letter-spacing: 0.15em;
     }
 
-    .footer {
-      font-size: 0.75em;
+    .info {
+      font-size: 0.9rem;
       margin-top: 2em;
-      color: #00ff66;
-      text-transform: uppercase;
+      max-width: 90vw;
+      line-height: 1.5;
+      text-align: left;
     }
 
     @media (max-width: 600px) {
-      .countdown { font-size: 2.4em; }
-      h1 { font-size: 1.2em; }
+      .countdown {
+        font-size: 2.4rem;
+      }
+      .title {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="screen">
-    <h1>// MISSION COUNTDOWN: DEAD & CO. SAN FRANCISCO //</h1>
-    <div class="countdown" id="countdown">--:--:--:--</div>
-    <div class="labels">
-      <span>DAYS</span>
-      <span>HOURS</span>
-      <span>MINUTES</span>
-      <span>SECONDS</span>
-    </div>
-    <div class="footer">
-      EVENT: GOLDEN GATE PARK / AUG 1–3, 2025<br>
-      GUESTS: BILLY STRINGS, STURGILL SIMPSON, TREY ANASTASIO BAND
+  <img id="sat1" class="sat-img" src="IMG_8688.jpeg" alt="">
+  <img id="sat2" class="sat-img" src="IMG_8687.jpeg" alt="">
+  <img id="sat3" class="sat-img" src="IMG_8685.png" alt="">
+  <img id="stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie">
+
+  <div class="main">
+    <div class="title">SF MISSION EVENT: DEAD & COMPANY</div>
+    <div id="countdown" class="countdown">--:--:--:--</div>
+    <div class="labels">[DAYS]   [HOURS]   [MINUTES]   [SECONDS]</div>
+    <div class="info">
+      OPERATION TIMEPOINT: 01 AUG 2025 — GOLDEN GATE PARK<br>
+      ASSOCIATED UNITS: BILLY STRINGS / STURGILL SIMPSON / JOHNNY BLUE SKIES / TREY ANASTASIO BAND
     </div>
   </div>
 
@@ -92,7 +122,7 @@
     }
 
     function updateCountdown() {
-      const eventTime = new Date('2025-08-01T07:00:00Z'); // UTC time for Aug 1, 2025 @ 00:00 PDT
+      const eventTime = new Date('2025-08-01T07:00:00Z'); // PDT = UTC-7
       const now = new Date();
       const diff = eventTime - now;
 
@@ -110,8 +140,8 @@
         `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
 
-    setInterval(updateCountdown, 1000);
     updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
