@@ -36,10 +36,16 @@
       }
     }
 
-    .overlay-glitch {
+    .overlay-glitch,
+    .overlay-anim {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .overlay-glitch {
       background: repeating-linear-gradient(
         0deg,
         rgba(0,255,0,0.03),
@@ -47,28 +53,22 @@
         transparent 1px,
         transparent 2px
       );
-      pointer-events: none;
-      z-index: 2;
       mix-blend-mode: screen;
       animation: flicker 2.5s infinite alternate;
+    }
+
+    .overlay-anim img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      mix-blend-mode: screen;
     }
 
     @keyframes flicker {
       0% { opacity: 0.02; }
       50% { opacity: 0.06; }
       100% { opacity: 0.03; }
-    }
-
-    .matrix-fx::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(0,255,0,0.12), transparent 60%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-      z-index: 1;
     }
 
     .countdown-container {
@@ -168,7 +168,14 @@
   </style>
 </head>
 <body class="matrix-fx">
+
+  <!-- Green glow grid -->
   <div class="overlay-glitch"></div>
+
+  <!-- Animated psychedelic glow overlay -->
+  <div class="overlay-anim">
+    <img src="your-glow.gif" alt="glow effect" />
+  </div>
 
   <!-- Floating Images -->
   <img src="IMG_8687.jpeg" class="floating-img img1" alt="">
