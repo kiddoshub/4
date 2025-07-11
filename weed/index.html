@@ -2,71 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>COUNTDOWN - GD.SF.OP-CMD</title>
+  <title>DEAD & CO. COUNTDOWN – TERMINAL NODE SF-876</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     html, body {
       background-color: #000;
       color: #00FF00;
-      font-family: monospace;
+      font-family: 'Courier New', Courier, monospace;
       margin: 0;
-      padding: 2rem;
-      font-size: 16px;
+      padding: 2vh 4vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .terminal-block {
-      max-width: 720px;
-      margin: 0 auto;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-    .label {
-      color: #00FF00;
-    }
-    .value {
-      font-weight: bold;
+    .terminal-line {
+      white-space: pre;
+      line-height: 1.8;
     }
     #countdown {
-      font-size: 1.2rem;
-      padding: 1rem 0;
+      font-weight: bold;
+      font-size: 2.5em;
+      color: #00FF00;
+      text-shadow: 0 0 5px #00FF00;
+      margin: 1rem 0;
     }
-    .blinker {
+    .cursor {
       display: inline-block;
-      width: 10px;
-      height: 16px;
-      background-color: #00FF00;
+      width: 0.7ch;
+      height: 1.1em;
+      background: #00FF00;
       animation: blink 1s steps(1) infinite;
     }
     @keyframes blink {
-      0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="terminal-block">
-GD.SF.OPSNET//ACTIVE LINK
-----------------------------------------
-MISSION: GD60 CELEBRATION - GOLDEN GATE PARK
-LOCATION: SAN FRANCISCO, CALIFORNIA
-DATES: 2025.08.01 - 2025.08.03
-COORDINATES: 37.7801°N, 122.4202°W
-
-STANDBY FOR LIVE DEPLOYMENT COUNTDOWN
-----------------------------------------
-
-<span id="countdown">LOADING...</span>
-<span class="blinker"></span>
-
-  </div>
+  <div class="terminal-line">> INITIATING CONNECTION: NODE SF-876</div>
+  <div class="terminal-line">> ACCESS LEVEL GRANTED</div>
+  <div class="terminal-line">> TARGET: DEAD & COMPANY / GOLDEN GATE PARK</div>
+  <div class="terminal-line">> EVENT DATE: AUG 1, 2025 – 00:00 PDT</div>
+  <div class="terminal-line">> COUNTDOWN TO EVENT:</div>
+  <div id="countdown">--:--:--:--</div>
+  <div class="terminal-line">> STATUS: STANDBY <span class="cursor"></span></div>
 
   <script>
+    const countdownEl = document.getElementById("countdown");
+
     function updateCountdown() {
-      const eventDate = new Date("2025-08-01T00:00:00-07:00"); // PDT
+      const eventDate = new Date("2025-08-01T07:00:00Z"); // PDT is UTC-7
       const now = new Date();
       const diff = eventDate - now;
 
       if (diff <= 0) {
-        document.getElementById("countdown").textContent = ">> COUNTDOWN COMPLETE <<";
+        countdownEl.textContent = "00:00:00:00";
         return;
       }
 
@@ -75,13 +66,15 @@ STANDBY FOR LIVE DEPLOYMENT COUNTDOWN
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      document.getElementById("countdown").textContent =
-        `T-MINUS ${days} DAYS ${hours.toString().padStart(2, '0')}H ` +
-        `${minutes.toString().padStart(2, '0')}M ${seconds.toString().padStart(2, '0')}S`;
+      countdownEl.textContent = 
+        String(days).padStart(2, '0') + ":" +
+        String(hours).padStart(2, '0') + ":" +
+        String(minutes).padStart(2, '0') + ":" +
+        String(seconds).padStart(2, '0');
     }
 
-    setInterval(updateCountdown, 1000);
     updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
