@@ -2,328 +2,314 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dead & Company SF Countdown • 1 Aug 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 1960s Poster Font Stand-in: Creepster (best web-safe alternative, swap if you host your own) -->
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <title>Dead & Company SF Countdown</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Psychedelic Headline Font: Ewert; Labels: Public Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Ewert&family=Public+Sans:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --psy-bg1: #23006d;
-      --psy-bg2: #fe3e7b;
-      --psy-bg3: #00ffdd;
-      --psy-bg4: #ffd902;
-      --scanline-color: rgba(0,0,0,0.12);
-      --font-main: 'Creepster', "Underground NF", Impact, sans-serif;
-      --font-secondary: 'Arial Rounded MT Bold', 'Arial', sans-serif;
-    }
+      /* Core Palette */
+      --bg-dark1: #2c003e;
+      --bg-dark2: #004d47;
+      --bg-dark3: #a44200;
+      --lime: #b0f2b4;
+      --magenta: #d40078;
+      --gold: #f9a602;
+      --highlight: #F7F8EA;
+      --label: #fcfcfc;
+      --shadow: #130010cc;
 
+      /* Fonts */
+      --headline: 'Ewert', fantasy, cursive;
+      --label-font: 'Public Sans', Arial Rounded MT Bold, Arial, sans-serif;
+    }
     html, body {
+      margin: 0; padding: 0;
+      min-height: 100%;
+      width: 100%;
+      box-sizing: border-box;
       height: 100%;
-      margin: 0;
-      padding: 0;
       overflow-x: hidden;
-      background: linear-gradient(120deg, var(--psy-bg1) 0%, var(--psy-bg2) 30%, var(--psy-bg3) 70%, var(--psy-bg4) 100%);
-      animation: bg-warp 14s linear infinite alternate;
-      min-height: 100vh;
+      background: radial-gradient(ellipse 80% 100% at 50% 40%, var(--bg-dark1) 0%, var(--bg-dark2) 60%, var(--bg-dark3) 100%);
+      /* Animated background movement */
+      animation: bg-warp 28s ease-in-out infinite alternate;
+      position: relative;
     }
     @keyframes bg-warp {
-      0% { filter: hue-rotate(0deg) saturate(1.1); }
-      100% { filter: hue-rotate(360deg) saturate(1.5); }
+      0% {
+        background-position: 50% 40%;
+        filter: hue-rotate(0deg) brightness(1);
+      }
+      100% {
+        background-position: 60% 45%;
+        filter: hue-rotate(-44deg) brightness(1.13);
+      }
     }
-    body {
-      position: relative;
-      min-height: 100vh;
-      font-family: var(--font-main);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 6vh;
-      padding-bottom: 5vh;
-      box-sizing: border-box;
-      z-index: 1;
-    }
-    /* VHS Scanlines */
-    body::before {
-      content: "";
-      pointer-events: none;
-      position: fixed;
-      z-index: 99;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: repeating-linear-gradient(
-        to bottom, 
-        transparent 0 1px, 
-        var(--scanline-color) 2px 3px,
-        transparent 4px 8px
-      );
-      opacity: 0.33;
-      mix-blend-mode: soft-light;
-    }
-    /* Analog Video Noise Overlay */
+    /* VHS/CRT Static Overlay */
     body::after {
       content: "";
       pointer-events: none;
       position: fixed;
       z-index: 100;
-      left: 0; top: 0; width: 100vw; height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      opacity: 0.23;
       background: url('https://grainy-gradients.vercel.app/noise.svg');
-      opacity: 0.16;
+      background-size: cover;
       mix-blend-mode: screen;
-      animation: noise 0.7s steps(2) infinite;
+      animation: staticfuzz 1.4s steps(2) infinite;
     }
-    @keyframes noise {
-      0%,100% { background-position: 0 0; }
-      50% { background-position: 2vw 2vh; }
+    @keyframes staticfuzz {
+      50% { opacity: 0.13; }
+      100% { opacity: 0.23; }
     }
-    /* Floating Geometrics */
-    .floaters {
-      pointer-events: none;
-      position: fixed;
-      z-index: 9;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      overflow: visible;
-    }
-    /* Responsive Container */
-    .main-content {
+    /* Flex-centered container */
+    .container {
+      min-height: 100vh;
       width: 100vw;
-      max-width: 560px;
-      min-width: 240px;
-      text-align: center;
-      z-index: 10;
-    }
-    .dead-bridge {
-      width: 80vw;
-      max-width: 480px;
-      margin: 0 auto 2vh auto;
-      opacity: 0.91;
-      filter: drop-shadow(0 2px 20px #290052);
-      user-select: none;
-      pointer-events: none;
-    }
-    /* Countdown Block */
-    .countdown-wrap {
-      margin: 0 auto;
-      margin-bottom: 2vh;
-      background: linear-gradient(90deg,rgba(0,0,0,0.08),rgba(255,255,255,0.06),rgba(0,0,0,0.08));
-      border-radius: 33px;
-      box-shadow: 0 2px 24px #25004f77;
-      padding: 1.5rem 2vw;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.3rem;
+      justify-content: center;
       position: relative;
-      z-index: 12;
+      z-index: 3;
+      padding: 3vh 0 10vh 0;
     }
-    /* Psychedelic Gradient Text */
-    .countdown {
-      font-family: var(--font-main);
-      font-size: clamp(2.6rem, 8vw, 6rem);
-      letter-spacing: 0.02em;
-      background: linear-gradient(90deg,
-        #ffd902 0%,
-        #ff005f 19%,
-        #00f5a0 41%,
-        #26ffef 65%,
-        #00bfff 84%,
-        #ffd902 100%
-      );
-      background-size: 300% 100%;
-      background-clip: text;
+    /* Countdown styles */
+    #countdown {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2vw;
+      background: rgba(20,0,40,0.67);
+      border-radius: 2.5em;
+      box-shadow: 0 8px 36px 0 var(--shadow), 0 0 2px #000b;
+      padding: 3vw 3vw 2vw 3vw;
+      margin-bottom: 1.5em;
+      min-width: 320px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    #countdown > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 5ch;
+    }
+    #countdown span {
+      font-family: var(--headline);
+      font-size: clamp(2.8rem, 8vw, 5.4rem);
+      line-height: 1;
+      background: linear-gradient(90deg, var(--magenta), var(--gold), var(--lime), var(--bg-dark2));
+      background-size: 200% auto;
       -webkit-background-clip: text;
-      color: transparent;
       -webkit-text-fill-color: transparent;
-      animation: rainbow-flow 6s linear infinite;
-      text-shadow:
-        0 0 16px #fff,
-        0 2px 20px #7c60ff77,
-        0 0 2px #fff9;
-      transition: font-size 0.2s;
+      background-clip: text;
+      text-fill-color: transparent;
+      filter: drop-shadow(0 3px 12px #0006);
+      animation: text-shine 5.3s linear infinite;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.18em;
       user-select: text;
     }
-    @keyframes rainbow-flow {
-      to { background-position: 300% 0; }
+    @keyframes text-shine {
+      to { background-position: 200% center; }
     }
-    .countdown-label {
-      font-family: var(--font-secondary);
-      font-size: 1.33rem;
-      color: #e8e4ff;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.2em;
-      opacity: 0.86;
-      text-shadow: 0 1px 10px #380c4044;
-    }
-    /* Marquee Band Lineup */
-    .marquee-outer {
-      width: 100vw;
-      overflow: hidden;
-      margin-top: 1vh;
-      margin-bottom: 2vh;
-      height: 3rem;
-      position: relative;
-      z-index: 11;
-      background: linear-gradient(90deg,rgba(0,0,0,0.03),rgba(255,255,255,0.03));
-      box-shadow: 0 2px 14px #19005533;
-      border-radius: 1.7em;
-      display: flex;
-      align-items: center;
-      pointer-events: none;
-    }
-    .marquee-inner {
-      display: flex;
-      align-items: center;
-      animation: marquee 18s linear infinite;
-      font-family: var(--font-main);
-      font-size: 1.8rem;
-      white-space: nowrap;
-      color: #00ffe7;
-      text-shadow: 0 0 14px #110b43, 0 2px 10px #00fff7cc;
-      letter-spacing: 0.08em;
-      padding-left: 2vw;
-      gap: 2em;
-      min-width: 100vw;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0);}
-      100% { transform: translateX(-60vw);}
-    }
-    /* Responsive Adjustments */
-    @media (max-width: 520px) {
-      .countdown { font-size: clamp(2.2rem, 12vw, 4.2rem); }
-      .marquee-inner { font-size: 1.25rem;}
-      .dead-bridge { max-width: 97vw;}
-    }
-    /* Jerry Head SVG */
-    .jerry-head {
-      position: absolute;
-      right: 7vw; top: -28px;
-      width: 48px; height: 48px;
-      filter: drop-shadow(0 0 12px #0004);
-      z-index: 13;
-      pointer-events: none;
-      opacity: 0.83;
-    }
-    /* Subtle details for Deadhead authenticity */
-    .sf-badge {
-      position: absolute;
-      left: 2vw;
-      bottom: -33px;
-      font-size: 1.22em;
-      background: rgba(29,0,82,0.82);
-      border-radius: 11px 22px 13px 9px;
-      color: #ffd902;
-      padding: 0.21em 0.8em 0.19em 0.8em;
-      font-family: var(--font-secondary);
+    #countdown div {
+      color: var(--label);
+      font-family: var(--label-font);
+      font-size: 1.09rem;
       letter-spacing: 0.09em;
-      box-shadow: 0 2px 14px #19005542;
+      text-shadow: 0 2px 12px #000b, 0 0 2px var(--gold);
+    }
+    /* "Dead" Headliner */
+    .headline {
+      font-family: var(--headline);
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.1em;
+      margin-top: 0.7em;
+      filter: drop-shadow(0 3px 30px var(--magenta)) drop-shadow(0 0 1px #fff);
+      text-shadow: 0 2px 10px #0009;
+      line-height: 1;
+      text-align: center;
       user-select: none;
-      opacity: 0.93;
+    }
+    .event-detail {
+      font-family: var(--label-font);
+      font-size: 1.06rem;
+      color: var(--highlight);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.8em;
+      text-align: center;
+      opacity: 0.87;
+      text-shadow: 0 1px 7px #1b0040c7;
+    }
+    /* Floating SVG psychedelic shapes */
+    .svg-float {
+      position: absolute;
       pointer-events: none;
+      z-index: 4;
+    }
+    /* Steal Your Face Skull */
+    .skull {
+      top: 2vh; left: 2vw;
+      width: 64px;
+      opacity: 0.85;
+      animation: float1 16s ease-in-out infinite alternate;
+    }
+    /* Lightning Bolt */
+    .bolt {
+      right: 4vw; top: 7vh;
+      width: 38px;
+      opacity: 0.92;
+      animation: float2 13s linear infinite alternate;
+    }
+    /* Spiral */
+    .spiral {
+      left: 50vw; top: 12vh;
+      width: 44px;
+      opacity: 0.7;
+      animation: float3 21s ease-in-out infinite alternate;
+    }
+    /* All-seeing Eye */
+    .eye {
+      right: 14vw; bottom: 15vh;
+      width: 48px;
+      opacity: 0.84;
+      animation: float4 17s ease-in-out infinite alternate;
+    }
+    /* Wolf silhouette (Jerry nod) */
+    .wolf {
+      left: 7vw; bottom: 7vh;
+      width: 58px;
+      opacity: 0.82;
+      animation: float5 19s ease-in-out infinite alternate;
+    }
+    @keyframes float1 { 0% {transform: translateY(0);} 100% {transform: translateY(38px) scale(1.09);} }
+    @keyframes float2 { 0% {transform: translateY(0);} 100% {transform: translateY(-28px) scale(1.1);} }
+    @keyframes float3 { 0% {transform: translateX(-17vw) rotate(0deg);} 100% {transform: translateX(19vw) rotate(359deg);} }
+    @keyframes float4 { 0% {transform: scale(1) rotate(0deg);} 100% {transform: scale(1.16) rotate(-21deg);} }
+    @keyframes float5 { 0% {transform: translateY(0) scale(1);} 100% {transform: translateY(-14px) scale(1.12);} }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      #countdown {
+        flex-direction: column;
+        padding: 6vw 2vw 3vw 2vw;
+        gap: 0.9em;
+        min-width: unset;
+      }
+      .headline { font-size: 2.1rem; }
+      .skull, .spiral, .bolt, .eye, .wolf { width: 40px !important; }
+    }
+
+    /* Scrolling Marquee Footer */
+    footer {
+      position: fixed;
+      left: 0; bottom: 0;
+      width: 100vw;
+      background: rgba(22,0,24,0.93);
+      z-index: 9999;
+      overflow: hidden;
+      height: 2.6em;
+      border-top: 2px solid var(--magenta);
+      box-shadow: 0 -2px 16px #000c;
+      display: flex;
+      align-items: center;
+    }
+    .marquee {
+      white-space: nowrap;
+      display: inline-block;
+      padding-left: 100vw;
+      font-family: var(--headline);
+      font-size: 1.2em;
+      letter-spacing: 0.09em;
+      color: var(--lime);
+      text-shadow: 0 0 6px var(--gold), 0 2px 6px #000c;
+      animation: marquee-move 19s linear infinite;
+      user-select: none;
+    }
+    @keyframes marquee-move {
+      0% { transform: translateX(0);}
+      100% { transform: translateX(-100vw);}
     }
   </style>
 </head>
 <body>
-  <!-- Floating Shapes Layer (SVG eyes, spirals, triangles, subtle movement) -->
-  <svg class="floaters" width="100vw" height="100vh" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
-    <!-- Rotating spiral -->
-    <g style="transform-origin:900px 160px;">
-      <circle cx="900" cy="160" r="44" fill="none" stroke="#ffd902" stroke-width="5"/>
-      <path d="M900 160
-        m -30,0
-        a 30,30 0 1,1 60,0
-        a 30,30 0 1,1 -60,0" 
-        fill="none" stroke="#fe3e7b" stroke-width="3">
-        <animateTransform attributeName="transform" type="rotate"
-          from="0 900 160" to="360 900 160" dur="11s" repeatCount="indefinite"/>
-      </path>
-    </g>
-    <!-- Floating triangle -->
-    <polygon points="250,750 290,830 210,830" fill="#26ffef" opacity="0.56">
-      <animateTransform attributeName="transform" type="translate" values="0 0; 22 -38; 0 0" dur="14s" repeatCount="indefinite"/>
-      <animateTransform attributeName="transform" type="rotate" values="0 250 790; 360 250 790" dur="13s" repeatCount="indefinite"/>
-    </polygon>
-    <!-- Jerry glasses eye -->
-    <ellipse cx="1350" cy="250" rx="42" ry="18" fill="#fff7" stroke="#00bfff" stroke-width="3">
-      <animate attributeName="rx" values="42;30;42" dur="6s" repeatCount="indefinite"/>
-    </ellipse>
-    <ellipse cx="1350" cy="250" rx="6" ry="6" fill="#ffd902">
-      <animate attributeName="cx" values="1350;1362;1350" dur="6s" repeatCount="indefinite"/>
-    </ellipse>
+  <!-- Floating SVG icons for Deadhead authenticity -->
+  <!-- Steal Your Face Skull -->
+  <svg class="svg-float skull" viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="32" cy="32" r="29" fill="#2c003e" stroke="#b0f2b4" stroke-width="3"/>
+    <ellipse cx="32" cy="38" rx="17" ry="12" fill="#fff" stroke="#004d47" stroke-width="2"/>
+    <path d="M26,54 Q32,62 38,54" stroke="#d40078" stroke-width="3" fill="none"/>
+    <polygon points="32,22 36,32 28,32" fill="#d40078"/>
+    <circle cx="27" cy="36" r="3.5" fill="#004d47"/>
+    <circle cx="37" cy="36" r="3.5" fill="#004d47"/>
+  </svg>
+  <!-- Lightning Bolt -->
+  <svg class="svg-float bolt" viewBox="0 0 32 64" aria-hidden="true">
+    <polyline points="16,2 27,27 20,27 31,62 6,32 13,32 2,2" fill="none" stroke="#f9a602" stroke-width="4"/>
+  </svg>
+  <!-- Psychedelic Spiral -->
+  <svg class="svg-float spiral" viewBox="0 0 44 44" aria-hidden="true">
+    <path d="M22,22 m-18,0 a18,18 0 1,0 36,0 a18,18 0 1,0 -36,0"
+      fill="none" stroke="#d40078" stroke-width="2"/>
+    <path d="M22,22 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0"
+      fill="none" stroke="#b0f2b4" stroke-width="2"/>
+  </svg>
+  <!-- All-seeing Eye -->
+  <svg class="svg-float eye" viewBox="0 0 48 32" aria-hidden="true">
+    <ellipse cx="24" cy="16" rx="22" ry="13" fill="#2c003e" stroke="#b0f2b4" stroke-width="2"/>
+    <ellipse cx="24" cy="16" rx="10" ry="7" fill="#f9a602" stroke="#d40078" stroke-width="2"/>
+    <circle cx="24" cy="16" r="4" fill="#004d47"/>
+  </svg>
+  <!-- Wolf silhouette (Jerry Garcia) -->
+  <svg class="svg-float wolf" viewBox="0 0 58 36" aria-hidden="true">
+    <path d="M7,28 Q17,6 22,15 Q23,7 31,7 Q38,8 39,16 Q41,12 50,15 Q55,18 57,27 Q56,34 48,29 Q41,32 32,30 Q20,36 7,28 Z"
+      fill="#004d47" stroke="#b0f2b4" stroke-width="1.5"/>
   </svg>
 
-  <main class="main-content">
-    <!-- Golden Gate Bridge Silhouette with Dead Bolt Lightning -->
-    <svg class="dead-bridge" viewBox="0 0 600 110" fill="none" aria-hidden="true">
-      <rect x="0" y="80" width="600" height="30" fill="#1a1337" opacity="0.91"/>
-      <path d="M30,110 l10,-80 l14,80" stroke="#ffd902" stroke-width="5"/>
-      <path d="M560,110 l-10,-80 l-14,80" stroke="#ffd902" stroke-width="5"/>
-      <rect x="155" y="55" width="14" height="55" fill="#ff005f"/>
-      <rect x="430" y="55" width="14" height="55" fill="#ff005f"/>
-      <!-- Bridge arcs -->
-      <path d="M30,110 Q300,30 570,110" stroke="#00f5a0" stroke-width="5" fill="none"/>
-      <!-- Lightning Bolt -->
-      <polyline points="300,68 320,94 309,87 320,110" fill="none" stroke="#ffd902" stroke-width="6"/>
-      <!-- Steal Your Face circle (outline only) -->
-      <circle cx="300" cy="79" r="25" fill="none" stroke="#00bfff" stroke-width="4"/>
-    </svg>
-    <div class="sf-badge">Haight & Ashbury // San Francisco</div>
-
-    <!-- Countdown block -->
-    <div class="countdown-wrap">
-      <div class="countdown-label">Time till Dead & Company — Oracle Park, Aug 1, 2025, 7PM</div>
-      <div class="countdown" id="countdown"></div>
-      <!-- Jerry Head (line art, only outlines, for authenticity) -->
-      <svg class="jerry-head" viewBox="0 0 42 42" fill="none">
-        <ellipse cx="21" cy="21" rx="18" ry="18" stroke="#ffd902" stroke-width="2"/>
-        <circle cx="16" cy="18" r="2.5" fill="#fff" stroke="#1a1337" stroke-width="0.7"/>
-        <circle cx="26" cy="18" r="2.5" fill="#fff" stroke="#1a1337" stroke-width="0.7"/>
-        <path d="M13 28 Q21 35 29 28" stroke="#fe3e7b" stroke-width="1.6" fill="none"/>
-        <path d="M12 24 Q21 26 30 24" stroke="#ffd902" stroke-width="1.2" fill="none"/>
-        <path d="M11 16 Q16 11 21 13 Q26 11 31 16" stroke="#00ffdd" stroke-width="0.7" fill="none"/>
-      </svg>
+  <div class="container">
+    <div class="headline">
+      Dead & Company <br>San Francisco Countdown
     </div>
-    <!-- Marquee with authentic band names (edit as needed) -->
-    <div class="marquee-outer" aria-label="Band lineup">
-      <div class="marquee-inner" id="band-marquee">
-        Dead & Company • Billy Strings • Bobby Weir • Mickey Hart • Oteil Burbridge • Jeff Chimenti • Jay Lane • San Francisco Giants & More
-        &nbsp;•&nbsp;
-        Dead & Company • Billy Strings • Bobby Weir • Mickey Hart • Oteil Burbridge • Jeff Chimenti • Jay Lane • San Francisco Giants & More
-      </div>
+    <div class="event-detail">
+      Oracle Park • August 1, 2025 • 7:00pm PT
     </div>
-  </main>
-  <!-- JavaScript for countdown (no mouse/keypress required) -->
+    <!-- COUNTDOWN -->
+    <div id="countdown">
+      <div><span id="days">00</span> DAYS</div>
+      <div><span id="hours">00</span> HOURS</div>
+      <div><span id="minutes">00</span> MINS</div>
+      <div><span id="seconds">00</span> SECS</div>
+    </div>
+  </div>
+  <footer>
+    <div class="marquee">
+      Dead & Company ◆ Featuring special guest Billy Strings ◆ San Francisco, CA ◆ August 1, 2025 ◆ No Tour Like a Dead Tour ◆
+    </div>
+  </footer>
   <script>
-    // Countdown logic (UTC-7 / Pacific Time)
+    // Set the event time in UTC for Aug 1, 2025, 7PM PT (Pacific Time)
+    const targetDate = new Date('2025-08-02T02:00:00Z'); // Correct: UTC time for 7PM PT
     function updateCountdown() {
-      const showTime = new Date('2025-08-01T19:00:00-07:00'); // 7PM PT
       const now = new Date();
-      let diff = showTime - now;
+      let diff = targetDate - now;
       if (diff < 0) diff = 0;
-      // Calculate units
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
-      // Format output
-      const out = [
-        `<span>${d}</span> <small>days</small>`,
-        `<span>${h.toString().padStart(2, "0")}</span> <small>hrs</small>`,
-        `<span>${m.toString().padStart(2, "0")}</span> <small>min</small>`,
-        `<span>${s.toString().padStart(2, "0")}</span> <small>sec</small>`
-      ].join(" : ");
-      document.getElementById('countdown').innerHTML = out;
+      document.getElementById('days').textContent = String(d).padStart(2, '0');
+      document.getElementById('hours').textContent = String(h).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
     }
-    setInterval(updateCountdown, 900);
     updateCountdown();
-    // Make sure marquee is long enough
-    window.addEventListener('resize', function() {
-      // Adjust marquee animation duration if needed
-      const el = document.getElementById('band-marquee');
-      if (el) {
-        const len = el.scrollWidth;
-        el.style.animationDuration = (Math.max(len / 80, 12)) + 's';
-      }
-    });
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
