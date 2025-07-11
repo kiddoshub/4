@@ -2,59 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DEAD & CO. COUNTDOWN – TERMINAL NODE SF-876</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dead & Company Countdown Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <style>
     html, body {
-      background-color: #000;
-      color: #00FF00;
-      font-family: 'Courier New', Courier, monospace;
       margin: 0;
-      padding: 2vh 4vw;
-      height: 100vh;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #000;
+      color: #33ff33;
+      font-family: 'VT323', monospace;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-image: url('sf-satellite.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
-    .terminal-line {
-      white-space: pre;
-      line-height: 1.8;
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: #000;
+      opacity: 0.7;
+      z-index: 0;
     }
-    #countdown {
+
+    .terminal {
+      z-index: 1;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1rem;
+    }
+
+    .location {
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
+    }
+
+    .countdown {
+      font-size: 5rem;
+      letter-spacing: 0.25rem;
       font-weight: bold;
-      font-size: 2.5em;
-      color: #00FF00;
-      text-shadow: 0 0 5px #00FF00;
-      margin: 1rem 0;
-    }
-    .cursor {
+      background: black;
+      padding: 0.5rem 1rem;
+      border: 1px solid #33ff33;
       display: inline-block;
-      width: 0.7ch;
-      height: 1.1em;
-      background: #00FF00;
-      animation: blink 1s steps(1) infinite;
+      margin-bottom: 2rem;
     }
-    @keyframes blink {
-      50% { opacity: 0; }
+
+    .label {
+      font-size: 1.4rem;
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+      letter-spacing: 0.1rem;
+    }
+
+    .footer {
+      font-size: 1.2rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      .title { font-size: 1.6rem; }
+      .location { font-size: 1.2rem; }
+      .countdown { font-size: 3rem; }
+      .label { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="terminal-line">> INITIATING CONNECTION: NODE SF-876</div>
-  <div class="terminal-line">> ACCESS LEVEL GRANTED</div>
-  <div class="terminal-line">> TARGET: DEAD & COMPANY / GOLDEN GATE PARK</div>
-  <div class="terminal-line">> EVENT DATE: AUG 1, 2025 – 00:00 PDT</div>
-  <div class="terminal-line">> COUNTDOWN TO EVENT:</div>
-  <div id="countdown">--:--:--:--</div>
-  <div class="terminal-line">> STATUS: STANDBY <span class="cursor"></span></div>
+  <div class="terminal">
+    <div class="title">SYSTEM STATUS: GRATEFUL DEAD MISSION LAUNCH</div>
+    <div class="location">SAN FRANCISCO, CALIFORNIA — AUGUST 1, 2025</div>
+    <div id="countdown" class="countdown">--:--:--:--</div>
+    <div class="label">DAYS : HOURS : MINUTES : SECONDS</div>
+    <div class="footer">TERMINAL: GD60-CIV-MISSION | v1.0</div>
+  </div>
 
   <script>
-    const countdownEl = document.getElementById("countdown");
+    const countdownEl = document.getElementById('countdown');
+
+    function pad(n) {
+      return n.toString().padStart(2, '0');
+    }
 
     function updateCountdown() {
-      const eventDate = new Date("2025-08-01T07:00:00Z"); // PDT is UTC-7
+      const target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0)); // August 1, 2025 at 00:00 PDT (UTC-7)
       const now = new Date();
-      const diff = eventDate - now;
+      const nowUTC = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      const diff = target - nowUTC;
 
       if (diff <= 0) {
         countdownEl.textContent = "00:00:00:00";
@@ -66,11 +115,7 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdownEl.textContent = 
-        String(days).padStart(2, '0') + ":" +
-        String(hours).padStart(2, '0') + ":" +
-        String(minutes).padStart(2, '0') + ":" +
-        String(seconds).padStart(2, '0');
+      countdownEl.textContent = `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
 
     updateCountdown();
