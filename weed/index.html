@@ -10,17 +10,22 @@
       src: url('OCR-a___.ttf') format('truetype');
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'OCR-A', monospace;
-      background: #000;
-      color: #00ff88;
-      overflow: hidden;
+    html {
+      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
+      height: 100%;
     }
 
     body {
-      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
+      margin: 0;
+      padding: 0;
+      font-family: 'OCR-A', monospace;
+      color: #00ff88;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
       position: relative;
     }
 
@@ -62,7 +67,6 @@
     .countdown-container {
       position: relative;
       max-width: 600px;
-      margin: 60px auto;
       background: rgba(0, 0, 0, 0.6);
       border: 2px solid #00ff99;
       padding: 30px;
