@@ -1,101 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Countdown to Grateful Dead SF</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>GD60 COUNTDOWN TERMINAL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     html, body {
       margin: 0;
-      padding: 0;
+      padding: 2em;
       background: #000;
-      color: #0f0;
-      font-family: 'Courier New', monospace;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      color: #00FF00;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      line-height: 1.6;
     }
-
-    h1 {
-      font-size: 2.2vw;
-      text-shadow: 0 0 5px #0f0;
-      margin-bottom: 3vh;
+    #terminal {
+      max-width: 80ch;
+      white-space: pre;
     }
-
     #countdown {
-      font-size: 8vw;
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 10px #0f0;
+      font-weight: bold;
+      margin-top: 1em;
+      font-size: 20px;
     }
-
-    #label {
-      font-size: 1.2vw;
-      color: #0f0;
-      margin-top: 1vh;
-      letter-spacing: 0.2em;
-      text-shadow: 0 0 3px #0f0;
-    }
-
     .cursor {
       display: inline-block;
-      width: 0.7em;
-      height: 1.2em;
-      background: #0f0;
-      animation: blink 1s steps(2, start) infinite;
-      margin-left: 0.3em;
-      vertical-align: bottom;
+      width: 10px;
+      height: 1em;
+      background: #00FF00;
+      animation: blink 1s steps(1) infinite;
     }
-
     @keyframes blink {
-      to { visibility: hidden; }
-    }
-
-    @media (max-width: 768px) {
-      #countdown {
-        font-size: 12vw;
-      }
-      h1 {
-        font-size: 4vw;
-      }
-      #label {
-        font-size: 2.5vw;
-      }
+      50% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>INITIALIZING EVENT SEQUENCE... STANDBY</h1>
-  <div id="countdown">--:--:--:--</div>
-  <div id="label">DAYS : HOURS : MINUTES : SECONDS<span class="cursor"></span></div>
+  <div id="terminal">
+GD60 TERMINAL BOOT SEQUENCE
+---------------------------
+
+SYSTEM STATUS: ONLINE
+CONNECTION SECURE
+
+EVENT: CELEBRATING 60 YEARS OF THE GRATEFUL DEAD
+LOCATION: SAN FRANCISCO, CA
+DATES: AUGUST 1, 2, 3, 2025
+
+COUNTDOWN TO AUGUST 1, 2025 - 00:00 PDT
+
+> <span id="countdown">-- DAYS --:--:--</span><span class="cursor"></span>
+  </div>
 
   <script>
+    const countdown = document.getElementById('countdown');
+
     function pad(n) {
-      return n.toString().padStart(2, '0');
+      return String(n).padStart(2, '0');
     }
 
     function updateCountdown() {
-      // August 1, 2025 at 00:00 PDT = UTC-7 => 07:00 UTC
-      const target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0));
+      const target = new Date('2025-08-01T07:00:00Z'); // 00:00 PDT
       const now = new Date();
-      const nowUtc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
-      let diff = target - nowUtc;
+      const diff = target - now;
 
       if (diff <= 0) {
-        document.getElementById("countdown").textContent = "00:00:00:00";
+        countdown.textContent = '00 DAYS 00:00:00';
         return;
       }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
 
-      document.getElementById("countdown").textContent = 
-        `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+      countdown.textContent =
+        `${pad(days)} DAYS ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
     }
 
     setInterval(updateCountdown, 1000);
