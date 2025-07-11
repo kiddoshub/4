@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Celebrating 60 Years of the Grateful Dead’s Music</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Ewert&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
+      overflow-x: hidden;
+      background: #18001a url('IMG_8667.jpeg') center center/cover no-repeat fixed;
+      position: relative;
+      font-family: 'VT323', monospace;
+      cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto;
+    }
+
+    /* Faded overlay for better text readability */
+    .overlay-bg-stealie {
+      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
+      opacity: 0.33;
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 5vh;
+      box-sizing: border-box;
+    }
+
+    .gd60-logo {
+      width: min(480px, 60vw);
+      margin: 0 auto 1.5vh auto;
+      display: block;
+      filter: drop-shadow(0 2px 22px #0009);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .header-title {
+      font-family: 'Ewert', serif;
+      text-align: center;
+      font-size: clamp(1.7rem, 4vw, 3.2rem);
+      color: #ffecbc;
+      letter-spacing: 0.03em;
+      margin: 0.5em 0 0.3em 0;
+      line-height: 1.08;
+      text-shadow: 0 3px 28px #000, 0 1px 0 #fff8;
+      filter: drop-shadow(0 2px 6px #F99a6055);
+    }
+    .subhead {
+      text-align: center;
+      color: #d2f2fd;
+      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+      letter-spacing: 0.11em;
+      text-shadow: 0 2px 12px #000a;
+      margin-bottom: 0.9em;
+    }
+
+    .dates-row {
+      font-family: 'Ewert', serif;
+      text-align: center;
+      color: #f9a602;
+      font-size: clamp(1.4rem, 4vw, 2.3rem);
+      margin-bottom: 1.5em;
+      text-shadow: 0 3px 16px #0009, 0 1px 0 #fff8;
+    }
+
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2em;
+      padding: 1.2em 1em 0.7em 1em;
+      margin: 0 auto 2.3em auto;
+      border-radius: 1.2em;
+      background: rgba(28,18,38,0.74);
+      border: 3.3px solid #ff3366;
+      box-shadow: 0 8px 44px #000d;
+      min-width: 240px;
+      max-width: 94vw;
+      flex-wrap: wrap;
+      font-family: 'Ewert', serif;
+      font-size: clamp(1.2rem, 2.8vw, 2.6rem);
+      font-weight: 700;
+      color: #fdf6d6;
+      text-shadow: 0 2px 12px #000c, 0 0 2px #fff6;
+    }
+    .count-num {
+      font-size: clamp(1.5rem, 7vw, 4.2rem);
+      color: #fff;
+      background: linear-gradient(90deg,#ff3366,#f9a602,#00ff99,#ff3366 80%);
+      background-size: 180% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      animation: textflow 5.5s linear infinite;
+      margin-right: 0.1em;
+      font-family: 'Ewert', serif;
+      letter-spacing: 0.05em;
+      filter: drop-shadow(0 1px 6px #000b);
+      user-select: text;
+    }
+    @keyframes textflow {
+      to { background-position: 180% center; }
+    }
+    .count-label {
+      font-family: 'VT323', monospace;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: #e9ffe6;
+      margin-right: 1em;
+      margin-left: 0.12em;
+      text-shadow: 0 1px 6px #000b;
+      letter-spacing: 0.13em;
+      align-self: flex-end;
+      opacity: 0.91;
+    }
+
+    /* IMAGE LAYERING & POSITIONING */
+    .bridge-img {
+      width: min(580px, 95vw);
+      max-width: 100vw;
+      margin: 0.6em auto 0.6em auto;
+      display: block;
+      z-index: 15;
+      pointer-events: none;
+      filter: drop-shadow(0 8px 30px #0a355566) brightness(0.99);
+      user-select: none;
+    }
+    .skel-left {
+      position: absolute;
+      left: 0; bottom: 6vh;
+      width: min(205px,30vw);
+      min-width: 84px;
+      z-index: 30;
+      filter: drop-shadow(0 4px 18px #0009);
+      user-select: none;
+      pointer-events: none;
+    }
+    .skel-right {
+      position: absolute;
+      right: 0; bottom: 5vh;
+      width: min(205px,30vw);
+      min-width: 84px;
+      z-index: 30;
+      filter: drop-shadow(0 4px 18px #0009);
+      user-select: none;
+      pointer-events: none;
+    }
+    .blimp-img {
+      position: absolute;
+      top: 7vh;
+      right: 11vw;
+      width: min(170px,23vw);
+      min-width: 72px;
+      z-index: 40;
+      filter: drop-shadow(0 2px 22px #0007);
+      pointer-events: none;
+      user-select: none;
+      animation: blimpfloat 11s ease-in-out infinite alternate;
+    }
+    @keyframes blimpfloat {
+      0% { transform: translateY(0) rotate(-3deg);}
+      100% { transform: translateY(-22px) rotate(7deg);}
+    }
+    .stealie-logo {
+      position: absolute;
+      top: 4vh;
+      left: 8vw;
+      width: min(68px,8vw);
+      z-index: 50;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 10px #000a);
+      user-select: none;
+    }
+    .location-img {
+      display: block;
+      margin: 0.4em auto 1em auto;
+      width: min(400px, 54vw);
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 2px 14px #011d);
+    }
+
+    /* Guest Set Box */
+    .guest-sets-box {
+      background: rgba(21,21,21,0.84);
+      border-radius: 1.6em;
+      border: 2px solid #b0f2b4;
+      padding: 2em 1.4em;
+      max-width: 410px;
+      margin: 3vh auto 4vh auto;
+      color: #fdf6d6;
+      font-size: 1.25em;
+      box-shadow: 0 2px 18px #001a;
+      position: relative;
+      text-align: center;
+    }
+    .guest-title {
+      font-family: 'Ewert', serif;
+      color: #b0f2b4;
+      letter-spacing: 0.09em;
+      margin-bottom: 1em;
+      font-size: 1.15em;
+      text-shadow: 0 1px 12px #000a;
+    }
+    .guest-row {
+      margin: 0.8em 0 0.5em 0;
+      font-size: 1em;
+      line-height: 1.45;
+      letter-spacing: 0.02em;
+    }
+    .guest-artist {
+      color: #f9a602;
+      font-family: 'Ewert', serif;
+      font-size: 1.13em;
+      font-weight: 600;
+      text-shadow: 0 1px 7px #000a;
+      margin-right: 0.28em;
+    }
+    .guest-day {
+      color: #00ff99;
+      font-size: 0.98em;
+      font-family: 'VT323', monospace;
+      text-shadow: 0 1px 4px #0007;
+    }
+
+    @media (max-width: 900px) {
+      .skel-left, .skel-right { min-width: 40px; }
+      .gd60-logo { width: 74vw;}
+    }
+    @media (max-width: 700px) {
+      .main-content { padding-top: 2vh;}
+      .dates-row { font-size: 1.11em;}
+      .skel-left, .skel-right { width: 19vw; min-width: 28px;}
+      .blimp-img { width: 17vw; min-width: 45px;}
+    }
+    @media (max-width: 500px) {
+      .main-content { padding-top: 1vh;}
+      .skel-left, .skel-right { width: 13vw;}
+      .gd60-logo { width: 86vw;}
+      .guest-sets-box { padding: 1em 0.3em;}
+      .dates-row { font-size: 1.01em;}
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay-bg-stealie"></div>
+
+  <!-- SKELETONS (left/right) -->
+  <img class="skel-left" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="Left Skeleton" />
+  <img class="skel-right" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="Right Skeleton" />
+
+  <!-- BLIMP -->
+  <img class="blimp-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="Dead Blimp" />
+
+  <!-- STEALIE LOGO, DEAD & COMPANY LOGO -->
+  <img class="stealie-logo" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Steal Your Face" />
+  <img class="gd60-logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="Dead & Company 60 Years Logo" />
+
+  <div class="main-content">
+    <div class="header-title">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
+    <div class="subhead">SAN FRANCISCO, CALIFORNIA</div>
+    <div class="dates-row">AUGUST 1, 2, 3, 2025</div>
+    <div class="countdown-container" id="countdown-container">
+      <span class="count-num" id="days">00</span>
+      <span class="count-label">DAYS</span>
+      <span class="count-num" id="hours">00</span>
+      <span class="count-label">HOURS</span>
+      <span class="count-num" id="minutes">00</span>
+      <span class="count-label">MINUTES</span>
+      <span class="count-num" id="seconds">00</span>
+      <span class="count-label">SECONDS</span>
+    </div>
+    <!-- GOLDEN GATE BRIDGE -->
+    <img class="bridge-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="Golden Gate Bridge" />
+    <!-- LOCATION TEXT -->
+    <img class="location-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park" />
+
+    <!-- GUEST SETS BOX -->
+    <div class="guest-sets-box">
+      <div class="guest-title">PLUS SPECIAL GUEST SETS BY</div>
+      <div class="guest-row"><span class="guest-artist">BILLY STRINGS</span><span class="guest-day">FRIDAY</span></div>
+      <div class="guest-row"><span class="guest-artist">STURGILL JOHNNY BLUE SKIES SIMPSON</span><span class="guest-day">SATURDAY</span></div>
+      <div class="guest-row"><span class="guest-artist">TREY ANASTASIO BAND</span><span class="guest-day">SUNDAY</span></div>
+    </div>
+  </div>
+
+  <script>
+    // Countdown targets start of show, August 1, 2025, 12:00am (midnight) local Pacific Time
+    // If you want 7:00pm PT specifically, use this:
+    const targetDate = new Date('2025-08-02T02:00:00Z');
+    function pad(n) { return n.toString().padStart(2, '0'); }
+    function updateCountdown() {
+      const now = new Date();
+      let diff = targetDate - now;
+      if (diff < 0) diff = 0;
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      document.getElementById('days').textContent = pad(d);
+      document.getElementById('hours').textContent = pad(h);
+      document.getElementById('minutes').textContent = pad(m);
+      document.getElementById('seconds').textContent = pad(s);
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
