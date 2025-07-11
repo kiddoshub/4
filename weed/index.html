@@ -1,176 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Grateful Dead SF 2025 • Live Edition</title>
-
-<!-- Plugins & Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.52/Tone.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Russo+One&display=swap" rel="stylesheet">
-
-<style>
-  body,html { margin:0; padding:0; overflow:hidden; background:#000; }
-  canvas { position:absolute; top:0; left:0; width:100%; height:100%; }
-  #overlay {
-    position:absolute; top:5%; width:100%; text-align:center;
-    pointer-events:none; mix-blend-mode:lighten; z-index:10;
-  }
-  .title { font-family:'Russo One',sans-serif; font-size:4vw; color:#39ff14; text-shadow:0 0 12px #39ff14; }
-  .countdown { font-family:'Orbitron',sans-serif; font-size:6vw; color:#00ffff; margin-top:1vw; text-shadow:0 0 14px #00ffff; }
-  .artist { font-family:'Orbitron',sans-serif; font-size:3vw; color:#ff66cc; margin-top:2vw; text-shadow:0 0 8px #ff66cc; }
-</style>
+  <meta charset="UTF-8" />
+  <title>Grateful Dead SF 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Russo+One&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+    }
+    #overlay {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      z-index: 10;
+    }
+    .title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 4vw;
+      color: #39ff14;
+      text-shadow: 0 0 12px #39ff14;
+    }
+    .countdown {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 6vw;
+      color: #00ffff;
+      margin-top: 1vw;
+      text-shadow: 0 0 14px #00ffff;
+    }
+    .artist {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8vw;
+      color: #ff66cc;
+      margin-top: 1vw;
+      text-shadow: 0 0 8px #ff66cc;
+    }
+  </style>
 </head>
 <body>
+  <div id="overlay">
+    <div class="title">GRATEFUL DEAD SF 2025</div>
+    <div class="countdown" id="countdown">000d 00h 00m 00s</div>
+    <div class="artist" id="artist">Loading…</div>
+  </div>
 
-<div id="overlay">
-  <div class="title">GRATEFUL DEAD SF 2025</div>
-  <div class="countdown" id="countdown">000d 00h 00m 00s</div>
-  <div class="artist" id="artist">Loading‑…</div>
-</div>
-<canvas id="matrixCanvas"></canvas>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-<script>
-(async function(){
-  const eventDate = new Date('2025-08-01T16:00:00Z');
-  const artists = [
-    [new Date('2025-08-01'), "Billy Strings"],
-    [new Date('2025-08-02'), "Johnny Blue Skies"],
-    [new Date('2025-08-03'), "Trey Anastasio Band"]
-  ];
+    camera.position.set(0, 4, 12);
 
-  // THREE.JS Setup
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 2000);
-  camera.position.set(0,2,10);
-  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-  renderer.setSize(innerWidth, innerHeight);
-  document.body.appendChild(renderer.domElement);
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(5, 10, 7);
+    scene.add(light);
 
-  // Environment: Skybox + Ground Plane
-  const loader = new THREE.TextureLoader();
-  const sky = await loader.loadAsync('IMG_8667.jpeg');
-  const rt = new THREE.WebGLCubeRenderTarget(sky.image.height);
-  rt.fromEquirectangularTexture(renderer, sky);
-  scene.background = rt.texture;
+    const loader = new THREE.TextureLoader();
 
-  const groundMat = new THREE.MeshStandardMaterial({ color:0x333322, flatShading:true });
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(50,50,200,200), groundMat);
-  ground.rotation.x = -Math.PI/2;
-  scene.add(ground);
+    // Load pyramid texture from your first image
+    const pyramidTexture = loader.load('E7F20829-C0F6-4732-BF12-83CC93C1C9CB.jpeg');
 
-  const light = new THREE.DirectionalLight(0xffffff,1);
-  light.position.set(10,10,5);
-  scene.add(light);
-
-  // GSAP Ground Vertex Noise Animation
-  const simplex = new SimplexNoise();
-  gsap.ticker.add(() => {
-    const verts = ground.geometry.attributes.position.array;
-    const t = Date.now()/1000;
-    for(let i=0; i<verts.length; i+=3){
-      verts[i+1] = simplex.noise3D(verts[i]/5, verts[i+2]/5, t)*0.3;
-    }
-    ground.geometry.attributes.position.needsUpdate = true;
-  });
-
-  // Audio analyzer setup
-  await Tone.start();
-  const mic = new Tone.UserMedia().open();
-  const fft = new Tone.FFT(32);
-  mic.connect(fft);
-
-  // Matrix Canvas overlay
-  const canvas = document.getElementById('matrixCanvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
-  const fontSize = 20;
-  const cols = Math.floor(innerWidth/fontSize);
-  const drops = Array(cols).fill(1);
-  const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-  // Orbital points
-  const orbs = [];
-  for(let i=0;i<120;i++){
-    const orb = {
-      angle:Math.random()*Math.PI*2,
-      baseR:2+Math.random()*8,
-      r:0,
-      speed:0.001+Math.random()*0.002,
-      hue:Math.random()*360
-    };
-    orbs.push(orb);
-    gsap.to(orb, { r:orb.baseR+2, duration:2+Math.random()*2, yoyo:true, repeat:-1, ease:"sine.inOut" });
-  }
-
-  // Animate everything
-  gsap.ticker.add(()=>{
-    renderer.render(scene, camera);
-    ctx.fillStyle = 'rgba(0,0,0,0.08)';
-    ctx.fillRect(0,0,innerWidth,innerHeight);
-
-    const now = Date.now();
-    const spectrum = fft.getValue().map(v=>Math.pow(10,v/10));
-
-    orbs.forEach((o,i)=>{
-      o.angle += o.speed + spectrum[i%32]*0.02;
-      const x = innerWidth/2 + o.r * Math.cos(o.angle),
-            y = innerHeight/2 + o.r * Math.sin(o.angle);
-      ctx.fillStyle = `hsl(${(now/50+o.hue)%360},100%,60%)`;
-      ctx.beginPath(); ctx.arc(x,y,1.5,0,2*Math.PI); ctx.fill();
+    // Load sky texture from your second image
+    loader.load('C8D52F16-F90D-41BF-9544-96FEC808CD99.jpeg', function(tex) {
+      const rt = new THREE.WebGLCubeRenderTarget(tex.image.height);
+      rt.fromEquirectangularTexture(renderer, tex);
+      scene.background = rt.texture;
     });
 
-    drops.forEach((_,i) => {
-      const x = i*fontSize, y=drops[i]*fontSize;
-      const hue = (now/80 + i*5) % 360;
-      ctx.fillStyle = `hsl(${hue},90%,50%)`;
-      ctx.font = `${fontSize}px Orbitron`;
-      ctx.fillText(charset.charAt(Math.floor(Math.random()*charset.length)), x, y);
-      drops[i] = y>innerHeight && Math.random()>0.975 ? 0 : drops[i]+1;
-    });
-  });
+    // Build step pyramid
+    const pyramid = new THREE.Group();
+    const steps = 9;
+    const baseSize = 10;
+    const height = 5;
+    const stepHeight = height / steps;
 
-  // Camera slow orbit
-  gsap.to(camera.position, { x:10, z:10, duration:60, yoyo:true, repeat:-1, ease:"sine.inOut" });
-  gsap.to(camera, { rotation: { y:Math.PI*2 }, duration:120, repeat:-1, ease:"linear" });
-
-  // Countdown & Artist
-  const cd = document.getElementById('countdown');
-  const artEl = document.getElementById('artist');
-  const fmt2 = v => String(v).padStart(2,'0');
-
-  function refresh(){
-    const now=new Date(), diff=eventDate-now;
-    const d=fmt2(Math.max(0,Math.floor(diff/864e5))),
-          h=fmt2(Math.floor(diff%864e5/36e5)),
-          m=fmt2(Math.floor(diff%36e5/6e4)),
-          s=fmt2(Math.floor(diff%6e4/1e3));
-    cd.textContent = `${d}d ${h}h ${m}m ${s}s`;
-
-    let art = 'Stay Tuned';
-    for(let [dt,n] of artists){
-      if(now < dt) { art = n; break; }
+    for (let i = 0; i < steps; i++) {
+      const size = baseSize * (1 - i / steps);
+      const geometry = new THREE.BoxGeometry(size, stepHeight, size);
+      const material = new THREE.MeshStandardMaterial({ map: pyramidTexture });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.y = i * stepHeight;
+      pyramid.add(mesh);
     }
-    artEl.textContent = `NEXT: ${art}`;
-  }
-  setInterval(refresh,200);
-  refresh();
 
-  window.addEventListener('resize', ()=>{
-    renderer.setSize(innerWidth,innerHeight);
-    camera.aspect = innerWidth/innerHeight;
-    camera.updateProjectionMatrix();
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-  });
-})();
-</script>
+    pyramid.position.y = -height / 2;
+    scene.add(pyramid);
 
+    // Animate rotation
+    gsap.to(pyramid.rotation, {
+      y: "+=6.2831",
+      duration: 90,
+      repeat: -1,
+      ease: "none"
+    });
+
+    // Countdown logic
+    const countdownElement = document.getElementById('countdown');
+    const artistElement = document.getElementById('artist');
+    const showDate = new Date("2025-08-01T16:00:00Z");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = showDate - now;
+      const d = String(Math.floor(diff / 86400000)).padStart(3, '0');
+      const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+      const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+      countdownElement.textContent = `${d}d ${h}h ${m}m ${s}s`;
+
+      let artist = "Stay Tuned";
+      if (now < new Date("2025-08-01T23:59:59Z")) artist = "Billy Strings";
+      else if (now < new Date("2025-08-02T23:59:59Z")) artist = "Johnny Blue Skies";
+      else if (now < new Date("2025-08-03T23:59:59Z")) artist = "Trey Anastasio Band";
+      else artist = "Show Complete";
+
+      artistElement.textContent = `NEXT: ${artist}`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Start render loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
 </body>
 </html>
