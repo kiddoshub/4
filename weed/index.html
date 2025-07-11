@@ -15,313 +15,216 @@
       width: 100%;
       margin: 0;
       padding: 0;
-      background: #111 url('IMG_8667.jpeg') center center/cover no-repeat fixed;
-      overflow-x: hidden;
-    }
-    body {
-      min-height: 100vh;
-      min-width: 100vw;
+      background: #000 url('IMG_8667.jpeg') center center/cover no-repeat fixed;
       font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      position: relative;
       color: #fff;
+      overflow: hidden;
     }
-    #overlay-stealie {
+    /* Subtle overlay swirl */
+    body::before {
+      content: '';
       position: fixed;
       inset: 0;
-      width: 100vw;
-      height: 100vh;
+      z-index: 0;
       background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover repeat;
-      mix-blend-mode: lighten;
-      opacity: 0.28;
-      z-index: 1;
+      opacity: 0.22;
       pointer-events: none;
-      animation: swirl 30s linear infinite;
+      mix-blend-mode: lighten;
+      animation: swirl 44s linear infinite;
     }
     @keyframes swirl {
       0% { background-position: 0 0; }
-      100% { background-position: 500px 200px; }
-    }
-    /* Animated SVG blobs */
-    #blobs {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 0.48;
-      filter: blur(1.2px) brightness(1.1);
-    }
-    /* Stealie floating */
-    #stealie {
-      position: fixed;
-      top: 3vw;
-      left: 3vw;
-      width: 8vw;
-      min-width: 70px;
-      max-width: 120px;
-      z-index: 20;
-      pointer-events: none;
-      opacity: 0.94;
-      filter: drop-shadow(0 0 18px #faff88cc);
-      animation: floatStealie 8s ease-in-out infinite alternate;
-    }
-    @keyframes floatStealie {
-      0% { transform: translateY(0) rotate(-8deg);}
-      50% { transform: translateY(20px) rotate(6deg);}
-      100% { transform: translateY(-10px) rotate(-12deg);}
+      100% { background-position: 320px 200px; }
     }
     #main {
       position: relative;
-      z-index: 10;
+      z-index: 1;
+      width: 100vw;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      width: 100vw;
-      min-height: 100vh;
-      padding-top: 5vw;
-      padding-bottom: 2vw;
-      gap: 0.7vw;
-      overflow-x: hidden;
+      gap: 2vw;
+      padding-top: 6vw;
     }
     .headline {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(2.1rem, 4vw, 5.3rem);
+      font-size: clamp(2.2rem, 5vw, 5rem);
       text-align: center;
-      background: linear-gradient(90deg,#faff88,#ff70fa 40%,#70fff9 100%);
-      background-clip: text;
+      background: linear-gradient(90deg,#faff88 5%,#ff70fa 50%,#70fff9 95%);
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 2px #16161690;
-      letter-spacing: 0.07em;
-      margin-bottom: 0.14em;
-      filter: drop-shadow(0 0 22px #faff8855);
-      padding: 0.13em 0.2em;
-      border-radius: 2vw;
+      -webkit-text-stroke: 1.2px #151513;
+      margin-bottom: 0.05em;
+      filter: drop-shadow(0 0 15px #70fff944);
       user-select: none;
-      text-shadow: 0 0 18px #ff70fa33;
     }
     .subheadline {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(1.25rem, 3vw, 3rem);
-      background: linear-gradient(90deg,#fffdcb 70%,#70fff9 100%);
-      background-clip: text;
+      font-size: clamp(1.1rem, 3vw, 2.7rem);
+      background: linear-gradient(90deg,#fffdcb 65%,#70fff9 100%);
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 1.5px #192a;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.10em;
-      filter: drop-shadow(0 0 16px #70fff966);
-      text-shadow: 0 0 10px #fffdcb77;
+      -webkit-text-stroke: 1px #101623bb;
+      margin-bottom: 0.3em;
+      filter: drop-shadow(0 0 10px #faff8844);
       user-select: none;
+      letter-spacing: 0.1em;
     }
     .dates {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(1.1rem,2.2vw,2.3rem);
+      font-size: clamp(1rem,2vw,1.8rem);
       color: #faff88;
       text-shadow: 0 0 13px #fcff7dcc;
-      margin-bottom: 0.8vw;
+      margin-bottom: 1.3em;
       letter-spacing: 0.16em;
       user-select: none;
     }
-    /* Countdown ring blob */
-    #countdown-blob {
+    #countdown-wrap {
+      background: radial-gradient(circle at 50% 45%, #faff8855 0%, #ff70fa44 65%, #0000 100%);
+      padding: 3vw 7vw;
+      border-radius: 40% 60% 52% 55% / 60% 46% 54% 40%;
+      box-shadow: 0 0 90px #faff88aa;
+      margin-bottom: 2vw;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      width: 92vw;
-      max-width: 850px;
-      min-width: 240px;
-      min-height: 220px;
-      margin: 2vw 0 2.3vw 0;
-      position: relative;
-      z-index: 100;
-      border-radius: 55% 46% 53% 58% / 60% 55% 54% 50%;
-      background: radial-gradient(ellipse 110% 80% at 50% 32%, #eaff89bb 0%, #71ffc7a0 33%, #fcff7d70 100%);
-      box-shadow: 0 0 88px #faff8855, 0 0 38px #70fff966;
-      filter: blur(0.6px);
       animation: blobWobble 10s ease-in-out infinite alternate;
-      overflow: visible;
     }
     @keyframes blobWobble {
-      0% { border-radius: 55% 46% 53% 58% / 60% 55% 54% 50%; }
-      28% { border-radius: 48% 44% 62% 54% / 53% 65% 53% 45%; }
-      70% { border-radius: 58% 41% 60% 53% / 57% 58% 59% 62%; }
-      100% { border-radius: 51% 44% 54% 61% / 60% 53% 56% 59%; }
+      0% { border-radius: 40% 60% 52% 55% / 60% 46% 54% 40%; }
+      60% { border-radius: 44% 56% 46% 60% / 55% 62% 38% 53%; }
+      100% { border-radius: 56% 44% 60% 46% / 47% 60% 53% 58%; }
     }
-    /* Countdown digits and labels */
     #countdown {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(3.2rem, 12vw, 13rem);
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      width: 100%;
-      letter-spacing: 0.14em;
-      font-weight: bold;
-      user-select: all;
+      font-size: clamp(3.5rem, 14vw, 13rem);
       background: linear-gradient(90deg, #faff88 0%, #70fff9 50%, #ff70fa 100%);
-      background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 3.5px #000b;
-      filter: drop-shadow(0 0 54px #faff88cc) drop-shadow(0 0 16px #70fff9aa);
-      animation: countGlow 7s ease-in-out infinite alternate, colorWave 13s linear infinite;
-      text-shadow: 0 0 34px #fff, 0 2px 10px #70fff955;
+      -webkit-text-stroke: 3.5px #191919cc;
+      text-shadow: 0 0 54px #faff88bb, 0 0 22px #ff70fa88;
+      font-weight: bold;
+      letter-spacing: 0.11em;
+      filter: drop-shadow(0 0 42px #70fff9bb);
+      animation: pulseglow 8s ease-in-out infinite alternate;
+      user-select: all;
     }
-    @keyframes countGlow {
-      0%,100% { filter: drop-shadow(0 0 54px #faff88cc) drop-shadow(0 0 16px #70fff9aa);}
-      55% { filter: drop-shadow(0 0 67px #ff70fa88) drop-shadow(0 0 34px #faff88dd);}
-    }
-    @keyframes colorWave {
-      0% { background-position: 0% 50%;}
-      100% { background-position: 100% 50%;}
+    @keyframes pulseglow {
+      0%,100% { text-shadow: 0 0 54px #faff88bb, 0 0 22px #ff70fa88;}
+      50% { text-shadow: 0 0 90px #70fff9bb, 0 0 54px #faff88bb;}
     }
     .count-labels {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(1.1rem, 2.1vw, 2rem);
+      font-size: clamp(1rem, 2vw, 2rem);
       display: flex;
       justify-content: center;
       align-items: flex-start;
       width: 100%;
-      margin-top: -1.1em;
-      z-index: 110;
-      pointer-events: none;
-      gap: 1.2vw;
+      margin-top: -1em;
+      gap: 2vw;
+      font-weight: normal;
     }
     .count-labels span {
       flex: 1 1 22%;
       text-align: center;
-      color: #fff;
-      letter-spacing: 0.07em;
-      text-shadow: 0 0 13px #70fff977, 0 1px 2px #faff88;
       background: linear-gradient(90deg,#ff70fa,#faff88 50%,#70fff9 90%);
-      background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
       -webkit-text-stroke: 1px #1239;
       user-select: none;
+      letter-spacing: 0.07em;
     }
-    /* Location graphic & name */
-    .location-block {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 2vw 0 1.2vw 0;
-      gap: 2vw;
-    }
-    .location-block img {
-      width: clamp(78px,13vw,190px);
-      height: auto;
-      border-radius: 2vw 1vw 2vw 1vw;
-      box-shadow: 0 0 18px #fcff7d88, 0 2px 6px #0a0a;
-      background: #fff3;
-      mix-blend-mode: lighten;
-      user-select: none;
-    }
-    .location-block .loc-text {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(1.1rem,2.6vw,2.1rem);
-      background: linear-gradient(90deg,#fcff7d,#ff70fa 90%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1px #0a0354;
-      text-shadow: 0 0 7px #fcff7d77,0 0 1px #fff,0 1px 4px #0007;
-      border-radius: 1vw;
-      padding: 0.12em 1.1em;
-      filter: drop-shadow(0 0 8px #fcff7daa);
-      user-select: none;
-    }
-    /* Guests blobs */
-    .guests-section {
-      width: 98vw;
-      max-width: 950px;
-      background: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 2vw auto 2vw auto;
-      gap: 2vw;
-    }
+    /* Special guests section */
     .guests-title {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(1.2rem,3vw,2.6rem);
-      background: linear-gradient(90deg,#ff70fa,#faff88 50%,#70fff9 100%);
-      background-clip: text;
+      font-size: clamp(1.1rem,3vw,2.2rem);
+      background: linear-gradient(90deg,#ff70fa,#faff88 60%,#70fff9 100%);
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 1px #0a0354;
-      text-shadow: 0 0 12px #fcff7d88;
-      letter-spacing: 0.15em;
+      -webkit-text-stroke: 0.9px #0a0354;
+      text-shadow: 0 0 9px #fcff7d88;
+      letter-spacing: 0.12em;
       user-select: none;
-      margin-bottom: 0.2em;
+      margin-bottom: 0.3em;
     }
     .guests-days {
-      width: 100%;
+      width: 97vw;
+      max-width: 900px;
       display: flex;
       flex-wrap: wrap;
       gap: 2vw;
       justify-content: center;
     }
     .guests-day {
-      flex: 1 1 220px;
-      max-width: 290px;
-      min-width: 120px;
+      flex: 1 1 140px;
+      min-width: 110px;
       min-height: 80px;
-      padding: 2vw 1vw 1.2vw 1vw;
-      margin: 1vw 1vw;
-      background: radial-gradient(ellipse 80% 66% at 56% 44%, #ff70fa88 0%, #faff8899 99%);
-      border-radius: 45% 51% 59% 41%/52% 62% 55% 45%;
-      box-shadow: 0 0 22px #fcff7d44, 0 0 10px #ff70fa99;
+      padding: 1vw 2vw;
+      background: radial-gradient(ellipse 90% 60% at 55% 40%, #ff70fa66 0%, #faff8880 100%);
+      border-radius: 45% 48% 60% 42%/50% 60% 55% 44%;
+      box-shadow: 0 0 20px #fcff7d44;
       display: flex;
       flex-direction: column;
       align-items: center;
-      filter: blur(0.11px);
-      animation: guestWobble 7s ease-in-out infinite alternate;
-      user-select: none;
+      animation: guestWobble 9s ease-in-out infinite alternate;
+      margin-bottom: 1vw;
     }
     @keyframes guestWobble {
-      0% { border-radius: 45% 51% 59% 41%/52% 62% 55% 45%; }
-      38% { border-radius: 48% 55% 63% 44%/53% 69% 52% 44%; }
-      60% { border-radius: 44% 48% 60% 47%/62% 60% 57% 59%; }
-      100% { border-radius: 51% 44% 59% 47%/61% 48% 62% 59%; }
+      0% { border-radius: 45% 48% 60% 42%/50% 60% 55% 44%; }
+      38% { border-radius: 48% 44% 63% 44%/53% 62% 52% 44%; }
+      60% { border-radius: 44% 45% 60% 47%/52% 60% 57% 52%; }
+      100% { border-radius: 51% 44% 57% 47%/61% 48% 62% 59%; }
     }
     .guests-day h3 {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(1rem,1.8vw,1.7rem);
+      font-size: clamp(.9rem,1.4vw,1.3rem);
       background: linear-gradient(90deg,#70fff9,#ff70fa 80%);
-      background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 0.8px #111;
-      margin: 0 0 0.1em 0;
-      letter-spacing: 0.12em;
+      -webkit-text-stroke: 0.7px #111;
+      margin: 0 0 .13em 0;
+      letter-spacing: 0.09em;
+      text-shadow: 0 0 5px #70fff988;
       user-select: none;
-      text-shadow: 0 0 6px #70fff988;
     }
     .guests-list {
-      font-family: 'Hendrix', Arial, Helvetica, sans-serif;
-      font-size: clamp(0.98rem,1.3vw,1.39rem);
+      font-size: clamp(0.8rem,1.1vw,1.09rem);
       color: #fff;
       text-align: center;
-      line-height: 1.23;
+      line-height: 1.2;
       text-shadow: 0 0 5px #70fff9bb,0 1px 3px #ff70fa66;
-      margin-top: 0.09em;
       user-select: text;
     }
-    @media (max-width: 900px) {
-      #main { padding-top: 7vw;}
-      #countdown-blob { min-width: 140px;}
+    .location-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2vw 0 2vw 0;
+      gap: 1vw;
     }
-    @media (max-width: 600px) {
-      .headline { font-size: 1.25rem;}
-      .subheadline { font-size: 0.75rem;}
-      .dates { font-size: 0.63rem;}
-      #countdown { font-size: 1.2rem;}
-      .count-labels span { font-size: .7rem;}
+    .location-block img {
+      width: clamp(65px,12vw,130px);
+      border-radius: 1.5vw 1vw 2vw 1vw;
+      box-shadow: 0 0 18px #fcff7d88, 0 2px 6px #0a0a;
+      background: #fff3;
+      mix-blend-mode: lighten;
+      user-select: none;
+    }
+    .location-block .loc-text {
+      font-size: clamp(0.9rem,2.1vw,1.5rem);
+      background: linear-gradient(90deg,#fcff7d,#ff70fa 90%);
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: .7px #0a0354;
+      text-shadow: 0 0 7px #fcff7d77,0 0 1px #fff,0 1px 4px #0007;
+      border-radius: 0.8vw;
+      padding: 0.12em 1em;
+      filter: drop-shadow(0 0 7px #fcff7daa);
+      user-select: none;
+    }
+    /* Responsive for small screens */
+    @media (max-width: 700px) {
+      #main { padding-top: 13vw;}
+      .headline { font-size: 1.15rem; }
+      .subheadline { font-size: .85rem;}
+      .dates { font-size: .62rem;}
+      #countdown { font-size: 2rem;}
+      .count-labels span { font-size: .8rem;}
       .guests-title { font-size: .8rem;}
       .guests-day h3 { font-size: .7rem;}
       .guests-list { font-size: .7rem;}
@@ -329,30 +232,57 @@
   </style>
 </head>
 <body>
-  <div id="overlay-stealie"></div>
-  <div id="blobs">
-    <svg width="100vw" height="100vh" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:-10vh;left:-10vw;z-index:2;width:120vw;height:110vh;pointer-events:none;">
-      <ellipse cx="800" cy="450" rx="580" ry="220" fill="#ff70fa55">
-        <animate attributeName="rx" values="500;650;520" dur="12s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="200;270;220" dur="11s" repeatCount="indefinite" />
-      </ellipse>
-      <ellipse cx="900" cy="350" rx="210" ry="99" fill="#70fff944">
-        <animate attributeName="cx" values="900;1000;900" dur="14s" repeatCount="indefinite" />
-      </ellipse>
-      <ellipse cx="500" cy="700" rx="180" ry="85" fill="#faff8849">
-        <animate attributeName="cx" values="500;600;540;500" dur="13s" repeatCount="indefinite" />
-      </ellipse>
-    </svg>
-  </div>
-  <img id="stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie">
   <div id="main">
     <div class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
     <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
     <div class="dates">AUGUST 1, 2, 3, 2025</div>
-    <div id="countdown-blob">
+    <div id="countdown-wrap">
       <div id="countdown"></div>
       <div class="count-labels">
         <span>DAYS</span><span>HOURS</span><span>MINUTES</span><span>SECONDS</span>
       </div>
     </div>
-    <div class
+    <div class="location-block">
+      <img src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="">
+      <div class="loc-text">Golden Gate Park</div>
+    </div>
+    <div class="guests-title">SPECIAL GUESTS</div>
+    <div class="guests-days">
+      <div class="guests-day">
+        <h3>Friday</h3>
+        <div class="guests-list">BILLY STRINGS</div>
+      </div>
+      <div class="guests-day">
+        <h3>Saturday</h3>
+        <div class="guests-list">STURGILL SIMPSON<br>JOHNNY BLUE<br>SKIES</div>
+      </div>
+      <div class="guests-day">
+        <h3>Sunday</h3>
+        <div class="guests-list">TREY ANASTASIO BAND</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function pad(n) { return n.toString().padStart(2,'0'); }
+    function updateCountdown() {
+      // Target: August 1, 2025, 00:00 PDT (UTC-7)
+      var target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0)); // 00:00 San Francisco = 07:00 UTC
+      var now = new Date();
+      var nowUTC = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      var diff = target - nowUTC;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = "<span>SHOWTIME!</span>";
+        return;
+      }
+      var days = Math.floor(diff/(1000*60*60*24));
+      var hours = Math.floor((diff/(1000*60*60))%24);
+      var mins = Math.floor((diff/(1000*60))%60);
+      var secs = Math.floor((diff/1000)%60);
+      document.getElementById('countdown').innerHTML =
+        `<span>${pad(days)}</span>:<span>${pad(hours)}</span>:<span>${pad(mins)}</span>:<span>${pad(secs)}</span>`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
