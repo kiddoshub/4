@@ -13,107 +13,86 @@
     body {
       margin: 0;
       background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
-      color: #ff4dff;
-      font-family: 'OCR-A', monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       background-color: black;
-      text-align: center;
+      font-family: 'OCR-A', monospace;
+      color: #ff4dff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       overflow: hidden;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.55);
-      z-index: 1;
-      pointer-events: none;
+      position: relative;
+      text-align: center;
     }
 
     .countdown-container {
       position: relative;
       z-index: 2;
-      padding: 25px 35px;
-      border: 3px solid #00ffff;
-      border-radius: 50px;
-      background: rgba(0, 0, 0, 0.6);
-      box-shadow: 
-        0 0 20px #ff00ff,
-        0 0 30px #00ffff,
-        0 0 40px #ffff00;
-      backdrop-filter: blur(3px);
+      padding: 30px 40px;
+      background: rgba(0, 0, 0, 0.25); /* less blocking */
+      border: 2px solid #00ffff;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 15px #00ffffaa, 0 0 30px #ff00ffaa, 0 0 30px #ffff0088;
     }
 
     .headline {
       font-size: 1.3rem;
-      letter-spacing: 1.5px;
-      margin-bottom: 10px;
+      letter-spacing: 2px;
       color: #00ffff;
       text-shadow: 0 0 10px #00ffff;
+      margin-bottom: 10px;
     }
 
     .countdown {
-      font-size: 3rem;
-      letter-spacing: 2px;
+      font-size: 3.5rem;
+      letter-spacing: 4px;
       line-height: 1.6;
       color: #ff4dff;
       text-shadow: 0 0 10px #ff4dff, 0 0 15px #ff4dff;
     }
 
-    /* Floating image slot */
-    .floating {
+    .floating-img {
       position: absolute;
-      width: 80px;
-      animation: float 8s ease-in-out infinite;
-      z-index: 0;
+      width: 100px;
       opacity: 0.6;
+      z-index: 1;
+      animation: floatAnim 18s infinite ease-in-out;
+      pointer-events: none;
     }
 
-    .floating.jerry {
-      top: 10%;
-      left: 5%;
-      animation-delay: 1s;
-    }
+    .img1 { top: 5%; left: 5%; animation-delay: 0s; }
+    .img2 { top: 10%; right: 10%; animation-delay: 3s; }
+    .img3 { bottom: 8%; left: 15%; animation-delay: 6s; }
+    .img4 { bottom: 10%; right: 5%; animation-delay: 9s; }
+    .img5 { top: 20%; left: 35%; animation-delay: 12s; }
+    .img6 { bottom: 20%; right: 25%; animation-delay: 15s; }
 
-    .floating.stealie {
-      bottom: 10%;
-      right: 5%;
-      animation-delay: 3s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(5deg); }
+    @keyframes floatAnim {
+      0%   { transform: translateY(0) rotate(0deg); }
+      50%  { transform: translateY(-20px) rotate(3deg); }
+      100% { transform: translateY(0) rotate(-2deg); }
     }
 
     @media (max-width: 600px) {
-      .countdown {
-        font-size: 2.2rem;
-      }
-
-      .headline {
-        font-size: 1rem;
-      }
-
-      .floating {
-        width: 50px;
-      }
+      .countdown { font-size: 2rem; }
+      .headline { font-size: 1rem; }
+      .floating-img { width: 60px; }
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
 
   <!-- Floating Images -->
-  <img src="stealie.png" class="floating stealie" alt="Stealie">
-  <img src="jerry.png" class="floating jerry" alt="Jerry">
+  <img src="IMG_8667.jpeg" class="floating-img img1" alt="">
+  <img src="IMG_8687.jpeg" class="floating-img img2" alt="">
+  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1704511064031-W9H9O9HB74EADRGZ0SS4/IMG_3025.jpeg?format=1500w" class="floating-img img3" alt="">
+  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755796555-SOIDBCRP5SKGHVZ5T8TO/oteil21.jpg" class="floating-img img4" alt="">
+  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755223256-ZKXA81NX1A7RSDMD0OPF/deadcoredrocks21.jpg?format=1500w" class="floating-img img5" alt="">
+  <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755660325-K6WPIQGKJ2CY3RALJEK5/deadcochicstage.jpg?format=1500w" class="floating-img img6" alt="">
 
   <div class="countdown-container">
-    <div class="headline">DEAD & COMPANY · SAN FRANCISCO</div>
+    <div class="headline">DEAD & COMPANY — SAN FRANCISCO</div>
     <div class="countdown" id="countdown">Loading...</div>
   </div>
 
