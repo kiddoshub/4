@@ -2,27 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GD60 COUNTDOWN TERMINAL</title>
+  <title>GD60 MIL-TIME COUNTDOWN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     html, body {
-      margin: 0;
-      padding: 2em;
       background: #000;
       color: #00FF00;
       font-family: 'Courier New', Courier, monospace;
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 16px;
+      margin: 0;
+      padding: 2em;
+      white-space: pre;
+      overflow: hidden;
     }
+
     #terminal {
       max-width: 80ch;
-      white-space: pre;
+      margin: 0 auto;
     }
+
     #countdown {
       font-weight: bold;
       margin-top: 1em;
-      font-size: 20px;
     }
+
     .cursor {
       display: inline-block;
       width: 10px;
@@ -30,6 +33,7 @@
       background: #00FF00;
       animation: blink 1s steps(1) infinite;
     }
+
     @keyframes blink {
       50% { opacity: 0; }
     }
@@ -37,19 +41,21 @@
 </head>
 <body>
   <div id="terminal">
-GD60 TERMINAL BOOT SEQUENCE
----------------------------
-
-SYSTEM STATUS: ONLINE
-CONNECTION SECURE
-
-EVENT: CELEBRATING 60 YEARS OF THE GRATEFUL DEAD
-LOCATION: SAN FRANCISCO, CA
-DATES: AUGUST 1, 2, 3, 2025
-
-COUNTDOWN TO AUGUST 1, 2025 - 00:00 PDT
-
-> <span id="countdown">-- DAYS --:--:--</span><span class="cursor"></span>
++--------------------------------------------------------------+
+| GD60 MISSION TIMER                                            |
+|--------------------------------------------------------------|
+| SYSTEM: ACTIVE                                                |
+| ACCESS LEVEL: VERIFIED [CIVILIAN PUBLIC]                     |
+| NETWORK: DEADNET TERMINAL                                    |
+|                                                              |
+| EVENT: 60 YEARS OF THE GRATEFUL DEAD                         |
+| LOCATION: SAN FRANCISCO, CALIFORNIA                          |
+| DATES: AUGUST 1, 2, 3 - 2025                                 |
+|                                                              |
+| COUNTDOWN TO 2025-08-01 00:00 PDT                            |
+|                                                              |
+|> <span id="countdown">-- DAYS --:--:--</span><span class="cursor"></span>
++--------------------------------------------------------------+
   </div>
 
   <script>
@@ -60,7 +66,7 @@ COUNTDOWN TO AUGUST 1, 2025 - 00:00 PDT
     }
 
     function updateCountdown() {
-      const target = new Date('2025-08-01T07:00:00Z'); // 00:00 PDT
+      const target = new Date('2025-08-01T07:00:00Z'); // UTC equivalent of 00:00 PDT
       const now = new Date();
       const diff = target - now;
 
