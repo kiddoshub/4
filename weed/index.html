@@ -2,94 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dead & Company: Countdown – SF 2025</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dead & Company SF Countdown</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @font-face {
       font-family: 'OCR-A';
-      src: url('OCR-A.ttf') format('truetype');
+      src: url('OCR-a___.ttf') format('truetype');
     }
-    html, body {
+    body {
       margin: 0;
       padding: 0;
-      background-color: #000;
-      color: #00FF00;
+      background: #000;
+      color: #f00;
       font-family: 'OCR-A', monospace;
-      font-size: 1.25rem;
-      line-height: 1.6;
-      padding: 2rem;
-      white-space: pre;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
     }
+
+    .circle-group {
+      position: relative;
+      width: 80vw;
+      height: 80vw;
+      max-width: 600px;
+      max-height: 600px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      transform: rotate(-6deg);
+    }
+
+    .show-label {
+      font-size: 1.6rem;
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
     .countdown {
-      font-size: 2rem;
-      color: #FF3C00;
+      font-size: 2.3rem;
+      font-weight: bold;
       margin: 1rem 0;
     }
-    .section {
-      margin-bottom: 2rem;
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 12%;
+      margin-top: 2rem;
+      filter: grayscale(100%) brightness(1.2);
+    }
+
+    @media (max-width: 600px) {
+      .circle-group {
+        width: 90vw;
+        height: 90vw;
+      }
+      .countdown {
+        font-size: 1.8rem;
+      }
+      .show-label {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
-DEAD & COMPANY - SAN FRANCISCO OPERATIONS
-GOLDEN GATE PARK, CALIFORNIA
-AUGUST 1–3, 2025
 
-SYSTEM STATUS: MONITORING TIME REMAINING UNTIL PERFORMANCE INITIALIZATION
+  <div class="circle-group">
+    <div class="show-label">AUG 1 SHOW</div>
+    <div class="countdown" id="count1"></div>
+    <div class="show-label">AUG 2 SHOW</div>
+    <div class="countdown" id="count2"></div>
+    <div class="show-label">AUG 3 SHOW</div>
+    <div class="countdown" id="count3"></div>
+    <img src="IMG_8667.jpeg" alt="SF Satellite">
+  </div>
 
------------------------------
-SHOW #1 - FRIDAY, AUGUST 1
------------------------------
-<span id="day1" class="countdown">INITIALIZING...</span>
+  <script>
+    function pad(n) { return n.toString().padStart(2, '0'); }
 
------------------------------
-SHOW #2 - SATURDAY, AUGUST 2
------------------------------
-<span id="day2" class="countdown">INITIALIZING...</span>
+    const targets = {
+      count1: new Date("2025-08-01T00:00:00"),
+      count2: new Date("2025-08-02T00:00:00"),
+      count3: new Date("2025-08-03T00:00:00")
+    };
 
------------------------------
-SHOW #3 - SUNDAY, AUGUST 3
------------------------------
-<span id="day3" class="countdown">INITIALIZING...</span>
-
------------------------------
-CONFIRMED LINEUP
------------------------------
-  • Mickey Hart – Drums, Percussion
-  • Bob Weir – Rhythm Guitar, Vocals
-  • John Mayer – Lead Guitar, Vocals
-  • Oteil Burbridge – Bass, Vocals
-  • Jeff Chimenti – Keys, Vocals
-  • Jay Lane – Drums
-
-  • Billy Strings (Aug 1)
-  • Sturgill Simpson, Johnny Blue Skies (Aug 2)
-  • Trey Anastasio Band (Aug 3)
-
-<script>
-  function countdown(targetDateStr, elementId) {
-    const target = new Date(targetDateStr);
-    function update() {
+    function updateCountdowns() {
       const now = new Date();
-      let diff = target - now;
-      if (diff <= 0) {
-        document.getElementById(elementId).textContent = "SHOWTIME NOW!";
-        return;
+      for (const [id, date] of Object.entries(targets)) {
+        const diff = date - now;
+        if (diff <= 0) {
+          document.getElementById(id).textContent = "SHOWTIME";
+          continue;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        document.getElementById(id).textContent = 
+          `${pad(days)}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
       }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-      document.getElementById(elementId).textContent =
-        `${days} DAYS ${hours} HOURS ${mins} MINUTES ${secs} SECONDS`;
     }
-    update();
-    setInterval(update, 1000);
-  }
 
-  countdown("2025-08-01T00:00:00", "day1");
-  countdown("2025-08-02T00:00:00", "day2");
-  countdown("2025-08-03T00:00:00", "day3");
-</script>
+    setInterval(updateCountdowns, 1000);
+    updateCountdowns();
+  </script>
+
 </body>
 </html>
