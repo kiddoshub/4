@@ -10,7 +10,6 @@
       --text-color: #f0f0f0;
       --shadow-color: #ff66cc;
     }
-
     body {
       margin: 0;
       overflow: hidden;
@@ -18,11 +17,7 @@
       color: var(--text-color);
       font-family: 'Londrina Solid', sans-serif;
     }
-
-    canvas {
-      display: block;
-    }
-
+    canvas { display: block; }
     #overlay {
       position: absolute;
       top: 0;
@@ -38,7 +33,6 @@
       pointer-events: none;
       z-index: 10;
     }
-
     .title {
       font-size: clamp(24px, 5vw, 60px);
       font-weight: 400;
@@ -47,14 +41,12 @@
       text-shadow: 0 0 8px var(--shadow-color), 0 0 20px var(--shadow-color), 0 0 40px var(--shadow-color);
       animation: pulse 4s infinite alternate;
     }
-
     .footer-text {
       font-size: clamp(12px, 1.5vw, 18px);
       font-weight: 300;
       color: var(--text-color);
       text-shadow: 0 0 5px #000;
     }
-    
     #play-message {
         position: absolute;
         top: 50%;
@@ -70,8 +62,6 @@
         border-radius: 10px;
         background-color: rgba(0,0,0,0.5);
     }
-
-    /* --- Flip Clock Countdown CSS --- */
     .countdown-container {
       display: flex;
       gap: 2vw;
@@ -79,13 +69,11 @@
       align-items: center;
       margin-top: 2vh;
     }
-
     .clock-group {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
     .time-unit {
       font-size: clamp(12px, 2vw, 20px);
       font-weight: 300;
@@ -93,7 +81,6 @@
       margin-top: 1vh;
       text-transform: uppercase;
     }
-
     .flip-card {
       display: inline-flex;
       flex-direction: column;
@@ -108,15 +95,13 @@
       color: #00ffff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.7), 0 0 10px var(--glow-color);
     }
-
     .top, .bottom, .flip-card .top-flip, .flip-card .bottom-flip {
       height: 50%;
       width: 100%;
       overflow: hidden;
       position: absolute;
-      backface-visibility: hidden; /* Fixes flickering in Chrome */
+      backface-visibility: hidden;
     }
-
     .top, .top-flip {
       top: 0;
       display: flex;
@@ -126,7 +111,6 @@
       border-top-right-radius: 8px;
       border-bottom: 1px solid #000;
     }
-    
     .bottom, .bottom-flip {
       bottom: 0;
       display: flex;
@@ -135,7 +119,6 @@
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
     }
-    
     .top-flip {
       background: #222;
       color: #00ffff;
@@ -143,11 +126,7 @@
       transform: rotateX(0deg);
       z-index: 2;
     }
-
-    .flip-card.flipping .top-flip {
-      animation: flip-top 0.5s ease-in forwards;
-    }
-    
+    .flip-card.flipping .top-flip { animation: flip-top 0.5s ease-in forwards; }
     .bottom-flip {
       background: #222;
       color: #00ffff;
@@ -155,23 +134,13 @@
       transform: rotateX(90deg);
       z-index: 2;
     }
-
-    .flip-card.flipping .bottom-flip {
-      animation: flip-bottom 0.5s ease-out 0.5s forwards;
-    }
-    
+    .flip-card.flipping .bottom-flip { animation: flip-bottom 0.5s ease-out 0.5s forwards; }
     @keyframes pulse {
       from { text-shadow: 0 0 8px var(--shadow-color), 0 0 20px var(--shadow-color), 0 0 40px var(--shadow-color); }
       to { text-shadow: 0 0 12px var(--shadow-color), 0 0 30px var(--shadow-color), 0 0 60px var(--shadow-color); }
     }
-
-    @keyframes flip-top {
-      to { transform: rotateX(-90deg); }
-    }
-
-    @keyframes flip-bottom {
-      to { transform: rotateX(0deg); }
-    }
+    @keyframes flip-top { to { transform: rotateX(-90deg); } }
+    @keyframes flip-bottom { to { transform: rotateX(0deg); } }
   </style>
 </head>
 <body>
@@ -179,17 +148,13 @@
     <div class="header">
       <div class="title">GRATEFUL DEAD - SF 2025</div>
     </div>
-
-    <div class="countdown-container" id="countdown">
-      </div>
-
+    <div class="countdown-container" id="countdown"></div>
     <div class="footer">
       <div class="footer-text">Music makes the world go 'round</div>
     </div>
   </div>
 
   <div id="play-message">Click to Begin the Trip</div>
-  
   <audio id="audio" src="https://assets.codepen.io/225363/boxcat-games-epic-song.mp3" loop></audio>
 
   <script type="importmap">
@@ -211,23 +176,17 @@
     import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
     import { gsap } from "https://unpkg.com/gsap@3.12.5/index.js";
 
-    // --- EMBEDDED ASSETS (Self-contained) ------------------------------------
-    
-    // Base64 encoded tie-dye texture for our 3D objects
-    const tieDyeTextureURL = 'data:image/jpeg;base64,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';
-
-    // Base64 encoded space/nebula texture for the skybox
-    const skyTextureURL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBIVFRUVFRUVFRUVFRUVFRcVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBEQACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABFEAABAwIDBQUFBgQEBQUBAAABAAIDBBEFEiEGMUETIlFhcZEHMoGhscEVI0JScuEzYnOCg5KissLwFUNEg7PT0yU1RVST/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QALhEBAQEAAgIBAgQFAgcAAAAAAAECERIhAzFBUXEEEyIyYXEUM4GhscHwM9HhUv/aAAwDAQACEQMRAD8A8qREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQ-9k=';
-
-    // Base64 encoded SVG for the Grateful Dead 13-point lightning bolt
+    // --- EMBEDDED ASSETS ------------------------------------
+    const tieDyeTextureURL = 'data:image/jpeg;base64,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';
+    const skyTextureURL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBIVFRUVFRUVFRUVFRUVFRcVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBEQACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABFEAABAwIDBQUFBgQEBQUBAAABAAIDBBEFEiEGMUETIlFhcZEHMoGhscEVI0JScuEzYnOCg5KissLwFUNEg7PT0yU1RVST/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QALhEBAQEAAgIBAgQFAgcAAAAAAAECERIhAzFBUXEEEyIyYXEUM4GhscHwM9HhUv/aAAwDAQACEQMRAD8A8qREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERA-9k';
     const lightningBoltSVG_URL = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NSA2NSI+PHBvbHlnb24gZmlsbD0iI2ZmZmZmZiIgcG9pbnRzPSIyMyAwIDEzIDMwIDIzIDMwIDExIDQ1IDIzIDQxIDIwIDY1IDMyIDMyIDIyIDM2IDM0IDIwIDIzIDMwIi8+PC9zdmc+`;
-
 
     // --- GLOBAL VARIABLES --------------------------------------------------
     let scene, camera, renderer, controls, composer;
     let audio, analyser;
     let lightningBolt, particleSystem;
-    
+    let animationId = null; // To control the animation loop
+
     // Countdown Target Date
     const countdownTargetDate = new Date("July 27, 2025 20:00:00").getTime();
 
@@ -243,7 +202,7 @@
       renderer.setPixelRatio(window.devicePixelRatio);
       document.body.appendChild(renderer.domElement);
 
-      // Orbit Controls to allow user interaction
+      // Controls
       controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
@@ -251,42 +210,84 @@
       controls.maxDistance = 50;
       controls.enablePan = false;
 
-      // Textures
+      // Textures & Environment
       const textureLoader = new THREE.TextureLoader();
-      const tieDyeTexture = textureLoader.load(tieDyeTextureURL);
-      tieDyeTexture.wrapS = THREE.RepeatWrapping;
-      tieDyeTexture.wrapT = THREE.RepeatWrapping;
-
       const skyTexture = textureLoader.load(skyTextureURL);
       skyTexture.mapping = THREE.EquirectangularReflectionMapping;
       scene.background = skyTexture;
       scene.environment = skyTexture;
-
-      // --- 3D OBJECTS ------------------------------------------------------
-
-      // Create the Lightning Bolt from SVG
-      createLightningBolt(tieDyeTexture);
-
-      // Create the Particle System
-      createParticleSystem();
       
-      // --- POST-PROCESSING (Glow and Custom Shader) -----------------------
+      // Load all necessary assets before starting
+      loadAssetsAndStart(textureLoader);
+
+      // Setup post-processing stack
       setupPostProcessing();
 
-      // --- EVENT LISTENERS -------------------------------------------------
-      window.addEventListener('resize', onWindowResize, false);
-      
-      // Audio setup requires user interaction to start
+      // Setup UI and event listeners
+      setupUI();
+    }
+    
+    // --- ASSET LOADING & SCENE CREATION --------------------------------
+    function loadAssetsAndStart(textureLoader) {
+        // Create static elements first
+        createParticleSystem();
+
+        // Create the main lightning bolt from an SVG file
+        // This is an ASYNCHRONOUS operation, which is a common source of crashes.
+        const svgLoader = new SVGLoader();
+        svgLoader.load(lightningBoltSVG_URL, (data) => {
+            // This code runs ONLY after the SVG has been successfully loaded
+            const material = new THREE.MeshStandardMaterial({
+                map: textureLoader.load(tieDyeTextureURL),
+                metalness: 0.8,
+                roughness: 0.4,
+                side: THREE.DoubleSide
+            });
+            
+            const paths = data.paths;
+            const group = new THREE.Group();
+            group.scale.multiplyScalar(0.1);
+            group.position.set(-2.2, -3.2, 0);
+
+            for (const path of paths) {
+                const shapes = SVGLoader.createShapes(path);
+                for (const shape of shapes) {
+                    const extrudeSettings = { depth: 20, bevelEnabled: true, bevelThickness: 2, bevelSize: 1, bevelSegments: 2 };
+                    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+                    const mesh = new THREE.Mesh(geometry, material);
+                    group.add(mesh);
+                }
+            }
+            lightningBolt = group;
+            scene.add(lightningBolt);
+            
+            // CRITICAL: Start the animation loop only AFTER the main object is loaded
+            startAnimation(); 
+        },
+        undefined, // onProgress callback (not used here)
+        (error) => {
+            // Handle potential loading errors
+            console.error('An error happened while loading the SVG.', error);
+            document.getElementById('play-message').textContent = "Error: Could not load 3D model.";
+        });
+    }
+
+    // --- UI & EVENT LISTENERS ------------------------------------------
+    function setupUI() {
+      // Audio setup requires user interaction
       const playMessage = document.getElementById('play-message');
       playMessage.addEventListener('click', startAudio, { once: true });
 
-      // --- COUNTDOWN SETUP ------------------------------------------------
+      // Countdown Setup
       createFlipClock();
       setInterval(updateCountdown, 1000);
       updateCountdown(); // Initial call
-    }
 
-    // --- AUDIO SETUP ("Plugin") --------------------------------------------
+      // Window Resize
+      window.addEventListener('resize', onWindowResize, false);
+    }
+    
+    // --- AUDIO SETUP ----------------------------------------------------
     function startAudio() {
         document.getElementById('play-message').style.display = 'none';
         
@@ -298,45 +299,12 @@
         audio.setMediaElementSource(audioElement);
         audioElement.play();
 
-        // Audio Analyser for visualization
-        analyser = new THREE.AudioAnalyser(audio, 32); // FFT size (frequency bands)
+        analyser = new THREE.AudioAnalyser(audio, 32);
     }
-
-    // --- 3D OBJECT CREATION FUNCTIONS --------------------------------------
-    function createLightningBolt(texture) {
-        const material = new THREE.MeshStandardMaterial({
-            map: texture,
-            metalness: 0.8,
-            roughness: 0.4,
-            side: THREE.DoubleSide
-        });
-
-        const svgLoader = new SVGLoader();
-        svgLoader.load(lightningBoltSVG_URL, function (data) {
-            const paths = data.paths;
-            const group = new THREE.Group();
-            group.scale.multiplyScalar(0.1);
-            group.position.x = -2.2;
-            group.position.y = -3.2;
-
-            for (let i = 0; i < paths.length; i++) {
-                const path = paths[i];
-                const shapes = SVGLoader.createShapes(path);
-                for (let j = 0; j < shapes.length; j++) {
-                    const shape = shapes[j];
-                    const extrudeSettings = { depth: 20, bevelEnabled: true, bevelThickness: 2, bevelSize: 1, bevelSegments: 2 };
-                    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-                    const mesh = new THREE.Mesh(geometry, material);
-                    group.add(mesh);
-                }
-            }
-            lightningBolt = group;
-            scene.add(lightningBolt);
-        });
-    }
-
+    
     function createParticleSystem() {
-        const particleCount = 5000;
+        // Reduced particle count for better stability on more devices
+        const particleCount = 2500;
         const particles = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
         const color = new THREE.Color();
@@ -350,7 +318,6 @@
             particles[i+1] = radius * Math.sin(theta) * Math.sin(phi);
             particles[i+2] = radius * Math.cos(theta);
             
-            // Assign a psychedelic color
             color.setHSL(Math.random(), 0.7, 0.6);
             colors[i] = color.r;
             colors[i+1] = color.g;
@@ -373,177 +340,120 @@
         scene.add(particleSystem);
     }
     
-    // --- POST-PROCESSING SETUP ---------------------------------------------
     function setupPostProcessing() {
         composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
-
-        // Glow effect
-        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.0, 0.4, 0.85);
-        composer.addPass(bloomPass);
-
-        // Custom Psychedelic Vignette Shader ("Plugin")
+        composer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.0, 0.4, 0.85));
+        
         const PsychedelicVignetteShader = {
-            uniforms: {
-                'tDiffuse': { value: null },
-                'time': { value: 0.0 },
-                'strength': { value: 0.0 }
-            },
-            vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                    vUv = uv;
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-            `,
+            uniforms: { 'tDiffuse': { value: null }, 'time': { value: 0.0 }, 'strength': { value: 0.0 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
             fragmentShader: `
-                uniform sampler2D tDiffuse;
-                uniform float time;
-                uniform float strength;
-                varying vec2 vUv;
-                
+                uniform sampler2D tDiffuse; uniform float time; uniform float strength; varying vec2 vUv;
                 void main() {
                     vec4 color = texture2D(tDiffuse, vUv);
-                    vec2 center = vec2(0.5, 0.5);
-                    float dist = distance(vUv, center);
-                    
-                    // Create a pulsating, color-shifting vignette
+                    float dist = distance(vUv, vec2(0.5));
                     float vignette = smoothstep(0.8, 0.3, dist);
-                    vec3 psychedelicColor = vec3(
-                        0.5 + 0.5 * sin(time * 0.5 + vUv.x * 5.0),
-                        0.5 + 0.5 * sin(time * 0.4 + vUv.y * 5.0),
-                        0.5 + 0.5 * cos(time * 0.6)
-                    );
-                    
+                    vec3 psychedelicColor = vec3(0.5 + 0.5 * sin(time * 0.5 + vUv.x * 5.0), 0.5 + 0.5 * sin(time * 0.4 + vUv.y * 5.0), 0.5 + 0.5 * cos(time * 0.6));
                     color.rgb = mix(color.rgb, psychedelicColor, (1.0 - vignette) * 0.5 * strength);
                     gl_FragColor = color;
-                }
-            `
+                }`
         };
         const shaderPass = new ShaderPass(PsychedelicVignetteShader);
         composer.addPass(shaderPass);
     }
 
     // --- ANIMATION LOOP ----------------------------------------------------
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
+    function startAnimation() {
+      if (!animationId) {
+        animate();
+      }
+    }
 
+    function animate() {
+        animationId = requestAnimationFrame(animate);
         const time = Date.now() * 0.0005;
 
-        // Animate particle system
+        // Update controls
+        controls.update();
+
+        // Animate particle system (safe check)
         if (particleSystem) {
             particleSystem.rotation.y = time * 0.1;
             particleSystem.rotation.x = time * 0.05;
         }
 
-        // Animate lightning bolt
+        // --- Defensive Coding ---
+        // Only animate objects AFTER they have been confirmed to exist.
         if (lightningBolt) {
             lightningBolt.rotation.y = time * 0.3;
         }
 
         // Audio visualization logic
         if (analyser) {
-            const freq = analyser.getAverageFrequency();
-            const normalizedFreq = freq / 128; // Normalize based on 0-255 range
+            const normalizedFreq = analyser.getAverageFrequency() / 128;
 
-            // Pulse the lightning bolt scale
+            // Pulse the lightning bolt scale (safe check)
             if (lightningBolt) {
                 const targetScale = 1 + normalizedFreq * 0.5;
-                gsap.to(lightningBolt.scale, {
-                    x: targetScale,
-                    y: targetScale,
-                    z: targetScale,
-                    duration: 0.1
-                });
+                gsap.to(lightningBolt.scale, { x: targetScale, y: targetScale, z: targetScale, duration: 0.1 });
             }
             
             // Pulse the custom shader effect strength
-            const shaderPass = composer.passes[2]; // Our custom shader is the third pass
-            if(shaderPass) {
-                shaderPass.uniforms.time.value = time * 5.0;
-                shaderPass.uniforms.strength.value = gsap.utils.interpolate(
-                    shaderPass.uniforms.strength.value,
-                    normalizedFreq * 2.0,
-                    0.1
-                );
-            }
+            const shaderPass = composer.passes[2];
+            shaderPass.uniforms.time.value = time * 5.0;
+            shaderPass.uniforms.strength.value = gsap.utils.interpolate(shaderPass.uniforms.strength.value, normalizedFreq * 2.0, 0.1);
         }
         
         composer.render();
     }
 
-    // --- COUNTDOWN LOGIC (Flip Clock) --------------------------------------
+    // --- COUNTDOWN LOGIC (No changes needed here) --------------------------
     function createFlipClock() {
         const countdownElement = document.getElementById('countdown');
         countdownElement.innerHTML = `
-            ${createTimeUnit('days')}
-            ${createTimeUnit('hours')}
-            ${createTimeUnit('minutes')}
-            ${createTimeUnit('seconds')}
+            ${createTimeUnit('days')} ${createTimeUnit('hours')} ${createTimeUnit('minutes')} ${createTimeUnit('seconds')}
         `;
     }
-
     function createTimeUnit(label) {
-        return `
-            <div class="clock-group">
-                <div class="flip-card" id="${label}">
-                    <div class="top">00</div>
-                    <div class="bottom">00</div>
-                    <div class="top-flip">00</div>
-                    <div class="bottom-flip">00</div>
-                </div>
+        return `<div class="clock-group">
+                <div class="flip-card" id="${label}"><div class="top">00</div><div class="bottom">00</div><div class="top-flip">00</div><div class="bottom-flip">00</div></div>
                 <div class="time-unit">${label}</div>
-            </div>
-        `;
+            </div>`;
     }
-
     let lastTime = {};
     function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = countdownTargetDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        const time = { days, hours, minutes, seconds };
-        
+        const distance = countdownTargetDate - new Date().getTime();
         if (distance < 0) {
-            // Handle countdown finished
             document.getElementById('countdown').innerHTML = "<div class='title'>The Golden Road!</div>";
             return;
         }
-
+        const time = {
+            days: Math.floor(distance / 86400000),
+            hours: Math.floor((distance % 86400000) / 3600000),
+            minutes: Math.floor((distance % 3600000) / 60000),
+            seconds: Math.floor((distance % 60000) / 1000)
+        };
         for (const unit in time) {
-            if (!lastTime[unit] || time[unit] !== lastTime[unit]) {
+            if (lastTime[unit] !== time[unit]) {
                 flip(document.getElementById(unit), time[unit]);
                 lastTime[unit] = time[unit];
             }
         }
     }
-
     function flip(flipCard, newNumber) {
         const topHalf = flipCard.querySelector('.top');
-        const bottomHalf = flipCard.querySelector('.bottom');
-        const topFlip = flipCard.querySelector('.top-flip');
-        const bottomFlip = flipCard.querySelector('.bottom-flip');
-        
-        const currentNumber = parseInt(topHalf.textContent);
-        if (newNumber === currentNumber) return;
-
         const numStr = String(newNumber).padStart(2, '0');
-        const oldNumStr = String(currentNumber).padStart(2, '0');
+        if (parseInt(topHalf.textContent) === newNumber) return;
         
-        topFlip.textContent = oldNumStr;
-        bottomFlip.textContent = numStr;
+        const topFlip = flipCard.querySelector('.top-flip');
+        topFlip.textContent = topHalf.textContent;
+        flipCard.querySelector('.bottom-flip').textContent = numStr;
         
         flipCard.classList.add('flipping');
-        
         topFlip.addEventListener('animationend', () => {
             topHalf.textContent = numStr;
-            bottomHalf.textContent = numStr;
+            flipCard.querySelector('.bottom').textContent = numStr;
             flipCard.classList.remove('flipping');
         }, { once: true });
     }
@@ -558,7 +468,6 @@
 
     // --- SCRIPT EXECUTION --------------------------------------------------
     init();
-    animate();
 
   </script>
 </body>
