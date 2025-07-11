@@ -4,25 +4,18 @@
   <meta charset="UTF-8">
   <title>Celebrating 60 Years of the Grateful Dead’s Music</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- Readable, trippy font and terminal font -->
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=VT323&display=swap" rel="stylesheet">
   <style>
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
-    }
-    body {
+      height: 100%;
       min-height: 100vh;
-      min-width: 100vw;
-      overflow-x: hidden;
-      background: #1a0020 url('IMG_8667.jpeg') center center/cover no-repeat fixed;
-      position: relative;
       font-family: 'VT323', monospace;
+      background: #16001b url('IMG_8667.jpeg') center center/cover no-repeat fixed;
+      overflow-x: hidden;
       cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto;
     }
-
-    /* Main faded stealie overlay background */
     .overlay-bg-stealie {
       background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
       opacity: 0.33;
@@ -32,156 +25,176 @@
       pointer-events: none;
       mix-blend-mode: lighten;
     }
-
-    /* Floating stealie overlays */
     .floating-stealie {
       position: fixed;
-      z-index: 15;
+      z-index: 9;
+      opacity: 0.16;
       pointer-events: none;
-      opacity: 0.19;
+      filter: drop-shadow(0 2px 12px #000d);
+      animation: floatstealie 28s linear infinite;
       user-select: none;
-      filter: drop-shadow(0 2px 16px #000a);
-      animation: floatstealie 21s linear infinite;
-      will-change: transform, opacity;
     }
     .floating-stealie.st1 {
-      top: 10vh; left: 7vw; width: 100px; animation-delay: 0s; animation-duration: 23s; transform: rotate(-22deg);
+      top: 6vh; left: 9vw; width: 90px; animation-delay: 0s; animation-duration: 27s; transform: rotate(-12deg);
     }
     .floating-stealie.st2 {
-      bottom: 13vh; right: 11vw; width: 130px; animation-delay: 4s; animation-duration: 28s; transform: rotate(14deg);
+      bottom: 11vh; right: 15vw; width: 130px; animation-delay: 6s; animation-duration: 33s; transform: rotate(10deg);
     }
     .floating-stealie.st3 {
-      top: 50vh; left: 42vw; width: 65px; animation-delay: 12s; animation-duration: 19s; transform: rotate(32deg);
+      top: 53vh; left: 60vw; width: 55px; animation-delay: 15s; animation-duration: 21s; transform: rotate(20deg);
     }
     .floating-stealie.st4 {
-      bottom: 8vh; left: 21vw; width: 90px; animation-delay: 7s; animation-duration: 33s; transform: rotate(-7deg);
+      bottom: 9vh; left: 25vw; width: 100px; animation-delay: 13s; animation-duration: 36s; transform: rotate(-7deg);
     }
     @keyframes floatstealie {
-      0% { opacity: 0.12; transform: translateY(0);}
-      45% { opacity: 0.28;}
-      100% { opacity: 0.14; transform: translateY(-40px);}
+      0% { opacity: 0.14; transform: translateY(0);}
+      50% { opacity: 0.23;}
+      100% { opacity: 0.14; transform: translateY(-38px);}
     }
-
+    .skel-left, .skel-right, .blimp-img, .stealie-logo {
+      pointer-events: none;
+      user-select: none;
+      position: absolute;
+      z-index: 30;
+      filter: drop-shadow(0 4px 18px #000a);
+    }
+    .skel-left {
+      left: 0; bottom: 8vh;
+      width: min(150px,25vw);
+      min-width: 70px;
+    }
+    .skel-right {
+      right: 0; bottom: 7vh;
+      width: min(150px,25vw);
+      min-width: 70px;
+    }
+    .blimp-img {
+      top: 10vh; right: 10vw;
+      width: min(130px,22vw);
+      min-width: 56px;
+      animation: blimpfloat 13s ease-in-out infinite alternate;
+    }
+    @keyframes blimpfloat {
+      0% { transform: translateY(0) rotate(-2deg);}
+      100% { transform: translateY(-22px) rotate(9deg);}
+    }
+    .stealie-logo {
+      top: 5vh; left: 7vw;
+      width: min(60px,8vw);
+      z-index: 50;
+    }
+    .gd60-logo {
+      width: min(410px, 56vw);
+      margin: 0 auto 1.5vh auto;
+      display: block;
+      filter: drop-shadow(0 2px 18px #000a);
+      z-index: 11;
+      position: relative;
+    }
     .main-content {
       position: relative;
-      z-index: 10;
+      z-index: 12;
       min-height: 100vh;
       width: 100vw;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 5vh;
+      padding-top: 7vh;
       box-sizing: border-box;
     }
-
-    .gd60-logo {
-      width: min(480px, 60vw);
-      margin: 0 auto 1.5vh auto;
-      display: block;
-      filter: drop-shadow(0 2px 22px #0009);
-      user-select: none;
-      pointer-events: none;
-    }
-
     .header-title {
       font-family: 'Uncial Antiqua', serif;
       text-align: center;
-      font-size: clamp(1.6rem, 5vw, 3.2rem);
-      color: #ffecbc;
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+      color: #ffe7c7;
       letter-spacing: 0.04em;
-      margin: 0.45em 0 0.22em 0;
+      margin: 0.7em 0 0.25em 0;
       line-height: 1.09;
       text-shadow:
-        0 3px 34px #000,
-        0 1px 0 #fff8,
-        0 0 10px #e98b15,
-        0 0 24px #fff7;
-      filter: drop-shadow(0 2px 6px #f9a60255);
+        0 3px 28px #000,
+        0 0 16px #f9a60255,
+        0 0 1px #fff;
       animation: shinepulse 4.2s ease-in-out infinite;
-      -webkit-background-clip: text;
     }
     @keyframes shinepulse {
-      0% { text-shadow: 0 3px 34px #000, 0 1px 0 #fff8, 0 0 10px #e98b15, 0 0 24px #fff7; }
-      50% { text-shadow: 0 3px 44px #f9a602bb, 0 1px 0 #fff8, 0 0 30px #fff8, 0 0 44px #f9a60288; }
-      100% { text-shadow: 0 3px 34px #000, 0 1px 0 #fff8, 0 0 10px #e98b15, 0 0 24px #fff7; }
+      0% { text-shadow: 0 3px 28px #000, 0 0 16px #f9a60255, 0 0 1px #fff;}
+      50% { text-shadow: 0 3px 42px #f9a602bb, 0 0 36px #fff8;}
+      100% { text-shadow: 0 3px 28px #000, 0 0 16px #f9a60255, 0 0 1px #fff;}
     }
-
     .subhead {
       text-align: center;
       color: #c2edfc;
       font-family: 'Uncial Antiqua', serif;
-      font-size: clamp(1.12rem, 2.6vw, 1.7rem);
+      font-size: clamp(1.1rem, 2.4vw, 1.45rem);
       letter-spacing: 0.13em;
-      text-shadow: 0 2px 18px #000a, 0 0 8px #fff7;
+      text-shadow: 0 2px 12px #000a, 0 0 5px #fff7;
       margin-bottom: 0.4em;
       filter: drop-shadow(0 2px 6px #003a);
       font-weight: 400;
-      padding-bottom: 0.2em;
     }
-
     .dates-row {
       font-family: 'Uncial Antiqua', serif;
       text-align: center;
       color: #f9a602;
-      font-size: clamp(1.32rem, 3.8vw, 2.5rem);
-      margin-bottom: 1.1em;
+      font-size: clamp(1.12rem, 3vw, 2rem);
+      margin-bottom: 0.9em;
       text-shadow:
-        0 3px 18px #0009,
+        0 3px 18px #0008,
         0 1px 0 #fff8,
-        0 0 12px #f9a60288;
-      letter-spacing: 0.09em;
-      -webkit-text-stroke: 1px #fff9;
+        0 0 10px #f9a60288;
+      letter-spacing: 0.08em;
+      -webkit-text-stroke: 1px #fff8;
       filter: drop-shadow(0 2px 4px #f9a60233);
     }
-
     .countdown-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1.2em;
+      gap: 1.3em;
       padding: 1.2em 1em 0.7em 1em;
-      margin: 0 auto 2.3em auto;
+      margin: 0 auto 2.1em auto;
       border-radius: 1.2em;
-      background: rgba(28,18,38,0.81);
-      border: 3.3px solid #ff3366;
-      box-shadow: 0 8px 44px #000d;
-      min-width: 240px;
-      max-width: 94vw;
+      background: rgba(20,13,29,0.79);
+      border: 3px solid #ff3366;
+      box-shadow: 0 8px 44px #000c;
+      min-width: 200px;
+      max-width: 97vw;
       flex-wrap: wrap;
       font-family: 'VT323', monospace;
-      font-size: clamp(1.08rem, 2vw, 2.3rem);
-      font-weight: 700;
-      color: #fdf6d6;
-      text-shadow: 0 2px 12px #000c, 0 0 2px #fff6;
+      font-size: clamp(1rem, 2vw, 2rem);
+      color: #fffcfc;
+      text-shadow: 0 2px 12px #000d, 0 0 2px #fff6;
+      position: relative;
+      z-index: 20;
     }
     .count-num {
-      font-size: clamp(1.5rem, 7vw, 4.3rem);
+      font-size: clamp(2.1rem, 8vw, 5.1rem);
       color: #fff;
       background: linear-gradient(90deg,#ff3366,#f9a602,#00ff99,#ff3366 80%);
-      background-size: 280% auto;
+      background-size: 340% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-fill-color: transparent;
-      animation: textflow 3.8s linear infinite, numglow 2.2s alternate infinite;
-      margin-right: 0.1em;
+      animation: textflow 3.4s linear infinite, numglow 2.2s alternate infinite;
+      margin-right: 0.13em;
       font-family: 'VT323', monospace;
       letter-spacing: 0.05em;
-      filter: drop-shadow(0 1px 7px #000b);
+      filter: drop-shadow(0 1px 8px #000b);
       user-select: text;
-      text-shadow: 0 2px 18px #fffa, 0 0 2px #00ff99;
+      text-shadow: 0 2px 15px #fffa, 0 0 2px #00ff99;
     }
     @keyframes textflow {
-      to { background-position: 280% center; }
+      to { background-position: 340% center; }
     }
     @keyframes numglow {
-      0% { text-shadow: 0 2px 12px #ff3366, 0 0 6px #fff8;}
-      100% { text-shadow: 0 2px 24px #00ff99, 0 0 13px #ffec;}
+      0% { text-shadow: 0 2px 11px #ff3366, 0 0 4px #fff8;}
+      100% { text-shadow: 0 2px 18px #00ff99, 0 0 8px #ffec;}
     }
     .count-label {
       font-family: 'VT323', monospace;
-      font-size: clamp(1.02rem, 2vw, 1.23rem);
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
       color: #e9ffe6;
       margin-right: 1em;
       margin-left: 0.12em;
@@ -190,106 +203,56 @@
       align-self: flex-end;
       opacity: 0.91;
     }
-
-    /* IMAGE LAYERING & POSITIONING */
     .bridge-img {
-      width: min(560px, 96vw);
+      width: min(500px, 95vw);
       max-width: 100vw;
-      margin: 0.3em auto 0.8em auto;
+      margin: 0.2em auto 0.8em auto;
       display: block;
       z-index: 15;
       pointer-events: none;
       filter: drop-shadow(0 8px 30px #0a355566) brightness(0.99);
       user-select: none;
     }
-    .skel-left {
-      position: absolute;
-      left: 0; bottom: 7vh;
-      width: min(180px,28vw);
-      min-width: 84px;
-      z-index: 30;
-      filter: drop-shadow(0 4px 18px #0009);
-      user-select: none;
-      pointer-events: none;
-    }
-    .skel-right {
-      position: absolute;
-      right: 0; bottom: 5vh;
-      width: min(180px,28vw);
-      min-width: 84px;
-      z-index: 30;
-      filter: drop-shadow(0 4px 18px #0009);
-      user-select: none;
-      pointer-events: none;
-    }
-    .blimp-img {
-      position: absolute;
-      top: 8vh;
-      right: 9vw;
-      width: min(145px,22vw);
-      min-width: 62px;
-      z-index: 40;
-      filter: drop-shadow(0 2px 22px #0007);
-      pointer-events: none;
-      user-select: none;
-      animation: blimpfloat 11s ease-in-out infinite alternate;
-    }
-    @keyframes blimpfloat {
-      0% { transform: translateY(0) rotate(-3deg);}
-      100% { transform: translateY(-22px) rotate(7deg);}
-    }
-    .stealie-logo {
-      position: absolute;
-      top: 4vh;
-      left: 8vw;
-      width: min(68px,8vw);
-      z-index: 50;
-      pointer-events: none;
-      filter: drop-shadow(0 2px 10px #000a);
-      user-select: none;
-    }
     .location-img {
       display: block;
       margin: 0.4em auto 1em auto;
-      width: min(400px, 54vw);
+      width: min(340px, 54vw);
       pointer-events: none;
       user-select: none;
       filter: drop-shadow(0 2px 14px #011d);
     }
-
-    /* Guest Set Box */
     .guest-sets-box {
       background: rgba(21,21,21,0.84);
       border-radius: 1.6em;
       border: 2px solid #b0f2b4;
       padding: 2em 1.4em;
       max-width: 410px;
-      margin: 3vh auto 4vh auto;
+      margin: 2vh auto 4vh auto;
       color: #fdf6d6;
-      font-size: 1.25em;
+      font-size: 1.15em;
       box-shadow: 0 2px 18px #001a;
-      position: relative;
       text-align: center;
-      letter-spacing: 0.01em;
+      z-index: 30;
+      position: relative;
     }
     .guest-title {
       font-family: 'Uncial Antiqua', serif;
       color: #b0f2b4;
       letter-spacing: 0.09em;
       margin-bottom: 1em;
-      font-size: 1.15em;
+      font-size: 1.1em;
       text-shadow: 0 1px 12px #000a;
     }
     .guest-row {
-      margin: 0.8em 0 0.5em 0;
+      margin: 0.7em 0 0.5em 0;
       font-size: 1em;
-      line-height: 1.45;
-      letter-spacing: 0.02em;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
     }
     .guest-artist {
       color: #f9a602;
       font-family: 'Uncial Antiqua', serif;
-      font-size: 1.13em;
+      font-size: 1.1em;
       font-weight: 600;
       text-shadow: 0 1px 7px #000a;
       margin-right: 0.28em;
@@ -300,47 +263,76 @@
       font-family: 'VT323', monospace;
       text-shadow: 0 1px 4px #0007;
     }
-
     @media (max-width: 900px) {
       .skel-left, .skel-right { min-width: 40px; }
-      .gd60-logo { width: 74vw;}
+      .gd60-logo { width: 70vw;}
     }
     @media (max-width: 700px) {
-      .main-content { padding-top: 2vh;}
-      .dates-row { font-size: 1.11em;}
-      .skel-left, .skel-right { width: 19vw; min-width: 28px;}
-      .blimp-img { width: 17vw; min-width: 45px;}
+      .main-content { padding-top: 1.5vh;}
+      .dates-row { font-size: 1.08em;}
+      .skel-left, .skel-right { width: 17vw; min-width: 25px;}
+      .blimp-img { width: 13vw; min-width: 35px;}
+      .header-title { font-size: 1.2rem;}
+      .countdown-container { font-size: 1.01rem;}
     }
     @media (max-width: 500px) {
       .main-content { padding-top: 1vh;}
-      .skel-left, .skel-right { width: 13vw;}
+      .skel-left, .skel-right { width: 10vw;}
       .gd60-logo { width: 86vw;}
       .guest-sets-box { padding: 1em 0.3em;}
-      .dates-row { font-size: 1.01em;}
+      .dates-row { font-size: 0.97em;}
+      .bridge-img { width: 92vw;}
+      .location-img { width: 85vw;}
+      .count-num { font-size: 2rem;}
     }
   </style>
 </head>
 <body>
   <div class="overlay-bg-stealie"></div>
+  <!-- Stealie overlays -->
+  <img class="floating-stealie st1" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
+  <img class="floating-stealie st2" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
+  <img class="floating-stealie st3" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
+  <img class="floating-stealie st4" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
 
-  <!-- Floating visible stealie overlays -->
-  <img class="floating-stealie st1" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="" />
-  <img class="floating-stealie st2" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="" />
-  <img class="floating-stealie st3" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="" />
-  <img class="floating-stealie st4" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="" />
-
-  <!-- SKELETONS (left/right) -->
+  <!-- Skeletons, blimp, logo -->
   <img class="skel-left" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="Left Skeleton" />
   <img class="skel-right" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="Right Skeleton" />
-
-  <!-- BLIMP -->
   <img class="blimp-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="Dead Blimp" />
-
-  <!-- STEALIE LOGO, DEAD & COMPANY LOGO -->
   <img class="stealie-logo" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Steal Your Face" />
   <img class="gd60-logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="Dead & Company 60 Years Logo" />
 
   <div class="main-content">
     <div class="header-title">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
     <div class="subhead">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="dates-row">AUGUST 1, 2, 3, 
+    <div class="dates-row">AUGUST 1, 2, 3, 2025</div>
+
+    <div class="countdown-container" id="countdown-container">
+      <span class="count-num" id="days">00</span>
+      <span class="count-label">DAYS</span>
+      <span class="count-num" id="hours">00</span>
+      <span class="count-label">HOURS</span>
+      <span class="count-num" id="minutes">00</span>
+      <span class="count-label">MINUTES</span>
+      <span class="count-num" id="seconds">00</span>
+      <span class="count-label">SECONDS</span>
+    </div>
+
+    <img class="bridge-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="Golden Gate Bridge" />
+    <img class="location-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park" />
+
+    <div class="guest-sets-box">
+      <div class="guest-title">PLUS SPECIAL GUEST SETS BY</div>
+      <div class="guest-row"><span class="guest-artist">BILLY STRINGS</span><span class="guest-day">FRIDAY</span></div>
+      <div class="guest-row"><span class="guest-artist">STURGILL JOHNNY BLUE SKIES SIMPSON</span><span class="guest-day">SATURDAY</span></div>
+      <div class="guest-row"><span class="guest-artist">TREY ANASTASIO BAND</span><span class="guest-day">SUNDAY</span></div>
+    </div>
+  </div>
+  <script>
+    // Countdown targets August 1, 2025, 7:00pm PT (UTC-7)
+    const targetDate = new Date('2025-08-02T02:00:00Z');
+    function pad(n) { return n.toString().padStart(2, '0'); }
+    function updateCountdown() {
+      const now = new Date();
+      let diff = targetDate - now;
+      if (diff < 0) diff
