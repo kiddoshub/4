@@ -24,7 +24,6 @@
       position: relative;
     }
 
-    /* OVERLAY FX */
     .overlay-glitch {
       position: fixed;
       top: 0; left: 0;
@@ -60,7 +59,6 @@
       z-index: 1;
     }
 
-    /* COUNTDOWN BOX */
     .countdown-container {
       position: relative;
       max-width: 600px;
@@ -107,7 +105,6 @@
       color: #00ff99;
     }
 
-    /* SCROLLING TICKER */
     .ticker {
       position: fixed;
       bottom: 0;
@@ -133,7 +130,6 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* FLOATING IMAGES */
     .floating-img {
       position: absolute;
       width: 90px;
@@ -163,33 +159,31 @@
   </style>
 </head>
 <body class="matrix-fx">
-
-  <!-- OVERLAY FX -->
   <div class="overlay-glitch"></div>
 
-  <!-- FLOATING IMAGES (replace URLs if needed) -->
+  <!-- Floating Images -->
   <img src="IMG_8687.jpeg" class="floating-img img1" alt="">
   <img src="IMG_8688.jpeg" class="floating-img img2" alt="">
   <img src="IMG_8685.png" class="floating-img img3" alt="">
   <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755660325-K6WPIQGKJ2CY3RALJEK5/deadcochicstage.jpg?format=1500w" class="floating-img img4" alt="">
 
-  <!-- COUNTDOWN BLOCK -->
+  <!-- Countdown -->
   <div class="countdown-container">
-    <div class="countdown-title">SF MISSION EVENT: DEAD & COMPANY</div>
+    <div class="countdown-title">DEAD & COMPANY — SAN FRANCISCO</div>
     <div class="countdown-timer" id="countdown">LOADING</div>
     <div class="time-labels">[DAYS] [HOURS] [MINUTES] [SECONDS]</div>
     <div class="details">
-      OPERATION TIMEPOINT: 01 AUG 2025 — GOLDEN GATE PARK<br>
-      ASSOCIATED UNITS: BILLY STRINGS / STURGILL SIMPSON / JOHNNY BLUE SKIES / TREY ANASTASIO BAND
+      DEAD & COMPANY — GOLDEN GATE PARK · AUGUST 1, 2025<br>
+      WITH BILLY STRINGS, STURGILL SIMPSON, TREY, JOHNNY BLUE SKIES
     </div>
   </div>
 
-  <!-- SCROLLING TICKER -->
+  <!-- Ticker -->
   <div class="ticker">
-    <span>BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO • DEAD & COMPANY • GOLDEN GATE • SAN FRANCISCO • AUGUST 1–3 2025 • DEAD50+ • OPERATION ASHBURY •</span>
+    <span>BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO • DEAD & COMPANY • GOLDEN GATE PARK • AUGUST 1-3 • SAN FRANCISCO • SF MISSION • </span>
   </div>
 
-  <!-- COUNTDOWN SCRIPT -->
+  <!-- Countdown Script -->
   <script>
     const countdownEl = document.getElementById('countdown');
     const targetDate = new Date("2025-08-01T00:00:00-07:00");
