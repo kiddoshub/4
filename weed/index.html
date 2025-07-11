@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MISSION TIMER — SF: DEAD & CO.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SF MISSION: DEAD & COMPANY</title>
   <style>
     @font-face {
       font-family: 'OCR-A';
@@ -13,131 +13,142 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: #000;
-      color: #00ff00;
+      background-color: black;
+      color: #00FF00;
       font-family: 'OCR-A', monospace;
+      font-size: 1rem;
+      line-height: 1.4;
       overflow: hidden;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: url('IMG_8667.jpeg') center/cover no-repeat;
-      opacity: 0.05;
-      z-index: 0;
-      filter: grayscale(1);
-    }
-
-    .sat-img {
-      position: fixed;
-      width: 22vmin;
-      opacity: 0.11;
-      z-index: 1;
-      filter: grayscale(1) brightness(0.7);
-    }
-
-    #sat1 { top: 4vh; left: 2vw; }
-    #sat2 { bottom: 4vh; right: 2vw; }
-    #sat3 { bottom: 10vh; left: 6vw; }
-
-    #stealie {
-      position: fixed;
-      top: 2vh;
-      left: 2vw;
-      width: 70px;
-      opacity: 0.12;
-      z-index: 2;
-    }
-
-    .main {
-      position: relative;
-      z-index: 10;
+    body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
+      height: 100vh;
+    }
+
+    .stealie {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 60px;
+      height: auto;
+      opacity: 0.9;
+      animation: float 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(8px); }
+    }
+
+    .satellite {
+      position: absolute;
+      opacity: 0.08;
+      z-index: 0;
+      width: 35vw;
+    }
+
+    #sat1 {
+      bottom: 5%;
+      left: 2%;
+    }
+
+    #sat2 {
+      top: 15%;
+      right: 5%;
+    }
+
+    #sat3 {
+      bottom: 10%;
+      right: 3%;
     }
 
     .title {
-      font-size: 1.2rem;
-      margin-bottom: 1em;
-      letter-spacing: 0.1em;
+      z-index: 1;
+      color: #00ff00;
+      font-size: 1.25rem;
+      margin-bottom: 1.2rem;
     }
 
-    .countdown {
-      font-size: 3.8rem;
-      color: #ff3030;
-      background: #000;
-      padding: 0.2em 0.4em;
-      border: 1px solid #ff3030;
+    .countdown-box {
+      z-index: 2;
+      border: 2px solid red;
+      padding: 0.8rem 1.2rem;
+      display: inline-block;
+      font-size: 2rem;
+      font-weight: bold;
+      color: red;
+      background: black;
+      text-shadow: 0 0 8px red;
+      letter-spacing: 0.25em;
     }
 
     .labels {
-      font-size: 0.85rem;
-      margin-top: 0.6em;
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
       color: #00ff00;
-      letter-spacing: 0.15em;
     }
 
-    .info {
-      font-size: 0.9rem;
-      margin-top: 2em;
+    .footer {
+      margin-top: 2rem;
       max-width: 90vw;
-      line-height: 1.5;
-      text-align: left;
+      font-size: 0.9rem;
+      white-space: pre-line;
     }
 
     @media (max-width: 600px) {
-      .countdown {
-        font-size: 2.4rem;
+      .countdown-box {
+        font-size: 1.6rem;
       }
-      .title {
-        font-size: 0.9rem;
+      .labels {
+        font-size: 0.75rem;
       }
     }
   </style>
 </head>
 <body>
-  <img id="sat1" class="sat-img" src="IMG_8688.jpeg" alt="">
-  <img id="sat2" class="sat-img" src="IMG_8687.jpeg" alt="">
-  <img id="sat3" class="sat-img" src="IMG_8685.png" alt="">
-  <img id="stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie">
+  <img class="stealie" src="IMG_8667.jpeg" alt="Stealie">
+  <img id="sat1" class="satellite" src="IMG_8685.png" alt="Satellite 1" />
+  <img id="sat2" class="satellite" src="IMG_8687.jpeg" alt="Satellite 2" />
+  <img id="sat3" class="satellite" src="IMG_8688.jpeg" alt="Satellite 3" />
 
-  <div class="main">
-    <div class="title">SF MISSION EVENT: DEAD & COMPANY</div>
-    <div id="countdown" class="countdown">--:--:--:--</div>
-    <div class="labels">[DAYS]   [HOURS]   [MINUTES]   [SECONDS]</div>
-    <div class="info">
-      OPERATION TIMEPOINT: 01 AUG 2025 — GOLDEN GATE PARK<br>
-      ASSOCIATED UNITS: BILLY STRINGS / STURGILL SIMPSON / JOHNNY BLUE SKIES / TREY ANASTASIO BAND
-    </div>
+  <div class="title">SF MISSION EVENT: DEAD & COMPANY</div>
+
+  <div class="countdown-box" id="countdown">00:00:00:00</div>
+  <div class="labels">[DAYS]   [HOURS]   [MINUTES]   [SECONDS]</div>
+
+  <div class="footer">
+OPERATION TIMEPOINT: 01 AUG 2025 — GOLDEN GATE PARK  
+ASSOCIATED UNITS:
+  — BILLY STRINGS  
+  — STURGILL SIMPSON  
+  — JOHNNY BLUE SKIES  
+  — TREY ANASTASIO BAND
   </div>
 
   <script>
-    function pad(n) {
-      return n.toString().padStart(2, '0');
-    }
+    const countdown = document.getElementById("countdown");
+    const target = new Date("2025-08-01T00:00:00-07:00").getTime();
 
     function updateCountdown() {
-      const eventTime = new Date('2025-08-01T07:00:00Z'); // PDT = UTC-7
-      const now = new Date();
-      const diff = eventTime - now;
-
-      if (diff <= 0) {
-        document.getElementById('countdown').textContent = '00:00:00:00';
-        return;
-      }
+      const now = new Date().getTime();
+      const diff = target - now;
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      document.getElementById('countdown').textContent =
-        `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+      countdown.innerHTML =
+        `${days.toString().padStart(2, '0')}:` +
+        `${hours.toString().padStart(2, '0')}:` +
+        `${minutes.toString().padStart(2, '0')}:` +
+        `${seconds.toString().padStart(2, '0')}`;
     }
 
     updateCountdown();
