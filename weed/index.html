@@ -2,502 +2,359 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dead & Company San Francisco Countdown</title>
+  <title>Dead & Company SF Countdown</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Digital-7 font (Open Font License, close to old-school countdown) -->
   <style>
     @font-face {
-      font-family: 'Hend';
-      src: url('HENDD___.TTF') format('truetype'); /* Ensure you have this font file */
+      font-family: 'Digital7';
+      src: url('https://cdn.jsdelivr.net/gh/kayone/fonts@master/digital-7.ttf') format('truetype');
       font-display: swap;
     }
     html, body {
       margin: 0;
       padding: 0;
-      width: 100vw;
       min-height: 100vh;
-      background: #111 url('https://i.imgur.com/r8k2h2a.jpg') center center/cover fixed no-repeat; /* Optional background */
-      overflow-x: hidden;
+      width: 100vw;
+      overflow: hidden;
+      background: #000;
     }
-    body::before {
-      content: "";
+    body {
+      position: relative;
+      background: url('2B852B16-4AF0-4479-B279-B5BC8D954C6E.jpeg') center center/cover fixed no-repeat;
+    }
+    /* Stealie overlay with a subtle swirl */
+    body::after {
+      content: '';
       position: fixed;
-      z-index: 0;
-      left: 0; right: 0; top: 0; bottom: 0;
-      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
-      opacity: 0.4;
+      inset: 0;
       pointer-events: none;
-      animation: slow-pan 90s linear infinite alternate;
-    }
-    @keyframes slow-pan {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-    body, a, button, input, select {
-      cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto !important;
-    }
-
-    .psy-spine {
-      position: relative;
       z-index: 2;
-      width: 100vw;
-      min-height: 100vh;
+      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover repeat;
+      opacity: 0.38;
+      mix-blend-mode: lighten;
+      animation: swirl 14s linear infinite;
+    }
+    @keyframes swirl {
+      0% { background-position: 0 0; }
+      100% { background-position: 300px 150px; }
+    }
+    /* Subtle scanlines and glowing "laser" overlay */
+    #scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      opacity: 0.16;
+      background: repeating-linear-gradient(
+        to bottom,
+        #0f0 0px,
+        #0f0 1.3px,
+        transparent 1.3px,
+        transparent 3.4px
+      );
+      animation: scanmove 7s linear infinite;
+    }
+    @keyframes scanmove {
+      0% { background-position-y: 0; }
+      100% { background-position-y: 120px; }
+    }
+    /* Animated sweeping green light */
+    #sweep {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0.14;
+      background: linear-gradient(
+        110deg,
+        transparent 40%,
+        #44ff88 51%,
+        transparent 61%
+      );
+      mix-blend-mode: lighten;
+      animation: sweepLight 4s linear infinite alternate;
+    }
+    @keyframes sweepLight {
+      0% { background-position: -80vw 0; }
+      100% { background-position: 120vw 0; }
+    }
+
+    /* MAIN COUNTDOWN LAYOUT */
+    #main {
+      position: fixed;
+      inset: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 5vw 2vw 4vw 2vw;
-      overflow-x: hidden;
-    }
-
-    .poster-frame {
-      position: absolute;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-    .frame-svg {
-      width: 100vw;
-      height: 100vh;
-      position: absolute;
-      left: 0; top: 0;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.87;
-    }
-    .art {
-      position: absolute;
-      pointer-events: none;
-      user-select: none;
-      filter: drop-shadow(0 0 24px #0009);
-      /* Use will-change for performance boost on animated transforms */
-      will-change: transform;
-      /* Eased transition for smoother parallax movement */
-      transition: transform 0.2s ease-out;
-    }
-    .art.bridge { left: 3vw; bottom: 1vw; width: 30vw; min-width: 110px; z-index: 3;}
-    .art.left-skel { left: 1vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; }
-    .art.right-skel { right: 2vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; }
-    .art.blimp { right: 7vw; top: 2vw; width: 15vw; min-width: 80px; z-index: 3;}
-    .art.stealie { left: 50vw; top: 4vw; width: 7vw; min-width: 50px; z-index: 4; will-change: filter; transition: filter 0.1s linear;}
-    .art.logo { left: 50vw; top: 12vw; width: 14vw; min-width: 90px; z-index: 5; mix-blend-mode: lighten;}
-
-    .headline {
-      font-family: 'Hend', serif;
-      font-size: clamp(2.2rem, 7vw, 6rem);
-      letter-spacing: 0.04em;
-      text-align: center;
-      padding: 0.3em 0.5em;
-      background: linear-gradient(97deg, #ffe66b, #e4008f);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1.5px #1e3b54;
-      filter: drop-shadow(0 0 20px #ffe66b88) drop-shadow(0 0 12px #0008);
-      text-shadow: 0 2px 28px #8df4, 0 2px 3px #000;
-      margin: 0 0 0.8em 0;
-      border-radius: 1vw 2vw 1vw 2vw;
-      user-select: none;
+      justify-content: center;
       z-index: 10;
-      position: relative;
-    }
-
-    .subheadline {
-      font-family: 'Hend', serif;
-      font-size: clamp(1.3rem, 3vw, 2.7rem);
-      text-align: center;
-      color: #ffe66b;
-      -webkit-text-stroke: 1px #21232d;
-      text-shadow: 0 0 10px #ffe66b77, 0 1px 2px #003a;
-      margin-bottom: 0.6vw;
-      margin-top: 0vw;
-      user-select: none;
-      z-index: 10;
-      position: relative;
-    }
-
-    .dates {
-      font-family: 'Hend', serif;
-      font-size: clamp(1.1rem, 2.1vw, 2.2rem);
-      color: #fff;
-      text-shadow: 0 0 18px #1e90ffcc, 0 1px 4px #000;
-      letter-spacing: 0.16em;
-      margin-bottom: 1.3vw;
-      user-select: none;
-      z-index: 10;
-      position: relative;
-    }
-
-    .countdown-psy {
-      display: flex;
       flex-direction: column;
-      align-items: center;
-      margin: 2vw 0 3vw 0;
-      z-index: 10;
-      position: relative;
+      pointer-events: none;
     }
     #countdown {
-      font-family: 'Hend', serif;
-      font-size: clamp(4.2rem, 11vw, 10rem);
+      font-family: 'Digital7', monospace;
+      font-size: clamp(3rem, 16vw, 15rem);
+      color: #85ff7a;
       letter-spacing: 0.09em;
-      background: linear-gradient(90deg,#ffe66b,#1698ff 55%,#e4008f 90%);
+      background: linear-gradient(90deg, #2aff5e 20%, #cfffab 60%, #34ffb7 100%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 2px #1e3b54;
-      text-shadow: 0 0 45px #ffe66b, 0 0 25px #1e90ffb0, 0 0 15px #e4008f60, 0 2px 6px #141f;
-      filter: drop-shadow(0 0 12px #ffe66b80);
-      text-align: center;
-      border-radius: 60% 45% 55% 70%/65% 60% 75% 55%;
-      padding: 0.25em 0.4em;
-      animation: psyglow 8s linear infinite;
-      user-select: none;
+      -webkit-text-stroke: 2.5px #0dff4b;
+      text-shadow:
+        0 0 18px #10ff50,
+        0 0 44px #34ffb7,
+        0 2px 10px #000a;
+      filter: blur(0.1px) drop-shadow(0 0 36px #12ff6e66);
+      transition: font-size 0.2s;
+      pointer-events: auto;
+      user-select: all;
       margin-bottom: 1vw;
+      animation: pulseglow 2.2s ease-in-out infinite;
     }
-    @keyframes psyglow {
-      0%,100% { filter: drop-shadow(0 0 38px #ffe66b90);}
-      50% { filter: drop-shadow(0 0 70px #1e90ffcc);}
+    @keyframes pulseglow {
+      0%,100% { text-shadow: 0 0 18px #10ff50, 0 0 44px #34ffb7, 0 2px 10px #000a; }
+      50% { text-shadow: 0 0 44px #34ffb7, 0 0 80px #00ffbb, 0 3px 22px #000a; }
     }
-    .count-label {
-      font-family: 'Hend', serif;
-      font-size: clamp(0.8rem, 2vw, 1.4rem);
-      color: #ffe66b;
-      text-align: center;
-      letter-spacing: 0.12em;
-      margin-bottom: 0.4vw;
-      text-shadow: 0 0 12px #1e90ffbb, 0 2px 4px #2228;
+    /* Tap/click to show event info */
+    #info-toggle {
+      pointer-events: auto;
+      font-family: 'Digital7', monospace;
+      font-size: 1.25em;
+      color: #a8ffd6;
+      background: rgba(9,22,12,0.36);
+      border: 2px solid #31ff92;
+      border-radius: 19px;
+      padding: 0.15em 1em 0.19em 1em;
+      margin-top: 2vw;
+      outline: none;
+      cursor: pointer;
+      text-shadow: 0 0 10px #0fa,0 0 2px #fff;
+      z-index: 100;
+      transition: background 0.13s;
       user-select: none;
+      opacity: 0.93;
+      letter-spacing: 0.11em;
     }
-
+    #info-toggle:active {
+      background: #112e1a;
+    }
+    #event-info {
+      pointer-events: auto;
+      opacity: 0;
+      max-height: 0;
+      transition: opacity 0.24s,max-height 0.24s;
+      overflow: hidden;
+      margin-top: 1vw;
+      text-align: center;
+      width: 92vw;
+      max-width: 690px;
+      border-radius: 1.8vw;
+      background: rgba(10,26,18,0.82);
+      box-shadow: 0 0 20px #0f0c;
+      padding: 0 0;
+    }
+    #event-info.show {
+      opacity: 1;
+      max-height: 420px;
+      padding: 2vw 2vw 1vw 2vw;
+    }
+    .headline {
+      font-family: 'Digital7', monospace;
+      font-size: clamp(1.1rem, 3vw, 2.8rem);
+      background: linear-gradient(90deg,#a8ffd6,#faff88,#70fff9 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1.2px #011;
+      letter-spacing: 0.08em;
+      margin: 0 0 0.1em 0;
+      text-shadow: 0 0 18px #34ffb777, 0 1px 2px #000;
+      padding: 0.11em 0.1em;
+      user-select: text;
+    }
+    .subheadline {
+      font-family: 'Digital7', monospace;
+      font-size: clamp(1rem,2vw,2rem);
+      color: #fffdcb;
+      margin: 0 0 0.1em 0;
+      letter-spacing: 0.1em;
+      background: linear-gradient(90deg,#fffdcb 70%,#34ffb7 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1px #023;
+      text-shadow: 0 0 14px #affffb66, 0 0 3px #fff;
+    }
+    .dates {
+      font-family: 'Digital7', monospace;
+      font-size: clamp(.9rem,1.7vw,1.5rem);
+      color: #a8ffd6;
+      text-shadow: 0 0 8px #00ffd0aa;
+      margin-bottom: 0.7em;
+      letter-spacing: 0.18em;
+    }
     .location-block {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 1.5vw;
-      margin-bottom: 2vw;
-      margin-top: 0vw;
+      gap: 1vw;
       flex-wrap: wrap;
-      z-index: 10;
-      position: relative;
+      margin: 1vw 0 0.6vw 0;
     }
     .location-block img {
-      width: clamp(75px,17vw,210px);
-      border-radius: 23% 18% 40% 21%/38% 27% 20% 41%;
-      box-shadow: 0 0 38px #ffe66b90,0 2px 12px #1e90ffb0;
+      width: clamp(55px,13vw,140px);
+      border-radius: 1vw 2vw 1vw 1vw;
+      box-shadow: 0 0 18px #a8ffd6b0, 0 2px 6px #111a;
+      background: #fff3;
+      mix-blend-mode: lighten;
       margin-right: 1vw;
-      user-select: none;
-      background: #fff4;
-      z-index: 10;
-      position: relative;
     }
-    .location-block .loc-txt {
-      font-family: 'Hend', serif;
-      font-size: clamp(1.4rem,2.6vw,2.9rem);
-      background: linear-gradient(90deg,#ffe66b,#1e90ff 60%,#e4008f);
+    .location-block .loc-text {
+      font-family: 'Digital7', monospace;
+      font-size: clamp(.9rem,1.2vw,1.4rem);
+      color: #d4fff0;
+      background: linear-gradient(90deg,#faff88,#34ffb7 90%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 1.8px #1e3b54;
-      text-shadow: 0 0 15px #ffe66b77, 0 1px 4px #000;
-      padding: 0.2em 1em;
-      filter: drop-shadow(0 0 10px #8df);
-      border-radius: 1vw;
-      user-select: none;
-      z-index: 10;
-      position: relative;
+      -webkit-text-stroke: .7px #0a0354;
+      text-shadow: 0 0 8px #affffb77,0 0 1px #fff,0 1px 4px #0007;
+      border-radius: 0.7vw;
+      padding: 0.1em 0.7em;
+      filter: drop-shadow(0 0 8px #00ffd077);
     }
-
     .guests-section {
-      width: 92vw;
-      max-width: 820px;
-      background: linear-gradient(109deg,#ffe66b35 10%,#1e90ff22 80%,#e4008f19 100%);
-      border: 2.5px solid #fff7;
-      border-radius: 3vw;
-      margin: 2vw auto 1.5vw auto;
-      padding: 2vw 2vw 1.6vw 2vw;
-      box-shadow: 0 0 37px #ffe66b33;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 10;
-      position: relative;
-      overflow: visible;
+      width: 100%;
+      margin: 0.9em auto 0.3em auto;
+      padding: 0.7em 0 0.3em 0;
+      background: linear-gradient(90deg,#193e24c7 60%,#28e66b11 100%);
+      border-radius: 1.5vw;
+      box-shadow: 0 0 9px #2aff5e22;
     }
-    .guests-title {
-      font-family: 'Hend', serif;
-      font-size: clamp(1.6rem, 3vw, 3rem);
-      letter-spacing: 0.10em;
-      background: linear-gradient(90deg,#e4008f,#ffe66b 60%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-stroke: 1.7px #1e3b54;
-      text-shadow: 0 0 11px #ffe66b88, 0 2px 10px #000b;
-      margin: 0 0 1vw 0;
-      text-align: center;
-      user-select: none;
+    .guests-section h2 {
+      font-family: 'Digital7', monospace;
+      font-size: clamp(.8rem,2vw,1.3rem);
+      color: #34ffb7;
+      text-shadow: 0 0 8px #00ffd0bb,0 2px 7px #0006;
+      margin: 0 0 .19em 0;
+      letter-spacing: 0.07em;
     }
     .guests-days {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      gap: 2vw;
-      justify-content: center;
+      gap: .7vw;
+      justify-content: space-around;
     }
     .guests-day {
-      flex: 1 1 220px;
-      min-width: 130px;
-      margin: 0.4vw 1vw;
-      padding: 1.2vw 1.5vw;
-      background: linear-gradient(108deg,#ffe66b40 30%,#e4008f20 100%);
-      box-shadow: 0 0 15px #ffe66b40,0 0 2px #1e90ffb0;
+      flex: 1 1 115px;
+      min-width: 90px;
+      margin: 0.1vw 0.5vw;
+      padding: .5vw .7vw;
+      background: linear-gradient(100deg,#a8ffd644 60%,#cafffb22 100%);
+      border-radius: 1vw 2vw 1vw 2vw;
+      box-shadow: 0 0 4px #00ffd044;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1.4px solid #ffe66b33;
-      z-index: 10;
-      position: relative;
-      min-height: 120px;
-      clip-path: polygon(0% 15%, 15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-    .guests-day:hover {
-        transform: scale(1.05) rotate(2deg);
-        box-shadow: 0 0 30px #ffe66b77, 0 0 10px #1e90ffdd;
+      border: .5px solid #fff2;
     }
     .guests-day h3 {
-      font-family: 'Hend', serif;
-      font-size: clamp(1.1rem, 2vw, 1.6rem);
-      color: #e4008f;
-      text-shadow: 0 0 9px #ffe66b90, 0 1px 4px #1e90ff90;
-      margin: 0 0 0.15em 0;
+      font-family: 'Digital7', monospace;
+      font-size: clamp(.7rem,1.4vw,1rem);
+      color: #a8ffd6;
+      margin: 0 0 .1em 0;
+      text-shadow: 0 0 4px #00ffd044,0 2px 5px #0006;
       letter-spacing: 0.07em;
-      user-select: none;
     }
     .guests-list {
-      font-family: 'Hend', serif;
-      font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+      font-family: 'Digital7', monospace;
+      font-size: clamp(.7rem,1vw,.95rem);
       color: #fff;
       text-align: center;
-      line-height: 1.4;
-      text-shadow: 0 0 13px #ffe66b70, 0 1px 3px #0008;
-      margin-bottom: 0.14vw;
-      user-select: none;
+      line-height: 1.3;
+      text-shadow: 0 0 6px #00ffd044,0 1px 4px #0007;
     }
-
-    /* Styles for the new audio toggle button */
-    #audio-toggle {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 999;
-        background: #ffe66b;
-        border: 2px solid #1e3b54;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        color: #1e3b54;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 20px #000a;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    #audio-toggle:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 30px #ffe66ba0;
-    }
-    #audio-toggle.playing {
-        background: #e4008f;
-        color: #fff;
-    }
-
-    @media (max-width: 900px) {
-      .art-img { width: 30vw; min-width: 38px;}
-      .art-bridge { bottom: 11vw;}
-      .art-blimp { top: 14vw;}
-    }
+    /* Hide scrollbars but still scrollable for mobile */
+    ::-webkit-scrollbar { width: 0 !important; background: transparent; }
     @media (max-width: 700px) {
-      .art.left-skel, .art.right-skel { width: 22vw; top: 20vw;}
-      .art.bridge, .art.blimp { width: 32vw;}
-      .art.logo { width: 19vw;}
-      .art.stealie { width: 10vw;}
-      .guests-days {flex-direction: column; gap: 1vw;}
-      .guests-day {min-width: 130px; width: 85vw; margin: 2vw auto;}
+      #countdown { font-size: 2.5rem; }
+      #event-info { font-size: .88em; }
     }
-    @media (max-width: 480px) {
-      .headline { font-size: clamp(1.8rem, 10vw, 2.2rem); -webkit-text-stroke-width: 1px;}
-      .subheadline { font-size: clamp(1.1rem, 6vw, 1.3rem); }
-      .dates { font-size: clamp(0.9rem, 5vw, 1.1rem); }
-      #countdown { font-size: clamp(3.5rem, 20vw, 4.2rem); -webkit-text-stroke-width: 1.5px;}
-      .location-block .loc-txt { font-size: clamp(1rem, 7vw, 1.4rem); }
-      #audio-toggle { width: 40px; height: 40px; font-size: 20px; }
+    @media (max-width: 400px) {
+      .headline { font-size: .7rem; }
+      .subheadline { font-size: .6rem; }
+      .dates { font-size: .45rem; }
     }
   </style>
 </head>
 <body>
-  <div class="poster-frame">
-    <svg class="frame-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <path d="M2,12 Q12,2 20,12 Q28,22 36,12 Q44,2 52,12 Q60,22 68,12 Q76,2 84,12 Q92,22 99,11 L99,99 L1,99 Z"
-        fill="none" stroke="#ffe66b" stroke-width="2" opacity="0.45"/>
-      <path d="M4,16 Q16,4 25,16 Q34,28 43,16 Q52,4 61,16 Q70,28 79,16 Q88,4 96,16" 
-        fill="none" stroke="#e4008f" stroke-width="1.2" opacity="0.29"/>
-    </svg>
-  </div>
-  <img class="art bridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="" data-parallax-strength="5">
-  <img class="art left-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="" data-parallax-strength="15">
-  <img class="art right-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="" data-parallax-strength="15">
-  <img class="art blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="" data-parallax-strength="25">
-  <img class="art stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
-  <img class="art logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="" data-parallax-strength="-10">
-  
-  <div class="psy-spine">
-    <h1 class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</h1>
-    <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="dates">JULY 18, 19, & 20, 2025</div>
-    <div class="countdown-psy">
-      <div id="countdown">00:00:00:00</div>
-      <div class="count-label">DAYS : HOURS : MINS : SECS</div>
-    </div>
-
-    <div class="location-block">
-      <img src="https://i.scdn.co/image/ab67616d0000b273b7556c7512709337535c8942" alt="Oracle Park stadium view">
-      <div class="loc-txt">ORACLE PARK</div>
-    </div>
-
-    <div class="guests-section">
-      <h2 class="guests-title">WITH SPECIAL GUESTS</h2>
-      <div class="guests-days">
-        <div class="guests-day">
-          <h3>FRIDAY, JUL 18</h3>
-          <div class="guests-list">Sturgill Simpson<br>The War on Drugs</div>
-        </div>
-        <div class="guests-day">
-          <h3>SATURDAY, JUL 19</h3>
-          <div class="guests-list">Khruangbin<br>Bob Weir & Wolf Bros.</div>
-        </div>
-        <div class="guests-day">
-          <h3>SUNDAY, JUL 20</h3>
-          <div class="guests-list">Dead & Company<br>(Full Set)</div>
+  <div id="scanlines"></div>
+  <div id="sweep"></div>
+  <div id="main">
+    <div id="countdown"></div>
+    <button id="info-toggle" aria-controls="event-info" aria-expanded="false">Show Event Info</button>
+    <div id="event-info" tabindex="0">
+      <div class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
+      <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
+      <div class="dates">AUGUST 1, 2, 3, 2025</div>
+      <div class="location-block">
+        <img src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="">
+        <div class="loc-text">Golden Gate Park</div>
+      </div>
+      <div class="guests-section">
+        <h2>SPECIAL GUESTS</h2>
+        <div class="guests-days">
+          <div class="guests-day">
+            <h3>Friday</h3>
+            <div class="guests-list">BILLY STRINGS</div>
+          </div>
+          <div class="guests-day">
+            <h3>Saturday</h3>
+            <div class="guests-list">STURGILL SIMPSON<br>JOHNNY BLUE<br>SKIES</div>
+          </div>
+          <div class="guests-day">
+            <h3>Sunday</h3>
+            <div class="guests-list">TREY ANASTASIO BAND</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <button id="audio-toggle">🎵</button>
-
   <script>
-    // --- 1. COUNTDOWN TIMER ---
-    const countdownElement = document.getElementById('countdown');
-    const countDownDate = new Date("July 18, 2025 00:00:00").getTime();
-    
-    const updateCountdown = () => {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
-
-        if (distance < 0) {
-            countdownElement.innerHTML = "LIVE NOW!";
-            document.querySelector('.count-label').style.display = 'none';
-            clearInterval(countdownInterval); // Stop the interval once the event starts
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        const format = (num) => num.toString().padStart(2, '0');
-        countdownElement.innerHTML = `${format(days)}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
-    };
-    const countdownInterval = setInterval(updateCountdown, 1000);
+    function pad(n) { return n.toString().padStart(2,'0'); }
+    function updateCountdown() {
+      // Target: August 1, 2025, 00:00 PDT (UTC-7) = 2025-08-01T07:00:00Z
+      const target = new Date(Date.UTC(2025, 7, 1, 7, 0, 0));
+      const now = new Date();
+      const nowUTC = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      let diff = target - nowUTC;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = "<span style='font-size:1em;'>SHOWTIME!</span>";
+        return;
+      }
+      const days = Math.floor(diff/(1000*60*60*24));
+      const hours = Math.floor((diff/(1000*60*60))%24);
+      const mins = Math.floor((diff/(1000*60))%60);
+      const secs = Math.floor((diff/1000)%60);
+      document.getElementById('countdown').innerHTML =
+        `<span>${pad(days)}</span>:<span>${pad(hours)}</span>:<span>${pad(mins)}</span>:<span>${pad(secs)}</span>`;
+    }
+    setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // --- 2. PARALLAX MOUSE EFFECT ---
-    document.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        
-        // Calculate mouse position relative to center (-0.5 to 0.5)
-        const mouseX = (clientX - centerX) / (centerX * 2);
-        const mouseY = (clientY - centerY) / (centerY * 2);
-        
-        document.querySelectorAll('.art[data-parallax-strength]').forEach(art => {
-            const strength = art.dataset.parallaxStrength;
-            const offsetX = -mouseX * strength;
-            const offsetY = -mouseY * strength;
-            
-            // Apply the parallax translate without overriding the initial rotation from CSS
-            art.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        });
-    });
-
-    // --- 3. AUDIO-REACTIVE STEALIE ---
-    const audioButton = document.getElementById('audio-toggle');
-    const stealie = document.querySelector('.art.stealie');
-    let audioContext, analyser, source, dataArray, isPlaying = false;
-    let animationFrameId;
-
-    const audioUrl = 'https://cdn.jsdelivr.net/gh/scottschiller/SoundManager2@master/demo/_mp3/sine-wave-440.mp3'; // Placeholder audio
-
-    const setupAudio = () => {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-
-        const audioElement = new Audio(audioUrl);
-        audioElement.crossOrigin = "anonymous";
-        audioElement.loop = true;
-        source = audioContext.createMediaElementSource(audioElement);
-        source.connect(analyser);
-        analyser.connect(audioContext.destination);
-
-        return audioElement;
-    };
-
-    let audioElement = null;
-
-    const visualize = () => {
-        analyser.getByteFrequencyData(dataArray);
-        // Focus on bass frequencies (first few bins)
-        const bassLevel = (dataArray[1] + dataArray[2] + dataArray[3]) / 3;
-        // Map bass level (0-255) to a glow size (0-25px)
-        const glowSize = (bassLevel / 255) * 25;
-        
-        stealie.style.filter = `drop-shadow(0 0 ${glowSize}px #e4008f) drop-shadow(0 0 10px #0009)`;
-        
-        animationFrameId = requestAnimationFrame(visualize);
-    };
-
-    audioButton.addEventListener('click', () => {
-        if (!audioContext) {
-            audioElement = setupAudio();
-        }
-
-        // Must resume context after user interaction
-        if (audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
-        
-        if (isPlaying) {
-            audioElement.pause();
-            audioButton.textContent = '🎵';
-            audioButton.classList.remove('playing');
-            cancelAnimationFrame(animationFrameId); // Stop animation loop
-        } else {
-            audioElement.play();
-            audioButton.textContent = '⏸️';
-            audioButton.classList.add('playing');
-            visualize(); // Start animation loop
-        }
-        isPlaying = !isPlaying;
+    // Info toggle
+    const btn = document.getElementById('info-toggle');
+    const info = document.getElementById('event-info');
+    btn.addEventListener('click', () => {
+      info.classList.toggle('show');
+      btn.textContent = info.classList.contains('show') ? 'Hide Event Info' : 'Show Event Info';
+      btn.setAttribute('aria-expanded', info.classList.contains('show') ? 'true' : 'false');
+      if (info.classList.contains('show')) info.focus();
     });
   </script>
-
 </body>
 </html>
