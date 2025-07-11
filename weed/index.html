@@ -2,200 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Elements of Design — Full Spectrum</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grateful Dead SF Countdown</title>
   <style>
-    :root {
-      --primary: #b6ffe0;
-      --accent: #ff00cc;
-      --live-glow: #ff9900;
-      --font: monospace;
-      --dark: #0a0a0a;
-      --light: #fafafa;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
     html, body {
       margin: 0;
-      padding: 0;
-      font-family: var(--font);
-      background-color: var(--dark);
-      color: var(--light);
-      scroll-behavior: smooth;
-      scroll-snap-type: y mandatory;
-      overflow-x: hidden;
+      overflow: hidden;
+      background: black;
+      font-family: monospace;
     }
-
-    section {
-      height: 100vh;
-      width: 100vw;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    canvas {
+      display: block;
+    }
+    #overlay {
+      position: absolute;
+      top: 10%;
+      width: 100%;
       text-align: center;
-      position: relative;
-      padding: 2rem;
-      z-index: 1;
-    }
-
-    section h1 {
-      font-size: clamp(3rem, 8vw, 10rem);
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 12px var(--accent);
-    }
-
-    section p {
-      font-size: clamp(1.2rem, 2vw, 2.2rem);
-      max-width: 70ch;
-      line-height: 1.7;
-      margin: 1.5rem auto 0 auto;
-    }
-
-    section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      opacity: 0.2;
-    }
-
-    /* INDIVIDUAL BACKGROUNDS */
-
-    #line {
-      background: linear-gradient(90deg, #ff0080, #7928ca);
-    }
-
-    #line::before {
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.1) 0px,
-        rgba(255, 255, 255, 0.1) 2px,
-        transparent 2px,
-        transparent 8px
-      );
-    }
-
-    #shape {
-      background: radial-gradient(circle at center, #0ff, #0047ff);
-    }
-
-    #shape::before {
-      background: conic-gradient(from 0deg, #0000 25%, rgba(255,255,255,0.05) 25% 50%, #0000 50% 75%, rgba(255,255,255,0.05) 75%);
-      mask-image: radial-gradient(circle, black 60%, transparent 100%);
-    }
-
-    #color {
-      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-      animation: hueShift 20s linear infinite;
-    }
-
-    @keyframes hueShift {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
-    }
-
-    #texture {
-      background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-      background-size: 200px;
-    }
-
-    #value {
-      background: linear-gradient(to bottom, #000, #222, #444, #666, #888, #aaa, #ccc, #fff);
-    }
-
-    #form {
-      background: radial-gradient(ellipse at center, #222 0%, #000 100%);
-      perspective: 800px;
-    }
-
-    #form::before {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: #fff2;
-      border: 2px solid #fff5;
-      transform: rotateX(45deg) rotateY(30deg) translateZ(30px);
-      box-shadow: 0 0 12px #fff5;
-      animation: cubeSpin 12s infinite linear;
-    }
-
-    @keyframes cubeSpin {
-      0% { transform: rotateX(45deg) rotateY(0deg); }
-      100% { transform: rotateX(45deg) rotateY(360deg); }
-    }
-
-    #space {
-      background: radial-gradient(circle, #000 20%, #111 60%, #000 100%);
-    }
-
-    #space::before {
-      background: repeating-radial-gradient(circle, #222 1px, transparent 2px);
-      background-size: 20px 20px;
-    }
-
-    .label {
-      position: absolute;
-      bottom: 1rem;
-      font-size: 0.9rem;
-      opacity: 0.4;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      color: #00FF00;
+      font-size: 20px;
+      text-shadow: 0 0 5px #00FF00;
+      pointer-events: none;
+      mix-blend-mode: screen;
     }
   </style>
 </head>
 <body>
+  <canvas id="matrix"></canvas>
+  <div id="overlay">
+    <div style="font-size: 30px;">GRATEFUL DEAD — SAN FRANCISCO 2025</div>
+    <div id="countdown" style="margin-top: 1em;"></div>
+    <div id="artist" style="margin-top: 0.5em;"></div>
+    <div id="phase" style="margin-top: 0.5em;"></div>
+  </div>
 
-  <section id="line">
-    <h1>Line</h1>
-    <p>The visual path that enables the eye to move within the piece. Lines can lead, divide, and generate rhythm across composition.</p>
-    <div class="label">1 / 7 — Direction & Flow</div>
-  </section>
+  <script>
+    // --- Matrix Rain ---
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-  <section id="shape">
-    <h1>Shape</h1>
-    <p>Defined areas—geometric or organic—shapes build structure, unity, and the bones of design.</p>
-    <div class="label">2 / 7 — Structure</div>
-  </section>
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+    const fontSize = 18;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
 
-  <section id="color">
-    <h1>Color</h1>
-    <p>Color evokes emotion, builds contrast, and defines mood. Hue, brightness, saturation—each element matters.</p>
-    <div class="label">3 / 7 — Emotion</div>
-  </section>
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  <section id="texture">
-    <h1>Texture</h1>
-    <p>Texture gives visual or physical tactility—felt or faked. Adds realism, depth, and grit to flat surfaces.</p>
-    <div class="label">4 / 7 — Feel</div>
-  </section>
+      ctx.fillStyle = "#00FF00";
+      ctx.font = fontSize + "px monospace";
 
-  <section id="value">
-    <h1>Value</h1>
-    <p>Value is the scale of light to dark. It creates highlights, shadows, and the full range of tone between.</p>
-    <div class="label">5 / 7 — Light & Dark</div>
-  </section>
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-  <section id="form">
-    <h1>Form</h1>
-    <p>Form is shape with depth. Through light and perspective, flat becomes full and dimensional.</p>
-    <div class="label">6 / 7 — Volume</div>
-  </section>
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 33);
 
-  <section id="space">
-    <h1>Space</h1>
-    <p>Space is what surrounds, divides, or isolates. Positive space is subject. Negative space is breath.</p>
-    <div class="label">7 / 7 — Depth</div>
-  </section>
+    // --- Countdown + Timeline Overlay ---
+    const countdownEl = document.getElementById('countdown');
+    const artistEl = document.getElementById('artist');
+    const phaseEl = document.getElementById('phase');
 
+    const showDate = new Date("2025-08-01T16:00:00");
+    const schedule = [
+      { date: "2025-08-01", artist: "Billy Strings" },
+      { date: "2025-08-02", artist: "Johnny Blue Skies (Sturgill)" },
+      { date: "2025-08-03", artist: "Trey Anastasio Band" }
+    ];
+
+    function updateOverlay() {
+      const now = new Date();
+      const diff = showDate - now;
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      countdownEl.innerText = `COUNTDOWN: ${d}d ${h}h ${m}m ${s}s`;
+
+      const next = schedule.find(e => new Date(e.date) >= now);
+      artistEl.innerText = next ? `NEXT ARTIST: ${next.artist}` : "ALL ARTISTS COMPLETE";
+
+      if (diff > 5 * 24 * 60 * 60 * 1000) {
+        phaseEl.innerText = "PHASE: EARLY WAIT";
+      } else if (diff > 2 * 24 * 60 * 60 * 1000) {
+        phaseEl.innerText = "PHASE: FINAL BUILDUP";
+      } else if (diff > 0) {
+        phaseEl.innerText = "PHASE: STAGE SET";
+      } else if (diff > -24 * 60 * 60 * 1000) {
+        phaseEl.innerText = "PHASE: SHOWTIME";
+      } else {
+        phaseEl.innerText = "PHASE: ARCHIVE MODE";
+      }
+    }
+
+    setInterval(updateOverlay, 1000);
+
+    // Responsive resize
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
 </body>
 </html>
