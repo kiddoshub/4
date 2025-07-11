@@ -2,288 +2,338 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>60 Years of the Grateful Dead!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Classic web fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=VT323&display=swap" rel="stylesheet">
+  <title>CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-      background: #000 url('IMG_8667.jpeg') center center/cover no-repeat fixed;
-      font-family: 'VT323', monospace;
-      color: #fff;
-      cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto;
-      min-height: 100vh;
+      overflow-x: hidden;
     }
-    /* BG Stealie overlay */
-    #overlay-stealie {
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      background: url('IMG_8667.jpeg') center center/cover fixed no-repeat;
+      position: relative;
+      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
+      color: #fff;
+      user-select: none;
+    }
+    body::before {
+      content: '';
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
+      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
+      opacity: 0.35;
       z-index: 1;
       pointer-events: none;
-      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/contain no-repeat;
-      opacity: 0.36;
-      mix-blend-mode: lighten;
     }
-    .layout-table {
+    #psyche-wrap {
       position: relative;
       z-index: 2;
-      margin: 0 auto;
-      width: 98vw;
-      max-width: 1200px;
-      background: rgba(32,10,32,0.88);
-      border: 6px double #f9a602;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #000c, 0 0 0 12px #18001a88;
-      padding: 0.5em 1.5vw 1.6em 1.5vw;
-      margin-top: 16px;
+      padding-bottom: 5vh;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
-    .logo {
-      margin: 12px auto 2vw auto;
-      display: block;
-      max-width: 380px;
-      width: 60vw;
-      filter: drop-shadow(0 2px 10px #000a);
-    }
-    .header {
-      font-family: 'Orbitron', Impact, Arial Black, sans-serif;
-      font-size: clamp(1.1rem, 5vw, 2.6rem);
+    .headline-main {
+      font-size: clamp(2rem, 5vw + 2rem, 5.5rem);
       text-align: center;
-      font-weight: bold;
-      color: #ff3366;
-      background: linear-gradient(90deg,#ff3366,#f9a602,#b0f2b4,#004d47,#ff3366);
-      background-size: 500% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin-top: 4vw;
+      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 18px #4ef6f7, 0 0 2px #fffd62, 0 0 45px #f95fc9, 2px 2px 0 #080808;
+      background: linear-gradient(90deg, #e82a3f 10%, #fec906 40%, #49d3a6 60%, #5f49d3 85%, #e82a3f 100%);
       background-clip: text;
-      text-fill-color: transparent;
-      animation: rainbowTitle 7s linear infinite;
-      letter-spacing: 0.04em;
-      margin-top: 0.4em;
-      margin-bottom: 0.2em;
-      text-shadow: 2px 4px 0 #000, 0 0 10px #ff3367cc, 0 0 30px #fff7;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: headlineGlow 2.7s infinite alternate;
+      filter: drop-shadow(0 0 18px #ff00fb) drop-shadow(0 0 4px #ffe157);
     }
-    @keyframes rainbowTitle {
-      100% { background-position: 500% center; }
+    @keyframes headlineGlow {
+      0% { filter: drop-shadow(0 0 25px #e82a3f) drop-shadow(0 0 4px #4ef6f7);}
+      100% { filter: drop-shadow(0 0 45px #fec906) drop-shadow(0 0 12px #5f49d3);}
     }
-    .subtitle, .dates, .location {
+    .subheadline {
       text-align: center;
-      font-family: 'VT323', monospace;
-      font-size: 1.7rem;
-      color: #ffe88a;
-      margin: 0.8em 0 0.4em 0;
-      text-shadow: 1px 1px 0 #000, 0 0 6px #f9a602cc;
+      font-size: clamp(1.3rem, 3vw, 2.7rem);
+      font-family: 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
+      background: linear-gradient(90deg,#00eaff 10%, #fff 50%, #b500ff 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: 0.12em;
+      margin-top: 1vw;
+      margin-bottom: 0.5vw;
+      text-shadow: 0 0 12px #000, 2px 2px 0 #ff006a;
+      filter: drop-shadow(0 0 12px #00ffe1);
     }
-    .dates {
-      color: #f9a602;
-      font-size: 2.0rem;
+    .event-dates {
+      text-align: center;
+      font-size: clamp(1.1rem, 2.5vw, 2.2rem);
       letter-spacing: 0.08em;
-      margin-bottom: 0.8em;
+      background: linear-gradient(90deg,#fffd62 20%, #e82a3f 60%, #49d3a6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1vw;
+      text-shadow: 0 0 10px #000;
+    }
+    .location-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2vw;
+      gap: 2vw;
+      flex-wrap: wrap;
+    }
+    .golden-gate-img {
+      width: clamp(90px, 17vw, 240px);
+      min-width: 75px;
+      filter: drop-shadow(0 0 24px #ffe157) drop-shadow(0 0 6px #222) brightness(1.2);
+      border-radius: 11% 39% 24% 43%/29% 47% 25% 44%;
+      margin-right: 1vw;
+      margin-bottom: 0.7vw;
+      background: rgba(0,0,0,0.06);
+    }
+    .location-txt {
+      font-size: clamp(1.5rem, 3vw, 3.3rem);
+      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
+      letter-spacing: 0.12em;
+      background: linear-gradient(90deg,#9aff37 10%, #0077ff 50%, #ff63b5 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 8px #fff, 0 0 18px #4ef6f7, 2px 2px 0 #000;
+      filter: drop-shadow(0 0 14px #49d3a6);
+      white-space: nowrap;
+    }
+    .dead-logo {
+      width: clamp(80px, 17vw, 260px);
+      min-width: 60px;
+      margin: 0 2vw 0 0;
+      filter: drop-shadow(0 0 8px #fec906) drop-shadow(0 0 2px #fff);
+      border-radius: 12% 39% 36% 28%/38% 40% 26% 42%;
+    }
+    .stealie-icon {
+      width: clamp(50px, 8vw, 90px);
+      position: absolute;
+      top: 1vw; right: 3vw;
+      z-index: 10;
+      filter: drop-shadow(0 0 12px #fff) brightness(1.18);
+      animation: spinSkull 7.5s linear infinite;
+    }
+    @keyframes spinSkull {
+      0% {transform: rotate(-12deg);}
+      100% {transform: rotate(348deg);}
     }
     .countdown-row {
       display: flex;
-      justify-content: center;
       align-items: center;
-      margin: 1.7em auto 1.6em auto;
-      padding: 0.8em 0.3em;
-      background: rgba(24,0,40,0.89);
-      border: 5px ridge #00ff99;
-      border-radius: 18px;
-      box-shadow: 0 0 18px #000d;
-      max-width: 95vw;
-      font-family: 'Orbitron', monospace;
+      justify-content: center;
+      margin-top: 5vw;
+      gap: 1.5vw;
+      position: relative;
+      flex-wrap: wrap;
     }
-    .cd-label {
-      font-size: 1.15em;
-      color: #ffe88a;
-      margin: 0 1.2vw;
-      text-shadow: 1px 1px 0 #000, 0 0 4px #fff8;
-    }
-    .cd-num {
-      display: inline-block;
-      font-size: clamp(2.2rem, 9vw, 4.9rem);
-      font-family: 'Orbitron', monospace;
-      font-weight: bold;
-      padding: 0 0.15em;
-      margin: 0 0.08em;
-      border-radius: 0.18em;
-      background: linear-gradient(120deg, #f9a602 20%, #ff3366 40%, #00ff99 60%, #f9a602 80%);
-      color: #fff;
-      box-shadow: 0 3px 18px #0af8;
-      text-shadow: 1px 2px 0 #000, 0 0 10px #fff9;
-      border: 2.7px solid #b0f2b4;
-      animation: cdnumRainbow 3.5s linear infinite, pulse 2.4s ease-in-out infinite alternate;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
-    }
-    @keyframes cdnumRainbow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
-    }
-    @keyframes pulse {
-      0% { filter: brightness(1) drop-shadow(0 1px 12px #00ff99);}
-      100% { filter: brightness(1.33) drop-shadow(0 0px 18px #f9a602);}
-    }
-    .bigbridge {
-      width: 98vw;
-      max-width: 730px;
-      margin: 1em auto 0.5em auto;
-      display: block;
-      filter: drop-shadow(0 4px 26px #3306);
-    }
-    .blimp {
-      position: absolute;
-      right: 6vw;
-      top: 3vw;
-      width: 140px;
-      z-index: 99;
-      filter: drop-shadow(0 6px 18px #0098);
-      animation: blimpfloat 11s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes blimpfloat {
-      0% { transform: translateY(0) rotate(-2deg);}
-      100% { transform: translateY(-18px) rotate(9deg);}
-    }
-    .skel-left {
-      position: absolute;
-      left: 0; bottom: 8vh;
-      width: 160px;
-      filter: drop-shadow(0 4px 18px #0009);
-      z-index: 11;
-      pointer-events: none;
-    }
-    .skel-right {
-      position: absolute;
-      right: 0; bottom: 7vh;
-      width: 160px;
-      filter: drop-shadow(0 4px 18px #0009);
-      z-index: 11;
-      pointer-events: none;
-    }
-    .stealie-logo {
-      position: absolute;
-      top: 7vw; left: 4vw;
-      width: 60px;
-      z-index: 15;
-      filter: drop-shadow(0 2px 10px #000a);
-      pointer-events: none;
-    }
-    .location-img {
-      display: block;
-      margin: 1em auto 1em auto;
-      width: 360px;
-      max-width: 80vw;
-      filter: drop-shadow(0 2px 14px #011d);
-    }
-    .guests-box {
-      background: #111922ee;
-      border-radius: 19px;
-      border: 3px groove #00ff99;
-      color: #fdf6d6;
-      font-size: 1.4rem;
-      margin: 2vw auto 0 auto;
-      max-width: 430px;
-      box-shadow: 0 2px 15px #001a;
-      padding: 2em 1.4em;
+    .countdown-wrap {
+      flex: 1 1 400px;
       text-align: center;
     }
-    .guests-title {
-      color: #b0f2b4;
-      font-size: 1.22em;
-      margin-bottom: 0.6em;
-      font-family: 'Orbitron', Impact, Arial Black, sans-serif;
+    .countdown-label {
+      font-size: clamp(1.2rem, 2vw, 2.3rem);
+      margin-bottom: 1vw;
+      color: #fff;
+      text-shadow: 0 0 16px #000, 0 0 4px #49d3a6, 2px 2px 0 #ff006a;
+      font-family: 'GratefulDead', 'Arial Black', cursive, sans-serif;
       letter-spacing: 0.07em;
-      text-shadow: 0 1px 11px #000b;
     }
-    .guest-line {
-      margin: 0.7em 0;
-      font-size: 1.1em;
+    .countdown {
+      font-size: clamp(3rem, 8vw + 1rem, 8.2rem);
+      letter-spacing: 0.12em;
+      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
+      background: repeating-linear-gradient(90deg,#f95fc9 0%, #fec906 25%, #4ef6f7 45%, #fffd62 70%, #e82a3f 100%);
+      background-size: 350% 100%;
+      background-position: 0 0;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: rainbowText 2.2s linear infinite;
+      filter: drop-shadow(0 0 30px #e82a3f) drop-shadow(0 0 3px #4ef6f7);
+      text-shadow: 0 0 60px #fff, 0 0 32px #ffe157;
     }
-    .guest-artist {
-      color: #f9a602;
-      font-weight: bold;
-      text-shadow: 0 1px 7px #000a;
-      font-family: 'VT323', monospace;
+    @keyframes rainbowText {
+      0% {background-position: 0%;}
+      100% {background-position: 100%;}
+    }
+    /* Organic skeleton left/right & blimp overlays */
+    .poster-img {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.95;
+      mix-blend-mode: lighten;
+    }
+    .skeleton-left {
+      left: -5vw; top: 32vh;
+      width: clamp(120px, 16vw, 210px);
+      transform: rotate(-8deg);
+      filter: drop-shadow(0 0 24px #ff006a) brightness(1.1);
+      border-radius: 33% 54% 42% 24%/34% 38% 54% 38%;
+      opacity: 0.98;
+    }
+    .skeleton-right {
+      right: -6vw; top: 25vh;
+      width: clamp(120px, 17vw, 225px);
+      transform: rotate(6deg);
+      filter: drop-shadow(0 0 28px #b500ff) brightness(1.12);
+      border-radius: 22% 49% 35% 38%/34% 38% 54% 38%;
+      opacity: 0.98;
+    }
+    .blimp {
+      left: 54vw; top: 2vw;
+      width: clamp(120px, 22vw, 260px);
+      filter: drop-shadow(0 0 22px #fff) drop-shadow(0 0 3px #fffd62) brightness(1.08);
+      border-radius: 46% 40% 53% 44%/34% 48% 43% 48%;
+      opacity: 0.91;
+      transform: rotate(-7deg);
+    }
+    /* Special guests psychedelic card list */
+    .guests-section {
+      width: 99vw;
+      max-width: 780px;
+      margin: 9vw auto 0 auto;
+      background: rgba(30,16,38,0.64);
+      border: 4px solid #f95fc9;
+      border-radius: 2.5vw 7vw 5vw 1vw/5vw 2vw 5vw 6vw;
+      box-shadow: 0 0 44px #4ef6f7, 0 0 12px #fffd62;
+      position: relative;
+      z-index: 9;
+      overflow: hidden;
+    }
+    .guests-title {
+      font-size: clamp(1.4rem, 3vw, 3rem);
+      text-align: center;
+      font-family: 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
+      background: linear-gradient(90deg, #fec906 10%, #e82a3f 60%, #b500ff 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 12px #fff, 2px 2px 0 #4ef6f7;
+      letter-spacing: 0.08em;
+      margin-top: 1vw;
+      margin-bottom: 2vw;
+      filter: drop-shadow(0 0 22px #fffd62);
+    }
+    .guests-list {
+      display: flex;
+      justify-content: space-around;
+      gap: 3vw;
+      flex-wrap: wrap;
+      margin-bottom: 2.7vw;
     }
     .guest-day {
-      color: #00ff99;
-      margin-left: 0.7em;
-      font-family: 'Orbitron', monospace;
+      flex: 1 1 200px;
+      margin: 1vw 0.6vw;
+      background: linear-gradient(135deg, #fffd62 0 20%, #f95fc9 70%, #49d3a6 100%);
+      border-radius: 2vw 4vw 3vw 1vw/2vw 1vw 5vw 3vw;
+      box-shadow: 0 0 19px #fff, 0 0 13px #e82a3f;
+      padding: 1.5vw 1vw 1vw 1vw;
+      min-width: 135px;
+      max-width: 230px;
+      text-align: center;
+      font-family: 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
     }
-    /* For smaller screens */
-    @media (max-width:700px) {
-      .logo { max-width: 95vw; }
-      .dates { font-size: 1.2rem;}
-      .countdown-row { font-size: 0.9rem; }
-      .bigbridge { width: 100vw; max-width: none;}
-      .blimp { width: 70px;}
-      .skel-left,.skel-right { width: 70px;}
-      .location-img { width: 70vw;}
-      .guests-box { padding: 1em 0.7em;}
+    .guest-day .day {
+      font-size: 1.4em;
+      font-weight: bold;
+      letter-spacing: 0.09em;
+      color: #0077ff;
+      text-shadow: 0 0 12px #fff, 2px 2px 0 #e82a3f;
+      margin-bottom: 0.8vw;
+      background: linear-gradient(90deg,#4ef6f7 10%,#b500ff 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
     }
-    @media (max-width:420px) {
-      .dates { font-size: 0.9rem;}
-      .header { font-size: 1.2rem;}
-      .guests-box { font-size: 1.1rem;}
-      .countdown-row { flex-wrap: wrap; }
-      .bigbridge { width: 100vw;}
+    .guest-list {
+      font-size: 1.15em;
+      font-weight: bold;
+      color: #e82a3f;
+      text-shadow: 0 0 10px #fff, 2px 2px 0 #49d3a6;
+      background: linear-gradient(90deg,#b500ff 10%,#fffd62 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-top: 0.4vw;
+      margin-bottom: 0.4vw;
+      letter-spacing: 0.06em;
+      line-height: 1.35em;
+    }
+    /* Responsive fixes */
+    @media (max-width: 900px) {
+      .headline-main { font-size: 2.7rem;}
+      .location-txt { font-size: 2rem;}
+      .event-dates { font-size: 1.3rem;}
+      .guests-title { font-size: 1.4rem;}
+      .stealie-icon { width: 65px;}
+    }
+    @media (max-width: 700px) {
+      .poster-img { display: none; }
+      .guests-section {margin-top: 4vw;}
+      .location-row { flex-direction: column; }
+      .golden-gate-img { margin-bottom: 0;}
+    }
+    @media (max-width: 520px) {
+      .headline-main { font-size: 1.4rem;}
+      .guests-title { font-size: 1.1rem;}
+      .countdown { font-size: 2.2rem;}
+      .location-txt { font-size: 1.1rem;}
+      .guests-section { border-width: 2px;}
+    }
+    /* Custom cursor */
+    body, a, button, input, .cursor-img {
+      cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto !important;
+    }
+    /* Hide scrollbars on mobile */
+    ::-webkit-scrollbar { width: 0; background: transparent;}
+    /* Try to load a Dead font if user has it locally */
+    @font-face {
+      font-family: 'Deadhead Script';
+      src: local('Deadhead Script'), local('Deadhead Script One');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'GratefulDead';
+      src: local('GratefulDead'), local('Grateful Dead');
+      font-weight: normal;
+      font-style: normal;
     }
   </style>
 </head>
 <body>
-  <div id="overlay-stealie"></div>
-  <!-- Floating Images -->
-  <img class="blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="blimp" />
-  <img class="skel-left" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="left skeleton" />
-  <img class="skel-right" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="right skeleton" />
-  <img class="stealie-logo" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="stealie" />
-  <div class="layout-table">
-    <img class="logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="Dead & Company Logo">
-    <div class="header">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
-    <div class="subtitle">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="dates">AUGUST 1, 2, 3, 2025</div>
+  <img class="stealie-icon" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie Icon" draggable="false">
+  <img class="poster-img skeleton-left" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="Skeleton Left" draggable="false">
+  <img class="poster-img skeleton-right" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="Skeleton Right" draggable="false">
+  <img class="poster-img blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="Blimp" draggable="false">
+  <div id="psyche-wrap">
     <div class="countdown-row">
-      <span class="cd-num" id="days">00</span>
-      <span class="cd-label">Days</span>
-      <span class="cd-num" id="hours">00</span>
-      <span class="cd-label">Hours</span>
-      <span class="cd-num" id="minutes">00</span>
-      <span class="cd-label">Minutes</span>
-      <span class="cd-num" id="seconds">00</span>
-      <span class="cd-label">Seconds</span>
+      <img class="dead-logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="Dead & Company Logo" draggable="false">
+      <div class="countdown-wrap">
+        <div class="countdown-label">DAYS UNTIL</div>
+        <div class="countdown" id="countdown"></div>
+      </div>
     </div>
-    <img class="bigbridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="Golden Gate Bridge">
-    <img class="location-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park">
-    <div class="guests-box">
+    <div class="headline-main">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
+    <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
+    <div class="event-dates">AUGUST 1, 2, 3, 2025</div>
+    <div class="location-row">
+      <img class="golden-gate-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park" draggable="false">
+      <div class="location-txt">Golden Gate Park</div>
+    </div>
+    <div class="guests-section">
       <div class="guests-title">PLUS SPECIAL GUEST SETS BY</div>
-      <div class="guest-line"><span class="guest-artist">BILLY STRINGS</span><span class="guest-day">FRIDAY</span></div>
-      <div class="guest-line"><span class="guest-artist">STURGILL JOHNNY<br>BLUE SKIES SIMPSON</span><span class="guest-day">SATURDAY</span></div>
-      <div class="guest-line"><span class="guest-artist">TREY ANASTASIO BAND</span><span class="guest-day">SUNDAY</span></div>
-    </div>
-  </div>
-  <script>
-    // Countdown to August 1, 2025, 7:00PM PT (UTC-7)
-    const targetDate = new Date('2025-08-02T02:00:00Z');
-    function pad(n) { return n.toString().padStart(2, '0'); }
-    function updateCountdown() {
-      const now = new Date();
-      let diff = targetDate - now;
-      if (diff < 0) diff = 0;
-      const d = Math.floor(diff / (1000*60*60*24));
-      const h = Math.floor((diff / (1000*60*60)) % 24);
-      const m = Math.floor((diff / (1000*60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-      document.getElementById('days').textContent = pad(d);
-      document.getElementById('hours').textContent = pad(h);
-      document.getElementById('minutes').textContent = pad(m);
-      document.getElementById('seconds').textContent = pad(s);
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
+      <div class="guests-list">
+        <div class="
