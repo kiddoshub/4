@@ -19,7 +19,7 @@
       margin: 0;
       padding: 0;
       font-family: 'OCR-A', monospace;
-      color: #00ff88;
+      color: #66ffcc;
       overflow: hidden;
       display: flex;
       justify-content: flex-start;
@@ -36,25 +36,30 @@
       }
     }
 
-    .overlay-glitch,
-    .overlay-anim {
+    .overlay-glitch {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .overlay-glitch {
       background: repeating-linear-gradient(
         0deg,
-        rgba(0,255,0,0.03),
-        rgba(0,255,0,0.03) 1px,
+        rgba(0,255,0,0.02),
+        rgba(0,255,0,0.02) 1px,
         transparent 1px,
         transparent 2px
       );
+      pointer-events: none;
+      z-index: 2;
       mix-blend-mode: screen;
       animation: flicker 2.5s infinite alternate;
+    }
+
+    .overlay-anim {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .overlay-anim img {
@@ -67,23 +72,23 @@
 
     @keyframes flicker {
       0% { opacity: 0.02; }
-      50% { opacity: 0.06; }
+      50% { opacity: 0.05; }
       100% { opacity: 0.03; }
     }
 
     .countdown-container {
       max-width: 600px;
       background: rgba(0, 0, 0, 0.6);
-      border: 2px solid #00ff99;
+      border: 2px solid #66ffcc;
       padding: 28px;
       text-align: center;
       z-index: 5;
-      box-shadow: 0 0 10px #00ffcc80;
+      box-shadow: 0 0 10px #66ffcc80;
       backdrop-filter: blur(4px);
     }
 
     .countdown-title {
-      color: #00ff88;
+      color: #00ffff;
       font-size: 1.1rem;
       letter-spacing: 2px;
       margin-bottom: 16px;
@@ -91,10 +96,10 @@
 
     .countdown-timer {
       font-size: 2.5rem;
-      color: #ff2a2a;
+      color: #ff4d4d;
       background: black;
       padding: 14px 20px;
-      border: 2px solid #ff2a2a;
+      border: 2px solid #ff4d4d;
       display: inline-block;
       letter-spacing: 4px;
       margin-bottom: 10px;
@@ -103,7 +108,7 @@
 
     .time-labels {
       font-size: 0.85rem;
-      color: #00ff88;
+      color: #ffee00;
       letter-spacing: 2px;
     }
 
@@ -111,7 +116,7 @@
       margin-top: 18px;
       font-size: 0.9rem;
       line-height: 1.5;
-      color: #00ff99;
+      color: #66ffcc;
     }
 
     .ticker {
@@ -121,11 +126,10 @@
       background: rgba(0, 0, 0, 0.6);
       padding: 6px 0;
       font-size: 0.85rem;
-      color: #00ff99;
       white-space: nowrap;
       overflow: hidden;
       z-index: 10;
-      border-top: 1px solid #00ff88;
+      border-top: 1px solid #00ffff;
     }
 
     .ticker span {
@@ -142,7 +146,7 @@
     .floating-img {
       position: absolute;
       width: 90px;
-      opacity: 0.65;
+      opacity: 0.6;
       mix-blend-mode: screen;
       pointer-events: none;
       z-index: 4;
@@ -168,11 +172,9 @@
   </style>
 </head>
 <body class="matrix-fx">
-
-  <!-- Green glow grid -->
   <div class="overlay-glitch"></div>
 
-  <!-- Animated psychedelic glow overlay -->
+  <!-- Your actual animated glow -->
   <div class="overlay-anim">
     <img src="IMG_8676.gif" alt="glow effect" />
   </div>
@@ -189,14 +191,18 @@
     <div class="countdown-timer" id="countdown">LOADING</div>
     <div class="time-labels">[DAYS] [HOURS] [MINUTES] [SECONDS]</div>
     <div class="details">
-      DEAD & COMPANY — GOLDEN GATE PARK · COUNTDOWN TO AUGUST 1, 2025<br>
+      DEAD & COMPANY — GOLDEN GATE PARK · AUGUST 1, 2025<br>
       WITH BILLY STRINGS, STURGILL SIMPSON, TREY, JOHNNY BLUE SKIES
     </div>
   </div>
 
   <!-- Ticker -->
   <div class="ticker">
-    <span>BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO • DEAD & COMPANY • GOLDEN GATE PARK • AUGUST 1-3 • SAN FRANCISCO • SF MISSION • </span>
+    <span style="color:#00ff88">BILLY STRINGS</span>
+    <span style="color:#ffaa00"> • STURGILL SIMPSON</span>
+    <span style="color:#ff66ff"> • TREY ANASTASIO</span>
+    <span style="color:#00ffff"> • DEAD & COMPANY</span>
+    <span style="color:#ffee00"> • AUGUST 1–3 • GOLDEN GATE PARK • </span>
   </div>
 
   <!-- Countdown Script -->
