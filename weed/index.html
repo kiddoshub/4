@@ -4,14 +4,31 @@
   <meta charset="UTF-8">
   <title>Dead & Company SF Countdown</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- FONT will be added in next step -->
+  <!-- CSS, font, and effects will be added after this step -->
 </head>
 <body>
-  <div id="main">
-    <div class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
-    <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="dates">AUGUST 1, 2, 3, 2025</div>
-    <div id="countdown-wrap">
+  <!-- Background layers -->
+  <img id="bg-image" src="IMG_8667.jpeg" alt="Main Background">
+  <img id="stealie-swirl" src="https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg" alt="Stealie Swirl Overlay">
+
+  <!-- Poster Art Assets (layered/decorative) -->
+  <img id="logo-60th" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="Dead & Company 60th Logo">
+  <img id="stealie-icon" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie Icon">
+  <img id="golden-gate-bridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="Golden Gate Bridge">
+  <img id="skeleton-left" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="Skeleton Left">
+  <img id="skeleton-right" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="Skeleton Right">
+  <img id="blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="Blimp">
+  <img id="golden-gate-park-art" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park Art">
+
+  <!-- Main Event Content -->
+  <main id="main-content">
+    <section id="event-header">
+      <h1 class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</h1>
+      <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
+      <div class="dates">AUGUST 1, 2, 3, 2025</div>
+    </section>
+
+    <section id="countdown-section">
       <div id="countdown"></div>
       <div class="count-labels">
         <span>DAYS</span>
@@ -19,27 +36,31 @@
         <span>MINUTES</span>
         <span>SECONDS</span>
       </div>
-    </div>
-    <div class="location-block">
-      <img src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park">
+    </section>
+
+    <section class="location-block">
       <div class="loc-text">Golden Gate Park</div>
-    </div>
-    <div class="guests-title">SPECIAL GUESTS</div>
-    <div class="guests-days">
-      <div class="guests-day">
-        <h3>Friday</h3>
-        <div class="guests-list">BILLY STRINGS</div>
+    </section>
+
+    <section id="guests">
+      <div class="guests-title">SPECIAL GUESTS</div>
+      <div class="guests-days">
+        <div class="guests-day">
+          <h3>Friday</h3>
+          <div class="guests-list">BILLY STRINGS</div>
+        </div>
+        <div class="guests-day">
+          <h3>Saturday</h3>
+          <div class="guests-list">STURGILL SIMPSON<br>JOHNNY BLUE<br>SKIES</div>
+        </div>
+        <div class="guests-day">
+          <h3>Sunday</h3>
+          <div class="guests-list">TREY ANASTASIO BAND</div>
+        </div>
       </div>
-      <div class="guests-day">
-        <h3>Saturday</h3>
-        <div class="guests-list">STURGILL SIMPSON<br>JOHNNY BLUE<br>SKIES</div>
-      </div>
-      <div class="guests-day">
-        <h3>Sunday</h3>
-        <div class="guests-list">TREY ANASTASIO BAND</div>
-      </div>
-    </div>
-  </div>
+    </section>
+  </main>
+
   <script>
     function pad(n) { return n.toString().padStart(2,'0'); }
     function updateCountdown() {
