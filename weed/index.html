@@ -3,113 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <title>Grateful Dead SF Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
-      overflow: hidden;
       background: black;
-      font-family: monospace;
+      overflow: hidden;
     }
+
     canvas {
-      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
+
     #overlay {
       position: absolute;
-      top: 10%;
+      top: 12%;
       width: 100%;
       text-align: center;
-      color: #00FF00;
-      font-size: 20px;
-      text-shadow: 0 0 5px #00FF00;
       pointer-events: none;
-      mix-blend-mode: screen;
+      mix-blend-mode: lighten;
+      z-index: 10;
+    }
+
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      color: #39ff14;
+      text-shadow: 0 0 10px #39ff14;
+    }
+
+    .countdown {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 26px;
+      color: #00ffcc;
+      text-shadow: 0 0 8px #00ffcc;
+      margin-top: 12px;
+    }
+
+    .artist {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 20px;
+      color: #ff66cc;
+      text-shadow: 0 0 6px #ff66cc;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
   <div id="overlay">
-    <div style="font-size: 30px;">GRATEFUL DEAD — SAN FRANCISCO 2025</div>
-    <div id="countdown" style="margin-top: 1em;"></div>
-    <div id="artist" style="margin-top: 0.5em;"></div>
-    <div id="phase" style="margin-top: 0.5em;"></div>
+    <div class="title">GRATEFUL DEAD — SAN FRANCISCO 2025</div>
+    <div class="countdown" id="countdown"></div>
+    <div class="artist" id="artist"></div>
   </div>
 
   <script>
-    // --- Matrix Rain ---
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Canvas setup
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
-    const fontSize = 18;
-    const columns = Math.floor(canvas.width / fontSize);
+    const fontSize = 20;
+    const columns = Math.floor(width / fontSize);
     const drops = Array(columns).fill(1);
 
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     function drawMatrix() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#00FF00";
-      ctx.font = fontSize + "px monospace";
+      ctx.fillRect(0, 0, width, height);
 
       for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        const char = charset.charAt(Math.floor(Math.random() * charset.length));
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
 
-        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
-          drops[i] = 0;
-        }
+        const hue = (Date.now() / 60 + i * 20) % 360;
+        ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+        ctx.font = `${fontSize}px 'Share Tech Mono', monospace`;
+        ctx.fillText(char, x, y);
+
+        if (y > height && Math.random() > 0.98) drops[i] = 0;
         drops[i]++;
       }
     }
+
     setInterval(drawMatrix, 33);
 
-    // --- Countdown + Timeline Overlay ---
+    // Countdown logic
     const countdownEl = document.getElementById('countdown');
     const artistEl = document.getElementById('artist');
-    const phaseEl = document.getElementById('phase');
 
-    const showDate = new Date("2025-08-01T16:00:00");
-    const schedule = [
-      { date: "2025-08-01", artist: "Billy Strings" },
-      { date: "2025-08-02", artist: "Johnny Blue Skies (Sturgill)" },
-      { date: "2025-08-03", artist: "Trey Anastasio Band" }
+    const eventStart = new Date("2025-08-01T16:00:00");
+    const artists = [
+      { name: "Billy Strings", desc: "Neo-bluegrass, heavy improvisation" },
+      { name: "Johnny Blue Skies", desc: "Psychedelic country under Sturgill's mask" },
+      { name: "Trey Anastasio Band", desc: "Jazz fusion and Phish lineage meet Dead roots" }
     ];
 
     function updateOverlay() {
       const now = new Date();
-      const diff = showDate - now;
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
+      const delta = eventStart - now;
 
-      countdownEl.innerText = `COUNTDOWN: ${d}d ${h}h ${m}m ${s}s`;
+      const d = Math.floor(delta / (1000 * 60 * 60 * 24));
+      const h = Math.floor((delta / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((delta / (1000 * 60)) % 60);
+      const s = Math.floor((delta / 1000) % 60);
 
-      const next = schedule.find(e => new Date(e.date) >= now);
-      artistEl.innerText = next ? `NEXT ARTIST: ${next.artist}` : "ALL ARTISTS COMPLETE";
+      countdownEl.textContent = `COUNTDOWN: ${d}d ${h}h ${m}m ${s}s`;
 
-      if (diff > 5 * 24 * 60 * 60 * 1000) {
-        phaseEl.innerText = "PHASE: EARLY WAIT";
-      } else if (diff > 2 * 24 * 60 * 60 * 1000) {
-        phaseEl.innerText = "PHASE: FINAL BUILDUP";
-      } else if (diff > 0) {
-        phaseEl.innerText = "PHASE: STAGE SET";
-      } else if (diff > -24 * 60 * 60 * 1000) {
-        phaseEl.innerText = "PHASE: SHOWTIME";
-      } else {
-        phaseEl.innerText = "PHASE: ARCHIVE MODE";
-      }
+      const i = Math.floor(Date.now() / 8000) % artists.length;
+      artistEl.textContent = `NEXT: ${artists[i].name} — ${artists[i].desc}`;
     }
 
     setInterval(updateOverlay, 1000);
 
-    // Responsive resize
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     });
   </script>
 </body>
