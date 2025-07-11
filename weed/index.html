@@ -2,338 +2,344 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dead & Company: 60 Years - San Francisco Countdown</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="preload" href="https://fonts.cdnfonts.com/s/14262/DeadFontWalking.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="https://fonts.cdnfonts.com/s/56925/GoodTimesRg-Regular.woff" as="font" type="font/woff" crossorigin>
   <style>
+    @font-face {
+      font-family: 'DeadFontWalking';
+      src: url('https://fonts.cdnfonts.com/s/14262/DeadFontWalking.woff') format('woff');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'GoodTimes';
+      src: url('https://fonts.cdnfonts.com/s/56925/GoodTimesRg-Regular.woff') format('woff');
+      font-display: swap;
+    }
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      background: #111;
     }
     body {
       min-height: 100vh;
-      width: 100vw;
-      background: url('IMG_8667.jpeg') center center/cover fixed no-repeat;
+      min-width: 100vw;
+      box-sizing: border-box;
+      font-family: 'DeadFontWalking', 'GoodTimes', Arial, Helvetica, sans-serif;
+      background: url('IMG_8667.jpeg') no-repeat center center fixed;
+      background-size: cover;
       position: relative;
-      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-      color: #fff;
-      user-select: none;
     }
+    /* Overlay */
     body::before {
-      content: '';
+      content: "";
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
-      opacity: 0.35;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center repeat;
+      background-size: cover;
+      opacity: 0.45;
       z-index: 1;
       pointer-events: none;
     }
-    #psyche-wrap {
-      position: relative;
-      z-index: 2;
-      padding-bottom: 5vh;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-    .headline-main {
-      font-size: clamp(2rem, 5vw + 2rem, 5.5rem);
-      text-align: center;
-      margin-top: 4vw;
-      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 18px #4ef6f7, 0 0 2px #fffd62, 0 0 45px #f95fc9, 2px 2px 0 #080808;
-      background: linear-gradient(90deg, #e82a3f 10%, #fec906 40%, #49d3a6 60%, #5f49d3 85%, #e82a3f 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: headlineGlow 2.7s infinite alternate;
-      filter: drop-shadow(0 0 18px #ff00fb) drop-shadow(0 0 4px #ffe157);
-    }
-    @keyframes headlineGlow {
-      0% { filter: drop-shadow(0 0 25px #e82a3f) drop-shadow(0 0 4px #4ef6f7);}
-      100% { filter: drop-shadow(0 0 45px #fec906) drop-shadow(0 0 12px #5f49d3);}
-    }
-    .subheadline {
-      text-align: center;
-      font-size: clamp(1.3rem, 3vw, 2.7rem);
-      font-family: 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-      background: linear-gradient(90deg,#00eaff 10%, #fff 50%, #b500ff 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      letter-spacing: 0.12em;
-      margin-top: 1vw;
-      margin-bottom: 0.5vw;
-      text-shadow: 0 0 12px #000, 2px 2px 0 #ff006a;
-      filter: drop-shadow(0 0 12px #00ffe1);
-    }
-    .event-dates {
-      text-align: center;
-      font-size: clamp(1.1rem, 2.5vw, 2.2rem);
-      letter-spacing: 0.08em;
-      background: linear-gradient(90deg,#fffd62 20%, #e82a3f 60%, #49d3a6 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-bottom: 1vw;
-      text-shadow: 0 0 10px #000;
-    }
-    .location-row {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 2vw;
-      gap: 2vw;
-      flex-wrap: wrap;
-    }
-    .golden-gate-img {
-      width: clamp(90px, 17vw, 240px);
-      min-width: 75px;
-      filter: drop-shadow(0 0 24px #ffe157) drop-shadow(0 0 6px #222) brightness(1.2);
-      border-radius: 11% 39% 24% 43%/29% 47% 25% 44%;
-      margin-right: 1vw;
-      margin-bottom: 0.7vw;
-      background: rgba(0,0,0,0.06);
-    }
-    .location-txt {
-      font-size: clamp(1.5rem, 3vw, 3.3rem);
-      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-      letter-spacing: 0.12em;
-      background: linear-gradient(90deg,#9aff37 10%, #0077ff 50%, #ff63b5 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 8px #fff, 0 0 18px #4ef6f7, 2px 2px 0 #000;
-      filter: drop-shadow(0 0 14px #49d3a6);
-      white-space: nowrap;
-    }
-    .dead-logo {
-      width: clamp(80px, 17vw, 260px);
-      min-width: 60px;
-      margin: 0 2vw 0 0;
-      filter: drop-shadow(0 0 8px #fec906) drop-shadow(0 0 2px #fff);
-      border-radius: 12% 39% 36% 28%/38% 40% 26% 42%;
-    }
-    .stealie-icon {
-      width: clamp(50px, 8vw, 90px);
-      position: absolute;
-      top: 1vw; right: 3vw;
-      z-index: 10;
-      filter: drop-shadow(0 0 12px #fff) brightness(1.18);
-      animation: spinSkull 7.5s linear infinite;
-    }
-    @keyframes spinSkull {
-      0% {transform: rotate(-12deg);}
-      100% {transform: rotate(348deg);}
-    }
-    .countdown-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 5vw;
-      gap: 1.5vw;
-      position: relative;
-      flex-wrap: wrap;
-    }
-    .countdown-wrap {
-      flex: 1 1 400px;
-      text-align: center;
-    }
-    .countdown-label {
-      font-size: clamp(1.2rem, 2vw, 2.3rem);
-      margin-bottom: 1vw;
-      color: #fff;
-      text-shadow: 0 0 16px #000, 0 0 4px #49d3a6, 2px 2px 0 #ff006a;
-      font-family: 'GratefulDead', 'Arial Black', cursive, sans-serif;
-      letter-spacing: 0.07em;
-    }
-    .countdown {
-      font-size: clamp(3rem, 8vw + 1rem, 8.2rem);
-      letter-spacing: 0.12em;
-      font-family: 'Deadhead Script', 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-      background: repeating-linear-gradient(90deg,#f95fc9 0%, #fec906 25%, #4ef6f7 45%, #fffd62 70%, #e82a3f 100%);
-      background-size: 350% 100%;
-      background-position: 0 0;
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: rainbowText 2.2s linear infinite;
-      filter: drop-shadow(0 0 30px #e82a3f) drop-shadow(0 0 3px #4ef6f7);
-      text-shadow: 0 0 60px #fff, 0 0 32px #ffe157;
-    }
-    @keyframes rainbowText {
-      0% {background-position: 0%;}
-      100% {background-position: 100%;}
-    }
-    /* Organic skeleton left/right & blimp overlays */
-    .poster-img {
-      position: absolute;
-      z-index: 3;
-      pointer-events: none;
-      opacity: 0.95;
-      mix-blend-mode: lighten;
-    }
-    .skeleton-left {
-      left: -5vw; top: 32vh;
-      width: clamp(120px, 16vw, 210px);
-      transform: rotate(-8deg);
-      filter: drop-shadow(0 0 24px #ff006a) brightness(1.1);
-      border-radius: 33% 54% 42% 24%/34% 38% 54% 38%;
-      opacity: 0.98;
-    }
-    .skeleton-right {
-      right: -6vw; top: 25vh;
-      width: clamp(120px, 17vw, 225px);
-      transform: rotate(6deg);
-      filter: drop-shadow(0 0 28px #b500ff) brightness(1.12);
-      border-radius: 22% 49% 35% 38%/34% 38% 54% 38%;
-      opacity: 0.98;
-    }
-    .blimp {
-      left: 54vw; top: 2vw;
-      width: clamp(120px, 22vw, 260px);
-      filter: drop-shadow(0 0 22px #fff) drop-shadow(0 0 3px #fffd62) brightness(1.08);
-      border-radius: 46% 40% 53% 44%/34% 48% 43% 48%;
-      opacity: 0.91;
-      transform: rotate(-7deg);
-    }
-    /* Special guests psychedelic card list */
-    .guests-section {
-      width: 99vw;
-      max-width: 780px;
-      margin: 9vw auto 0 auto;
-      background: rgba(30,16,38,0.64);
-      border: 4px solid #f95fc9;
-      border-radius: 2.5vw 7vw 5vw 1vw/5vw 2vw 5vw 6vw;
-      box-shadow: 0 0 44px #4ef6f7, 0 0 12px #fffd62;
-      position: relative;
-      z-index: 9;
-      overflow: hidden;
-    }
-    .guests-title {
-      font-size: clamp(1.4rem, 3vw, 3rem);
-      text-align: center;
-      font-family: 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-      background: linear-gradient(90deg, #fec906 10%, #e82a3f 60%, #b500ff 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 12px #fff, 2px 2px 0 #4ef6f7;
-      letter-spacing: 0.08em;
-      margin-top: 1vw;
-      margin-bottom: 2vw;
-      filter: drop-shadow(0 0 22px #fffd62);
-    }
-    .guests-list {
-      display: flex;
-      justify-content: space-around;
-      gap: 3vw;
-      flex-wrap: wrap;
-      margin-bottom: 2.7vw;
-    }
-    .guest-day {
-      flex: 1 1 200px;
-      margin: 1vw 0.6vw;
-      background: linear-gradient(135deg, #fffd62 0 20%, #f95fc9 70%, #49d3a6 100%);
-      border-radius: 2vw 4vw 3vw 1vw/2vw 1vw 5vw 3vw;
-      box-shadow: 0 0 19px #fff, 0 0 13px #e82a3f;
-      padding: 1.5vw 1vw 1vw 1vw;
-      min-width: 135px;
-      max-width: 230px;
-      text-align: center;
-      font-family: 'GratefulDead', 'Impact', 'Arial Black', cursive, sans-serif;
-    }
-    .guest-day .day {
-      font-size: 1.4em;
-      font-weight: bold;
-      letter-spacing: 0.09em;
-      color: #0077ff;
-      text-shadow: 0 0 12px #fff, 2px 2px 0 #e82a3f;
-      margin-bottom: 0.8vw;
-      background: linear-gradient(90deg,#4ef6f7 10%,#b500ff 90%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .guest-list {
-      font-size: 1.15em;
-      font-weight: bold;
-      color: #e82a3f;
-      text-shadow: 0 0 10px #fff, 2px 2px 0 #49d3a6;
-      background: linear-gradient(90deg,#b500ff 10%,#fffd62 90%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-top: 0.4vw;
-      margin-bottom: 0.4vw;
-      letter-spacing: 0.06em;
-      line-height: 1.35em;
-    }
-    /* Responsive fixes */
-    @media (max-width: 900px) {
-      .headline-main { font-size: 2.7rem;}
-      .location-txt { font-size: 2rem;}
-      .event-dates { font-size: 1.3rem;}
-      .guests-title { font-size: 1.4rem;}
-      .stealie-icon { width: 65px;}
-    }
-    @media (max-width: 700px) {
-      .poster-img { display: none; }
-      .guests-section {margin-top: 4vw;}
-      .location-row { flex-direction: column; }
-      .golden-gate-img { margin-bottom: 0;}
-    }
-    @media (max-width: 520px) {
-      .headline-main { font-size: 1.4rem;}
-      .guests-title { font-size: 1.1rem;}
-      .countdown { font-size: 2.2rem;}
-      .location-txt { font-size: 1.1rem;}
-      .guests-section { border-width: 2px;}
-    }
     /* Custom cursor */
-    body, a, button, input, .cursor-img {
+    body, a, button, input, select {
       cursor: url('https://s39898.pcdn.co/wp-content/themes/sparkart/static/images/steal-your-face-cursor.webp'), auto !important;
     }
-    /* Hide scrollbars on mobile */
-    ::-webkit-scrollbar { width: 0; background: transparent;}
-    /* Try to load a Dead font if user has it locally */
-    @font-face {
-      font-family: 'Deadhead Script';
-      src: local('Deadhead Script'), local('Deadhead Script One');
-      font-weight: normal;
-      font-style: normal;
+    /* General layout */
+    #main {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 3vw;
+      padding-bottom: 3vw;
     }
-    @font-face {
-      font-family: 'GratefulDead';
-      src: local('GratefulDead'), local('Grateful Dead');
-      font-weight: normal;
-      font-style: normal;
+    /* Main headline */
+    .headline {
+      font-family: 'DeadFontWalking', 'GoodTimes', Arial, Helvetica, sans-serif;
+      font-size: clamp(2.5rem, 5vw, 5.5rem);
+      text-align: center;
+      letter-spacing: 0.06em;
+      margin: 0;
+      margin-bottom: 1.2vw;
+      line-height: 1.1;
+      background: linear-gradient(90deg, #f200ff 0%, #4ef7ff 50%, #ffeb3b 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 2px #1b1327;
+      text-shadow: 0 0 25px #1b1327, 0 2px 18px #0009, 0 0 2px #fff;
+      filter: drop-shadow(0 0 12px #17bfff90);
+      padding: 0.25em 0.5em;
+      border-radius: 2vw;
+    }
+    .subheadline {
+      font-family: 'GoodTimes', 'Arial Black', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 2.7rem);
+      text-align: center;
+      margin: 0;
+      margin-bottom: 0.5vw;
+      color: #fff;
+      text-shadow: 0 0 10px #000c, 0 0 3px #17bfff;
+      letter-spacing: 0.09em;
+      background: linear-gradient(90deg, #0ffcc3, #f2328c 70%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1.2px #111a;
+    }
+    .dates {
+      font-family: 'GoodTimes', 'Arial Black', sans-serif;
+      font-size: clamp(1.1rem, 2vw, 2.2rem);
+      color: #ffeb3b;
+      margin-bottom: 1.2vw;
+      text-align: center;
+      text-shadow: 0 0 12px #6600ffbb, 0 1px 2px #000;
+      letter-spacing: 0.18em;
+      filter: drop-shadow(0 0 10px #2100d0bb);
+    }
+    /* Countdown styling */
+    .countdown-wrap {
+      margin-top: 1.5vw;
+      margin-bottom: 2vw;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 4;
+    }
+    #countdown {
+      font-family: 'DeadFontWalking', 'GoodTimes', Arial, Helvetica, sans-serif;
+      font-size: clamp(4rem, 9vw, 10rem);
+      color: #fff;
+      letter-spacing: 0.15em;
+      text-align: center;
+      background: linear-gradient(90deg, #00ffea, #ffeb3b 40%, #ff4141 75%, #3e13ff 100%);
+      background-size: 400% 400%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 3.5px #000d;
+      text-shadow: 0 0 32px #4ef7ff77, 0 0 4px #fff;
+      animation: rainbowGlow 4s ease-in-out infinite, gradientAnim 8s linear infinite;
+      filter: drop-shadow(0 0 15px #00e5ffcc);
+      user-select: none;
+    }
+    @keyframes rainbowGlow {
+      0%, 100% { filter: drop-shadow(0 0 30px #00e5ff); }
+      40% { filter: drop-shadow(0 0 40px #ffeb3b); }
+      70% { filter: drop-shadow(0 0 45px #f200ff); }
+    }
+    @keyframes gradientAnim {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    /* Event/Location Graphic */
+    .location-block {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2vw;
+      gap: 1.6vw;
+      flex-wrap: wrap;
+    }
+    .location-block img {
+      width: clamp(60px, 13vw, 210px);
+      height: auto;
+      border-radius: 1vw 2vw 3vw 1vw;
+      box-shadow: 0 0 38px #2c130f77, 0 3px 12px #1108;
+      margin-right: 0.7vw;
+      background: #fff3;
+      mix-blend-mode: lighten;
+    }
+    .location-block .loc-text {
+      font-family: 'GoodTimes', Arial, Helvetica, sans-serif;
+      font-size: clamp(1.3rem, 2vw, 2.3rem);
+      color: #ffeb3b;
+      background: linear-gradient(90deg, #fffb4d, #ff6c00 60%, #ff00be);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1.2px #0a0354;
+      text-shadow: 0 0 18px #ff00be88, 0 0 2px #fff, 0 2px 12px #0007;
+      border-radius: 0.7vw;
+      padding: 0.2em 0.7em;
+      filter: drop-shadow(0 0 14px #ff00be88);
+    }
+    /* Guests section */
+    .guests-section {
+      width: 97vw;
+      max-width: 950px;
+      background: linear-gradient(110deg, #3e13ff44 10%, #0ffcc366 55%, #f2328c33 100%);
+      border: 2.5px solid #fff4;
+      border-radius: 2vw;
+      margin: 2vw auto 1.8vw auto;
+      padding: 2vw 2vw 1.4vw 2vw;
+      box-shadow: 0 0 40px #3e13ff44;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+    .guests-section h2 {
+      font-family: 'DeadFontWalking', 'GoodTimes', Arial, Helvetica, sans-serif;
+      font-size: clamp(1.5rem, 3vw, 3rem);
+      letter-spacing: 0.11em;
+      color: #fff;
+      margin: 0 0 1vw 0;
+      text-align: center;
+      background: linear-gradient(90deg, #f2328c, #f200ff 70%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1.7px #3e13ff;
+      text-shadow: 0 0 8px #3e13ff99, 0 2px 12px #0009;
+    }
+    .guests-days {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5vw;
+      justify-content: space-around;
+    }
+    .guests-day {
+      flex: 1 1 250px;
+      min-width: 180px;
+      margin: 0.2vw 0.8vw;
+      padding: 1vw 1vw 0.6vw 1vw;
+      background: linear-gradient(100deg, #1b1327cc 60%, #4ef7ff22 100%);
+      border-radius: 1vw 3vw 1vw 2vw;
+      box-shadow: 0 0 14px #1b132799;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.2px solid #fff2;
+    }
+    .guests-day h3 {
+      font-family: 'GoodTimes', 'Arial Black', sans-serif;
+      font-size: clamp(1.1rem, 2vw, 2rem);
+      color: #f2328c;
+      margin: 0 0 0.2em 0;
+      text-shadow: 0 0 7px #4ef7ff77, 0 2px 7px #0008;
+      letter-spacing: 0.09em;
+    }
+    .guests-list {
+      font-family: 'DeadFontWalking', 'GoodTimes', Arial, Helvetica, sans-serif;
+      font-size: clamp(1rem, 1.4vw, 1.7rem);
+      color: #fff;
+      text-align: center;
+      line-height: 1.4;
+      text-shadow: 0 0 8px #ff00be44, 0 1px 4px #0007;
+      margin-bottom: 0.2vw;
+    }
+    /* ART ASSETS: Layered graphics */
+    .layered-art {
+      position: fixed;
+      left: 0; right: 0; top: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 3;
+      width: 100vw; height: 100vh;
+      overflow: visible;
+    }
+    .art-img {
+      position: absolute;
+      max-width: 40vw;
+      max-height: 45vh;
+      opacity: 0.97;
+      filter: drop-shadow(0 0 32px #4ef7ff99);
+      pointer-events: none;
+      user-select: none;
+      z-index: 9;
+    }
+    .art-img.bridge { left: 5vw; bottom: 1vw; width: 38vw; transform: rotate(-2deg) scale(1.09);}
+    .art-img.left-skel { left: 0vw; top: 22vh; width: 23vw; z-index: 12; }
+    .art-img.right-skel { right: 0vw; top: 18vh; width: 23vw; z-index: 12; }
+    .art-img.blimp { right: 4vw; top: 4vw; width: 24vw; transform: rotate(-3deg);}
+    .art-img.stealie { left: 48vw; top: 1.2vw; width: 8vw; z-index: 22; }
+    .art-img.dnc-logo { left: 49vw; top: 7vw; width: 21vw; z-index: 21; mix-blend-mode: lighten; }
+    /* Responsive image sizing for mobile */
+    @media (max-width: 800px) {
+      .art-img.bridge, .art-img.left-skel, .art-img.right-skel, .art-img.blimp, .art-img.stealie, .art-img.dnc-logo {
+        max-width: 90vw;
+        width: 40vw;
+        min-width: 140px;
+      }
+      .art-img.bridge { bottom: 5vw; }
+      .art-img.blimp { top: 13vw; }
+    }
+    @media (max-width: 600px) {
+      .art-img.left-skel, .art-img.right-skel { width: 37vw; }
+      .art-img.bridge, .art-img.blimp { width: 60vw;}
+      .art-img.dnc-logo { width: 44vw;}
+      .art-img.stealie { width: 13vw;}
+    }
+    /* Responsive text */
+    @media (max-width: 700px) {
+      .headline { font-size: 2.2rem; }
+      .subheadline { font-size: 1.3rem; }
+      .dates { font-size: 1.1rem;}
+      .countdown-wrap { margin-top: 4vw;}
     }
   </style>
 </head>
 <body>
-  <img class="stealie-icon" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie Icon" draggable="false">
-  <img class="poster-img skeleton-left" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="Skeleton Left" draggable="false">
-  <img class="poster-img skeleton-right" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="Skeleton Right" draggable="false">
-  <img class="poster-img blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="Blimp" draggable="false">
-  <div id="psyche-wrap">
-    <div class="countdown-row">
-      <img class="dead-logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="Dead & Company Logo" draggable="false">
-      <div class="countdown-wrap">
-        <div class="countdown-label">DAYS UNTIL</div>
-        <div class="countdown" id="countdown"></div>
-      </div>
+  <div class="layered-art">
+    <img class="art-img bridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="">
+    <img class="art-img left-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="">
+    <img class="art-img right-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="">
+    <img class="art-img blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="">
+    <img class="art-img stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
+    <img class="art-img dnc-logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="">
+  </div>
+  <div id="main">
+    <h1 class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</h1>
+    <h2 class="subheadline">SAN FRANCISCO, CALIFORNIA</h2>
+    <div class="dates">AUGUST 1, 2, 3, 2025</div>
+    <div class="countdown-wrap">
+      <div id="countdown"></div>
     </div>
-    <div class="headline-main">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</div>
-    <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="event-dates">AUGUST 1, 2, 3, 2025</div>
-    <div class="location-row">
-      <img class="golden-gate-img" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="Golden Gate Park" draggable="false">
-      <div class="location-txt">Golden Gate Park</div>
+    <div class="location-block">
+      <img src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-golden-gate-park-3.png" alt="">
+      <div class="loc-text">Golden Gate Park</div>
     </div>
     <div class="guests-section">
-      <div class="guests-title">PLUS SPECIAL GUEST SETS BY</div>
-      <div class="guests-list">
-        <div class="
+      <h2>SPECIAL GUESTS</h2>
+      <div class="guests-days">
+        <div class="guests-day">
+          <h3>Friday</h3>
+          <div class="guests-list">BILLY STRINGS</div>
+        </div>
+        <div class="guests-day">
+          <h3>Saturday</h3>
+          <div class="guests-list">STURGILL SIMPSON<br>JOHNNY BLUE<br>SKIES</div>
+        </div>
+        <div class="guests-day">
+          <h3>Sunday</h3>
+          <div class="guests-list">TREY ANASTASIO BAND</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function updateCountdown() {
+      // San Francisco time zone offset (Pacific Time)
+      const eventDate = new Date(Date.UTC(2025, 7, 1, 7, 0, 0)); // August is month 7 (0-indexed), 00:00 PDT = 07:00 UTC
+      const now = new Date();
+      // Adjust now to UTC
+      const nowUtc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      const diff = eventDate - nowUtc;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = "<span style='font-size:1.5em;'>SHOWTIME!</span>";
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60
