@@ -15,7 +15,7 @@
       padding: 0;
       width: 100vw;
       min-height: 100vh;
-      background: #111 url('IMG_8667.jpeg') center center/cover fixed no-repeat; /* Optional background */
+      background: #111 url('https://i.imgur.com/r8k2h2a.jpg') center center/cover fixed no-repeat; /* Optional background */
       overflow-x: hidden;
     }
     body::before {
@@ -26,7 +26,6 @@
       background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover no-repeat;
       opacity: 0.4;
       pointer-events: none;
-      /* REFINEMENT: Add subtle animation for a "living poster" effect */
       animation: slow-pan 90s linear infinite alternate;
     }
     @keyframes slow-pan {
@@ -50,7 +49,6 @@
       overflow-x: hidden;
     }
 
-    /* POSTER FRAMES */
     .poster-frame {
       position: absolute;
       left: 0; top: 0; width: 100vw; height: 100vh;
@@ -67,39 +65,36 @@
       pointer-events: none;
       opacity: 0.87;
     }
-    /* LAYERED ART */
     .art {
       position: absolute;
       pointer-events: none;
       user-select: none;
       filter: drop-shadow(0 0 24px #0009);
-      transition: transform 0.5s ease-out;
+      /* Use will-change for performance boost on animated transforms */
+      will-change: transform;
+      /* Eased transition for smoother parallax movement */
+      transition: transform 0.2s ease-out;
     }
-    .art.bridge { left: 3vw; bottom: 1vw; width: 30vw; min-width: 110px; transform: rotate(-2deg); z-index: 3;}
-    /* REFINEMENT: Tuck skeletons behind the main content for depth */
-    .art.left-skel { left: 1vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; transform: translateX(3vw) rotate(3deg); }
-    .art.right-skel { right: 2vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; transform: translateX(-3vw) rotate(-3deg); }
-    .art.blimp { right: 7vw; top: 2vw; width: 15vw; min-width: 80px; transform: rotate(-7deg); z-index: 3;}
-    .art.stealie { left: 50vw; top: 4vw; width: 7vw; min-width: 50px; z-index: 4;}
+    .art.bridge { left: 3vw; bottom: 1vw; width: 30vw; min-width: 110px; z-index: 3;}
+    .art.left-skel { left: 1vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; }
+    .art.right-skel { right: 2vw; top: 15vw; width: 18vw; min-width: 85px; z-index: 9; }
+    .art.blimp { right: 7vw; top: 2vw; width: 15vw; min-width: 80px; z-index: 3;}
+    .art.stealie { left: 50vw; top: 4vw; width: 7vw; min-width: 50px; z-index: 4; will-change: filter; transition: filter 0.1s linear;}
     .art.logo { left: 50vw; top: 12vw; width: 14vw; min-width: 90px; z-index: 5; mix-blend-mode: lighten;}
 
-    /* MAIN HEADLINE */
     .headline {
       font-family: 'Hend', serif;
       font-size: clamp(2.2rem, 7vw, 6rem);
       letter-spacing: 0.04em;
       text-align: center;
       padding: 0.3em 0.5em;
-      /* REFINEMENT: Simplified gradient for better hierarchy */
       background: linear-gradient(97deg, #ffe66b, #e4008f);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      /* REFINEMENT: Reduced stroke for cleaner text */
       -webkit-text-stroke: 1.5px #1e3b54;
       filter: drop-shadow(0 0 20px #ffe66b88) drop-shadow(0 0 12px #0008);
       text-shadow: 0 2px 28px #8df4, 0 2px 3px #000;
-      /* REFINEMENT: Improved vertical rhythm */
       margin: 0 0 0.8em 0;
       border-radius: 1vw 2vw 1vw 2vw;
       user-select: none;
@@ -107,12 +102,10 @@
       position: relative;
     }
 
-    /* SUBHEADLINE */
     .subheadline {
       font-family: 'Hend', serif;
       font-size: clamp(1.3rem, 3vw, 2.7rem);
       text-align: center;
-      /* REFINEMENT: Changed to a solid color for better hierarchy */
       color: #ffe66b;
       -webkit-text-stroke: 1px #21232d;
       text-shadow: 0 0 10px #ffe66b77, 0 1px 2px #003a;
@@ -123,11 +116,10 @@
       position: relative;
     }
 
-    /* DATES */
     .dates {
       font-family: 'Hend', serif;
       font-size: clamp(1.1rem, 2.1vw, 2.2rem);
-      color: #fff; /* Changed to white for contrast against other yellow elements */
+      color: #fff;
       text-shadow: 0 0 18px #1e90ffcc, 0 1px 4px #000;
       letter-spacing: 0.16em;
       margin-bottom: 1.3vw;
@@ -136,12 +128,10 @@
       position: relative;
     }
 
-    /* COUNTDOWN */
     .countdown-psy {
       display: flex;
       flex-direction: column;
       align-items: center;
-      /* REFINEMENT: Added more margin for breathing room */
       margin: 2vw 0 3vw 0;
       z-index: 10;
       position: relative;
@@ -150,14 +140,11 @@
       font-family: 'Hend', serif;
       font-size: clamp(4.2rem, 11vw, 10rem);
       letter-spacing: 0.09em;
-      /* This is our "hero" gradient, so we keep it complex */
       background: linear-gradient(90deg,#ffe66b,#1698ff 55%,#e4008f 90%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      /* REFINEMENT: Reduced stroke, using a dark color for definition */
       -webkit-text-stroke: 2px #1e3b54;
-      /* REFINEMENT: Enhanced glow effect */
       text-shadow: 0 0 45px #ffe66b, 0 0 25px #1e90ffb0, 0 0 15px #e4008f60, 0 2px 6px #141f;
       filter: drop-shadow(0 0 12px #ffe66b80);
       text-align: center;
@@ -182,7 +169,6 @@
       user-select: none;
     }
 
-    /* LOCATION */
     .location-block {
       display: flex;
       flex-direction: row;
@@ -222,7 +208,6 @@
       position: relative;
     }
 
-    /* GUESTS */
     .guests-section {
       width: 92vw;
       max-width: 820px;
@@ -243,7 +228,6 @@
       font-family: 'Hend', serif;
       font-size: clamp(1.6rem, 3vw, 3rem);
       letter-spacing: 0.10em;
-      /* REFINEMENT: Simplified gradient */
       background: linear-gradient(90deg,#e4008f,#ffe66b 60%);
       background-clip: text;
       -webkit-background-clip: text;
@@ -275,10 +259,7 @@
       z-index: 10;
       position: relative;
       min-height: 120px;
-      /* REFINEMENT: Use clip-path for a "ticket stub" shape instead of border-radius */
-      border-radius: 0; /* reset border-radius */
       clip-path: polygon(0% 15%, 15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%);
-      /* REFINEMENT: Add interactive hover effect */
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .guests-day:hover {
@@ -305,7 +286,35 @@
       user-select: none;
     }
 
-    /* RESPONSIVE */
+    /* Styles for the new audio toggle button */
+    #audio-toggle {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 999;
+        background: #ffe66b;
+        border: 2px solid #1e3b54;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        color: #1e3b54;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px #000a;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #audio-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px #ffe66ba0;
+    }
+    #audio-toggle.playing {
+        background: #e4008f;
+        color: #fff;
+    }
+
     @media (max-width: 900px) {
       .art-img { width: 30vw; min-width: 38px;}
       .art-bridge { bottom: 11vw;}
@@ -320,12 +329,12 @@
       .guests-day {min-width: 130px; width: 85vw; margin: 2vw auto;}
     }
     @media (max-width: 480px) {
-      /* Adjusted font sizes for better readability on small screens */
       .headline { font-size: clamp(1.8rem, 10vw, 2.2rem); -webkit-text-stroke-width: 1px;}
       .subheadline { font-size: clamp(1.1rem, 6vw, 1.3rem); }
       .dates { font-size: clamp(0.9rem, 5vw, 1.1rem); }
       #countdown { font-size: clamp(3.5rem, 20vw, 4.2rem); -webkit-text-stroke-width: 1.5px;}
       .location-block .loc-txt { font-size: clamp(1rem, 7vw, 1.4rem); }
+      #audio-toggle { width: 40px; height: 40px; font-size: 20px; }
     }
   </style>
 </head>
@@ -338,17 +347,18 @@
         fill="none" stroke="#e4008f" stroke-width="1.2" opacity="0.29"/>
     </svg>
   </div>
-  <img class="art bridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="">
-  <img class="art left-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="">
-  <img class="art right-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="">
-  <img class="art blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="">
+  <img class="art bridge" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-cropped-4.png" alt="" data-parallax-strength="5">
+  <img class="art left-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-left-2.png" alt="" data-parallax-strength="15">
+  <img class="art right-skel" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-skeleton-right.png" alt="" data-parallax-strength="15">
+  <img class="art blimp" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/admat-blimp-crop-2.png" alt="" data-parallax-strength="25">
   <img class="art stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="">
-  <img class="art logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="">
+  <img class="art logo" src="https://s39898.pcdn.co/wp-content/uploads/2025/05/gd60-logo-xl.png" alt="" data-parallax-strength="-10">
   
   <div class="psy-spine">
     <h1 class="headline">CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC</h1>
     <div class="subheadline">SAN FRANCISCO, CALIFORNIA</div>
-    <div class="dates">JULY 18, 19, & 20, 2025</div> <div class="countdown-psy">
+    <div class="dates">JULY 18, 19, & 20, 2025</div>
+    <div class="countdown-psy">
       <div id="countdown">00:00:00:00</div>
       <div class="count-label">DAYS : HOURS : MINS : SECS</div>
     </div>
@@ -377,38 +387,116 @@
     </div>
   </div>
 
+  <button id="audio-toggle">🎵</button>
+
   <script>
-    // Countdown Timer Logic
+    // --- 1. COUNTDOWN TIMER ---
     const countdownElement = document.getElementById('countdown');
-    // NOTE: The event date is set to July 18, 2025, in the local time of the browser.
-    // This will count down to midnight at the beginning of that day.
     const countDownDate = new Date("July 18, 2025 00:00:00").getTime();
-
+    
     const updateCountdown = () => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
 
-      if (distance < 0) {
-        countdownElement.innerHTML = "LIVE NOW!";
-        // Optionally hide the label
-        document.querySelector('.count-label').style.display = 'none'; 
-        return;
-      }
+        if (distance < 0) {
+            countdownElement.innerHTML = "LIVE NOW!";
+            document.querySelector('.count-label').style.display = 'none';
+            clearInterval(countdownInterval); // Stop the interval once the event starts
+            return;
+        }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const format = (num) => num.toString().padStart(2, '0');
+        countdownElement.innerHTML = `${format(days)}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    };
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-      const format = (num) => num.toString().padStart(2, '0');
+    // --- 2. PARALLAX MOUSE EFFECT ---
+    document.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        // Calculate mouse position relative to center (-0.5 to 0.5)
+        const mouseX = (clientX - centerX) / (centerX * 2);
+        const mouseY = (clientY - centerY) / (centerY * 2);
+        
+        document.querySelectorAll('.art[data-parallax-strength]').forEach(art => {
+            const strength = art.dataset.parallaxStrength;
+            const offsetX = -mouseX * strength;
+            const offsetY = -mouseY * strength;
+            
+            // Apply the parallax translate without overriding the initial rotation from CSS
+            art.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+    });
 
-      countdownElement.innerHTML = `${format(days)}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    // --- 3. AUDIO-REACTIVE STEALIE ---
+    const audioButton = document.getElementById('audio-toggle');
+    const stealie = document.querySelector('.art.stealie');
+    let audioContext, analyser, source, dataArray, isPlaying = false;
+    let animationFrameId;
+
+    const audioUrl = 'https://cdn.jsdelivr.net/gh/scottschiller/SoundManager2@master/demo/_mp3/sine-wave-440.mp3'; // Placeholder audio
+
+    const setupAudio = () => {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+
+        const audioElement = new Audio(audioUrl);
+        audioElement.crossOrigin = "anonymous";
+        audioElement.loop = true;
+        source = audioContext.createMediaElementSource(audioElement);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+
+        return audioElement;
     };
 
-    // Update the countdown every second
-    setInterval(updateCountdown, 1000);
-    // Initial call to display immediately
-    updateCountdown();
+    let audioElement = null;
+
+    const visualize = () => {
+        analyser.getByteFrequencyData(dataArray);
+        // Focus on bass frequencies (first few bins)
+        const bassLevel = (dataArray[1] + dataArray[2] + dataArray[3]) / 3;
+        // Map bass level (0-255) to a glow size (0-25px)
+        const glowSize = (bassLevel / 255) * 25;
+        
+        stealie.style.filter = `drop-shadow(0 0 ${glowSize}px #e4008f) drop-shadow(0 0 10px #0009)`;
+        
+        animationFrameId = requestAnimationFrame(visualize);
+    };
+
+    audioButton.addEventListener('click', () => {
+        if (!audioContext) {
+            audioElement = setupAudio();
+        }
+
+        // Must resume context after user interaction
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+        
+        if (isPlaying) {
+            audioElement.pause();
+            audioButton.textContent = '🎵';
+            audioButton.classList.remove('playing');
+            cancelAnimationFrame(animationFrameId); // Stop animation loop
+        } else {
+            audioElement.play();
+            audioButton.textContent = '⏸️';
+            audioButton.classList.add('playing');
+            visualize(); // Start animation loop
+        }
+        isPlaying = !isPlaying;
+    });
   </script>
 
 </body>
