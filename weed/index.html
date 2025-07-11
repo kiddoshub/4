@@ -1,60 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dead & Company SF Countdown</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            margin: 0;
+        }
+        #countdown-container {
+            border: 2px dashed #f0f0f0;
+            padding: 40px;
+            border-radius: 15px;
+            background-color: #1a1a1a;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 3em;
+            letter-spacing: 5px;
+        }
+        #timer span {
+            padding: 10px;
+        }
+        .label {
+            font-size: 0.5em;
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="background-animation"></div>
-    <div class="container">
-        <header>
-            <h1>Dead & Company</h1>
-            <h2>San Francisco • Final Tour</h2>
-        </header>
 
-        <main>
-            <div id="countdown">
-                <div><span id="days">--</span> Days</div>
-                <div><span id="hours">--</span> Hours</div>
-                <div><span id="minutes">--</span> Minutes</div>
-                <div><span id="seconds">--</span> Seconds</div>
-            </div>
-
-            <svg id="clock" viewBox="0 0 200 200">
-                <defs>
-                    <filter id="glowFilter">
-                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                        <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <circle cx="100" cy="100" r="96" class="clock-face"/>
-                <g class="ticks">
-                    </g>
-                <line id="hour" class="hand" x1="100" y1="100" x2="100" y2="65"/>
-                <line id="minute" class="hand" x1="100" y1="100" x2="100" y2="45"/>
-                <line id="second" class="hand second-hand" x1="100" y1="100" x2="100" y2="35"/>
-                <circle cx="100" cy="100" r="4" class="hand-pivot"/>
-            </svg>
-        </main>
-
-        <footer>
-            <div id="ticker">
-                <p>DEAD & COMPANY • BILLY STRINGS • STURGILL SIMPSON • TREY ANASTASIO BAND</p>
-            </div>
-            <div class="badges">
-                <img class="badge" src="https://i.redd.it/qrxk4n1rei721.gif" alt="Dancing Bear">
-                <img class="badge" src="https://media.tenor.com/E76XPPYAKTUAAAAM/grateful-dead.gif" alt="Steal Your Face Skull">
-            </div>
-        </footer>
+    <div id="countdown-container">
+        <h1>Dead & Company | Golden Gate Park</h1>
+        <div id="timer">
+            <span id="days"></span>
+            <span id="hours"></span>
+            <span id="minutes"></span>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // Set the date for the show (August 1, 2025, 7:00 PM PDT)
+        const countdownDate = new Date("Aug 1, 2025 19:00:00").getTime();
+
+        // Update the countdown every 1 second
+        const interval = setInterval(function() {
+
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the countdown date
+            const distance = countdownDate - now;
+
+            // Time calculations for days, hours, and minutes
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            // Display the result in the elements
+            document.getElementById("days").innerHTML = days + "<span class='label'>Days</span>";
+            document.getElementById("hours").innerHTML = hours + "<span class='label'>Hours</span>";
+            document.getElementById("minutes").innerHTML = minutes + "<span class='label'>Minutes</span>";
+
+            // If the countdown is finished, write some text
+            if (distance < 0) {
+                clearInterval(interval);
+                document.getElementById("timer").innerHTML = "It's Showtime!";
+            }
+        }, 1000);
+    </script>
+
 </body>
 </html>
