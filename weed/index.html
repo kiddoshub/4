@@ -2,98 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dead & Company Countdown – SF 2025</title>
+  <title>DEAD & CO. SF COUNTDOWN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
-      color: #00ff88;
+      background-color: #000;
+      color: #00ff00;
       font-family: 'Courier New', Courier, monospace;
       height: 100vh;
-      overflow: hidden;
-    }
-    body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-size: cover;
-      background-position: center;
-      animation: rotateBg 24s infinite linear;
+      overflow: hidden;
     }
 
-    @keyframes rotateBg {
-      0%   { background-image: url('IMG_8688.jpeg'); }
-      33%  { background-image: url('IMG_8687.jpeg'); }
-      66%  { background-image: url('IMG_8685.png'); }
-      100% { background-image: url('IMG_8688.jpeg'); }
-    }
-
-    .header, .footer {
+    .bar {
       position: absolute;
-      left: 2vw;
-      right: 2vw;
-      color: #00ff88cc;
+      width: 100%;
       text-align: center;
       font-size: 0.95rem;
-      opacity: 0.65;
       letter-spacing: 0.15em;
-      text-shadow: 0 0 4px #00ff88;
+      text-shadow: 0 0 2px #0f0, 0 0 5px #0f0;
+      color: #00ff00;
+      user-select: none;
     }
-    .header {
-      top: 2vh;
-    }
-    .footer {
-      bottom: 2vh;
+
+    .top-bar {
+      top: 1.2rem;
     }
 
     #countdown {
       font-size: clamp(3rem, 12vw, 14rem);
       text-align: center;
-      color: #00ff88;
-      text-shadow:
-        0 0 6px #00ff88,
-        0 0 14px #00ff88aa,
-        0 0 40px #00ff88;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 4px #00ff00, 0 0 8px #00ff00, 0 0 20px #00ff00;
       user-select: none;
+      z-index: 10;
+    }
+
+    #stealie {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: 80px;
+      height: auto;
+      opacity: 0.88;
+      z-index: 5;
+      pointer-events: none;
+      animation: floatStealie 6s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px #0f0a);
+    }
+
+    @keyframes floatStealie {
+      0%   { transform: translateY(0px) rotate(-2deg); }
+      50%  { transform: translateY(10px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(-2deg); }
     }
 
     @media (max-width: 600px) {
-      .header, .footer { font-size: 0.7rem; }
+      .bar {
+        font-size: 0.7rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="header">>> EVENT: GRATEFUL DEAD 60TH ANNIVERSARY – SF AUG 1–3, 2025</div>
+  <div class="bar top-bar">DEAD & COMPANY · SAN FRANCISCO · AUGUST 1–3, 2025</div>
+
   <div id="countdown">--:--:--:--</div>
-  <div class="footer">TERMINAL DISPLAY // DEAD & CO. CIVILIAN MISSION // G.G. PARK, SF</div>
+
+  <img id="stealie" src="https://s39898.pcdn.co/wp-content/uploads/2022/03/cropped-cropped-favicon-270x270.png" alt="Stealie">
 
   <script>
     const countdown = document.getElementById('countdown');
-    const targetDate = new Date('2025-08-01T07:00:00Z'); // UTC = PDT +7
+    const target = new Date('2025-08-01T07:00:00Z'); // 00:00 PDT
 
     function updateCountdown() {
       const now = new Date();
-      let diff = targetDate - now;
+      let diff = target - now;
 
       if (diff <= 0) {
         countdown.textContent = '00:00:00:00';
         return;
       }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
 
       countdown.textContent = [
-        days.toString().padStart(2, '0'),
-        hours.toString().padStart(2, '0'),
-        mins.toString().padStart(2, '0'),
-        secs.toString().padStart(2, '0')
+        d.toString().padStart(2, '0'),
+        h.toString().padStart(2, '0'),
+        m.toString().padStart(2, '0'),
+        s.toString().padStart(2, '0')
       ].join(':');
     }
 
