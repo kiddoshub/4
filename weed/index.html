@@ -2,143 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dead & Company SF Countdown</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEAD & CO. SF COUNTDOWN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @font-face {
       font-family: 'OCR-A';
-      src: url('OCR-a___.ttf') format('truetype');
+      src: url('OCR-A.ttf') format('truetype');
       font-display: swap;
     }
-
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      background: #000 url('IMG_8685.png') center center / cover no-repeat fixed;
+      padding: 2vh 4vw;
+      background: black;
       color: #00FF00;
       font-family: 'OCR-A', monospace;
-      text-align: center;
-      height: 100vh;
-      overflow: hidden;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      white-space: pre;
     }
-
-    #overlay {
-      position: fixed;
-      inset: 0;
-      background: url('IMG_8687.jpeg') center center / cover no-repeat;
-      opacity: 0.08;
-      mix-blend-mode: lighten;
-      pointer-events: none;
-    }
-
-    #stealie {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      width: 80px;
-      opacity: 0.9;
-      animation: float 8s ease-in-out infinite alternate;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-10px); }
-    }
-
-    #container {
-      position: relative;
-      z-index: 1;
-      padding: 4vh 2vw;
-    }
-
-    #title {
-      font-size: 1.5rem;
-      margin-bottom: 1vh;
-    }
-
     #countdown {
-      font-size: 4rem;
+      font-size: 3rem;
       color: red;
-      letter-spacing: 0.1em;
-      margin: 3vh 0;
+      letter-spacing: 0.12em;
+      text-align: center;
+      margin: 4vh 0 2vh 0;
     }
-
-    #labels {
-      font-size: 1rem;
-      color: #00ff00;
-      letter-spacing: 0.5em;
+    .sep {
+      width: 100%;
+      max-width: 720px;
+      margin: auto;
+      border-top: 1px solid #00FF00;
     }
-
-    .section {
-      font-size: 0.85rem;
-      line-height: 1.6;
-      margin-top: 3vh;
-      white-space: pre-wrap;
+    .line {
+      max-width: 720px;
+      margin: auto;
     }
-
-    @media (max-width: 600px) {
-      #countdown {
-        font-size: 2.5rem;
-      }
+    @media (max-width:600px) {
+      #countdown { font-size: 2rem; }
+      body { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <div id="overlay"></div>
-  <img id="stealie" src="IMG_8667.jpeg" alt="Stealie">
-  <div id="container">
-    <div id="title">LIVE COUNTDOWN — GOLDEN GATE PARK: AUGUST 1–3, 2025</div>
-    <div id="countdown">00:00:00:00</div>
-    <div id="labels">DAYS  HOURS  MIN  SEC</div>
 
-    <div class="section">
-BAND LINEUP — DEAD & COMPANY
+COUNTDOWN:  
+DAYS   HOURS   MINUTES   SECONDS  
+<span id="countdown">00:00:00:00</span>
 
-• Bob Weir – Guitar, Vocals  
-• Mickey Hart – Drums  
-• Bill Kreutzmann – Drums  
-• Oteil Burbridge – Bass  
-• Jeff Chimenti – Keyboards  
-• John Mayer – Guitar, Vocals
+<div class="sep"></div>
 
-GUEST ARTISTS
+DEAD & COMPANY – GOLDEN GATE PARK, SAN FRANCISCO, CA  
+DATES: AUG 1 / AUG 2 / AUG 3 2025  
+<div class="sep"></div>
+LINEUP:  
+  BOB WEIR .................. GUITAR / VOCALS  
+  MICKEY HART .............. DRUMS / PERCUSSION  
+  BILL KREUTZMANN .......... DRUMS  
+  JEFF CHIMENTI ............ KEYBOARDS / BACKING VOCALS  
+  OTEIL BURBRIDGE .......... BASS / PERCUSSION / VOCALS  
+  JOHN MAYER ............... LEAD GUITAR / VOCALS  
+<div class="sep"></div>
+GUESTS - SF SHOW:  
+  AUG 1 — BILLY STRINGS  
+  AUG 2 — STURGILL SIMPSON / JOHNNY BLUE SKIES  
+  AUG 3 — TREY ANASTASIO BAND  
+<div class="sep"></div>
 
-• Billy Strings  
-• Sturgill Simpson  
-• Johnny Blue Skies  
-• Trey Anastasio Band
-
-DATES
-
-• Friday: Billy Strings  
-• Saturday: Sturgill Simpson, Johnny Blue Skies  
-• Sunday: Trey Anastasio Band
-    </div>
-  </div>
-
-  <script>
-    function updateCountdown() {
-      const target = new Date("2025-08-01T07:00:00Z"); // UTC for midnight PDT
-      const now = new Date();
-      const diff = target - now;
-
-      if (diff <= 0) {
-        document.getElementById("countdown").textContent = "00:00:00:00";
-        return;
-      }
-
-      const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-      const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-      const mins = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
-      const secs = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-
-      document.getElementById("countdown").textContent = `${days}:${hours}:${mins}:${secs}`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+<script>
+function pad(n){return String(n).padStart(2,'0')}
+const cd = document.getElementById('countdown');
+function update(){
+  const now = Date.now()
+  const target = new Date("2025-08-01T07:00:00Z").getTime();
+  let d = target - now;
+  if(d<0){cd.textContent="00:00:00:00";return}
+  const days = Math.floor(d/86400000);
+  d%=86400000;
+  const hrs = Math.floor(d/3600000);
+  d%=3600000;
+  const mins= Math.floor(d/60000);
+  const secs= Math.floor((d%60000)/1000);
+  cd.textContent = `${pad(days)}:${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+}
+update(); setInterval(update,1000);
+</script>
 </body>
 </html>
