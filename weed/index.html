@@ -53,7 +53,7 @@
 
   // Environment: Skybox + Ground Plane
   const loader = new THREE.TextureLoader();
-  const sky = await loader.loadAsync('haight_street_panorama.jpg');
+  const sky = await loader.loadAsync('IMG_8667.jpeg');
   const rt = new THREE.WebGLCubeRenderTarget(sky.image.height);
   rt.fromEquirectangularTexture(renderer, sky);
   scene.background = rt.texture;
