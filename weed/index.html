@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dead & Company SF Countdown</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>DEAD & CO SF COUNTDOWN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @font-face {
       font-family: 'OCR-A';
@@ -11,110 +11,72 @@
     }
     body {
       margin: 0;
-      padding: 0;
-      background: #000;
-      color: #f00;
+      background-color: black;
+      color: #ff3333;
       font-family: 'OCR-A', monospace;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      align-items: center;
+      height: 100vh;
       overflow: hidden;
-    }
-
-    .circle-group {
-      position: relative;
-      width: 80vw;
-      height: 80vw;
-      max-width: 600px;
-      max-height: 600px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
       text-align: center;
-      transform: rotate(-6deg);
     }
-
-    .show-label {
-      font-size: 1.6rem;
-      margin-top: 0.6rem;
-      text-transform: uppercase;
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2vh;
+    }
+    .title {
+      font-size: 2.5rem;
       letter-spacing: 0.1em;
+      margin-bottom: 1vh;
     }
-
+    .label {
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
     .countdown {
-      font-size: 2.3rem;
-      font-weight: bold;
-      margin: 1rem 0;
+      font-size: 3rem;
+      letter-spacing: 0.15em;
     }
-
-    img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 12%;
-      margin-top: 2rem;
-      filter: grayscale(100%) brightness(1.2);
-    }
-
     @media (max-width: 600px) {
-      .circle-group {
-        width: 90vw;
-        height: 90vw;
-      }
-      .countdown {
-        font-size: 1.8rem;
-      }
-      .show-label {
-        font-size: 1.3rem;
-      }
+      .title { font-size: 1.6rem; }
+      .countdown { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
-
-  <div class="circle-group">
-    <div class="show-label">AUG 1 SHOW</div>
-    <div class="countdown" id="count1"></div>
-    <div class="show-label">AUG 2 SHOW</div>
-    <div class="countdown" id="count2"></div>
-    <div class="show-label">AUG 3 SHOW</div>
-    <div class="countdown" id="count3"></div>
-    <img src="IMG_8667.jpeg" alt="SF Satellite">
+  <div class="container">
+    <div class="title">DEAD & CO // SF</div>
+    <div class="label">AUG 1 2025 · 00:00 · GOLDEN GATE PARK</div>
+    <div class="countdown" id="countdown">--:--:--:--</div>
   </div>
 
   <script>
-    function pad(n) { return n.toString().padStart(2, '0'); }
+    const countdownEl = document.getElementById("countdown");
+    const target = new Date("2025-08-01T00:00:00-07:00");
 
-    const targets = {
-      count1: new Date("2025-08-01T00:00:00"),
-      count2: new Date("2025-08-02T00:00:00"),
-      count3: new Date("2025-08-03T00:00:00")
-    };
-
-    function updateCountdowns() {
+    function update() {
       const now = new Date();
-      for (const [id, date] of Object.entries(targets)) {
-        const diff = date - now;
-        if (diff <= 0) {
-          document.getElementById(id).textContent = "SHOWTIME";
-          continue;
-        }
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-        document.getElementById(id).textContent = 
-          `${pad(days)}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
+      const diff = target - now;
+
+      if (diff <= 0) {
+        countdownEl.textContent = "00:00:00:00";
+        return;
       }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent = 
+        `${String(d).padStart(2, '0')}:${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     }
 
-    setInterval(updateCountdowns, 1000);
-    updateCountdowns();
+    setInterval(update, 1000);
+    update();
   </script>
-
 </body>
 </html>
