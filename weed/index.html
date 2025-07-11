@@ -4,155 +4,157 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dead & Co SF Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Zen+Dots&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
     :root {
-      --fg: #fffcf2;
       --bg: #000;
-      --glow1: #00ffcc;
-      --glow2: #ff00cc;
-      --font: 'VT323', monospace;
+      --text-glow: #00ffee;
+      --font-main: 'Zen Dots', sans-serif;
+      --font-secondary: 'Rubik Mono One', monospace;
     }
 
     html, body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: var(--bg);
-      color: var(--fg);
-      font-family: var(--font);
+      color: #fff;
+      font-family: var(--font-main);
+      height: 100vh;
       overflow: hidden;
+      position: relative;
     }
 
-    .bg-image {
+    body::before {
+      content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
+      inset: 0;
+      background: url("IMG_8667.jpeg") center/cover no-repeat;
+      opacity: 0.1;
       z-index: -3;
-      opacity: 0.35;
     }
 
-    .vhs-layer {
+    body::after {
+      content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.05) 0px,
-        rgba(255,255,255,0.02) 1px,
-        transparent 2px,
-        transparent 4px
-      );
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02) 2px, transparent 4px),
+        linear-gradient(135deg, rgba(0,255,255,0.03), rgba(255,0,255,0.03));
+      animation: vhs 2.5s infinite ease-in-out alternate;
       z-index: -2;
-      animation: flicker 2s infinite;
+      pointer-events: none;
     }
 
-    @keyframes flicker {
-      0%, 100% { opacity: 0.9; }
-      45% { opacity: 0.6; }
-      70% { opacity: 0.75; }
+    @keyframes vhs {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-1px); }
     }
 
     .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding-top: 18vh;
+      padding: 2vh 4vw;
     }
 
-    .headline {
+    .title {
+      font-family: var(--font-secondary);
       font-size: 10vw;
-      line-height: 1;
-      background: linear-gradient(90deg, var(--glow1), var(--glow2), #ffff00);
+      line-height: 1.1;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #ff0000, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff);
+      background-size: 400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 2px #000, 0 0 18px var(--glow1), 0 0 42px var(--glow2);
-      margin-bottom: 2vh;
+      animation: rainbow 8s linear infinite;
+      text-shadow: 0 0 20px #000;
     }
 
-    #countdown {
-      font-size: 6vw;
-      color: #fff;
-      text-shadow: 0 0 4px #0ff, 0 0 12px #f0f;
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
-    #clock {
-      width: 28vw;
-      margin: 4vh auto;
+    .countdown {
+      font-size: 7vw;
+      margin-top: 2vh;
+      text-shadow: 0 0 2px #fff, 0 0 10px var(--text-glow), 0 0 30px var(--text-glow);
     }
 
-    #ticker {
-      font-size: 4vw;
-      padding-top: 2vh;
-      color: #ffcc00;
-      text-shadow: 0 0 5px #f0f;
-      animation: ticker 12s linear infinite;
-      white-space: nowrap;
+    .shapes {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
     }
 
-    @keyframes ticker {
-      0% { transform: translateX(100vw); }
-      100% { transform: translateX(-100%); }
+    .triangle {
+      position: absolute;
+      width: 0; height: 0;
+      border-left: 25vw solid transparent;
+      border-right: 25vw solid transparent;
+      border-bottom: 25vw solid rgba(255,0,255,0.08);
+      animation: float 12s infinite ease-in-out;
     }
 
+    .triangle:nth-child(2) {
+      top: 60vh; left: -20vw;
+      border-bottom-color: rgba(0,255,255,0.1);
+      animation-delay: 3s;
+    }
+
+    .triangle:nth-child(3) {
+      top: 30vh; left: 60vw;
+      border-bottom-color: rgba(255,255,0,0.06);
+      animation-delay: 6s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .title { font-size: 12vw; }
+      .countdown { font-size: 9vw; }
+    }
   </style>
 </head>
 <body>
-  <img class="bg-image" src="IMG_8667.jpeg" alt="Dead background">
-  <div class="vhs-layer"></div>
+  <div class="shapes">
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+  </div>
 
   <div class="container">
-    <div class="headline">Dead & Company</div>
-    <div id="countdown">Loading...</div>
-
-    <svg id="clock" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="48" fill="none" stroke="#ff00cc" stroke-width="2"/>
-      <line id="hour-hand" x1="50" y1="50" x2="50" y2="30" stroke="#ffff00" stroke-width="3"/>
-      <line id="minute-hand" x1="50" y1="50" x2="50" y2="20" stroke="#00ffff" stroke-width="2"/>
-      <line id="second-hand" x1="50" y1="50" x2="50" y2="15" stroke="#ff0000" stroke-width="1"/>
-    </svg>
-
-    <div id="ticker">• SAN FRANCISCO • AUG 1ST • DEAD & COMPANY • BILLY STRINGS •</div>
+    <div class="title">Dead & Co</div>
+    <div class="countdown" id="countdown">-- days -- hours -- minutes -- seconds</div>
   </div>
 
   <script>
-    const targetDate = new Date("2025-08-01T19:00:00-07:00");
+    const target = new Date('2025-08-01T00:00:00-07:00');
+    const countdownEl = document.getElementById('countdown');
 
     function updateCountdown() {
       const now = new Date();
-      const diff = targetDate - now;
+      const diff = Math.max(0, target - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      const mins = Math.floor(diff / (1000 * 60)) % 60;
+      const secs = Math.floor(diff / 1000) % 60;
 
-      if (diff <= 0) {
-        document.getElementById("countdown").textContent = "The Golden Road...";
-        return;
-      }
-
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-
-      document.getElementById("countdown").textContent =
-        `${d} days ${h} hrs ${m} min ${s} sec`;
+      countdownEl.textContent = `${days} days ${hours} hours ${mins} minutes ${secs} seconds`;
     }
-
-    function updateClock() {
-      const now = new Date();
-      const sec = now.getSeconds();
-      const min = now.getMinutes();
-      const hour = now.getHours() % 12;
-
-      document.getElementById("second-hand").setAttribute("transform", `rotate(${6 * sec} 50 50)`);
-      document.getElementById("minute-hand").setAttribute("transform", `rotate(${6 * min} 50 50)`);
-      document.getElementById("hour-hand").setAttribute("transform", `rotate(${30 * hour + min/2} 50 50)`);
-    }
-
-    setInterval(() => {
-      updateCountdown();
-      updateClock();
-    }, 1000);
 
     updateCountdown();
-    updateClock();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
