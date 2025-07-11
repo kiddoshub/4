@@ -2,106 +2,137 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DEAD & COMPANY COUNTDOWN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEAD & CO SF COUNTDOWN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @font-face {
       font-family: 'OCR-A';
       src: url('OCR-a___.ttf') format('truetype');
     }
-
     body {
       margin: 0;
-      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
-      color: red;
+      background-color: black;
+      color: #ffffff;
       font-family: 'OCR-A', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+    }
+
+    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: black;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      gap: 2vh;
       z-index: 1;
-      pointer-events: none;
+      padding: 2vh;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff00ff, 0 0 30px #00ffff, 0 0 40px #ffff00;
+      background-color: rgba(0, 0, 0, 0.8);
     }
 
-    .countdown-container {
-      position: relative;
-      z-index: 2;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.65);
-      border: 2px solid red;
-      box-shadow: 0 0 25px red;
-      border-radius: 12px;
+    .title {
+      font-size: 2.5rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1vh;
+      background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #00ff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 4s linear infinite;
     }
 
-    .headline {
-      font-size: 1.3rem;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+    .label {
+      font-size: 1.2rem;
+      opacity: 0.8;
+      color: #dddddd;
     }
 
     .countdown {
-      font-size: 3.5rem;
-      letter-spacing: 4px;
-      line-height: 1.5;
+      font-size: 3.2rem;
+      letter-spacing: 0.15em;
+      color: #ffffff;
+      text-shadow: 0 0 8px #ff00ff, 0 0 15px #00ffff;
+    }
+
+    @keyframes glow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .floaters img {
+      position: absolute;
+      width: 120px;
+      height: auto;
+      opacity: 0.2;
+      pointer-events: none;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .floaters img:nth-child(2) {
+      animation-delay: 5s;
+      left: 70%;
+      top: 10%;
+    }
+
+    .floaters img:nth-child(3) {
+      animation-delay: 10s;
+      left: 20%;
+      top: 70%;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-40px) scale(1.05); }
+      100% { transform: translateY(0px) scale(1); }
     }
 
     @media (max-width: 600px) {
-      .countdown {
-        font-size: 2rem;
-        letter-spacing: 2px;
-      }
-
-      .headline {
-        font-size: 1rem;
-      }
+      .title { font-size: 1.6rem; }
+      .countdown { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="countdown-container">
-    <div class="headline">DEAD & COMPANY - SAN FRANCISCO</div>
-    <div class="countdown" id="countdown">Loading...</div>
+  <div class="floaters">
+    <img src="IMG_8685.png" style="left:10%;top:15%;">
+    <img src="IMG_8687.jpeg">
+    <img src="IMG_8688.jpeg">
+  </div>
+
+  <div class="container">
+    <div class="title">DEAD & CO // SF</div>
+    <div class="label">AUG 1 2025 · 00:00 · GOLDEN GATE PARK</div>
+    <div class="countdown" id="countdown">--:--:--:--</div>
   </div>
 
   <script>
-    const countdownEl = document.getElementById('countdown');
-    const targetDate = new Date("2025-08-01T00:00:00-07:00"); // PDT
+    const countdownEl = document.getElementById("countdown");
+    const target = new Date("2025-08-01T00:00:00-07:00");
 
-    function updateCountdown() {
+    function update() {
       const now = new Date();
-      const diff = targetDate - now;
+      const diff = target - now;
 
       if (diff <= 0) {
-        countdownEl.textContent = "SHOWTIME!";
+        countdownEl.textContent = "00:00:00:00";
         return;
       }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
 
-      countdownEl.innerHTML =
-        `${days} DAYS<br>` +
-        `${hours.toString().padStart(2, '0')} HOURS<br>` +
-        `${minutes.toString().padStart(2, '0')} MINUTES<br>` +
-        `${seconds.toString().padStart(2, '0')} SECONDS`;
+      countdownEl.textContent = 
+        `${String(d).padStart(2, '0')}:${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    setInterval(update, 1000);
+    update();
   </script>
 </body>
 </html>
