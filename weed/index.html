@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>DEAD & COMPANY — SF COUNTDOWN GD60</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABfUlEQVR4Ae3WwUoDQRRF0a83iCHzE0zgkA7iChFwCFbADxBPQJE0gZ+Q1i7tvPPgllxuRcWf7VVVVVVVV1X5uUEVZghrTiMxjmMkxjNAWM0xjOIZRjOIYBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIUxjOIcBjNMUzTOIcxnvzXgAJZUw3bmAItQAAAABJRU5ErkJggg==">
   <style>
     @font-face {
       font-family: 'OCR-A';
@@ -66,7 +67,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.25;
+      opacity: 0.2;
       mix-blend-mode: screen;
     }
 
@@ -94,9 +95,10 @@
       margin-bottom: 16px;
     }
 
-    .highlight-60 {
+    .countdown-title .highlight-60 {
       color: #ff66ff;
       text-shadow: 0 0 6px #ff66ff, 0 0 12px #ff00ff80;
+      font-size: 120%;
     }
 
     .countdown-timer {
@@ -122,6 +124,11 @@
       font-size: 0.9rem;
       line-height: 1.5;
       color: #66ffcc;
+    }
+
+    .details .highlight-60 {
+      font-size: 110%;
+      color: #ff66ff;
     }
 
     .ticker {
@@ -178,29 +185,27 @@
 </head>
 <body class="matrix-fx">
   <div class="overlay-glitch"></div>
-
   <div class="overlay-anim">
     <img src="IMG_8676.gif" alt="glow effect" />
   </div>
 
-  <!-- Floating Images -->
   <img src="IMG_8687.jpeg" class="floating-img img1" alt="">
   <img src="IMG_8688.jpeg" class="floating-img img2" alt="">
   <img src="IMG_8685.png" class="floating-img img3" alt="">
   <img src="https://images.squarespace-cdn.com/content/v1/58ec362d1e5b6c7fdb744109/1636755660325-K6WPIQGKJ2CY3RALJEK5/deadcochicstage.jpg?format=1500w" class="floating-img img4" alt="">
 
-  <!-- Countdown Box -->
   <div class="countdown-container">
-    <div class="countdown-title">DEAD & COMPANY <span class="highlight-60">GD60</span> — SAN FRANCISCO</div>
+    <div class="countdown-title">
+      DEAD & COMPANY GD<span class="highlight-60">60</span> — SAN FRANCISCO
+    </div>
     <div class="countdown-timer" id="countdown">LOADING</div>
     <div class="time-labels">[DAYS] [HOURS] [MINUTES] [SECONDS]</div>
     <div class="details">
-      DEAD & COMPANY CELEBRATING 60 YEARS OF THE GRATEFUL DEAD’S MUSIC — GOLDEN GATE PARK · <br>
+      DEAD & COMPANY CELEBRATING <span class="highlight-60">60</span> YEARS OF THE GRATEFUL DEAD’S MUSIC — GOLDEN GATE PARK ·<br>
       WITH BILLY STRINGS, STURGILL SIMPSON, TREY, JOHNNY BLUE SKIES
     </div>
   </div>
 
-  <!-- Artist Ticker -->
   <div class="ticker">
     <span style="color:#00ff88">BILLY STRINGS</span>
     <span style="color:#ffaa00"> • STURGILL SIMPSON</span>
@@ -209,7 +214,6 @@
     <span style="color:#ffee00"> • AUGUST 1–3 • GOLDEN GATE PARK • </span>
   </div>
 
-  <!-- Countdown Script -->
   <script>
     const countdownEl = document.getElementById('countdown');
     const targetDate = new Date("2025-08-01T00:00:00-07:00");
