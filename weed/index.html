@@ -18,7 +18,6 @@
     background: var(--bg);
     font-family: var(--font-mono);
     color: var(--main-clr);
-    transition: filter .5s ease;
   }
   body.psychedelic {
     filter: hue-rotate(180deg) saturate(250%) brightness(120%) blur(1px);
@@ -46,14 +45,17 @@
   #scanlines {
     position:absolute; top:0; left:0;
     width:100vw; height:100vh;
-    background:
-      repeating-linear-gradient(0deg,rgba(0,0,0,.15),rgba(0,0,0,.15)1px,transparent1px,transparent2px);
+    background:repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,.15) 0px,
+      rgba(0,0,0,.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
     pointer-events:none; z-index:6; opacity:.4;
     animation: flickerScan 0.2s infinite;
   }
-  @keyframes flickerScan {
-    0%,100%{opacity:.3}50%{opacity:.5}
-  }
+  @keyframes flickerScan {0%,100%{opacity:.3}50%{opacity:.5}}
 
   /* rainbow overlay */
   #rainbow {
@@ -62,9 +64,8 @@
     background: linear-gradient(90deg,
       red,orange,yellow,green,blue,indigo,violet);
     background-size:200% 200%;
-    mix-blend-mode:screen;
-    pointer-events:none; z-index:7;
-    opacity:.1;
+    mix-blend-mode:screen; pointer-events:none;
+    z-index:7; opacity:.1;
     animation: rainbowShift 10s linear infinite;
   }
   @keyframes rainbowShift {
@@ -73,14 +74,25 @@
   }
   body.psychedelic #rainbow { opacity:.3 }
 
-  /* UI */
+  /* HEADER with 3D rainbow text */
   #header {
     position:absolute; top:3vh; width:100%;
-    text-align:center; font-size:4vw;
-    color:var(--accent);
-    text-shadow:0 0 8px var(--accent),0 0 20px var(--accent);
+    text-align:center; font-size:6vw;
+    background:linear-gradient(45deg,
+      #ff0066,#ffcc00,#00ffcc,#6600ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-stroke:1px #000;
+    text-shadow:
+      2px 2px 0 #000,
+      4px 4px 0 rgba(0,0,0,0.5),
+      0 0 8px var(--accent),
+      0 0 20px var(--accent);
     z-index:8; pointer-events:none;
   }
+
+  /* TIMER with oversized 3D gradient */
   #timer-wrap {
     position:absolute; top:40%; left:50%;
     transform:translate(-50%,-50%);
@@ -88,31 +100,50 @@
     z-index:9;
   }
   #main-timer {
-    font-size:16vw; line-height:1;
-    text-align:center; color:var(--accent);
+    font-size:20vw; line-height:1;
+    text-align:center;
+    background: linear-gradient(90deg,
+      #00ffcc,#ff00ff,#ffff00);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-stroke:1px #000;
     text-shadow:
+      3px 3px 0 #000,
+      6px 6px 0 rgba(0,0,0,0.5),
       0 0 12px var(--accent),
       0 0 44px #ffd700;
   }
+
+  /* TICKER with 3D two-tone gradient */
   #ticker-wrap {
     position:absolute; bottom:5vh; left:0;
     width:100vw; overflow:hidden;
     z-index:10; pointer-events:none;
   }
   #ticker {
-    white-space:nowrap; font-size:3.5vw;
-    color:var(--main-clr);
-    text-shadow:0 0 8px var(--main-clr);
+    white-space:nowrap; font-size:5vw;
+    background: linear-gradient(120deg,
+      #ff00ff,#00ffff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-stroke:.5px #000;
+    text-shadow:
+      1px 1px 0 #000,
+      2px 2px 0 rgba(0,0,0,0.5),
+      0 0 8px var(--main-clr);
     will-change:transform;
   }
 </style>
 </head>
 <body>
-  <!-- your two JPEGs -->
+
+  <!-- your custom images -->
   <img class="artlayer" src="IMG_8667.jpeg" alt="">
   <img class="overlay"  src="IMG_8668.jpeg" alt="">
 
-  <!-- layered canvases -->
+  <!-- effect canvases -->
   <canvas id="matrix"></canvas>
   <canvas id="psygeo"></canvas>
   <canvas id="psy2"></canvas>
@@ -134,7 +165,7 @@
       charset:    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789⚡'
     };
 
-    // elements
+    // elements & contexts
     const mC = document.getElementById('matrix'),  m  = mC.getContext('2d');
     const gC = document.getElementById('psygeo'),  g  = gC.getContext('2d');
     const p2 = document.getElementById('psy2'),    p2c= p2.getContext('2d');
@@ -143,7 +174,6 @@
           tk = document.getElementById('ticker');
     let W,H,cols,fz,drops,tx=0;
 
-    // resize handler
     function resize(){
       W = mC.width = gC.width = p2.width = vC.width = innerWidth;
       H = mC.height= gC.height= p2.height= vC.height= innerHeight;
@@ -155,37 +185,32 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // countdown
     function updateTimer(){
       const ms = cfg.deadline - new Date();
-      if(ms<=0){
-        tm.textContent = cfg.doneText; return;
-      }
-      const s   = Math.floor(ms/1000),
-            d   = Math.floor(s/86400),
-            h   = Math.floor((s%86400)/3600),
-            m_  = Math.floor((s%3600)/60),
+      if(ms<=0){ tm.textContent = cfg.doneText; return; }
+      const s= Math.floor(ms/1000),
+            d= Math.floor(s/86400),
+            h= Math.floor((s%86400)/3600),
+            m= Math.floor((s%3600)/60),
             sec = s%60;
-      tm.textContent = [d,h,m_,sec]
+      tm.textContent = [d,h,m,sec]
         .map(n=>String(n).padStart(2,'0')).join(':');
     }
     setInterval(updateTimer,1000);
     updateTimer();
 
-    // Matrix rain
     function drawMatrix(){
       m.fillStyle='rgba(0,0,0,0.05)'; m.fillRect(0,0,W,H);
       m.font=`${fz}px VT323`;
       for(let i=0;i<cols;i++){
-        const ch = cfg.charset.charAt(Math.floor(Math.random()*cfg.charset.length));
-        m.fillStyle = Math.random()>0.97? '#ffec00':'#00ffe8';
+        const ch=cfg.charset.charAt(Math.random()*cfg.charset.length|0);
+        m.fillStyle= Math.random()>0.97? '#ffec00':'#00ffe8';
         m.fillText(ch, i*fz, drops[i]*fz);
         if(drops[i]*fz>H && Math.random()>0.975) drops[i]=0;
         drops[i]++;
       }
     }
 
-    // rotating triangle
     function drawGeo(){
       g.clearRect(0,0,W,H);
       const cx=W/2, cy=H/2, s=W*0.12;
@@ -195,7 +220,7 @@
       g.beginPath();
       for(let i=0;i<3;i++){
         const a=i*(2*Math.PI/3)-Math.PI/2;
-        g.lineTo(Math.cos(a)*s,Math.sin(a)*s);
+        g.lineTo(Math.cos(a)*s, Math.sin(a)*s);
       }
       g.closePath();
       g.lineWidth=5;
@@ -205,7 +230,6 @@
       g.restore();
     }
 
-    // psychedelic shapes + eyes
     function drawPsy2(){
       p2c.clearRect(0,0,W,H);
       // swirling text
@@ -213,8 +237,7 @@
       p2c.font=`${fz*0.6}px VT323`;
       for(let i=0;i<txt.length;i++){
         const ang = performance.now()/1500 + i*(2*Math.PI/txt.length);
-        const x = cx + Math.cos(ang)*R;
-        const y = cy + Math.sin(ang)*R;
+        const x = cx + Math.cos(ang)*R, y = cy + Math.sin(ang)*R;
         p2c.save();
         p2c.translate(x,y);
         p2c.rotate(ang+Math.PI/2);
@@ -222,8 +245,8 @@
         p2c.fillText(txt[i],0,0);
         p2c.restore();
       }
-      // auto-oscillating eyes
-      [0.3,0.7].forEach((f, idx)=>{
+      // eyes
+      [0.3,0.7].forEach((f,idx)=>{
         const ex=cx+(f-0.5)*W*0.4, ey=cy-H*0.2, rad=H*0.05;
         p2c.fillStyle='#fff';
         p2c.beginPath(); p2c.arc(ex,ey,rad,0,2*Math.PI); p2c.fill();
@@ -232,10 +255,10 @@
         p2c.fillStyle='#000';
         p2c.beginPath(); p2c.arc(ix,iy,rad*0.3,0,2*Math.PI); p2c.fill();
       });
-      // random triangles
+      // triangles
       for(let i=0;i<3;i++){
         const x=Math.random()*W, y=Math.random()*H, s=Math.random()*W*0.1+20;
-        p2c.strokeStyle= i%2? '#ffff00':'#ff00ff';
+        p2c.strokeStyle=i%2? '#ffff00':'#ff00ff';
         p2c.lineWidth=2;
         p2c.beginPath();
         p2c.moveTo(x,y);
@@ -246,34 +269,32 @@
       }
     }
 
-    // VHS noise
     function drawVHS(){
       v.clearRect(0,0,W,H);
       const sz=3;
       for(let x=0;x<W;x+=sz)
         for(let y=0;y<H;y+=sz){
-          const v_ = Math.random()*255|0;
-          v.fillStyle=`rgba(${v_},${v_},${v_},${Math.random()*0.07})`;
+          const g_=Math.random()*255|0;
+          v.fillStyle=`rgba(${g_},${g_},${g_},${Math.random()*0.07})`;
           v.fillRect(x,y,sz,sz);
         }
     }
     setInterval(drawVHS,80);
 
-    // main loop + ticker scroll
     function loop(){
       drawMatrix();
       drawGeo();
       drawPsy2();
       tx -= 1.7;
-      const tw = tk.scrollWidth;
+      const tw=tk.scrollWidth;
       if(-tx>tw/2) tx=0;
       tk.style.transform = `translateX(${tx}px)`;
       requestAnimationFrame(loop);
     }
     loop();
 
-    // P key toggles full-screen psych
-    document.addEventListener('keydown', e=>{
+    // P to toggle full psych
+    document.addEventListener('keydown',e=>{
       if(e.key.toLowerCase()==='p')
         document.body.classList.toggle('psychedelic');
     });
