@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>Dead & Company SF Countdown</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- Digital-7 font (Open Font License, close to old-school countdown) -->
+  <!-- Grateful Dead style font -->
+  <link href="https://fonts.cdnfonts.com/css/grateful-dead" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'Digital7';
@@ -23,7 +24,6 @@
       position: relative;
       background: url('2B852B16-4AF0-4479-B279-B5BC8D954C6E.jpeg') center center/cover fixed no-repeat;
     }
-    /* Stealie overlay with a subtle swirl */
     body::after {
       content: '';
       position: fixed;
@@ -31,22 +31,21 @@
       pointer-events: none;
       z-index: 2;
       background: url('https://deadandcompany.com/wp-content/uploads/2022/10/bg-stealie.jpg') center center/cover repeat;
-      opacity: 0.38;
+      opacity: 0.28;
       mix-blend-mode: lighten;
-      animation: swirl 14s linear infinite;
+      animation: swirl 20s linear infinite;
     }
     @keyframes swirl {
       0% { background-position: 0 0; }
-      100% { background-position: 300px 150px; }
+      100% { background-position: 320px 190px; }
     }
-    /* Subtle scanlines and glowing "laser" overlay */
     #scanlines {
       position: fixed;
       inset: 0;
       z-index: 3;
       pointer-events: none;
       mix-blend-mode: lighten;
-      opacity: 0.16;
+      opacity: 0.10;
       background: repeating-linear-gradient(
         to bottom,
         #0f0 0px,
@@ -54,13 +53,12 @@
         transparent 1.3px,
         transparent 3.4px
       );
-      animation: scanmove 7s linear infinite;
+      animation: scanmove 10s linear infinite;
     }
     @keyframes scanmove {
       0% { background-position-y: 0; }
       100% { background-position-y: 120px; }
     }
-    /* Animated sweeping green light */
     #sweep {
       position: fixed;
       inset: 0;
@@ -69,19 +67,17 @@
       opacity: 0.14;
       background: linear-gradient(
         110deg,
-        transparent 40%,
+        transparent 35%,
         #44ff88 51%,
-        transparent 61%
+        transparent 65%
       );
       mix-blend-mode: lighten;
-      animation: sweepLight 4s linear infinite alternate;
+      animation: sweepLight 7s linear infinite alternate;
     }
     @keyframes sweepLight {
       0% { background-position: -80vw 0; }
       100% { background-position: 120vw 0; }
     }
-
-    /* MAIN COUNTDOWN LAYOUT */
     #main {
       position: fixed;
       inset: 0;
@@ -95,17 +91,13 @@
     #countdown {
       font-family: 'Digital7', monospace;
       font-size: clamp(3rem, 16vw, 15rem);
-      color: #85ff7a;
       letter-spacing: 0.09em;
       background: linear-gradient(90deg, #2aff5e 20%, #cfffab 60%, #34ffb7 100%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
       -webkit-text-stroke: 2.5px #0dff4b;
-      text-shadow:
-        0 0 18px #10ff50,
-        0 0 44px #34ffb7,
-        0 2px 10px #000a;
+      text-shadow: 0 0 18px #10ff50, 0 0 44px #34ffb7, 0 2px 10px #000a;
       filter: blur(0.1px) drop-shadow(0 0 36px #12ff6e66);
       transition: font-size 0.2s;
       pointer-events: auto;
@@ -117,81 +109,79 @@
       0%,100% { text-shadow: 0 0 18px #10ff50, 0 0 44px #34ffb7, 0 2px 10px #000a; }
       50% { text-shadow: 0 0 44px #34ffb7, 0 0 80px #00ffbb, 0 3px 22px #000a; }
     }
-    /* Tap/click to show event info */
     #info-toggle {
       pointer-events: auto;
-      font-family: 'Digital7', monospace;
-      font-size: 1.25em;
-      color: #a8ffd6;
-      background: rgba(9,22,12,0.36);
-      border: 2px solid #31ff92;
-      border-radius: 19px;
-      padding: 0.15em 1em 0.19em 1em;
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: 1.3em;
+      color: #fff;
+      background: linear-gradient(90deg, #5dfdf7 10%, #fcff7d 80%);
+      border: none;
+      border-radius: 2em;
+      padding: 0.2em 1.6em 0.28em 1.6em;
       margin-top: 2vw;
-      outline: none;
+      box-shadow: 0 0 16px #34ffb7, 0 0 2px #000;
       cursor: pointer;
-      text-shadow: 0 0 10px #0fa,0 0 2px #fff;
+      text-shadow: 0 0 10px #fff,0 0 2px #000;
       z-index: 100;
-      transition: background 0.13s;
-      user-select: none;
-      opacity: 0.93;
       letter-spacing: 0.11em;
+      transition: background 0.14s, transform 0.09s;
+      user-select: none;
+      opacity: 0.95;
     }
-    #info-toggle:active {
-      background: #112e1a;
-    }
+    #info-toggle:hover { background: linear-gradient(90deg, #fcff7d 0%, #5dfdf7 90%); transform: scale(1.06);}
     #event-info {
       pointer-events: auto;
       opacity: 0;
       max-height: 0;
-      transition: opacity 0.24s,max-height 0.24s;
+      transition: opacity 0.35s,max-height 0.29s,padding 0.23s;
       overflow: hidden;
       margin-top: 1vw;
       text-align: center;
-      width: 92vw;
-      max-width: 690px;
-      border-radius: 1.8vw;
-      background: rgba(10,26,18,0.82);
-      box-shadow: 0 0 20px #0f0c;
+      width: 94vw;
+      max-width: 740px;
+      border-radius: 2.8vw 2.3vw 4vw 2.7vw/2vw 4vw 2vw 4vw;
+      background: radial-gradient(ellipse at 70% 30%, #30ffc2a0 0%, #11341e 90%);
+      box-shadow: 0 0 38px #15ffc780, 0 2px 15px #2228;
       padding: 0 0;
+      filter: blur(0.02px);
     }
     #event-info.show {
       opacity: 1;
-      max-height: 420px;
-      padding: 2vw 2vw 1vw 2vw;
+      max-height: 460px;
+      padding: 2vw 2vw 1.5vw 2vw;
     }
     .headline {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(1.1rem, 3vw, 2.8rem);
-      background: linear-gradient(90deg,#a8ffd6,#faff88,#70fff9 90%);
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(1.5rem, 4vw, 3.4rem);
+      background: linear-gradient(90deg,#ff70fa,#faff88 40%,#70fff9 90%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 1.2px #011;
+      -webkit-text-stroke: 1.3px #011;
       letter-spacing: 0.08em;
-      margin: 0 0 0.1em 0;
-      text-shadow: 0 0 18px #34ffb777, 0 1px 2px #000;
-      padding: 0.11em 0.1em;
+      margin: 0 0 0.13em 0;
+      text-shadow: 0 0 18px #faff8877, 0 1px 2px #000;
+      padding: 0.14em 0.13em;
       user-select: text;
     }
     .subheadline {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(1rem,2vw,2rem);
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(1.1rem,2.3vw,2.5rem);
       color: #fffdcb;
-      margin: 0 0 0.1em 0;
-      letter-spacing: 0.1em;
-      background: linear-gradient(90deg,#fffdcb 70%,#34ffb7 100%);
+      margin: 0 0 0.13em 0;
+      letter-spacing: 0.13em;
+      background: linear-gradient(90deg,#fffdcb 70%,#70fff9 100%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 1px #023;
-      text-shadow: 0 0 14px #affffb66, 0 0 3px #fff;
+      -webkit-text-stroke: 1.1px #023;
+      text-shadow: 0 0 14px #70fff966, 0 0 3px #fff;
     }
     .dates {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(.9rem,1.7vw,1.5rem);
-      color: #a8ffd6;
-      text-shadow: 0 0 8px #00ffd0aa;
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(1rem,1.7vw,2.2rem);
+      color: #fcff7d;
+      text-shadow: 0 0 12px #fcff7d;
       margin-bottom: 0.7em;
       letter-spacing: 0.18em;
     }
@@ -205,42 +195,43 @@
       margin: 1vw 0 0.6vw 0;
     }
     .location-block img {
-      width: clamp(55px,13vw,140px);
+      width: clamp(55px,13vw,150px);
       border-radius: 1vw 2vw 1vw 1vw;
-      box-shadow: 0 0 18px #a8ffd6b0, 0 2px 6px #111a;
+      box-shadow: 0 0 20px #a8ffd6b0, 0 2px 6px #111a;
       background: #fff3;
       mix-blend-mode: lighten;
       margin-right: 1vw;
     }
     .location-block .loc-text {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(.9rem,1.2vw,1.4rem);
-      color: #d4fff0;
-      background: linear-gradient(90deg,#faff88,#34ffb7 90%);
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(1.0rem,1.7vw,2rem);
+      color: #fff;
+      background: linear-gradient(90deg,#fcff7d,#34ffb7 90%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: .7px #0a0354;
-      text-shadow: 0 0 8px #affffb77,0 0 1px #fff,0 1px 4px #0007;
-      border-radius: 0.7vw;
-      padding: 0.1em 0.7em;
-      filter: drop-shadow(0 0 8px #00ffd077);
+      -webkit-text-stroke: 0.9px #0a0354;
+      text-shadow: 0 0 9px #fcff7d77,0 0 1px #fff,0 1px 4px #0007;
+      border-radius: 0.8vw;
+      padding: 0.19em 0.77em;
+      filter: drop-shadow(0 0 7px #00ffd077);
     }
     .guests-section {
       width: 100%;
-      margin: 0.9em auto 0.3em auto;
-      padding: 0.7em 0 0.3em 0;
-      background: linear-gradient(90deg,#193e24c7 60%,#28e66b11 100%);
-      border-radius: 1.5vw;
-      box-shadow: 0 0 9px #2aff5e22;
+      margin: 1.3em auto 0.3em auto;
+      padding: 0.8em 0 0.3em 0;
+      background: radial-gradient(ellipse at 50% 70%, #fcff7d60 0%, #30ffc210 100%);
+      border-radius: 2vw 4vw 2vw 4vw/4vw 2vw 4vw 2vw;
+      box-shadow: 0 0 18px #fcff7d44;
+      border: 2px solid #fcff7d44;
     }
     .guests-section h2 {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(.8rem,2vw,1.3rem);
-      color: #34ffb7;
-      text-shadow: 0 0 8px #00ffd0bb,0 2px 7px #0006;
-      margin: 0 0 .19em 0;
-      letter-spacing: 0.07em;
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(1.2rem,2vw,2.3rem);
+      color: #faff88;
+      text-shadow: 0 0 11px #faff8899,0 2px 7px #0006;
+      margin: 0 0 .25em 0;
+      letter-spacing: 0.12em;
     }
     .guests-days {
       width: 100%;
@@ -250,39 +241,38 @@
       justify-content: space-around;
     }
     .guests-day {
-      flex: 1 1 115px;
-      min-width: 90px;
+      flex: 1 1 140px;
+      min-width: 120px;
       margin: 0.1vw 0.5vw;
       padding: .5vw .7vw;
-      background: linear-gradient(100deg,#a8ffd644 60%,#cafffb22 100%);
-      border-radius: 1vw 2vw 1vw 2vw;
-      box-shadow: 0 0 4px #00ffd044;
+      background: linear-gradient(120deg,#faff8855 60%,#fcff7d22 100%);
+      border-radius: 1.6vw 2vw 1.2vw 2vw;
+      box-shadow: 0 0 6px #faff8844;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: .5px solid #fff2;
+      border: .7px solid #fff2;
     }
     .guests-day h3 {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(.7rem,1.4vw,1rem);
-      color: #a8ffd6;
-      margin: 0 0 .1em 0;
-      text-shadow: 0 0 4px #00ffd044,0 2px 5px #0006;
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(1rem,1.7vw,1.3rem);
+      color: #faff88;
+      margin: 0 0 .14em 0;
+      text-shadow: 0 0 7px #faff8844,0 2px 5px #0006;
       letter-spacing: 0.07em;
     }
     .guests-list {
-      font-family: 'Digital7', monospace;
-      font-size: clamp(.7rem,1vw,.95rem);
+      font-family: 'Grateful Dead', Arial, Helvetica, sans-serif;
+      font-size: clamp(.95rem,1.2vw,1.15rem);
       color: #fff;
       text-align: center;
       line-height: 1.3;
-      text-shadow: 0 0 6px #00ffd044,0 1px 4px #0007;
+      text-shadow: 0 0 6px #faff8844,0 1px 4px #0007;
     }
-    /* Hide scrollbars but still scrollable for mobile */
     ::-webkit-scrollbar { width: 0 !important; background: transparent; }
     @media (max-width: 700px) {
       #countdown { font-size: 2.5rem; }
-      #event-info { font-size: .88em; }
+      #event-info { font-size: .97em; }
     }
     @media (max-width: 400px) {
       .headline { font-size: .7rem; }
