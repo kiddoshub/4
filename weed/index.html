@@ -2,314 +2,359 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dead & Company SF Countdown</title>
+  <title>Dead & Company: Chase Center Countdown</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- Psychedelic Headline Font: Ewert; Labels: Public Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Ewert&family=Public+Sans:wght@700&display=swap" rel="stylesheet">
+  <!-- Psychedelic fluid font + CRT mono font -->
+  <link href="https://fonts.googleapis.com/css2?family=Molle:ital,wght@1,400&family=VT323&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Core Palette */
-      --bg-dark1: #2c003e;
-      --bg-dark2: #004d47;
-      --bg-dark3: #a44200;
-      --lime: #b0f2b4;
-      --magenta: #d40078;
-      --gold: #f9a602;
-      --highlight: #F7F8EA;
-      --label: #fcfcfc;
-      --shadow: #130010cc;
-
-      /* Fonts */
-      --headline: 'Ewert', fantasy, cursive;
-      --label-font: 'Public Sans', Arial Rounded MT Bold, Arial, sans-serif;
+      --dark-bg: #1a001a;
+      --primary-accent: #ff3366;
+      --secondary-accent: #00ff99;
+      --tertiary-accent: #f9a602;
+      --background-gradient1: linear-gradient(120deg, #1a001a 0%, #360052 90%);
+      --background-gradient2: radial-gradient(ellipse at 70% 60%, #ff336633 0%, #00ff9933 40%, #0000 80%);
+      --background-gradient3: linear-gradient(100deg, #00ff99 0%, #f9a602 85%);
+      --countdown-font: 'Molle', cursive;
+      --label-font: 'VT323', monospace;
     }
     html, body {
-      margin: 0; padding: 0;
-      min-height: 100%;
-      width: 100%;
-      box-sizing: border-box;
       height: 100%;
-      overflow-x: hidden;
-      background: radial-gradient(ellipse 80% 100% at 50% 40%, var(--bg-dark1) 0%, var(--bg-dark2) 60%, var(--bg-dark3) 100%);
-      /* Animated background movement */
-      animation: bg-warp 28s ease-in-out infinite alternate;
-      position: relative;
+      margin: 0;
+      padding: 0;
+      background: var(--background-gradient1);
+      overflow: hidden;
     }
-    @keyframes bg-warp {
-      0% {
-        background-position: 50% 40%;
-        filter: hue-rotate(0deg) brightness(1);
-      }
-      100% {
-        background-position: 60% 45%;
-        filter: hue-rotate(-44deg) brightness(1.13);
-      }
-    }
-    /* VHS/CRT Static Overlay */
-    body::after {
-      content: "";
-      pointer-events: none;
-      position: fixed;
-      z-index: 100;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      opacity: 0.23;
-      background: url('https://grainy-gradients.vercel.app/noise.svg');
-      background-size: cover;
-      mix-blend-mode: screen;
-      animation: staticfuzz 1.4s steps(2) infinite;
-    }
-    @keyframes staticfuzz {
-      50% { opacity: 0.13; }
-      100% { opacity: 0.23; }
-    }
-    /* Flex-centered container */
-    .container {
+    body {
       min-height: 100vh;
       width: 100vw;
+      /* Multi-layered animated backgrounds */
+      position: relative;
+      z-index: 0;
+    }
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      will-change: background, opacity;
+      transition: opacity 0.5s;
+    }
+    body::before {
+      background: var(--background-gradient2);
+      opacity: 0.85;
+      animation: bgfloat1 37s linear infinite alternate;
+      background-blend-mode: overlay;
+    }
+    body::after {
+      background: var(--background-gradient3);
+      opacity: 0.18;
+      animation: bgfloat2 70s linear infinite alternate-reverse;
+      background-blend-mode: difference;
+      mix-blend-mode: lighten;
+    }
+    @keyframes bgfloat1 {
+      0% { background-position: 60% 10%; }
+      100% { background-position: 40% 70%; }
+    }
+    @keyframes bgfloat2 {
+      0% { background-position: 80% 10%; }
+      100% { background-position: 12% 80%; }
+    }
+    /* Grid layout: 3x3, center for main */
+    #container {
+      display: grid;
+      grid-template-columns: 1fr 3fr 1fr;
+      grid-template-rows: 1fr 3fr 1fr;
+      height: 100vh; width: 100vw;
+      position: relative;
+      z-index: 2;
+      filter: url(#analog-filter);
+    }
+    #countdown {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center;
+      justify-self: center;
+      background: rgba(26,0,26,0.89);
+      border-radius: 2.3em;
+      box-shadow: 0 6px 44px 0 #000d, 0 1px 6px #ff336622;
+      padding: clamp(1.5em, 5vw, 3.8em) clamp(1.5em, 7vw, 4.2em);
+      min-width: 320px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      position: relative;
       z-index: 3;
-      padding: 3vh 0 10vh 0;
+      position: relative;
+      filter: none;
     }
-    /* Countdown styles */
-    #countdown {
+    .timer-row {
       display: flex;
-      flex-direction: row;
+      gap: clamp(1.1em, 6vw, 2.4em);
       align-items: flex-end;
       justify-content: center;
-      gap: 2vw;
-      background: rgba(20,0,40,0.67);
-      border-radius: 2.5em;
-      box-shadow: 0 8px 36px 0 var(--shadow), 0 0 2px #000b;
-      padding: 3vw 3vw 2vw 3vw;
-      margin-bottom: 1.5em;
-      min-width: 320px;
+      margin-bottom: 0.6em;
       flex-wrap: wrap;
-      position: relative;
     }
-    #countdown > div {
+    .timer-block {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 5ch;
     }
-    #countdown span {
-      font-family: var(--headline);
-      font-size: clamp(2.8rem, 8vw, 5.4rem);
-      line-height: 1;
-      background: linear-gradient(90deg, var(--magenta), var(--gold), var(--lime), var(--bg-dark2));
+    .timer-num {
+      font-family: var(--countdown-font);
+      font-size: clamp(3rem, 11vw, 7rem);
+      background: linear-gradient(90deg, #ff3366, #00ff99, #f9a602, #ff3366 98%);
       background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-fill-color: transparent;
-      filter: drop-shadow(0 3px 12px #0006);
-      animation: text-shine 5.3s linear infinite;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.18em;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: textflow 4s linear infinite;
+      text-shadow: 0 0 25px #ff3366bb, 0 2px 14px #000c;
+      letter-spacing: 0.03em;
+      filter: blur(0.2px);
       user-select: text;
     }
-    @keyframes text-shine {
+    @keyframes textflow {
       to { background-position: 200% center; }
     }
-    #countdown div {
-      color: var(--label);
+    .timer-label {
       font-family: var(--label-font);
-      font-size: 1.09rem;
-      letter-spacing: 0.09em;
-      text-shadow: 0 2px 12px #000b, 0 0 2px var(--gold);
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
+      color: var(--secondary-accent);
+      margin-top: 0.12em;
+      letter-spacing: 0.12em;
+      text-shadow: 0 2px 12px #000c;
     }
-    /* "Dead" Headliner */
-    .headline {
-      font-family: var(--headline);
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      color: var(--gold);
-      letter-spacing: 0.04em;
-      margin-bottom: 0.1em;
-      margin-top: 0.7em;
-      filter: drop-shadow(0 3px 30px var(--magenta)) drop-shadow(0 0 1px #fff);
-      text-shadow: 0 2px 10px #0009;
-      line-height: 1;
-      text-align: center;
-      user-select: none;
-    }
-    .event-detail {
-      font-family: var(--label-font);
-      font-size: 1.06rem;
-      color: var(--highlight);
-      letter-spacing: 0.05em;
-      margin-bottom: 1.8em;
-      text-align: center;
-      opacity: 0.87;
-      text-shadow: 0 1px 7px #1b0040c7;
-    }
-    /* Floating SVG psychedelic shapes */
-    .svg-float {
-      position: absolute;
-      pointer-events: none;
-      z-index: 4;
-    }
-    /* Steal Your Face Skull */
-    .skull {
-      top: 2vh; left: 2vw;
-      width: 64px;
-      opacity: 0.85;
-      animation: float1 16s ease-in-out infinite alternate;
-    }
-    /* Lightning Bolt */
-    .bolt {
-      right: 4vw; top: 7vh;
-      width: 38px;
-      opacity: 0.92;
-      animation: float2 13s linear infinite alternate;
-    }
-    /* Spiral */
-    .spiral {
-      left: 50vw; top: 12vh;
-      width: 44px;
-      opacity: 0.7;
-      animation: float3 21s ease-in-out infinite alternate;
-    }
-    /* All-seeing Eye */
-    .eye {
-      right: 14vw; bottom: 15vh;
-      width: 48px;
-      opacity: 0.84;
-      animation: float4 17s ease-in-out infinite alternate;
-    }
-    /* Wolf silhouette (Jerry nod) */
-    .wolf {
-      left: 7vw; bottom: 7vh;
-      width: 58px;
-      opacity: 0.82;
-      animation: float5 19s ease-in-out infinite alternate;
-    }
-    @keyframes float1 { 0% {transform: translateY(0);} 100% {transform: translateY(38px) scale(1.09);} }
-    @keyframes float2 { 0% {transform: translateY(0);} 100% {transform: translateY(-28px) scale(1.1);} }
-    @keyframes float3 { 0% {transform: translateX(-17vw) rotate(0deg);} 100% {transform: translateX(19vw) rotate(359deg);} }
-    @keyframes float4 { 0% {transform: scale(1) rotate(0deg);} 100% {transform: scale(1.16) rotate(-21deg);} }
-    @keyframes float5 { 0% {transform: translateY(0) scale(1);} 100% {transform: translateY(-14px) scale(1.12);} }
-
-    /* Responsive Adjustments */
-    @media (max-width: 600px) {
-      #countdown {
-        flex-direction: column;
-        padding: 6vw 2vw 3vw 2vw;
-        gap: 0.9em;
-        min-width: unset;
-      }
-      .headline { font-size: 2.1rem; }
-      .skull, .spiral, .bolt, .eye, .wolf { width: 40px !important; }
-    }
-
-    /* Scrolling Marquee Footer */
+    /* Marquee Footer */
     footer {
       position: fixed;
-      left: 0; bottom: 0;
+      left: 0; right: 0; bottom: 0;
       width: 100vw;
-      background: rgba(22,0,24,0.93);
-      z-index: 9999;
-      overflow: hidden;
-      height: 2.6em;
-      border-top: 2px solid var(--magenta);
-      box-shadow: 0 -2px 16px #000c;
+      z-index: 199;
+      height: 2.9em;
+      background: #0f001f;
+      box-shadow: 0 -2px 24px #ff336655;
       display: flex;
       align-items: center;
+      border-top: 2.5px solid #00ff99;
+      overflow: hidden;
+      pointer-events: none;
     }
     .marquee {
+      font-family: var(--label-font);
+      font-size: clamp(1rem, 2.5vw, 1.7rem);
       white-space: nowrap;
-      display: inline-block;
-      padding-left: 100vw;
-      font-family: var(--headline);
-      font-size: 1.2em;
-      letter-spacing: 0.09em;
-      color: var(--lime);
-      text-shadow: 0 0 6px var(--gold), 0 2px 6px #000c;
-      animation: marquee-move 19s linear infinite;
+      color: var(--primary-accent);
+      letter-spacing: 0.18em;
+      text-shadow: 0 2px 14px #f9a602, 0 0 3px #000c;
+      will-change: transform;
+      animation: marquee-move 26s linear infinite;
       user-select: none;
+      padding-left: 100vw;
     }
     @keyframes marquee-move {
       0% { transform: translateX(0);}
       100% { transform: translateX(-100vw);}
     }
+    /* Ghosted 710 Ashbury BG */
+    .ashbury-bg {
+      position: fixed;
+      left: 50%; top: 50%;
+      width: 80vw; max-width: 900px;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -54%) scaleX(-1) skewY(6deg);
+      filter: blur(2.5px) grayscale(1) contrast(1.15);
+      mix-blend-mode: lighten;
+      user-select: none;
+    }
+    /* Foliage animation (Golden Gate Park reference) */
+    .foliage {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.22;
+      filter: blur(0.3px) grayscale(0.5);
+      animation: driftfoliage 39s linear infinite alternate;
+    }
+    .foliage.f2 { left: 12vw; top: 24vh; width: 14vw; animation-duration: 49s;}
+    .foliage.f3 { right: 16vw; bottom: 22vh; width: 11vw; animation-duration: 42s; animation-delay: 10s;}
+    .foliage.f4 { left: 36vw; top: 10vh; width: 18vw; animation-duration: 55s; animation-delay: 5s;}
+    @keyframes driftfoliage {
+      0% { transform: translateY(0px) scale(1) rotate(0deg);}
+      100% { transform: translateY(-60vh) scale(1.18) rotate(24deg);}
+    }
+    /* Captain Trips: hidden/faded backlayer text */
+    .easter-egg {
+      position: fixed;
+      z-index: 0;
+      right: 3vw; bottom: 3vh;
+      font-family: var(--countdown-font);
+      font-size: clamp(2rem, 7vw, 6rem);
+      color: #0f0a16;
+      opacity: 0.02;
+      letter-spacing: 0.18em;
+      pointer-events: none;
+      user-select: none;
+      text-shadow: 0 1px 10px #0f0a16, 0 0 15px #000;
+      animation: tripfade 16s ease-in-out infinite alternate;
+      filter: blur(1.2px) grayscale(1) contrast(2.2);
+      writing-mode: vertical-rl;
+    }
+    @keyframes tripfade {
+      0%, 100% { opacity: 0.01; }
+      50% { opacity: 0.13; }
+    }
+    /* Floating Dead iconography */
+    .float-img {
+      position: absolute;
+      z-index: 9;
+      pointer-events: none;
+      will-change: transform, opacity;
+      opacity: 0.84;
+      filter: drop-shadow(0 1px 6px #000b);
+      transition: opacity 1s;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      #countdown { min-width: 0; padding: 6vw 1.2vw; }
+      .timer-row { gap: 1.2vw; }
+      .ashbury-bg { width: 110vw; }
+    }
+    @media (max-width: 480px) {
+      .timer-row { gap: 0.4em; }
+      #container { grid-template-columns: 1fr 5fr 1fr; }
+      #countdown { padding: 3vw 1vw;}
+    }
   </style>
 </head>
 <body>
-  <!-- Floating SVG icons for Deadhead authenticity -->
-  <!-- Steal Your Face Skull -->
-  <svg class="svg-float skull" viewBox="0 0 64 64" aria-hidden="true">
-    <circle cx="32" cy="32" r="29" fill="#2c003e" stroke="#b0f2b4" stroke-width="3"/>
-    <ellipse cx="32" cy="38" rx="17" ry="12" fill="#fff" stroke="#004d47" stroke-width="2"/>
-    <path d="M26,54 Q32,62 38,54" stroke="#d40078" stroke-width="3" fill="none"/>
-    <polygon points="32,22 36,32 28,32" fill="#d40078"/>
-    <circle cx="27" cy="36" r="3.5" fill="#004d47"/>
-    <circle cx="37" cy="36" r="3.5" fill="#004d47"/>
+  <!-- SVG analog video distortion filter -->
+  <svg style="display:none;">
+    <filter id="analog-filter">
+      <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.013 0.08" numOctaves="3" seed="5" result="turb"/>
+      <feDisplacementMap in2="turb" in="SourceGraphic" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur stdDeviation="0.9"/>
+    </filter>
   </svg>
-  <!-- Lightning Bolt -->
-  <svg class="svg-float bolt" viewBox="0 0 32 64" aria-hidden="true">
-    <polyline points="16,2 27,27 20,27 31,62 6,32 13,32 2,2" fill="none" stroke="#f9a602" stroke-width="4"/>
-  </svg>
-  <!-- Psychedelic Spiral -->
-  <svg class="svg-float spiral" viewBox="0 0 44 44" aria-hidden="true">
-    <path d="M22,22 m-18,0 a18,18 0 1,0 36,0 a18,18 0 1,0 -36,0"
-      fill="none" stroke="#d40078" stroke-width="2"/>
-    <path d="M22,22 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0"
-      fill="none" stroke="#b0f2b4" stroke-width="2"/>
-  </svg>
-  <!-- All-seeing Eye -->
-  <svg class="svg-float eye" viewBox="0 0 48 32" aria-hidden="true">
-    <ellipse cx="24" cy="16" rx="22" ry="13" fill="#2c003e" stroke="#b0f2b4" stroke-width="2"/>
-    <ellipse cx="24" cy="16" rx="10" ry="7" fill="#f9a602" stroke="#d40078" stroke-width="2"/>
-    <circle cx="24" cy="16" r="4" fill="#004d47"/>
-  </svg>
-  <!-- Wolf silhouette (Jerry Garcia) -->
-  <svg class="svg-float wolf" viewBox="0 0 58 36" aria-hidden="true">
-    <path d="M7,28 Q17,6 22,15 Q23,7 31,7 Q38,8 39,16 Q41,12 50,15 Q55,18 57,27 Q56,34 48,29 Q41,32 32,30 Q20,36 7,28 Z"
-      fill="#004d47" stroke="#b0f2b4" stroke-width="1.5"/>
-  </svg>
-
-  <div class="container">
-    <div class="headline">
-      Dead & Company <br>San Francisco Countdown
-    </div>
-    <div class="event-detail">
-      Oracle Park • August 1, 2025 • 7:00pm PT
-    </div>
-    <!-- COUNTDOWN -->
+  <!-- Ghosted 710 Ashbury background (replace with real Dead house silhouette PNG/SVG) -->
+  <img class="ashbury-bg" src="https://upload.wikimedia.org/wikipedia/commons/2/25/710_Ashbury_Street_San_Francisco.jpg" alt="710 Ashbury St. silhouette">
+  <!-- Foliage overlays (replace with transparent PNG/SVG silhouettes of ferns, eucalyptus) -->
+  <img class="foliage f2" src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Eucalyptus_branch.png" alt="Eucalyptus">
+  <img class="foliage f3" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Fern_pteridophyta_leaf_silhouette.png" alt="Fern">
+  <img class="foliage f4" src="https://upload.wikimedia.org/wikipedia/commons/0/03/Fern_leaf.png" alt="Fern">
+  <!-- Easter egg text -->
+  <span class="easter-egg">Captain Trips</span>
+  <!-- Main grid and timer -->
+  <main id="container">
     <div id="countdown">
-      <div><span id="days">00</span> DAYS</div>
-      <div><span id="hours">00</span> HOURS</div>
-      <div><span id="minutes">00</span> MINS</div>
-      <div><span id="seconds">00</span> SECS</div>
+      <div class="timer-row">
+        <div class="timer-block">
+          <span id="days" class="timer-num">00</span>
+          <span class="timer-label">DAYS</span>
+        </div>
+        <div class="timer-block">
+          <span id="hours" class="timer-num">00</span>
+          <span class="timer-label">HOURS</span>
+        </div>
+        <div class="timer-block">
+          <span id="minutes" class="timer-num">00</span>
+          <span class="timer-label">MINS</span>
+        </div>
+        <div class="timer-block">
+          <span id="seconds" class="timer-num">00</span>
+          <span class="timer-label">SECS</span>
+        </div>
+      </div>
+      <!-- Below can add Deadhead-isms, or next show details if desired -->
     </div>
-  </div>
+  </main>
   <footer>
     <div class="marquee">
-      Dead & Company ◆ Featuring special guest Billy Strings ◆ San Francisco, CA ◆ August 1, 2025 ◆ No Tour Like a Dead Tour ◆
+      DEAD & COMPANY ◆ CHASE CENTER ◆ SAN FRANCISCO, CA ◆ FEAT. BILLY STRINGS ◆ AUGUST 1, 2025 ◆ ONCE IN A LIFETIME ◆
     </div>
   </footer>
   <script>
-    // Set the event time in UTC for Aug 1, 2025, 7PM PT (Pacific Time)
-    const targetDate = new Date('2025-08-02T02:00:00Z'); // Correct: UTC time for 7PM PT
+    // Dynamic analog filter: animate feTurbulence for true video distortion
+    (function animateTurb(){
+      const turb = document.getElementById('turb');
+      let frame = 0;
+      function step() {
+        frame++;
+        // Animate frequency slightly on both axes
+        const freqX = 0.013 + 0.003*Math.sin(frame/45);
+        const freqY = 0.08 + 0.015*Math.cos(frame/67);
+        turb.setAttribute('baseFrequency', freqX + ' ' + freqY);
+        requestAnimationFrame(step);
+      }
+      if (turb) step();
+    })();
+
+    // Countdown Timer: Dead accurate to Aug 1, 2025, 7PM PT
+    const targetDate = new Date('2025-08-02T02:00:00Z');
+    function pad(n) { return n.toString().padStart(2, '0'); }
     function updateCountdown() {
       const now = new Date();
       let diff = targetDate - now;
       if (diff < 0) diff = 0;
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
-      document.getElementById('days').textContent = String(d).padStart(2, '0');
-      document.getElementById('hours').textContent = String(h).padStart(2, '0');
-      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
-      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+      document.getElementById('days').textContent = pad(d);
+      document.getElementById('hours').textContent = pad(h);
+      document.getElementById('minutes').textContent = pad(m);
+      document.getElementById('seconds').textContent = pad(s);
     }
-    updateCountdown();
     setInterval(updateCountdown, 1000);
-  </script>
-</body>
-</html>
+    updateCountdown();
+
+    // Authentic Dead iconography asset URLs (replace all with your official PNG/SVGs)
+    const authenticImages = [
+      // Steal Your Face (SVG or PNG, transparent)
+      'https://upload.wikimedia.org/wikipedia/commons/f/f3/StealYourFace.svg',
+      // Dancing Bears (use official vector or transparent PNGs in real site)
+      'https://www.dead.net/sites/g/files/g2000007856/files/media/2016/06/bear-blue.png',
+      'https://www.dead.net/sites/g/files/g2000007856/files/media/2016/06/bear-green.png',
+      // 13-point lightning bolt
+      'https://upload.wikimedia.org/wikipedia/commons/8/8a/Grateful_Dead_lightning_bolt.svg',
+      // Jerry handprint logo (replace with higher-res transparent PNG if possible)
+      'https://upload.wikimedia.org/wikipedia/commons/5/58/Jerry_Handprint.png',
+      // Wolf guitar inlay (replace with transparent PNG of Wolf inlay, sample only)
+      'https://i.imgur.com/jWIeO6E.png',
+      // Roses
+      'https://upload.wikimedia.org/wikipedia/commons/a/ac/Rose_icon.png'
+    ];
+    // Generate floating Dead assets: random pos, duration, etc.
+    function spawnDeadIcons() {
+      const N = 13; // Number of floating elements
+      for(let i=0;i<N;i++) {
+        const src = authenticImages[Math.floor(Math.random()*authenticImages.length)];
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'float-img';
+        // Random starting pos in one of 9 grid sectors (avoid main center)
+        const x = Math.random()*88 + 3; // vw
+        const y = Math.random()*70 + 8; // vh
+        img.style.left = x+'vw';
+        img.style.top = y+'vh';
+        // Size and duration random
+        const size = Math.round(Math.random()*6 + 4.2)*2.6; // vw
+        img.style.width = size+'vw';
+        const dur = (Math.random()*24 + 22).toFixed(1); // 22-46s
+        // Drift path randomization: unique per element
+        const drift = Math.random() > 0.5 ? 'driftA' : 'driftB';
+        img.style.animation = `${drift} ${dur}s linear infinite alternate`;
+        document.body.appendChild(img);
+      }
+    }
+    // Keyframes via JS for more variability
+    const driftStyle = document.createElement('style');
+    driftStyle.innerHTML = `
+    @keyframes driftA {
+      0% { transform: translateY(0) rotate(0deg) scale(1);}
+      100% { transform: translateY(-18vh) rotate(
