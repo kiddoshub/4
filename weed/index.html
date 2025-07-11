@@ -2,95 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DEAD & CO // SF COUNTDOWN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DEAD & COMPANY COUNTDOWN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body {
+    @font-face {
+      font-family: 'OCR-A';
+      src: url('OCR-a___.ttf') format('truetype');
+    }
+
+    body {
       margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
+      background: url('IMG_8667.jpeg') center center / cover no-repeat fixed;
+      color: #ff4dff;
+      font-family: 'OCR-A', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Courier New', monospace;
-    }
-
-    .skull-container {
-      width: 300px;
-      height: 400px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      clip-path: url(#skullPath);
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
+      background-color: black;
       text-align: center;
-      animation: glow 5s linear infinite;
-      box-shadow:
-        0 0 15px #ff00cc,
-        0 0 30px #00ffff,
-        0 0 45px #ffff00,
-        0 0 60px #ff00cc;
+      overflow: hidden;
     }
 
-    .countdown-text {
-      font-size: 1.8rem;
-      color: white;
-      z-index: 2;
-      text-shadow: 0 0 5px #fff, 0 0 15px #fff;
-    }
-
-    @keyframes glow {
-      0% { box-shadow: 0 0 15px #ff0000, 0 0 30px #00ffcc; }
-      33% { box-shadow: 0 0 20px #ffcc00, 0 0 40px #00ffff; }
-      66% { box-shadow: 0 0 25px #ff00ff, 0 0 50px #00ff00; }
-      100% { box-shadow: 0 0 15px #ff0000, 0 0 30px #00ffcc; }
-    }
-
-    /* Optional floating image style */
-    .floating-img {
+    .overlay {
       position: absolute;
-      width: 80px;
-      animation: float 6s ease-in-out infinite;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1;
       pointer-events: none;
     }
 
+    .countdown-container {
+      position: relative;
+      z-index: 2;
+      padding: 25px 35px;
+      border: 3px solid #00ffff;
+      border-radius: 50px;
+      background: rgba(0, 0, 0, 0.6);
+      box-shadow: 
+        0 0 20px #ff00ff,
+        0 0 30px #00ffff,
+        0 0 40px #ffff00;
+      backdrop-filter: blur(3px);
+    }
+
+    .headline {
+      font-size: 1.3rem;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    .countdown {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      line-height: 1.6;
+      color: #ff4dff;
+      text-shadow: 0 0 10px #ff4dff, 0 0 15px #ff4dff;
+    }
+
+    /* Floating image slot */
+    .floating {
+      position: absolute;
+      width: 80px;
+      animation: float 8s ease-in-out infinite;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .floating.jerry {
+      top: 10%;
+      left: 5%;
+      animation-delay: 1s;
+    }
+
+    .floating.stealie {
+      bottom: 10%;
+      right: 5%;
+      animation-delay: 3s;
+    }
+
     @keyframes float {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(3deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    @media (max-width: 600px) {
+      .countdown {
+        font-size: 2.2rem;
+      }
+
+      .headline {
+        font-size: 1rem;
+      }
+
+      .floating {
+        width: 50px;
+      }
     }
   </style>
 </head>
 <body>
-  <svg width="0" height="0">
-    <defs>
-      <clipPath id="skullPath" clipPathUnits="objectBoundingBox">
-        <!-- Simplified skull silhouette (adjusted for scale) -->
-        <path d="M0.5,0.05 C0.25,0.1, 0.1,0.35, 0.1,0.6 C0.1,0.8, 0.2,0.95, 0.3,0.98 C0.32,1, 0.38,0.95, 0.42,0.9 
-                 C0.45,0.87, 0.55,0.87, 0.58,0.9 C0.62,0.95, 0.68,1, 0.7,0.98 C0.8,0.95, 0.9,0.8, 0.9,0.6 
-                 C0.9,0.35, 0.75,0.1, 0.5,0.05 Z" />
-      </clipPath>
-    </defs>
-  </svg>
+  <div class="overlay"></div>
 
-  <div class="skull-container">
-    <div class="countdown-text" id="countdown">--:--:--:--</div>
+  <!-- Floating Images -->
+  <img src="stealie.png" class="floating stealie" alt="Stealie">
+  <img src="jerry.png" class="floating jerry" alt="Jerry">
+
+  <div class="countdown-container">
+    <div class="headline">DEAD & COMPANY · SAN FRANCISCO</div>
+    <div class="countdown" id="countdown">Loading...</div>
   </div>
 
   <script>
-    const countdownEl = document.getElementById("countdown");
-    const target = new Date("2025-08-01T00:00:00-07:00");
+    const countdownEl = document.getElementById('countdown');
+    const targetDate = new Date("2025-08-01T00:00:00-07:00");
 
     function updateCountdown() {
       const now = new Date();
-      const diff = target - now;
+      const diff = targetDate - now;
 
       if (diff <= 0) {
-        countdownEl.textContent = "00:00:00:00";
+        countdownEl.textContent = "SHOWTIME!";
         return;
       }
 
@@ -99,15 +135,15 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdownEl.textContent =
-        `${String(days).padStart(2, '0')}d :
-         ${String(hours).padStart(2, '0')}h :
-         ${String(minutes).padStart(2, '0')}m :
-         ${String(seconds).padStart(2, '0')}s`;
+      countdownEl.innerHTML =
+        `${days} DAYS<br>` +
+        `${hours.toString().padStart(2, '0')} HOURS<br>` +
+        `${minutes.toString().padStart(2, '0')} MINUTES<br>` +
+        `${seconds.toString().padStart(2, '0')} SECONDS`;
     }
 
-    setInterval(updateCountdown, 1000);
     updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
