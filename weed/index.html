@@ -2,144 +2,564 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Grateful Dead SF 2025</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Russo+One&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <title>Grateful Dead Countdown - 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    html, body {
+    :root {
+      --glow-color: #ff66cc;
+      --text-color: #f0f0f0;
+      --shadow-color: #ff66cc;
+    }
+
+    body {
       margin: 0;
       overflow: hidden;
-      background: black;
+      background: #000;
+      color: var(--text-color);
+      font-family: 'Londrina Solid', sans-serif;
     }
+
     canvas {
+      display: block;
+    }
+
+    #overlay {
       position: absolute;
       top: 0;
       left: 0;
-      display: block;
-    }
-    #overlay {
-      position: absolute;
-      top: 5%;
       width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5vh 0;
       text-align: center;
       pointer-events: none;
-      mix-blend-mode: lighten;
       z-index: 10;
     }
+
     .title {
-      font-family: 'Russo One', sans-serif;
-      font-size: 4vw;
-      color: #39ff14;
-      text-shadow: 0 0 12px #39ff14;
+      font-size: clamp(24px, 5vw, 60px);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--glow-color);
+      text-shadow: 0 0 8px var(--shadow-color), 0 0 20px var(--shadow-color), 0 0 40px var(--shadow-color);
+      animation: pulse 4s infinite alternate;
     }
-    .countdown {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 6vw;
+
+    .footer-text {
+      font-size: clamp(12px, 1.5vw, 18px);
+      font-weight: 300;
+      color: var(--text-color);
+      text-shadow: 0 0 5px #000;
+    }
+    
+    #play-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: clamp(20px, 4vw, 40px);
+        color: white;
+        text-shadow: 0 0 10px black;
+        pointer-events: all;
+        cursor: pointer;
+        padding: 1em 2em;
+        border: 2px solid white;
+        border-radius: 10px;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    /* --- Flip Clock Countdown CSS --- */
+    .countdown-container {
+      display: flex;
+      gap: 2vw;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2vh;
+    }
+
+    .clock-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-unit {
+      font-size: clamp(12px, 2vw, 20px);
+      font-weight: 300;
+      color: var(--text-color);
+      margin-top: 1vh;
+      text-transform: uppercase;
+    }
+
+    .flip-card {
+      display: inline-flex;
+      flex-direction: column;
+      position: relative;
+      width: clamp(40px, 8vw, 100px);
+      height: clamp(60px, 12vw, 150px);
+      font-size: clamp(40px, 9vw, 120px);
+      font-weight: 400;
+      line-height: 1;
+      border-radius: 8px;
+      background: #111;
       color: #00ffff;
-      margin-top: 1vw;
-      text-shadow: 0 0 14px #00ffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.7), 0 0 10px var(--glow-color);
     }
-    .artist {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.8vw;
-      color: #ff66cc;
-      margin-top: 1vw;
-      text-shadow: 0 0 8px #ff66cc;
+
+    .top, .bottom, .flip-card .top-flip, .flip-card .bottom-flip {
+      height: 50%;
+      width: 100%;
+      overflow: hidden;
+      position: absolute;
+      backface-visibility: hidden; /* Fixes flickering in Chrome */
+    }
+
+    .top, .top-flip {
+      top: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom: 1px solid #000;
+    }
+    
+    .bottom, .bottom-flip {
+      bottom: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    
+    .top-flip {
+      background: #222;
+      color: #00ffff;
+      transform-origin: bottom;
+      transform: rotateX(0deg);
+      z-index: 2;
+    }
+
+    .flip-card.flipping .top-flip {
+      animation: flip-top 0.5s ease-in forwards;
+    }
+    
+    .bottom-flip {
+      background: #222;
+      color: #00ffff;
+      transform-origin: top;
+      transform: rotateX(90deg);
+      z-index: 2;
+    }
+
+    .flip-card.flipping .bottom-flip {
+      animation: flip-bottom 0.5s ease-out 0.5s forwards;
+    }
+    
+    @keyframes pulse {
+      from { text-shadow: 0 0 8px var(--shadow-color), 0 0 20px var(--shadow-color), 0 0 40px var(--shadow-color); }
+      to { text-shadow: 0 0 12px var(--shadow-color), 0 0 30px var(--shadow-color), 0 0 60px var(--shadow-color); }
+    }
+
+    @keyframes flip-top {
+      to { transform: rotateX(-90deg); }
+    }
+
+    @keyframes flip-bottom {
+      to { transform: rotateX(0deg); }
     }
   </style>
 </head>
 <body>
   <div id="overlay">
-    <div class="title">GRATEFUL DEAD SF 2025</div>
-    <div class="countdown" id="countdown">000d 00h 00m 00s</div>
-    <div class="artist" id="artist">Loading…</div>
+    <div class="header">
+      <div class="title">GRATEFUL DEAD - SF 2025</div>
+    </div>
+
+    <div class="countdown-container" id="countdown">
+      </div>
+
+    <div class="footer">
+      <div class="footer-text">Music makes the world go 'round</div>
+    </div>
   </div>
 
-  <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+  <div id="play-message">Click to Begin the Trip</div>
+  
+  <audio id="audio" src="https://assets.codepen.io/225363/boxcat-games-epic-song.mp3" loop></audio>
 
-    camera.position.set(0, 4, 12);
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+      }
+    }
+  </script>
 
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 10, 7);
-    scene.add(light);
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+    import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+    import { gsap } from "https://unpkg.com/gsap@3.12.5/index.js";
 
-    const loader = new THREE.TextureLoader();
+    // --- EMBEDDED ASSETS (Self-contained) ------------------------------------
+    
+    // Base64 encoded tie-dye texture for our 3D objects
+    const tieDyeTextureURL = 'data:image/jpeg;base64,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';
 
-    // Load pyramid texture from your first image
-    const pyramidTexture = loader.load('IMG_8667.jpeg');
+    // Base64 encoded space/nebula texture for the skybox
+    const skyTextureURL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBIVFRUVFRUVFRUVFRUVFRcVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBEQACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAADAAECBAUGBwj/xABFEAABAwIDBQUFBgQEBQUBAAABAAIDBBEFEiEGMUETIlFhcZEHMoGhscEVI0JScuEzYnOCg5KissLwFUNEg7PT0yU1RVST/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QALhEBAQEAAgIBAgQFAgcAAAAAAAECERIhAzFBUXEEEyIyYXEUM4GhscHwM9HhUv/aAAwDAQACEQMRAD8A8qREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQ-9k=';
 
-    // Load sky texture from your second image
-    loader.load('IMG_8668.jpeg', function(tex) {
-      const rt = new THREE.WebGLCubeRenderTarget(tex.image.height);
-      rt.fromEquirectangularTexture(renderer, tex);
-      scene.background = rt.texture;
-    });
+    // Base64 encoded SVG for the Grateful Dead 13-point lightning bolt
+    const lightningBoltSVG_URL = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NSA2NSI+PHBvbHlnb24gZmlsbD0iI2ZmZmZmZiIgcG9pbnRzPSIyMyAwIDEzIDMwIDIzIDMwIDExIDQ1IDIzIDQxIDIwIDY1IDMyIDMyIDIyIDM2IDM0IDIwIDIzIDMwIi8+PC9zdmc+`;
 
-    // Build step pyramid
-    const pyramid = new THREE.Group();
-    const steps = 9;
-    const baseSize = 10;
-    const height = 5;
-    const stepHeight = height / steps;
 
-    for (let i = 0; i < steps; i++) {
-      const size = baseSize * (1 - i / steps);
-      const geometry = new THREE.BoxGeometry(size, stepHeight, size);
-      const material = new THREE.MeshStandardMaterial({ map: pyramidTexture });
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.y = i * stepHeight;
-      pyramid.add(mesh);
+    // --- GLOBAL VARIABLES --------------------------------------------------
+    let scene, camera, renderer, controls, composer;
+    let audio, analyser;
+    let lightningBolt, particleSystem;
+    
+    // Countdown Target Date
+    const countdownTargetDate = new Date("July 27, 2025 20:00:00").getTime();
+
+    // --- INITIALIZATION ----------------------------------------------------
+    function init() {
+      // Basic Scene Setup
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 15;
+      
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      document.body.appendChild(renderer.domElement);
+
+      // Orbit Controls to allow user interaction
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.minDistance = 5;
+      controls.maxDistance = 50;
+      controls.enablePan = false;
+
+      // Textures
+      const textureLoader = new THREE.TextureLoader();
+      const tieDyeTexture = textureLoader.load(tieDyeTextureURL);
+      tieDyeTexture.wrapS = THREE.RepeatWrapping;
+      tieDyeTexture.wrapT = THREE.RepeatWrapping;
+
+      const skyTexture = textureLoader.load(skyTextureURL);
+      skyTexture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.background = skyTexture;
+      scene.environment = skyTexture;
+
+      // --- 3D OBJECTS ------------------------------------------------------
+
+      // Create the Lightning Bolt from SVG
+      createLightningBolt(tieDyeTexture);
+
+      // Create the Particle System
+      createParticleSystem();
+      
+      // --- POST-PROCESSING (Glow and Custom Shader) -----------------------
+      setupPostProcessing();
+
+      // --- EVENT LISTENERS -------------------------------------------------
+      window.addEventListener('resize', onWindowResize, false);
+      
+      // Audio setup requires user interaction to start
+      const playMessage = document.getElementById('play-message');
+      playMessage.addEventListener('click', startAudio, { once: true });
+
+      // --- COUNTDOWN SETUP ------------------------------------------------
+      createFlipClock();
+      setInterval(updateCountdown, 1000);
+      updateCountdown(); // Initial call
     }
 
-    pyramid.position.y = -height / 2;
-    scene.add(pyramid);
+    // --- AUDIO SETUP ("Plugin") --------------------------------------------
+    function startAudio() {
+        document.getElementById('play-message').style.display = 'none';
+        
+        const listener = new THREE.AudioListener();
+        camera.add(listener);
 
-    // Animate rotation
-    gsap.to(pyramid.rotation, {
-      y: "+=6.2831",
-      duration: 90,
-      repeat: -1,
-      ease: "none"
-    });
+        audio = new THREE.Audio(listener);
+        const audioElement = document.getElementById('audio');
+        audio.setMediaElementSource(audioElement);
+        audioElement.play();
 
-    // Countdown logic
-    const countdownElement = document.getElementById('countdown');
-    const artistElement = document.getElementById('artist');
-    const showDate = new Date("2025-08-01T16:00:00Z");
-
-    function updateCountdown() {
-      const now = new Date();
-      const diff = showDate - now;
-      const d = String(Math.floor(diff / 86400000)).padStart(3, '0');
-      const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-      const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-      const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-      countdownElement.textContent = `${d}d ${h}h ${m}m ${s}s`;
-
-      let artist = "Stay Tuned";
-      if (now < new Date("2025-08-01T23:59:59Z")) artist = "Billy Strings";
-      else if (now < new Date("2025-08-02T23:59:59Z")) artist = "Johnny Blue Skies";
-      else if (now < new Date("2025-08-03T23:59:59Z")) artist = "Trey Anastasio Band";
-      else artist = "Show Complete";
-
-      artistElement.textContent = `NEXT: ${artist}`;
+        // Audio Analyser for visualization
+        analyser = new THREE.AudioAnalyser(audio, 32); // FFT size (frequency bands)
     }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    // --- 3D OBJECT CREATION FUNCTIONS --------------------------------------
+    function createLightningBolt(texture) {
+        const material = new THREE.MeshStandardMaterial({
+            map: texture,
+            metalness: 0.8,
+            roughness: 0.4,
+            side: THREE.DoubleSide
+        });
 
-    // Start render loop
+        const svgLoader = new SVGLoader();
+        svgLoader.load(lightningBoltSVG_URL, function (data) {
+            const paths = data.paths;
+            const group = new THREE.Group();
+            group.scale.multiplyScalar(0.1);
+            group.position.x = -2.2;
+            group.position.y = -3.2;
+
+            for (let i = 0; i < paths.length; i++) {
+                const path = paths[i];
+                const shapes = SVGLoader.createShapes(path);
+                for (let j = 0; j < shapes.length; j++) {
+                    const shape = shapes[j];
+                    const extrudeSettings = { depth: 20, bevelEnabled: true, bevelThickness: 2, bevelSize: 1, bevelSegments: 2 };
+                    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+                    const mesh = new THREE.Mesh(geometry, material);
+                    group.add(mesh);
+                }
+            }
+            lightningBolt = group;
+            scene.add(lightningBolt);
+        });
+    }
+
+    function createParticleSystem() {
+        const particleCount = 5000;
+        const particles = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const color = new THREE.Color();
+
+        for (let i = 0; i < particles.length; i += 3) {
+            const radius = 20 + Math.random() * 40;
+            const theta = THREE.MathUtils.randFloatSpread(360); 
+            const phi = THREE.MathUtils.randFloatSpread(360); 
+            
+            particles[i] = radius * Math.sin(theta) * Math.cos(phi);
+            particles[i+1] = radius * Math.sin(theta) * Math.sin(phi);
+            particles[i+2] = radius * Math.cos(theta);
+            
+            // Assign a psychedelic color
+            color.setHSL(Math.random(), 0.7, 0.6);
+            colors[i] = color.r;
+            colors[i+1] = color.g;
+            colors[i+2] = color.b;
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const material = new THREE.PointsMaterial({
+            size: 0.2,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.8
+        });
+
+        particleSystem = new THREE.Points(geometry, material);
+        scene.add(particleSystem);
+    }
+    
+    // --- POST-PROCESSING SETUP ---------------------------------------------
+    function setupPostProcessing() {
+        composer = new EffectComposer(renderer);
+        composer.addPass(new RenderPass(scene, camera));
+
+        // Glow effect
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.0, 0.4, 0.85);
+        composer.addPass(bloomPass);
+
+        // Custom Psychedelic Vignette Shader ("Plugin")
+        const PsychedelicVignetteShader = {
+            uniforms: {
+                'tDiffuse': { value: null },
+                'time': { value: 0.0 },
+                'strength': { value: 0.0 }
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform float time;
+                uniform float strength;
+                varying vec2 vUv;
+                
+                void main() {
+                    vec4 color = texture2D(tDiffuse, vUv);
+                    vec2 center = vec2(0.5, 0.5);
+                    float dist = distance(vUv, center);
+                    
+                    // Create a pulsating, color-shifting vignette
+                    float vignette = smoothstep(0.8, 0.3, dist);
+                    vec3 psychedelicColor = vec3(
+                        0.5 + 0.5 * sin(time * 0.5 + vUv.x * 5.0),
+                        0.5 + 0.5 * sin(time * 0.4 + vUv.y * 5.0),
+                        0.5 + 0.5 * cos(time * 0.6)
+                    );
+                    
+                    color.rgb = mix(color.rgb, psychedelicColor, (1.0 - vignette) * 0.5 * strength);
+                    gl_FragColor = color;
+                }
+            `
+        };
+        const shaderPass = new ShaderPass(PsychedelicVignetteShader);
+        composer.addPass(shaderPass);
+    }
+
+    // --- ANIMATION LOOP ----------------------------------------------------
     function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+        controls.update();
+
+        const time = Date.now() * 0.0005;
+
+        // Animate particle system
+        if (particleSystem) {
+            particleSystem.rotation.y = time * 0.1;
+            particleSystem.rotation.x = time * 0.05;
+        }
+
+        // Animate lightning bolt
+        if (lightningBolt) {
+            lightningBolt.rotation.y = time * 0.3;
+        }
+
+        // Audio visualization logic
+        if (analyser) {
+            const freq = analyser.getAverageFrequency();
+            const normalizedFreq = freq / 128; // Normalize based on 0-255 range
+
+            // Pulse the lightning bolt scale
+            if (lightningBolt) {
+                const targetScale = 1 + normalizedFreq * 0.5;
+                gsap.to(lightningBolt.scale, {
+                    x: targetScale,
+                    y: targetScale,
+                    z: targetScale,
+                    duration: 0.1
+                });
+            }
+            
+            // Pulse the custom shader effect strength
+            const shaderPass = composer.passes[2]; // Our custom shader is the third pass
+            if(shaderPass) {
+                shaderPass.uniforms.time.value = time * 5.0;
+                shaderPass.uniforms.strength.value = gsap.utils.interpolate(
+                    shaderPass.uniforms.strength.value,
+                    normalizedFreq * 2.0,
+                    0.1
+                );
+            }
+        }
+        
+        composer.render();
     }
+
+    // --- COUNTDOWN LOGIC (Flip Clock) --------------------------------------
+    function createFlipClock() {
+        const countdownElement = document.getElementById('countdown');
+        countdownElement.innerHTML = `
+            ${createTimeUnit('days')}
+            ${createTimeUnit('hours')}
+            ${createTimeUnit('minutes')}
+            ${createTimeUnit('seconds')}
+        `;
+    }
+
+    function createTimeUnit(label) {
+        return `
+            <div class="clock-group">
+                <div class="flip-card" id="${label}">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-flip">00</div>
+                    <div class="bottom-flip">00</div>
+                </div>
+                <div class="time-unit">${label}</div>
+            </div>
+        `;
+    }
+
+    let lastTime = {};
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = countdownTargetDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        const time = { days, hours, minutes, seconds };
+        
+        if (distance < 0) {
+            // Handle countdown finished
+            document.getElementById('countdown').innerHTML = "<div class='title'>The Golden Road!</div>";
+            return;
+        }
+
+        for (const unit in time) {
+            if (!lastTime[unit] || time[unit] !== lastTime[unit]) {
+                flip(document.getElementById(unit), time[unit]);
+                lastTime[unit] = time[unit];
+            }
+        }
+    }
+
+    function flip(flipCard, newNumber) {
+        const topHalf = flipCard.querySelector('.top');
+        const bottomHalf = flipCard.querySelector('.bottom');
+        const topFlip = flipCard.querySelector('.top-flip');
+        const bottomFlip = flipCard.querySelector('.bottom-flip');
+        
+        const currentNumber = parseInt(topHalf.textContent);
+        if (newNumber === currentNumber) return;
+
+        const numStr = String(newNumber).padStart(2, '0');
+        const oldNumStr = String(currentNumber).padStart(2, '0');
+        
+        topFlip.textContent = oldNumStr;
+        bottomFlip.textContent = numStr;
+        
+        flipCard.classList.add('flipping');
+        
+        topFlip.addEventListener('animationend', () => {
+            topHalf.textContent = numStr;
+            bottomHalf.textContent = numStr;
+            flipCard.classList.remove('flipping');
+        }, { once: true });
+    }
+
+    // --- UTILITY FUNCTIONS -------------------------------------------------
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // --- SCRIPT EXECUTION --------------------------------------------------
+    init();
     animate();
+
   </script>
 </body>
 </html>
