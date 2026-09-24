@@ -12,7 +12,7 @@ Ladon saves `catalog.json`, `catalog.json.bak`, per-head reports, and translatio
 
 Each numbered head has its own research topic, and every head writes to the same catalog. A record found by multiple heads retains the head numbers that found it. A custom search does not count toward the 100 numbered heads. A batch stops on an archive or save error, leaving the failed head available for retry. A later scan keeps the existing English summary when the new source result has none.
 
-**Search saved research** accepts title words, author names, topics, museum departments, or record IDs. It ranks up to 20 matches from the local catalog. Choose a result number to see its source URL, metadata, abstract or museum description, available PDF link, and any English summary. Choose **E** to export the matches as a Markdown research brief under `%USERPROFILE%\Ladon\exports`; choose **Q** to return to the menu. Search and export use the records already on your computer and make no network or AI request.
+**Search saved research** accepts title words, author names, topics, museum departments, or record IDs. It ranks all matches from the local catalog and shows ten per page. Choose **N** or **P** to move between pages, or enter any result number to see its source URL, metadata, abstract or museum description, available PDF link, and any English summary. Choose **E** to export every match as a Markdown research brief under `%USERPROFILE%\Ladon\exports`; choose **Q** to return to the menu. Search and export use the records already on your computer and make no network or AI request.
 
 ## Local AI
 

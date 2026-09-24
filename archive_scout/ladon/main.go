@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const version = "1.3.0"
+const version = "1.3.1"
 
 var buildDate = "development"
 
@@ -316,24 +316,44 @@ func (app *App) searchSaved() error {
 	if err != nil {
 		return err
 	}
-	items := app.catalog.find(query, 20)
+	items := app.catalog.find(query, len(app.catalog.Records))
 	if len(items) == 0 {
 		fmt.Fprintln(app.output, "No saved records match those words. Try a broader search.")
 		return nil
 	}
-	fmt.Fprintf(app.output, "\nSAVED RESEARCH | %d matching records shown\n", len(items))
-	for index, item := range items {
-		fmt.Fprintf(app.output, "%2d. [%s %s] %s\n", index+1, item.Kind, item.ID, item.Title)
-	}
+	const pageSize = 10
+	pageCount := (len(items) + pageSize - 1) / pageSize
+	page := 0
 	for {
-		choice, err := app.ask("Record number for details | E export matches | Q menu: ")
+		start := page * pageSize
+		end := start + pageSize
+		if end > len(items) {
+			end = len(items)
+		}
+		fmt.Fprintf(app.output, "\nSAVED RESEARCH | %d matches | Page %d of %d\n", len(items), page+1, pageCount)
+		for index := start; index < end; index++ {
+			item := items[index]
+			fmt.Fprintf(app.output, "%2d. [%s %s] %s\n", index+1, item.Kind, item.ID, item.Title)
+		}
+		choice, err := app.ask("N next | P previous | record number | E export all | Q menu: ")
 		if errors.Is(err, io.EOF) || strings.EqualFold(choice, "q") || choice == "" {
 			return nil
 		}
 		if err != nil {
 			return err
 		}
-		if strings.EqualFold(choice, "e") {
+		switch strings.ToLower(choice) {
+		case "n":
+			if page+1 < pageCount {
+				page++
+			}
+			continue
+		case "p":
+			if page > 0 {
+				page--
+			}
+			continue
+		case "e":
 			path, err := app.exportSearchResults(query, items)
 			if err != nil {
 				fmt.Fprintf(app.output, "Could not export results: %v\n", err)
@@ -344,7 +364,7 @@ func (app *App) searchSaved() error {
 		}
 		index, err := strconv.Atoi(choice)
 		if err != nil || index < 1 || index > len(items) {
-			fmt.Fprintf(app.output, "Choose a number from 1 to %d, E, or Q.\n", len(items))
+			fmt.Fprintf(app.output, "Choose a number from 1 to %d, N, P, E, or Q.\n", len(items))
 			continue
 		}
 		app.showRecord(items[index-1])

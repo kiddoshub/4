@@ -122,6 +122,46 @@ func TestOfflineSavedResearchSearchAndDetails(t *testing.T) {
 	}
 }
 
+func TestOfflineSearchPagesAndExportsEveryMatch(t *testing.T) {
+	directory := t.TempDir()
+	t.Setenv("LADON_DATA_DIR", directory)
+	t.Setenv("LADON_NO_AI", "1")
+	catalog := emptyCatalog()
+	for number := 1; number <= 25; number++ {
+		id := fmt.Sprintf("W%03d", number)
+		item := Record{Kind: "paper", ID: id, Title: fmt.Sprintf("Ancient record %03d", number),
+			URL: "https://openalex.org/" + id}
+		catalog.Records[catalogKey(item)] = item
+	}
+	if err := saveCatalog(filepath.Join(directory, "catalog.json"), catalog); err != nil {
+		t.Fatal(err)
+	}
+	var output bytes.Buffer
+	app, err := newApp(strings.NewReader("12\nancient\nn\nn\n25\np\n11\ne\nq\n0\n"), &output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	app.fetcher, app.llm = nil, nil
+	if err := app.menu(); err != nil {
+		t.Fatal(err)
+	}
+	for _, expected := range []string{"25 matches | Page 1 of 3", "25 matches | Page 2 of 3",
+		"25 matches | Page 3 of 3", "25. [paper W025]", "Source: https://openalex.org/W025",
+		"11. [paper W011]", "Source: https://openalex.org/W011", "Export saved:"} {
+		if !strings.Contains(output.String(), expected) {
+			t.Fatalf("paged search missing %q in %s", expected, output.String())
+		}
+	}
+	exports, err := filepath.Glob(filepath.Join(directory, "exports", "search-*.md"))
+	if err != nil || len(exports) != 1 {
+		t.Fatalf("expected one export, got %v: %v", exports, err)
+	}
+	markdown, err := os.ReadFile(exports[0])
+	if err != nil || strings.Count(string(markdown), "## ") != 25 {
+		t.Fatalf("export omitted matches: %v", err)
+	}
+}
+
 func TestAbstractReconstructionAndScoring(t *testing.T) {
 	abstract := abstractText(map[string][]int{"historic": {1}, "A": {0}, "record": {2}})
 	if abstract != "A historic record" {
