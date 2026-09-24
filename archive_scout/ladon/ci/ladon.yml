@@ -1,0 +1,43 @@
+name: Ladon
+
+on:
+  push:
+    paths:
+      - 'archive_scout/ladon/**'
+      - '.github/workflows/ladon.yml'
+  pull_request:
+    paths:
+      - 'archive_scout/ladon/**'
+      - '.github/workflows/ladon.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: archive_scout/ladon
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: archive_scout/ladon/go.mod
+          cache-dependency-path: archive_scout/ladon/go.sum
+      - name: Test
+        run: go test ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Build Windows executable
+        run: |
+          GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -trimpath \
+            -ldflags="-s -w -X main.buildDate=$(date -u +%Y-%m-%d)" \
+            -o Ladon.exe .
+      - name: Package Windows download
+        run: python3 package_release.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Ladon-Windows-x64
+          path: archive_scout/ladon/Ladon-Windows.zip
+          retention-days: 14

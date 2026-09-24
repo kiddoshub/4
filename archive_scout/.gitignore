@@ -1,0 +1,7 @@
+__pycache__/
+.venv/
+*.sqlite
+*.sqlite-*
+*.progress.json
+archive-results.json
+archive-results.md
