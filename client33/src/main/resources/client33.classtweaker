@@ -1,0 +1,45 @@
+classTweaker	v1	official
+
+# FireworksSparkParticleMixin, FireworksSparkParticleSubMixin
+accessible   class   net/minecraft/client/particle/FireworkParticles$SparkParticle
+# ClientChunkCacheAccessor, ClientChunkMapAccessor
+accessible   class   net/minecraft/client/multiplayer/ClientChunkCache$Storage
+
+# SaveMapCommand#saveMap
+accessible   field   net/minecraft/client/resources/MapTextureManager$MapInstance texture Lnet/minecraft/client/renderer/texture/DynamicTexture;
+
+# BeaconScreenMixin#changeButtons
+accessible   class   net/minecraft/client/gui/screens/inventory/BeaconScreen$BeaconPowerButton
+accessible   class   net/minecraft/client/gui/screens/inventory/BeaconScreen$BeaconConfirmButton
+accessible   class   net/minecraft/client/gui/screens/inventory/BeaconScreen$BeaconCancelButton
+
+# ResourceLoadStateTrackerAccessor, ReloadStateAccessor, Utils#isLoading
+accessible   class   net/minecraft/client/ResourceLoadStateTracker$ReloadState
+
+# ExtendedRenderPipelineBuilder
+accessible   method  com/mojang/renderpearl/api/pipeline/RenderPipeline$Builder <init> ()V
+
+# OutlineRenderCommandQueue#order
+accessible   field   net/minecraft/client/renderer/SubmitNodeStorage submitsPerOrder Lit/unimi/dsi/fastutil/ints/Int2ObjectAVLTreeMap;
+
+# GlCommandEncoderMixin, GlDeviceMixin
+accessible   class   com/mojang/renderpearl/backend/opengl/GlDevice
+# GlCommandEncoderMixin
+accessible   class   com/mojang/renderpearl/backend/opengl/GlCommandEncoder
+
+# AutoFish#tryCatch
+accessible   class   net/minecraft/world/entity/projectile/FishingHook$FishHookState
+accessible   field   net/minecraft/world/entity/projectile/FishingHook currentState Lnet/minecraft/world/entity/projectile/FishingHook$FishHookState;
+
+accessible   method  net/minecraft/client/multiplayer/MultiPlayerGameMode startPrediction (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/multiplayer/prediction/PredictiveAction;)V
+
+# GuiGraphicsExtractorAccessor
+accessible   class   net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack
+# WireframeEntityRenderer#getBuffer
+
+# ProjectileEntitySimulator#hitOrDeflect
+accessible   method   net/minecraft/world/entity/projectile/Projectile shouldBounceOnWorldBorder ()Z
+
+# Read a section's packed block data for immutable client-thread snapshots.
+accessible class net/minecraft/world/level/chunk/PalettedContainer$Data
+accessible field net/minecraft/world/level/chunk/PalettedContainer data Lnet/minecraft/world/level/chunk/PalettedContainer$Data;

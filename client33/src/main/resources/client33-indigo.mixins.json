@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "com.gaspoweredcake.client33.mixin.indigo",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.gaspoweredcake.client33.MixinPlugin",
+  "client": [
+    "AltModelBlockRendererImplMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

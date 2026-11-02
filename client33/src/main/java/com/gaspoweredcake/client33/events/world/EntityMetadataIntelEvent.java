@@ -1,0 +1,3 @@
+package com.gaspoweredcake.client33.events.world;
+import com.gaspoweredcake.client33.utils.intel.EntityMetadataIntel;
+public record EntityMetadataIntelEvent(EntityMetadataIntel observation) {}

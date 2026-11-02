@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "com.gaspoweredcake.client33.mixin.viafabricplus",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.gaspoweredcake.client33.MixinPlugin",
+  "client": [
+    "GeneralSettingsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "package": "com.gaspoweredcake.client33.mixin.lithium",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.gaspoweredcake.client33.MixinPlugin",
+  "client": [
+    "ChunkAwareBlockCollisionSweeperMixin",
+    "LithiumEntityCollisionsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

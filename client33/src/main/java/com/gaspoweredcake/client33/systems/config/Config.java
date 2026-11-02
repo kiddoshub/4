@@ -1,0 +1,222 @@
+
+package com.gaspoweredcake.client33.systems.config;
+
+import com.gaspoweredcake.client33.Client33;
+import com.gaspoweredcake.client33.renderer.Fonts;
+import com.gaspoweredcake.client33.renderer.text.FontFace;
+import com.gaspoweredcake.client33.settings.*;
+import com.gaspoweredcake.client33.systems.System;
+import com.gaspoweredcake.client33.systems.Systems;
+import com.gaspoweredcake.client33.systems.modules.Module;
+import com.gaspoweredcake.client33.utils.render.color.SettingColor;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.gaspoweredcake.client33.Client33.mc;
+
+public class Config extends System<Config> {
+    public final Settings settings = new Settings();
+
+    private final SettingGroup sgVisual = settings.createGroup("Visual");
+    private final SettingGroup sgModules = settings.createGroup("Modules");
+    private final SettingGroup sgChat = settings.createGroup("Chat");
+    private final SettingGroup sgMisc = settings.createGroup("Misc");
+    private final SettingGroup sgIntel = settings.createGroup("Data Acquisition");
+
+    public final Setting<Boolean> rawPacketCapture = sgIntel.add(new BoolSetting.Builder()
+        .name("capture-raw-packets").description("Capture bounded clientbound packet metadata and prefixes for this session.")
+        .defaultValue(true).onChanged(com.gaspoweredcake.client33.utils.intel.RawPacketCapture::setEnabled).build());
+    public final Setting<Integer> rawPacketPrefix = sgIntel.add(new IntSetting.Builder()
+        .name("raw-packet-prefix-bytes").description("Bytes retained from each clientbound packet in memory.")
+        .defaultValue(32).range(0, 256).sliderRange(0, 256)
+        .onChanged(com.gaspoweredcake.client33.utils.intel.RawPacketCapture::setPrefixBytes).build());
+    public final Setting<Boolean> persistBlockEntityNbt = sgIntel.add(new BoolSetting.Builder()
+        .name("persist-block-entity-nbt").description("Save received block entity NBT in the local SQLite cache.")
+        .defaultValue(true).onChanged(com.gaspoweredcake.client33.utils.intel.IntelBus::setBlockEntityPersistence).build());
+    public final Setting<Integer> intelSectionBudget = sgIntel.add(new IntSetting.Builder()
+        .name("sections-per-tick").description("Maximum section snapshots captured per tick for the intelligence cache.")
+        .defaultValue(2).range(1, 32).sliderRange(1, 16)
+        .onChanged(com.gaspoweredcake.client33.utils.intel.IntelBus::setSectionBudget).build());
+
+    // Visual
+
+    public final Setting<Boolean> customFont = sgVisual.add(new BoolSetting.Builder()
+        .name("custom-font")
+        .description("Use a custom font.")
+        .defaultValue(true)
+        .build()
+    );
+
+    public final Setting<FontFace> font = sgVisual.add(new FontFaceSetting.Builder()
+        .name("font")
+        .description("Custom font to use.")
+        .visible(customFont::get)
+        .onChanged(Fonts::load)
+        .build()
+    );
+
+    public final Setting<Double> rainbowSpeed = sgVisual.add(new DoubleSetting.Builder()
+        .name("rainbow-speed")
+        .description("The global rainbow speed.")
+        .defaultValue(0.5)
+        .range(0, 10)
+        .sliderMax(5)
+        .build()
+    );
+
+    public final Setting<Boolean> titleScreenCredits = sgVisual.add(new BoolSetting.Builder()
+        .name("title-screen-credits")
+        .description("Show Client33 credits on title screen")
+        .defaultValue(true)
+        .build()
+    );
+
+    public final Setting<Boolean> titleScreenSplashes = sgVisual.add(new BoolSetting.Builder()
+        .name("title-screen-splashes")
+        .description("Show Client33 splash texts on title screen")
+        .defaultValue(true)
+        .build()
+    );
+
+    public final Setting<Boolean> customWindowTitle = sgVisual.add(new BoolSetting.Builder()
+        .name("custom-window-title")
+        .description("Show custom text in the window title.")
+        .defaultValue(false)
+        .onModuleActivated(_ -> mc.updateTitle())
+        .onChanged(_ -> mc.updateTitle())
+        .build()
+    );
+
+    public final Setting<String> customWindowTitleText = sgVisual.add(new StringSetting.Builder()
+        .name("window-title-text")
+        .description("The text it displays in the window title.")
+        .visible(customWindowTitle::get)
+        .defaultValue("Minecraft {mc_version} - {client33.name} {client33.version}")
+        .onChanged(_ -> mc.updateTitle())
+        .build()
+    );
+
+    public final Setting<SettingColor> friendColor = sgVisual.add(new ColorSetting.Builder()
+        .name("friend-color")
+        .description("The color used to show friends.")
+        .defaultValue(new SettingColor(0, 255, 180))
+        .build()
+    );
+
+    public final Setting<Boolean> syncListSettingWidths = sgVisual.add(new BoolSetting.Builder()
+        .name("sync-list-setting-widths")
+        .description("Prevents the list setting screens from moving around as you add & remove elements.")
+        .defaultValue(false)
+        .build()
+    );
+
+    // Modules
+
+    public final Setting<List<Module>> hiddenModules = sgModules.add(new ModuleListSetting.Builder()
+        .name("hidden-modules")
+        .description("Prevent these modules from being rendered as options in the clickgui.")
+        .build()
+    );
+
+    public final Setting<Integer> moduleSearchCount = sgModules.add(new IntSetting.Builder()
+        .name("module-search-count")
+        .description("Amount of modules and settings to be shown in the module search bar.")
+        .defaultValue(8)
+        .min(1).sliderMax(12)
+        .build()
+    );
+
+    public final Setting<Boolean> moduleAliases = sgModules.add(new BoolSetting.Builder()
+        .name("search-module-aliases")
+        .description("Whether or not module aliases will be used in the module search bar.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Chat
+
+    public final Setting<String> prefix = sgChat.add(new StringSetting.Builder()
+        .name("prefix")
+        .description("Prefix.")
+        .defaultValue(".")
+        .build()
+    );
+
+    public final Setting<Boolean> chatFeedback = sgChat.add(new BoolSetting.Builder()
+        .name("chat-feedback")
+        .description("Sends chat feedback when client33 performs certain actions.")
+        .defaultValue(true)
+        .build()
+    );
+
+    public final Setting<Boolean> deleteChatFeedback = sgChat.add(new BoolSetting.Builder()
+        .name("delete-chat-feedback")
+        .description("Delete previous matching chat feedback to keep chat clear.")
+        .visible(chatFeedback::get)
+        .defaultValue(true)
+        .build()
+    );
+
+    // Misc
+
+    public final Setting<Integer> rotationHoldTicks = sgMisc.add(new IntSetting.Builder()
+        .name("rotation-hold")
+        .description("Hold long to hold server side rotation when not sending any packets.")
+        .defaultValue(4)
+        .build()
+    );
+
+    public final Setting<Boolean> useTeamColor = sgMisc.add(new BoolSetting.Builder()
+        .name("use-team-color")
+        .description("Uses player's team color for rendering things like esp and tracers.")
+        .defaultValue(true)
+        .build()
+    );
+
+    public List<String> dontShowAgainPrompts = new ArrayList<>();
+
+    public Config() {
+        super("config");
+    }
+
+    public static Config get() {
+        return Systems.get(Config.class);
+    }
+
+    @Override
+    public CompoundTag toTag() {
+        CompoundTag tag = new CompoundTag();
+
+        tag.putString("version", Client33.VERSION.toString());
+        tag.put("settings", settings.toTag());
+        tag.put("dontShowAgainPrompts", listToTag(dontShowAgainPrompts));
+
+        return tag;
+    }
+
+    @Override
+    public Config fromTag(CompoundTag tag) {
+        if (tag.contains("settings")) settings.fromTag(tag.getCompoundOrEmpty("settings"));
+        if (tag.contains("dontShowAgainPrompts")) dontShowAgainPrompts = listFromTag(tag, "dontShowAgainPrompts");
+
+        return this;
+    }
+
+    private ListTag listToTag(List<String> list) {
+        ListTag nbt = new ListTag();
+        for (String item : list) nbt.add(StringTag.valueOf(item));
+        return nbt;
+    }
+
+    private List<String> listFromTag(CompoundTag tag, String key) {
+        List<String> list = new ArrayList<>();
+        for (Tag item : tag.getListOrEmpty(key)) list.add(item.asString().orElse(""));
+        return list;
+    }
+
+}

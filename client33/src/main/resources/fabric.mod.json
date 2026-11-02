@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "name": "33",
+  "id": "client33",
+  "version": "${version}",
+  "description": "Based utility mod.",
+  "authors": [
+    "MineGame159",
+    "squidoodly",
+    "seasnail"
+  ],
+  "contact": {
+    "homepage": "https://github.com/GasPoweredCake/33",
+    "issues": "https://github.com/GasPoweredCake/33/issues",
+    "sources": "https://github.com/GasPoweredCake/33"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/client33/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.gaspoweredcake.client33.Client33"
+    ],
+    "modmenu": [
+      "com.gaspoweredcake.client33.modintegration.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "client33.mixins.json",
+    "client33-baritone.mixins.json",
+    "client33-indigo.mixins.json",
+    "client33-sodium.mixins.json",
+    "client33-lithium.mixins.json",
+    "client33-viafabricplus.mixins.json"
+  ],
+  "accessWidener": "client33.classtweaker",
+  "custom": {
+    "client33:build_number": "${build_number}",
+    "client33:color": "157,111,255",
+    "client33:commit": "${commit}",
+    "modmenu": {},
+    "badoptimizations:cache_hooks": {
+      "lightmap": "com.gaspoweredcake.client33.modintegration.BadOptimizationsHook"
+    }
+  },
+  "depends": {
+    "java": ">=${jdk_version}",
+    "minecraft": "${minecraft_version}",
+    "fabricloader": ">=${loader_version}",
+    "strata": ">=0.1.0-SNAPSHOT"
+  },
+  "breaks": {
+    "optifabric": "*",
+    "feather": "*",
+    "origins": "*",
+    "sodium": "<0.9.1",
+    "morechathistory": "*",
+    "lithium": "<0.22.1"
+  }
+}
