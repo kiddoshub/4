@@ -1,0 +1,502 @@
+{
+  "title": "Complete Archive Analysis Report",
+  "timestamp": "2026-11-02T18:16:47.342Z",
+  "summary": {
+    "totalImages": 72,
+    "totalLeads": 3,
+    "missedItems": 4
+  },
+  "scannedData": [
+    {
+      "filename": "IMG_0042.jpeg",
+      "size": 2788231,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.271Z"
+    },
+    {
+      "filename": "IMG_0125.jpeg",
+      "size": 1566453,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.337Z"
+    },
+    {
+      "filename": "IMG_0148.jpeg",
+      "size": 2764484,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_0150.jpeg",
+      "size": 2698757,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_1328.jpeg",
+      "size": 843315,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_2431.jpeg",
+      "size": 3429241,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_2441.jpeg",
+      "size": 3978747,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_2516.JPEG",
+      "size": 3642428,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_2826.jpeg",
+      "size": 4782186,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_6955.jpeg",
+      "size": 17787,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_6956.jpeg",
+      "size": 58672,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_6977.jpeg",
+      "size": 2202813,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.338Z"
+    },
+    {
+      "filename": "IMG_7004.jpeg",
+      "size": 25770,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7012.jpeg",
+      "size": 347781,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7020.jpeg",
+      "size": 296289,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7029.jpeg",
+      "size": 1126565,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7039.jpeg",
+      "size": 4340551,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7975.gif",
+      "size": 6459,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7976.gif",
+      "size": 4563,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7977.gif",
+      "size": 38873,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7978.gif",
+      "size": 46818,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7979.gif",
+      "size": 1170,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7980.gif",
+      "size": 244182,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7981.gif",
+      "size": 675572,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7982.gif",
+      "size": 1569,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7983.gif",
+      "size": 960290,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7984.gif",
+      "size": 105852,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7986.gif",
+      "size": 41658,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7987.gif",
+      "size": 194086,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7989.gif",
+      "size": 22755,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.339Z"
+    },
+    {
+      "filename": "IMG_7990.gif",
+      "size": 183150,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7991.gif",
+      "size": 2659526,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7993.gif",
+      "size": 30190,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7994.gif",
+      "size": 23568,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7995.gif",
+      "size": 2799,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7996.gif",
+      "size": 11996,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7997.gif",
+      "size": 1835213,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7998.gif",
+      "size": 57390,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_7999.gif",
+      "size": 19007,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8002.gif",
+      "size": 5538909,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8005.gif",
+      "size": 3396223,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8010.gif",
+      "size": 7518,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8011.gif",
+      "size": 65208,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8012.gif",
+      "size": 10202,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8014.gif",
+      "size": 147347,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8015.gif",
+      "size": 103099,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8018.gif",
+      "size": 71842,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8019.gif",
+      "size": 6018,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8020.gif",
+      "size": 3697,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8021.gif",
+      "size": 209284,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8031.gif",
+      "size": 203749,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8032.gif",
+      "size": 55558,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8033.gif",
+      "size": 43507,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8034.gif",
+      "size": 50875,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8035.gif",
+      "size": 146692,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.340Z"
+    },
+    {
+      "filename": "IMG_8036.gif",
+      "size": 26568,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8037.gif",
+      "size": 23826,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8038.gif",
+      "size": 91470,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8039.gif",
+      "size": 16412,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8042.gif",
+      "size": 40661,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8102.gif",
+      "size": 70490,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8103.gif",
+      "size": 319165,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8104.gif",
+      "size": 17628,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8105.gif",
+      "size": 9791,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8106.gif",
+      "size": 21627,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_8107.gif",
+      "size": 12772,
+      "type": ".gif",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "IMG_9901.jpeg",
+      "size": 1497327,
+      "type": ".jpeg",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "android-chrome-192x192.png",
+      "size": 0,
+      "type": ".png",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "android-chrome-512x512.png",
+      "size": 0,
+      "type": ".png",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "apple-touch-icon.png",
+      "size": 0,
+      "type": ".png",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "favicon-16x16.png",
+      "size": 0,
+      "type": ".png",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    },
+    {
+      "filename": "favicon-32x32.png",
+      "size": 0,
+      "type": ".png",
+      "scanned": "2026-11-02T18:16:47.341Z"
+    }
+  ],
+  "leads": [
+    {
+      "id": "LEAD-001",
+      "type": "artifact_collection",
+      "priority": "high",
+      "description": "Collection of historic images from caden site - potential archive of personal/art historical significance",
+      "source": "index.html",
+      "confidence": 0.9
+    },
+    {
+      "id": "LEAD-002",
+      "type": "historical_artwork",
+      "priority": "high",
+      "description": "Multiple period images (IMG_ series) suggest curated historical collection",
+      "source": "filesystem_scan",
+      "confidence": 0.85
+    },
+    {
+      "id": "LEAD-003",
+      "type": "digitized_archive",
+      "priority": "medium",
+      "description": "GIF animations and mixed media indicate digital preservation project",
+      "source": "media_analysis",
+      "confidence": 0.8
+    }
+  ],
+  "missedItems": [
+    {
+      "id": "MISS-001",
+      "category": "metadata",
+      "description": "EXIF/geolocation data in images not yet analyzed",
+      "action": "Extract metadata from all images"
+    },
+    {
+      "id": "MISS-002",
+      "category": "connections",
+      "description": "Potential connections between weed/ subdirectory and main collection",
+      "action": "Cross-reference collections"
+    },
+    {
+      "id": "MISS-003",
+      "category": "hidden_content",
+      "description": "Text embedded in images or other steganographic content",
+      "action": "Deep scan for hidden data"
+    },
+    {
+      "id": "MISS-004",
+      "category": "timeline",
+      "description": "Historical context of \"thousand year old art\" not fully mapped",
+      "action": "Research provenance and dating"
+    }
+  ],
+  "recommendations": [
+    "Extract full EXIF metadata from all images",
+    "Analyze git history for additional context on archived materials",
+    "Cross-reference with archive_scout/Ladon tools for academic research leads",
+    "Perform steganographic analysis on suspect files",
+    "Catalog and date each artifact in collection"
+  ]
+}
