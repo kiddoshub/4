@@ -1,46 +1,46 @@
 [versions]
 # Fabric (https://fabricmc.net/develop)
-minecraft = "1.21.10"
-yarn-mappings = "1.21.10+build.2"
-fabric-loader = "0.17.0"
-fabric-api = "0.136.0+1.21.10"
+jdk = "25"
+minecraft = "26.3"
+fabric-loader = "0.19.5"
+fabric-api = "0.165.0+26.3"
 
 # Plugins
 # Loom (https://github.com/FabricMC/fabric-loom)
-loom = "1.12-SNAPSHOT"
+loom = "1.19.3"
+# Error Prone Plugin (https://github.com/tbroyer/gradle-errorprone-plugin)
+errorprone-plugin = "5.1.1"
 
 # Mods
 # Baritone (https://github.com/MeteorDevelopment/baritone)
-baritone = "1.21.10-SNAPSHOT"
+baritone = "26.3-SNAPSHOT"
 # Sodium (https://github.com/CaffeineMC/sodium-fabric)
-sodium = "mc1.21.10-0.7.2-fabric"
+sodium = "mc26.3-0.9.3-beta.1-fabric"
 # Lithium (https://github.com/CaffeineMC/lithium-fabric)
-lithium = "mc1.21.10-0.20.0-fabric"
+lithium = "mc26.3-0.26.3-fabric"
 # Iris (https://github.com/IrisShaders/Iris)
-iris = "1.9.6+1.21.10-fabric"
+iris = "1.11.7+26.3-fabric"
 # ModMenu (https://github.com/TerraformersMC/ModMenu)
-modmenu = "15.0.0"
+modmenu = "22.0.0-alpha.3"
 # Orbit (https://github.com/MeteorDevelopment/orbit)
 orbit = "0.2.4"
 # Starscript (https://github.com/MeteorDevelopment/starscript)
 starscript = "0.2.5"
-# DiscordRPC (https://github.com/MeteorDevelopment/java-discord-rpc)
-discordipc = "1.1"
 # Reflections (https://github.com/ronmamo/reflections)
 reflections = "0.10.2"
-# Netty (https://github.com/netty/netty)
-netty = "4.1.118.Final"
 # ViaFabricPlus (https://github.com/ViaVersion/ViaFabricPlus)
-viafabricplus = "4.3.1"
-# WaybackAuthLib (https://github.com/FlorianMichael/WaybackAuthLib)
-waybackauthlib = "1.0.1"
-# MinecraftAuth (https://github.com/RaphiMC/MinecraftAuth)
-minecraftauth = "5.0.2"
+viafabricplus = "5.1.2"
+
+# Libraries
+# Error Prone (https://github.com/google/error-prone)
+errorprone = "2.50.0"
+# NullAway (https://github.com/uber/NullAway)
+nullaway = "0.14.0"
+sqlite-jdbc = "3.54.1.0"
 
 [libraries]
 # Fabric base
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
-yarn = { module = "net.fabricmc:yarn", version.ref = "yarn-mappings" }
 fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
 
 # Mods
@@ -48,19 +48,18 @@ sodium = { module = "maven.modrinth:sodium", version.ref = "sodium" }
 lithium = { module = "maven.modrinth:lithium", version.ref = "lithium" }
 iris = { module = "maven.modrinth:iris", version.ref = "iris" }
 baritone = { module = "meteordevelopment:baritone", version.ref = "baritone" }
-modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+modmenu = { module = "maven.modrinth:modmenu", version.ref = "modmenu" }
 viafabricplus = { module = "com.viaversion:viafabricplus", version.ref = "viafabricplus" }
 viafabricplus-api = { module = "com.viaversion:viafabricplus-api", version.ref = "viafabricplus" }
 
 # Libraries
 orbit = { module = "meteordevelopment:orbit", version.ref = "orbit" }
 starscript = { module = "org.meteordev:starscript", version.ref = "starscript" }
-discord-ipc = { module = "meteordevelopment:discord-ipc", version.ref = "discordipc" }
 reflections = { module = "org.reflections:reflections", version.ref = "reflections" }
-netty-handler-proxy = { module = "io.netty:netty-handler-proxy", version.ref = "netty" }
-netty-codec-socks = { module = "io.netty:netty-codec-socks", version.ref = "netty" }
-waybackauthlib = { module = "de.florianmichael:WaybackAuthLib", version.ref = "waybackauthlib" }
-minecraft-auth = { module = "net.raphimc:MinecraftAuth", version.ref = "minecraftauth" }
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite-jdbc" }
 
 [plugins]
-fabric-loom = { id = "fabric-loom", version.ref = "loom" }
+fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
+errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
