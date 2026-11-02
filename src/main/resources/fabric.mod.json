@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "name": "Client33",,
+  "id": "client33",,
+  "version": "${version}",
+  "description": "Based utility mod.",
+  "authors": [
+    "MineGame159",
+    "squidoodly",
+    "seasnail"
+  ],
+  "contact": {
+    "homepage": "https://meteorclient.com",
+    "issues": "https://github.com/MeteorDevelopment/meteor-client/issues",
+    "sources": "https://github.com/MeteorDevelopment/meteor-client",
+    "discord": "https://meteorclient.com/discord"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/client33/icon.png",,
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "meteordevelopment.meteorclient.MeteorClient"
+    ],
+    "modmenu": [
+      "meteordevelopment.meteorclient.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "client33.mixins.json",
+    "client33-baritone.mixins.json",
+    "client33-indigo.mixins.json",
+    "client33-sodium.mixins.json",
+    "client33-lithium.mixins.json",
+    "client33-viafabricplus.mixins.json"
+  ],
+  "accessWidener": "client33.accesswidener",,
+  "custom": {
+    "meteor-client:build_number": "${build_number}",
+    "meteor-client:color": "145,61,226",
+    "meteor-client:commit": "${commit}",
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://meteorclient.com/discord"
+      }
+    }
+  },
+  "depends": {
+    "java": ">=21",
+    "minecraft": ["${minecraft_version}", "1.21.9"],
+    "fabricloader": ">=0.17"
+  },
+  "breaks": {
+    "optifabric": "*",
+    "feather": "*",
+    "origins": "*",
+    "sodium": "<0.7.0",
+    "morechathistory": "*"
+  }
+}
